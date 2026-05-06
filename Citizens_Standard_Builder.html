@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Citizens Standard — Interactive Model Builder</title>
+<meta name="description" content="Interactive monetary policy model builder for the Citizens Standard framework. Tune K1, K2, K3 issuance channels and compare against seven alternative monetary systems using real-world median outcome data.">
+<style>
+  :root {
+    --bg: #fafaf7;
+    --surface: #ffffff;
+    --surface-2: #f1efe8;
+    --border: #d3d1c7;
+    --border-strong: #b4b2a9;
+    --text: #2c2c2a;
+    --text-muted: #5f5e5a;
+    --text-dim: #888780;
+    --accent: #185fa5;
+    --accent-bg: #e6f1fb;
+    --accent-text: #042c53;
+    --teal: #0f6e56;
+    --teal-bg: #e1f5ee;
+    --teal-text: #04342c;
+    --coral: #993c1d;
+    --purple: #534ab7;
+    --amber: #ba7517;
+    --red: #a32d2d;
+    --red-bg: #fcebeb;
+    --ok: #0f6e56;
+    --bad: #a32d2d;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a18;
+      --surface: #25252a;
+      --surface-2: #2c2c2a;
+      --border: #444441;
+      --border-strong: #5f5e5a;
+      --text: #f1efe8;
+      --text-muted: #b4b2a9;
+      --text-dim: #888780;
+      --accent: #378add;
+      --accent-bg: #0c447c;
+      --accent-text: #b5d4f4;
+      --teal-bg: #085041;
+      --teal-text: #9fe1cb;
+      --red-bg: #4a1e1e;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+  @media (max-width: 640px) { .container { padding: 20px 16px; } }
+
+  header { margin-bottom: 32px; }
+  h1 { font-size: 28px; font-weight: 600; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .subtitle { color: var(--text-muted); font-size: 15px; margin: 0; }
+  .meta { color: var(--text-dim); font-size: 13px; margin: 12px 0 0; }
+  .meta a { color: var(--accent); text-decoration: none; }
+  .meta a:hover { text-decoration: underline; }
+
+  .modes { display: flex; gap: 8px; margin: 24px 0; flex-wrap: wrap; }
+  .mode-btn {
+    padding: 10px 16px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text);
+    font-family: var(--font);
+    transition: all 0.15s ease;
+  }
+  .mode-btn:hover { border-color: var(--border-strong); }
+  .mode-btn.active {
+    border-color: var(--accent);
+    background: var(--accent-bg);
+    color: var(--accent-text);
+    border-width: 2px;
+    padding: 9px 15px;
+  }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    margin: 0 0 16px;
+  }
+  .card-note {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin: 12px 0 0;
+    line-height: 1.5;
+  }
+
+  .row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .row:last-child { margin-bottom: 0; }
+  .label { font-size: 13px; color: var(--text-muted); flex: 0 0 130px; flex-shrink: 0; }
+  .readout {
+    font-size: 13px;
+    font-weight: 600;
+    min-width: 80px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+    flex-shrink: 0;
+  }
+
+  input[type=range] {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: var(--accent);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.1s ease;
+  }
+  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  input[type=range]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: var(--accent);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+  }
+  .stat-label { font-size: 12px; color: var(--text-muted); margin: 0 0 4px; }
+  .stat-val { font-size: 22px; font-weight: 600; margin: 0; font-variant-numeric: tabular-nums; }
+  .stat-sub { font-size: 11px; color: var(--text-dim); margin: 2px 0 0; }
+
+  .tabs {
+    display: flex;
+    gap: 0;
+    margin: 24px 0 16px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .tab {
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text-muted);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active {
+    color: var(--text);
+    border-bottom-color: var(--text);
+    font-weight: 500;
+  }
+
+  .chart-wrap {
+    position: relative;
+    width: 100%;
+    height: 360px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 0 0 12px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .legend span { display: flex; align-items: center; gap: 6px; }
+  .swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  .comp-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    text-align: left;
+    padding: 12px 14px;
+    background: var(--surface-2);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    font-variant-numeric: tabular-nums;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  td.right { text-align: right; }
+  tr.highlight td {
+    background: var(--teal-bg);
+    color: var(--teal-text);
+    font-weight: 500;
+  }
+  td.system-name { font-weight: 500; color: var(--text); }
+  .badge-ok { color: var(--ok); font-weight: 600; }
+  .badge-no { color: var(--bad); }
+  .badge-partial { color: var(--text-muted); font-style: italic; font-size: 12px; }
+
+  .info-banner {
+    background: var(--accent-bg);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: var(--accent-text);
+  }
+
+  .scenario-pills { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .pill {
+    padding: 6px 12px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--font);
+  }
+  .pill.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+    font-weight: 500;
+  }
+
+  footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+  footer p { margin: 0 0 8px; }
+  footer h3 { font-size: 13px; font-weight: 600; color: var(--text-muted); margin: 16px 0 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 640px) {
+    h1 { font-size: 22px; }
+    .stat-val { font-size: 18px; }
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0);
+    white-space: nowrap; border: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+<h2 class="sr-only">Interactive engine for tuning Citizens Standard monetary parameters and comparing against alternative systems.</h2>
+
+<header>
+  <h1>The Citizens Standard — Interactive Model Builder</h1>
+  <p class="subtitle">Tune the monetary issuance dials. Project a representative cohort 65 years. Compare against real-world median outcomes under seven alternative systems.</p>
+  <p class="meta">Companion tool to the SSRN paper by Neo-Solon. <a href="#methodology">Data sources &amp; methodology below</a>.</p>
+</header>
+
+<div class="card" style="background: var(--accent-bg); border-color: var(--accent); margin-bottom: 24px;">
+  <p style="margin: 0 0 8px; font-weight: 600; color: var(--accent-text); font-size: 14px;">What you're looking at</p>
+  <p style="margin: 0 0 8px; color: var(--accent-text); font-size: 13px; line-height: 1.65;">
+    The Citizens Standard is a constitutional monetary framework that replaces central-bank discretion with three rules-based issuance channels. Every dollar of new money is distributed equally to all citizens — split between locked retirement equity (the <strong>Stable Floor</strong>) and, in inflation Mode, monthly dividends.
+  </p>
+  <p style="margin: 0; color: var(--accent-text); font-size: 13px; line-height: 1.65;">
+    <strong>How to use:</strong> Pick a Mode below to see one of the framework's three constitutional configurations. Adjust any slider to build your own. The stat cards and charts update live. The <em>vs. real outcomes</em> tab compares your configuration to what Americans actually retire with under today's system.
+  </p>
+</div>
+
+<div class="modes" role="tablist">
+  <button class="mode-btn" data-mode="A" title="Maximum lifetime wealth via deflation. No monthly dividend.">Mode A · Maximum wealth (deflation)</button>
+  <button class="mode-btn active" data-mode="B" title="Price stability. Highest Stable Floor without dividend.">Mode B · Stable prices (neutral)</button>
+  <button class="mode-btn" data-mode="C" title="Monthly citizen dividend at the cost of lower locked wealth.">Mode C · Monthly dividend (inflation)</button>
+  <button class="mode-btn" data-mode="X">Custom</button>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <p class="card-title">Issuance channels</p>
+    <div class="row"><span class="label">K1 — Citizenship</span><input type="range" id="k1" min="0" max="10" step="0.1" value="2.5"><span class="readout" id="k1r">2.5%</span></div>
+    <div class="row"><span class="label">K2 — Growth</span><input type="range" id="k2" min="0" max="100" step="1" value="84"><span class="readout" id="k2r">84%</span></div>
+    <div class="row"><span class="label">K3 — Dividend</span><input type="range" id="k3" min="0" max="6" step="0.1" value="0"><span class="readout" id="k3r">0.0%</span></div>
+    <p class="card-note">K1: % of GDP/capita per new citizen. K2: % of real growth captured. K3: % of M2 issued annually as monthly dividend.</p>
+  </div>
+
+  <div class="card">
+    <p class="card-title">Macro environment</p>
+    <div class="row"><span class="label">Real growth</span><input type="range" id="rg" min="-1" max="5" step="0.1" value="2.0"><span class="readout" id="rgr">2.0%</span></div>
+    <div class="row"><span class="label">Pop. growth</span><input type="range" id="pg" min="-0.5" max="2" step="0.1" value="0.5"><span class="readout" id="pgr">0.5%</span></div>
+    <div class="row"><span class="label">Equity return</span><input type="range" id="er" min="2" max="10" step="0.1" value="6.5"><span class="readout" id="err">6.5%</span></div>
+    <div class="row"><span class="label">CPI inflation</span><input type="range" id="cpi" min="-3" max="6" step="0.1" value="0"><span class="readout" id="cpir">0.0%</span></div>
+  </div>
+</div>
+
+<div class="card">
+  <p class="card-title">Launch parameters</p>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px 24px;">
+    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">M2 ($T)</span><input type="range" id="m2" min="5" max="60" step="0.5" value="22.7"><span class="readout" id="m2r">$22.7T</span></div>
+    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">GDP ($T)</span><input type="range" id="gdp" min="5" max="80" step="0.5" value="30.7"><span class="readout" id="gdpr">$30.7T</span></div>
+    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">Pop. (M)</span><input type="range" id="pop" min="50" max="800" step="5" value="342"><span class="readout" id="popr">342M</span></div>
+    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">Horizon</span><input type="range" id="hz" min="20" max="80" step="1" value="65"><span class="readout" id="hzr">65y</span></div>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat"><p class="stat-label">Stable Floor at horizon</p><p class="stat-val" id="sf">—</p><p class="stat-sub">launch-year purchasing power</p></div>
+  <div class="stat"><p class="stat-label">Annual real income</p><p class="stat-val" id="ari">—</p><p class="stat-sub">at 4% withdrawal</p></div>
+  <div class="stat"><p class="stat-label">K3 monthly / citizen</p><p class="stat-val" id="k3d">—</p><p class="stat-sub">year 1 dividend</p></div>
+  <div class="stat"><p class="stat-label">Issuance / M2</p><p class="stat-val" id="iss">—</p><p class="stat-sub">total annual, year 1</p></div>
+  <div class="stat"><p class="stat-label">Cost / GDP</p><p class="stat-val" id="cgdp">—</p><p class="stat-sub">total annual, year 1</p></div>
+</div>
+
+<div class="tabs" role="tablist">
+  <div class="tab active" data-tab="floor">Stable Floor growth</div>
+  <div class="tab" data-tab="m2">M2 trajectory</div>
+  <div class="tab" data-tab="income">K1, K2, K3 over time</div>
+  <div class="tab" data-tab="compare">vs. real outcomes</div>
+  <div class="tab" data-tab="inflation">Inflation paths</div>
+</div>
+
+<div id="chart-view">
+  <div class="legend" id="legend"></div>
+  <div class="chart-wrap"><canvas id="chart" role="img" aria-label="Projection chart"></canvas></div>
+</div>
+
+<div id="compare-view" style="display:none;">
+  <div class="info-banner">
+    <strong>This comparison uses verified real-world data, not theoretical maximums.</strong>
+    <span style="display: block; margin-top: 6px; font-size: 12px; opacity: 0.9;">
+      Median 401(k) balance from Vanguard's 2025 <em>How America Saves</em> report ($87,571 at age 55-64). Average Social Security benefit from SSA's March 2026 Statistical Snapshot ($24,953/year). The "after SS trust depletion" scenario applies the 23% benefit cut projected by the 2025 SSA Trustees Report. Half of Americans actually retire with less than the median values shown.
+    </span>
+  </div>
+
+  <div class="scenario-pills">
+    <button class="pill active" data-scenario="median">Median outcome (real-world)</button>
+    <button class="pill" data-scenario="average">Average outcome</button>
+    <button class="pill" data-scenario="ss-cut">After SS trust depletion (-23%)</button>
+  </div>
+
+  <div class="comp-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>System</th>
+          <th class="right">Wealth at 65</th>
+          <th class="right">Lifetime cash</th>
+          <th class="right">Annual income at 65</th>
+          <th>Funded by</th>
+          <th>Rules-based</th>
+        </tr>
+      </thead>
+      <tbody id="compare-body"></tbody>
+    </table>
+  </div>
+
+  <p style="font-size: 12px; color: var(--text-dim); margin: 16px 0 0; line-height: 1.6;">
+    Citizens Standard delivers locked equity to every citizen automatically — no savings discipline required.
+    Real-world systems require individual savings effort that most Americans never achieve. The median 401(k) balance
+    at age 55-64 is $87,571 (Vanguard 2025). The average Social Security check is $24,917/year (SSA Mar 2026).
+    These are the numbers actual retirees live on, not projections of what disciplined savers could achieve.
+  </p>
+</div>
+
+<div id="inflation-view" style="display:none;">
+  <div class="info-banner">
+    <strong>Inflation paths:</strong> Each system's CPI trajectory over 65 years.
+    The Citizens Standard's three Modes are deliberate constitutional targets.
+    Other systems' inflation paths reflect their actual or theoretical behavior.
+  </div>
+  <div class="legend" id="inflation-legend"></div>
+  <div class="chart-wrap"><canvas id="inflation-chart" role="img" aria-label="Inflation comparison chart"></canvas></div>
+  <p style="font-size: 12px; color: var(--text-dim); margin: 16px 0 0; line-height: 1.6;">
+    The Citizens Standard line (thick green) tracks your CPI input directly — slide it to see how the constitutional target shifts.
+    Fed status quo shows historical reality with stylized shock periods (recession episode and inflation spike).
+    Bitcoin's deflation tracks your real growth rate (fixed supply meets growing economy).
+    UBI and MMT show drift risk — fiscal pressure compounding over decades.
+    Friedman k-rule's inflation = monetary growth rate minus your real growth rate.
+    Chicago Plan shows constrained 2% targeting without fractional-banking amplification.
+  </p>
+</div>
+
+<footer id="methodology">
+  <h3>Real-world data sources</h3>
+  <p><strong>401(k) balances:</strong> Vanguard, <em>How America Saves 2025</em>. Median balance at age 55-64 is $87,571; average is $244,750. Median is more representative of typical outcomes; the average is skewed by high-balance accounts.</p>
+  <p><strong>Social Security:</strong> SSA Monthly Statistical Snapshot, March 2026. Average retired-worker benefit: $2,079.49/month ($24,953/year). Replacement rate for the average earner: ~37-42% of late-career earnings (CBO, SSA 2024-2025).</p>
+  <p><strong>Trust fund depletion:</strong> 2025 SSA Trustees Report projects the OASI trust fund will be unable to pay full benefits beginning around 2034, after which only ~77-81% of scheduled benefits would be payable.</p>
+  <p><strong>Alaska Permanent Fund Dividend:</strong> Alaska Department of Revenue. Recent dividends ranged $1,200-$3,300/year; default in this engine is $1,700.</p>
+  <p><strong>Bitcoin:</strong> Treated as a savings vehicle at the user-set equity return for fair comparison. Real Bitcoin returns have been wildly volatile and are not predictive.</p>
+
+  <h3>Engine methodology</h3>
+  <p>Single-cohort projection: tracks one citizen born at year 0. K1 deposited once at birth; K2 deposited annually; K3 (when active) distributed monthly. Stable Floor compounds at the equity return rate. Real values deflate by CPI index. Each year, M2 expands by total issuance, GDP grows at real growth × CPI, and population grows at the pop-growth rate.</p>
+  <p>For comparison columns, "median outcome" uses real-world median 401(k) balance ($87,571) at retirement age and actual SS average benefit. "Average outcome" uses Vanguard's average 401(k) balance ($244,750) and average SS. "After SS trust depletion" applies a 23% cut to Social Security benefits per Trustees' projections. None of these scenarios assume perfect savings discipline over 43 years — they reflect what Americans actually retire with.</p>
+
+  <h3>Honest caveats</h3>
+  <p>K3 modeled as a flat percent of M2, not the paper's full price-level path targeting formula. Equity return treated as nominal — for real returns, set CPI to 0. Births computed as population × pop-growth (real demographics are more complex). The full paper's projections include stochastic returns, mode transitions, sequence-of-returns risk, and emergency tools — this engine is for intuition, not policy calibration.</p>
+  <p>Built from <em>The Citizens Standard, Triple-Mode Edition</em> (May 2026) by Neo-Solon. Open-source, free to share, embed, or adapt.</p>
+</footer>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const fmt = n => {
+    if (!isFinite(n) || n === null) return '—';
+    const a = Math.abs(n);
+    if (a >= 1e12) return '$' + (n/1e12).toFixed(2) + 'T';
+    if (a >= 1e9) return '$' + (n/1e9).toFixed(1) + 'B';
+    if (a >= 1e6) return '$' + (n/1e6).toFixed(2) + 'M';
+    if (a >= 1e3) return '$' + Math.round(n/1e3).toLocaleString() + 'K';
+    if (a === 0) return '$0';
+    return '$' + Math.round(n).toLocaleString();
+  };
+
+  const presets = {
+    A: { k1: 2.5, k2: 12.5, k3: 0,   cpi: -1.6 },
+    B: { k1: 2.5, k2: 84,   k3: 0,   cpi: 0.0  },
+    C: { k1: 2.5, k2: 12.5, k3: 4.0, cpi: 2.0  }
+  };
+
+  // REAL-WORLD DATA (verified from sources, see footer)
+  const REAL_DATA = {
+    median401k_at_retirement: 87571,    // Vanguard 2025: median 55-64 401(k) balance
+    avg401k_at_retirement: 244750,      // Vanguard 2025: average 55-64 401(k) balance
+    avgSS_annual: 24953,                // SSA Mar 2026: $2,079.49/mo × 12
+    ssReplacementRate: 0.40,            // SSA/CBO: ~40% for average earner
+    ssCutAfterDepletion: 0.23,          // SSA Trustees: ~23% cut after 2034
+    avgUSWageAtRetirement: 62800,       // approx — used for SS calc
+    alaskaPFD: 1700,                    // Alaska DOR recent average
+    ubiMonthly: 1000,                   // common UBI proposal
+    mmtJobsWage: 31200                  // $15/hr × 2080 hrs
+  };
+
+  let activeTab = 'floor';
+  let activeScenario = 'median';
+  let chart = null;
+  let inflationChart = null;
+
+  function readInputs(){
+    return {
+      k1: parseFloat($('k1').value)/100,
+      k2: parseFloat($('k2').value)/100,
+      k3: parseFloat($('k3').value)/100,
+      rg: parseFloat($('rg').value)/100,
+      pg: parseFloat($('pg').value)/100,
+      er: parseFloat($('er').value)/100,
+      cpi: parseFloat($('cpi').value)/100,
+      m2: parseFloat($('m2').value)*1e12,
+      gdp: parseFloat($('gdp').value)*1e12,
+      pop: parseFloat($('pop').value)*1e6,
+      hz: parseInt($('hz').value),
+      wr: 0.04
+    };
+  }
+
+  function updateReadouts(p){
+    $('k1r').textContent = (p.k1*100).toFixed(1) + '%';
+    $('k2r').textContent = (p.k2*100).toFixed(0) + '%';
+    $('k3r').textContent = (p.k3*100).toFixed(1) + '%';
+    $('rgr').textContent = (p.rg*100).toFixed(1) + '%';
+    $('pgr').textContent = (p.pg*100).toFixed(1) + '%';
+    $('err').textContent = (p.er*100).toFixed(1) + '%';
+    $('cpir').textContent = (p.cpi*100).toFixed(1) + '%';
+    $('m2r').textContent = '$' + (p.m2/1e12).toFixed(1) + 'T';
+    $('gdpr').textContent = '$' + (p.gdp/1e12).toFixed(1) + 'T';
+    $('popr').textContent = (p.pop/1e6).toFixed(0) + 'M';
+    $('hzr').textContent = p.hz + 'y';
+  }
+
+  function simulate(p){
+    const years = [];
+    let m2 = p.m2, gdp = p.gdp, pop = p.pop;
+    let cpiIdx = 1.0, floor = 0, k3Cum = 0;
+    let births = pop * p.pg;
+
+    for (let t = 0; t <= p.hz; t++){
+      const gdpPerCap = gdp / pop;
+      const k1Total = p.k1 * gdpPerCap * Math.max(births, 0);
+      const k2Total = p.k2 * gdp * p.rg;
+      const k3Total = p.k3 * m2;
+      const k1pc = births > 0 ? k1Total / births : 0;
+      const k2pc = k2Total / pop;
+      const k3pc = k3Total / pop;
+
+      const deposit = (t === 0 ? k1pc : 0) + k2pc;
+      floor = (floor + deposit) * (1 + p.er);
+      k3Cum += k3pc / cpiIdx;
+
+      years.push({
+        t, m2, gdp, pop, cpiIdx,
+        k1Total, k2Total, k3Total,
+        k1pc, k2pc, k3pc,
+        floor, floorReal: floor / cpiIdx,
+        k3Monthly: k3pc / 12
+      });
+
+      m2 += k1Total + k2Total + k3Total;
+      gdp = gdp * (1 + p.rg) * (1 + p.cpi);
+      pop *= (1 + p.pg);
+      births = Math.max(0, pop * p.pg);
+      cpiIdx *= (1 + p.cpi);
+    }
+    return years;
+  }
+
+  function computeComparison(p, sim, scenario){
+    const last = sim[sim.length - 1];
+
+    // Citizens Standard outputs
+    const csFloor = last.floorReal;
+    const csK3Cum = sim.reduce((s, y) => s + y.k3pc / y.cpiIdx, 0);
+    const csOngoingK3 = last.k3Monthly * 12 / last.cpiIdx;
+    const csIncome = csFloor * p.wr + csOngoingK3;
+
+    // Real-world data, scaled by scenario
+    let baseSavings, ssBenefit;
+    if (scenario === 'median') {
+      baseSavings = REAL_DATA.median401k_at_retirement;
+      ssBenefit = REAL_DATA.avgSS_annual;
+    } else if (scenario === 'average') {
+      baseSavings = REAL_DATA.avg401k_at_retirement;
+      ssBenefit = REAL_DATA.avgSS_annual;
+    } else { // ss-cut
+      baseSavings = REAL_DATA.median401k_at_retirement;
+      ssBenefit = REAL_DATA.avgSS_annual * (1 - REAL_DATA.ssCutAfterDepletion);
+    }
+
+    return [
+      {
+        name: 'Citizens Standard',
+        wealth: csFloor,
+        cash: csK3Cum,
+        income: csIncome,
+        fund: 'Seigniorage',
+        rules: '✓',
+        highlight: true
+      },
+      {
+        name: 'Fed status quo + SS',
+        wealth: baseSavings,
+        cash: 0,
+        income: baseSavings * p.wr + ssBenefit,
+        fund: 'Mixed (Fed + payroll tax)',
+        rules: '✗'
+      },
+      {
+        name: 'Chicago Plan',
+        wealth: baseSavings,
+        cash: 0,
+        income: baseSavings * p.wr,
+        fund: 'Govt seigniorage',
+        rules: '✓'
+      },
+      {
+        name: 'Friedman k-rule',
+        wealth: baseSavings,
+        cash: 0,
+        income: baseSavings * p.wr,
+        fund: 'Fed seigniorage',
+        rules: '✓'
+      },
+      {
+        name: 'Bitcoin / fixed supply',
+        wealth: baseSavings,
+        cash: 0,
+        income: baseSavings * p.wr,
+        fund: 'Mining rewards',
+        rules: '✓'
+      },
+      {
+        name: 'Alaska PFD-style',
+        wealth: baseSavings,
+        cash: REAL_DATA.alaskaPFD * p.hz,
+        income: baseSavings * p.wr + REAL_DATA.alaskaPFD,
+        fund: 'Resource royalty',
+        rules: 'partial'
+      },
+      {
+        name: 'UBI (tax-funded)',
+        wealth: baseSavings,
+        cash: REAL_DATA.ubiMonthly * 12 * p.hz,
+        income: baseSavings * p.wr + REAL_DATA.ubiMonthly * 12,
+        fund: 'Taxation',
+        rules: '✗'
+      },
+      {
+        name: 'MMT + jobs guarantee',
+        wealth: baseSavings,
+        cash: REAL_DATA.mmtJobsWage * 43,  // 43 working years
+        income: baseSavings * p.wr,
+        fund: 'Treasury seigniorage',
+        rules: '✗'
+      }
+    ];
+  }
+
+  function update(){
+    const p = readInputs();
+    updateReadouts(p);
+    const sim = simulate(p);
+    const last = sim[sim.length - 1];
+    const y1 = sim[1] || sim[0];
+
+    $('sf').textContent = fmt(last.floorReal);
+    $('ari').textContent = fmt(last.floorReal * p.wr);
+    $('k3d').textContent = y1.k3Monthly > 0 ? fmt(y1.k3Monthly) : '—';
+    const totalIssY1 = y1.k1Total + y1.k2Total + y1.k3Total;
+    $('iss').textContent = (totalIssY1 / p.m2 * 100).toFixed(2) + '%';
+    $('cgdp').textContent = (totalIssY1 / p.gdp * 100).toFixed(2) + '%';
+
+    if (activeTab === 'compare') {
+      drawCompareTable(p, sim);
+    } else if (activeTab === 'inflation') {
+      drawInflationChart(p, sim);
+    } else {
+      drawChart(sim, p);
+    }
+  }
+
+  function drawCompareTable(p, sim) {
+    const cmp = computeComparison(p, sim, activeScenario);
+    const tbody = $('compare-body');
+    tbody.innerHTML = '';
+    cmp.forEach(row => {
+      const tr = document.createElement('tr');
+      if (row.highlight) tr.className = 'highlight';
+      const rulesClass = row.rules === '✓' ? 'badge-ok' : row.rules === '✗' ? 'badge-no' : 'badge-partial';
+      tr.innerHTML = `<td class="system-name">${row.name}</td>
+                      <td class="right">${fmt(row.wealth)}</td>
+                      <td class="right">${fmt(row.cash)}</td>
+                      <td class="right">${fmt(row.income)}</td>
+                      <td>${row.fund}</td>
+                      <td><span class="${rulesClass}">${row.rules}</span></td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function drawInflationChart(p, sim) {
+    const ctx = $('inflation-chart').getContext('2d');
+    if (inflationChart) inflationChart.destroy();
+    const labels = Array.from({length: p.hz + 1}, (_, t) => t);
+
+    // Citizens Standard: user's CPI input, constant — this is the constitutional target
+    const csPath = labels.map(() => p.cpi * 100);
+
+    // Fed status quo: realistic historical pattern. Long-run average ~2.5%, but with
+    // occasional shocks. We model a baseline 2.3% with two stylized shock periods
+    // (years 15-17 mild deflation episode, years 32-35 stagflation echo).
+    const fedPath = labels.map(t => {
+      let base = 2.3;
+      if (t >= 15 && t <= 17) base = 0.5;          // mild deflation/recession episode
+      if (t >= 32 && t <= 35) base = 5.5;          // stagflation echo
+      if (t >= 50 && t <= 52) base = 4.0;          // late-cycle inflation
+      return base;
+    });
+
+    // Bitcoin: fixed supply meets growing economy → structural deflation as economy
+    // grows but money doesn't. Magnitude depends on real growth rate.
+    const btcPath = labels.map(() => -Math.max(p.rg * 100 * 0.5, 0.5));
+
+    // UBI: tax-funded, theoretically inflation-neutral if fully tax-financed,
+    // but in practice partially monetized. Show ~3% baseline rising slightly over time
+    // as fiscal pressure compounds.
+    const ubiPath = labels.map(t => 2.5 + (t / p.hz) * 1.5);
+
+    // MMT: jobs guarantee anchors wages but inflation depends on whether tax response
+    // keeps pace with demand. Historically optimistic models say 2-3%; critics say it
+    // tends higher under political pressure. We show a path drifting upward.
+    const mmtPath = labels.map(t => 3.0 + (t / p.hz) * 2.0);
+
+    // Friedman k-rule: by design, inflation matches real-growth-money-growth gap.
+    // If money grows at k% and real grows at rg%, inflation ≈ k - rg. Friedman
+    // proposed k=3-4%, so with rg=2%, inflation ≈ 1-2%.
+    const friedmanPath = labels.map(() => Math.max(3.5 - p.rg * 100, 0));
+
+    // Chicago Plan: 100% reserves + government issuance. Inflation depends on issuance
+    // rule — typically targeted at 2% or stable prices. Show as constrained Fed-like
+    // but without the shocks (since no fractional banking amplification).
+    const chicagoPath = labels.map(() => 2.0);
+
+    // Alaska PFD: doesn't affect monetary policy, so same as whatever the underlying
+    // monetary regime is (we show Fed status quo).
+    // Skipped to avoid clutter — visually identical to Fed.
+
+    const datasets = [
+      { label: 'Citizens Standard (your CPI)', data: csPath, borderColor: '#0f6e56', borderWidth: 4, tension: 0, pointRadius: 0 },
+      { label: 'Fed status quo (historical)', data: fedPath, borderColor: '#185fa5', borderWidth: 2, tension: 0.1, pointRadius: 0, borderDash: [4,4] },
+      { label: 'Bitcoin (structural deflation)', data: btcPath, borderColor: '#ba7517', borderWidth: 2, tension: 0, pointRadius: 0 },
+      { label: 'UBI (partial monetization)', data: ubiPath, borderColor: '#993c1d', borderWidth: 2, tension: 0, pointRadius: 0 },
+      { label: 'MMT (drift risk)', data: mmtPath, borderColor: '#534ab7', borderWidth: 2, tension: 0, pointRadius: 0 },
+      { label: 'Friedman k-rule', data: friedmanPath, borderColor: '#888780', borderWidth: 2, tension: 0, pointRadius: 0, borderDash: [2,2] },
+      { label: 'Chicago Plan', data: chicagoPath, borderColor: '#1d9e75', borderWidth: 2, tension: 0, pointRadius: 0, borderDash: [6,3] }
+    ];
+
+    $('inflation-legend').innerHTML = datasets.map(d =>
+      `<span><span class="swatch" style="background:${d.borderColor}"></span>${d.label}</span>`
+    ).join('');
+
+    const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const tickColor = '#888780';
+    const gridColor = isDark ? 'rgba(180,178,169,0.15)' : 'rgba(136,135,128,0.15)';
+
+    inflationChart = new Chart(ctx, {
+      type: 'line',
+      data: { labels, datasets },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: c => c.dataset.label + ': ' + c.parsed.y.toFixed(2) + '%' } }
+        },
+        scales: {
+          x: { title: { display: true, text: 'Years from launch', color: tickColor, font: { size: 12 } }, grid: { display: false }, ticks: { color: tickColor, font: { size: 11 }, maxTicksLimit: 8 } },
+          y: {
+            title: { display: true, text: 'Annual CPI inflation (%)', color: tickColor, font: { size: 12 } },
+            ticks: { color: tickColor, font: { size: 11 }, callback: v => v.toFixed(1) + '%' },
+            grid: {
+              color: ctx => ctx.tick.value === 0 ? 'rgba(136,135,128,0.5)' : gridColor,
+              lineWidth: ctx => ctx.tick.value === 0 ? 1.5 : 1
+            },
+            suggestedMin: -3,
+            suggestedMax: 7
+          }
+        },
+        interaction: { mode: 'index', intersect: false }
+      }
+    });
+  }
+
+  function drawChart(sim, p){
+    const ctx = $('chart').getContext('2d');
+    if (chart) chart.destroy();
+    const labels = sim.map(s => s.t);
+    let datasets = [], legendHtml = '';
+
+    if (activeTab === 'floor'){
+      datasets = [
+        { label: 'Stable Floor (nominal)', data: sim.map(s => s.floor), borderColor: '#888780', backgroundColor: 'transparent', borderDash: [4,4], tension: 0.2, pointRadius: 0 },
+        { label: 'Stable Floor (real)',    data: sim.map(s => s.floorReal), borderColor: '#185fa5', backgroundColor: 'rgba(24,95,165,0.10)', fill: true, tension: 0.2, pointRadius: 0 }
+      ];
+      legendHtml = '<span><span class="swatch" style="background:#185fa5"></span>Real (today $)</span><span><span class="swatch" style="background:#888780"></span>Nominal</span>';
+    } else if (activeTab === 'm2'){
+      datasets = [
+        { label: 'M2 ($T)',  data: sim.map(s => s.m2/1e12), borderColor: '#0f6e56', backgroundColor: 'rgba(15,110,86,0.10)', fill: true, tension: 0.2, pointRadius: 0 },
+        { label: 'GDP ($T)', data: sim.map(s => s.gdp/1e12), borderColor: '#993c1d', borderDash: [4,4], tension: 0.2, pointRadius: 0 }
+      ];
+      legendHtml = '<span><span class="swatch" style="background:#0f6e56"></span>M2</span><span><span class="swatch" style="background:#993c1d"></span>GDP</span>';
+    } else {
+      datasets = [
+        { label: 'K1 endowment',         data: sim.map((s,i) => i === 0 ? s.k1pc : 0), borderColor: '#534ab7', backgroundColor: 'rgba(83,74,183,0.5)', tension: 0, pointRadius: 0 },
+        { label: 'K2 annual / citizen',  data: sim.map(s => s.k2pc),                   borderColor: '#1d9e75', backgroundColor: 'rgba(29,158,117,0.5)', tension: 0.2, pointRadius: 0 },
+        { label: 'K3 annual / citizen',  data: sim.map(s => s.k3pc),                   borderColor: '#ba7517', backgroundColor: 'rgba(186,117,23,0.5)', tension: 0.2, pointRadius: 0 }
+      ];
+      legendHtml = '<span><span class="swatch" style="background:#534ab7"></span>K1 (one-time)</span><span><span class="swatch" style="background:#1d9e75"></span>K2 (annual)</span><span><span class="swatch" style="background:#ba7517"></span>K3 (annual)</span>';
+    }
+    $('legend').innerHTML = legendHtml;
+
+    const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const tickColor = '#888780';
+    const gridColor = isDark ? 'rgba(180,178,169,0.15)' : 'rgba(136,135,128,0.15)';
+
+    chart = new Chart(ctx, {
+      type: 'line',
+      data: { labels, datasets },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: c => c.dataset.label + ': ' + (activeTab === 'm2' ? '$' + c.parsed.y.toFixed(1) + 'T' : fmt(c.parsed.y)) } }
+        },
+        scales: {
+          x: { title: { display: true, text: 'Years from launch', color: tickColor, font: { size: 12 } }, grid: { display: false }, ticks: { color: tickColor, font: { size: 11 }, maxTicksLimit: 8 } },
+          y: { ticks: { color: tickColor, font: { size: 11 }, callback: v => activeTab === 'm2' ? '$' + v + 'T' : fmt(v) }, grid: { color: gridColor } }
+        },
+        interaction: { mode: 'index', intersect: false }
+      }
+    });
+  }
+
+  function applyMode(mode){
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+    if (presets[mode]){
+      const pr = presets[mode];
+      $('k1').value = pr.k1;
+      $('k2').value = pr.k2;
+      $('k3').value = pr.k3;
+      $('cpi').value = pr.cpi;
+    }
+    update();
+  }
+
+  function showTab(name){
+    activeTab = name;
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+    $('chart-view').style.display = (name === 'compare' || name === 'inflation') ? 'none' : 'block';
+    $('compare-view').style.display = name === 'compare' ? 'block' : 'none';
+    $('inflation-view').style.display = name === 'inflation' ? 'block' : 'none';
+
+    // Destroy any existing chart instances so they rebuild fresh against the
+    // newly-visible canvas with correct dimensions. Without this, charts inside
+    // previously-hidden containers can render at zero or stale dimensions.
+    if (chart) { chart.destroy(); chart = null; }
+    if (inflationChart) { inflationChart.destroy(); inflationChart = null; }
+
+    // Defer the redraw to next animation frame so the browser has actually
+    // applied the display change and the canvas has real dimensions.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => update());
+    });
+  }
+
+  document.querySelectorAll('.mode-btn').forEach(b => b.addEventListener('click', () => applyMode(b.dataset.mode)));
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => showTab(t.dataset.tab)));
+  document.querySelectorAll('.pill').forEach(p => p.addEventListener('click', () => {
+    activeScenario = p.dataset.scenario;
+    document.querySelectorAll('.pill').forEach(x => x.classList.toggle('active', x === p));
+    update();
+  }));
+  ['k1','k2','k3','rg','pg','er','cpi','m2','gdp','pop','hz'].forEach(id => {
+    $(id).addEventListener('input', () => {
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === 'X'));
+      update();
+    });
+  });
+
+  applyMode('B');
+})();
+</script>
+
+</body>
+</html>
