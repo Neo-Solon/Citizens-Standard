@@ -2,7 +2,7 @@
 
 > Build your own monetary system. Adjust K1, K2, K3 issuance channels and see how a citizen retires under your rules — then compare against Fed status quo, Chicago Plan, Friedman's k-rule, Bitcoin, Alaska PFD, UBI, and MMT.
 
-Companion tool to *The Citizens Standard: A Constitutional Monetary Architecture with Mode-Selectable Inflation Regimes* by Neo-Solon ([SSRN link to be added]).
+Companion tool to *The Citizens Standard: A Constitutional Monetary Architecture with Mode-Selectable Inflation Regimes* by Neo-Solon (https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6702518)
 
 ---
 
