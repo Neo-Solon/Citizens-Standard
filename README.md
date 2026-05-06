@@ -111,7 +111,7 @@ The HTML file is self-contained and free to embed, host, share, or adapt. If you
 
 For academic citation:
 
-> Neo-Solon. *The Citizens Standard: A Constitutional Monetary Architecture with Mode-Selectable Inflation Regimes*. SSRN [DOI/link], 2026. Interactive companion engine: [your-hosted-URL].
+> Neo-Solon. *The Citizens Standard: A Constitutional Monetary Architecture with Mode-Selectable Inflation Regimes*. SSRN Solon, Neo, The Citizens Standard: A Constitutional Monetary Architecture with Mode-Selectable Inflation Regimes (May 03, 2026). Available at SSRN: https://ssrn.com/abstract=6702518 or http://dx.doi.org/10.2139/ssrn.6702518, 2026. Interactive companion engine: https://github.com/Neo-Solon/Citizens-Standard
 
 ## License
 
