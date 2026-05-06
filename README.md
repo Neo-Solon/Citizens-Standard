@@ -1,4 +1,4 @@
-# The Citizens Standard — Interactive Engine
+# The Citizens Standard — Interactive Model Builder
 
 > Build your own monetary system. Adjust K1, K2, K3 issuance channels and see how a citizen retires under your rules — then compare against Fed status quo, Chicago Plan, Friedman's k-rule, Bitcoin, Alaska PFD, UBI, and MMT.
 
