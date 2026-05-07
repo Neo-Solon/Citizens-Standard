@@ -292,6 +292,24 @@
     font-weight: 500;
   }
 
+  .er-preset {
+    padding: 4px 10px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    cursor: pointer;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: var(--font);
+  }
+  .er-preset:hover { border-color: var(--border-strong); color: var(--text); }
+  .er-preset.active {
+    background: var(--accent-bg);
+    border-color: var(--accent);
+    color: var(--accent-text);
+    font-weight: 500;
+  }
+
   footer {
     margin-top: 48px;
     padding-top: 24px;
@@ -360,6 +378,11 @@
     <div class="row"><span class="label">Real growth</span><input type="range" id="rg" min="-1" max="5" step="0.1" value="2.0"><span class="readout" id="rgr">2.0%</span></div>
     <div class="row"><span class="label">Pop. growth</span><input type="range" id="pg" min="-0.5" max="2" step="0.1" value="0.5"><span class="readout" id="pgr">0.5%</span></div>
     <div class="row"><span class="label">Equity return</span><input type="range" id="er" min="2" max="10" step="0.1" value="6.5"><span class="readout" id="err">6.5%</span></div>
+    <div style="display: flex; gap: 6px; margin: -4px 0 8px; padding-left: 142px; flex-wrap: wrap;">
+      <button class="er-preset" data-er="3.0" title="Conservative: lost-decade-style returns (2000s).">Pessimistic 3%</button>
+      <button class="er-preset" data-er="4.5" title="Forward-looking forecasts from Vanguard, Research Affiliates, AQR for next decade.">Forecast 4.5%</button>
+      <button class="er-preset active" data-er="6.5" title="Long-run US historical real return (Shiller 1871-2024).">Historical 6.5%</button>
+    </div>
     <div class="row"><span class="label">CPI inflation</span><input type="range" id="cpi" min="-3" max="6" step="0.1" value="0"><span class="readout" id="cpir">0.0%</span></div>
   </div>
 </div>
@@ -388,6 +411,7 @@
   <div class="tab" data-tab="income">K1, K2, K3 over time</div>
   <div class="tab" data-tab="compare">vs. real outcomes</div>
   <div class="tab" data-tab="inflation">Inflation paths</div>
+  <div class="tab" data-tab="stress">Stress test</div>
 </div>
 
 <div id="chart-view">
@@ -451,7 +475,42 @@
   </p>
 </div>
 
+<div id="stress-view" style="display:none;">
+  <div class="info-banner">
+    <strong>What this answers:</strong> "OK, but what if there's a Great Depression?" Each scenario embeds a real historical bad period into the citizen's working life and shows what they retire with — vs. the smooth-baseline projection. The Citizens Standard's structural advantage is what survives this stress test.
+  </div>
+
+  <div class="scenario-pills" id="stress-pills">
+    <button class="pill active" data-stress="smooth">Smooth baseline (no shocks)</button>
+    <button class="pill" data-stress="depression">Great Depression at age 25-40 (1929-1944)</button>
+    <button class="pill" data-stress="stagflation">1970s Stagflation at age 30-46 (1966-1982)</button>
+    <button class="pill" data-stress="lost-decade">2000s Lost Decade at age 35-44 (2000-2009)</button>
+    <button class="pill" data-stress="all-bad">All three sequences (worst-case stack)</button>
+  </div>
+
+  <div class="stats" style="margin-top: 16px;">
+    <div class="stat"><p class="stat-label">Stable Floor under stress</p><p class="stat-val" id="stress-sf">—</p><p class="stat-sub" id="stress-sf-vs">vs. smooth baseline</p></div>
+    <div class="stat"><p class="stat-label">Real income at retirement</p><p class="stat-val" id="stress-income">—</p><p class="stat-sub">at 4% withdrawal</p></div>
+    <div class="stat"><p class="stat-label">vs. median American</p><p class="stat-val" id="stress-vs-median">—</p><p class="stat-sub">$87,571 Vanguard 2025</p></div>
+  </div>
+
+  <div class="legend" id="stress-legend"></div>
+  <div class="chart-wrap"><canvas id="stress-chart" role="img" aria-label="Stress test trajectory chart"></canvas></div>
+
+  <p style="font-size: 12px; color: var(--text-dim); margin: 16px 0 0; line-height: 1.6;">
+    <strong>Sources for historical sequences:</strong>
+    Robert Shiller's annual real returns dataset (Yale, 1871-present). Great Depression: 1929-1944 produced ~1.5% annualized real return after the crash and recovery. 1970s Stagflation: 1966-1982 produced ~−1.0% annualized real return alongside ~7.5% CPI. Lost Decade: 2000-2009 produced ~−3% annualized real return. Each scenario applies these sequences as a contiguous bad period during the citizen's working life, then resumes long-run normal returns.
+  </p>
+</div>
+
 <footer id="methodology">
+  <div style="background: var(--red-bg); border-left: 3px solid var(--red); padding: 14px 18px; border-radius: var(--radius); margin-bottom: 24px;">
+    <p style="margin: 0 0 6px; font-weight: 600; color: var(--red); font-size: 13px;">⚠ This is an illustrative projection, not a guarantee.</p>
+    <p style="margin: 0; font-size: 12px; color: var(--text); line-height: 1.6;">
+      The headline numbers (e.g., $2.1M Stable Floor at retirement under Mode B defaults) assume <strong>steady 6.5% real equity returns over 65 years with no major crashes, recessions, or secular slowdowns</strong>. Real-world outcomes will almost certainly differ — possibly by hundreds of thousands of dollars in either direction. Forward-looking equity return forecasts from Vanguard, Research Affiliates, and AQR currently project <strong>4-5% real for the next decade</strong>, not the long-run historical 6.5%. Use the Stress Test tab to see what the framework actually delivers under historical adverse sequences (Great Depression, 1970s stagflation, 2000s lost decade). The Citizens Standard's structural advantage over the status quo is robust, but the specific dollar figures depend heavily on assumptions you can adjust. <strong>Treat all projections as "could be very large wealth if conditions cooperate" rather than promises.</strong>
+    </p>
+  </div>
+
   <h3>Real-world data sources</h3>
   <p><strong>401(k) balances:</strong> Vanguard, <em>How America Saves 2025</em>. Median balance at age 55-64 is $87,571; average is $244,750. Median is more representative of typical outcomes; the average is skewed by high-balance accounts.</p>
   <p><strong>Social Security:</strong> SSA Monthly Statistical Snapshot, March 2026. Average retired-worker benefit: $2,079.49/month ($24,953/year). Replacement rate for the average earner: ~37-42% of late-career earnings (CBO, SSA 2024-2025).</p>
@@ -506,8 +565,10 @@
 
   let activeTab = 'floor';
   let activeScenario = 'median';
+  let activeStress = 'smooth';
   let chart = null;
   let inflationChart = null;
+  let stressChart = null;
 
   function readInputs(){
     return {
@@ -572,6 +633,111 @@
       pop *= (1 + p.pg);
       births = Math.max(0, pop * p.pg);
       cpiIdx *= (1 + p.cpi);
+    }
+    return years;
+  }
+
+  // Historical bad-period sequences. Each is a year-by-year array of (real_return, cpi)
+  // pairs matching what an actual cohort lived through. Sources: Robert Shiller's annual
+  // dataset (Yale), BLS CPI historical.
+  const STRESS_SEQUENCES = {
+    // 1929-1944: Great Depression + WWII recovery. Real returns averaged ~1.5% annualized
+    // but with massive year-to-year variation. CPI was deflationary then inflationary.
+    depression: {
+      label: 'Great Depression at age 25-40 (1929-1944)',
+      startAge: 25,
+      // 16-year sequence of (real return, CPI) pairs
+      seq: [
+        [-0.13, 0.00], [-0.30, -0.024], [-0.45, -0.090], [-0.10, -0.099],
+        [0.55, 0.008], [-0.02, 0.014], [0.46, 0.029], [0.32, 0.012],
+        [-0.36, 0.029], [0.30, -0.020], [0.00, -0.005], [-0.10, 0.010],
+        [-0.13, 0.097], [0.20, 0.092], [0.26, 0.030], [0.20, 0.019]
+      ]
+    },
+    // 1966-1982: Stagflation. Real returns averaged ~-1.0% over 17 years; CPI ~7.5%.
+    stagflation: {
+      label: '1970s Stagflation at age 30-46 (1966-1982)',
+      startAge: 30,
+      seq: [
+        [-0.10, 0.029], [0.24, 0.031], [0.11, 0.044], [-0.08, 0.054],
+        [0.04, 0.058], [0.14, 0.043], [0.19, 0.033], [-0.15, 0.062],
+        [-0.27, 0.110], [0.37, 0.091], [0.24, 0.058], [-0.07, 0.065],
+        [0.07, 0.076], [0.18, 0.114], [0.32, 0.135], [-0.05, 0.103],
+        [0.21, 0.061]
+      ]
+    },
+    // 2000-2009: Lost Decade. Two bear markets (dot-com and GFC). Real returns ~-3%.
+    'lost-decade': {
+      label: '2000s Lost Decade at age 35-44 (2000-2009)',
+      startAge: 35,
+      seq: [
+        [-0.09, 0.034], [-0.12, 0.028], [-0.22, 0.016], [0.29, 0.023],
+        [0.11, 0.027], [0.05, 0.034], [0.16, 0.032], [0.05, 0.028],
+        [-0.37, 0.038], [0.26, -0.004]
+      ]
+    }
+  };
+
+  function simulateStress(p, stressKey){
+    // Run the same projection but override equity returns and CPI for years
+    // matching the stress sequence's start age and duration.
+    const years = [];
+    let m2 = p.m2, gdp = p.gdp, pop = p.pop;
+    let cpiIdx = 1.0, floor = 0, k3Cum = 0;
+    let births = pop * p.pg;
+
+    // For 'all-bad': stack all three sequences sequentially during working years
+    let stressEvents = [];
+    if (stressKey === 'all-bad') {
+      stressEvents = [
+        { ...STRESS_SEQUENCES.depression, startAge: 22 },
+        { ...STRESS_SEQUENCES['lost-decade'], startAge: 38 },
+        { ...STRESS_SEQUENCES.stagflation, startAge: 48 }
+      ];
+    } else if (STRESS_SEQUENCES[stressKey]) {
+      stressEvents = [STRESS_SEQUENCES[stressKey]];
+    }
+
+    function getReturnAndCpi(t){
+      // Default: smooth baseline
+      let er = p.er, cpi = p.cpi;
+      // Check if year t falls within any stress event
+      for (const ev of stressEvents){
+        const offset = t - ev.startAge;
+        if (offset >= 0 && offset < ev.seq.length){
+          er = ev.seq[offset][0];
+          cpi = ev.seq[offset][1];
+          break; // earlier events take precedence
+        }
+      }
+      return { er, cpi };
+    }
+
+    for (let t = 0; t <= p.hz; t++){
+      const { er, cpi } = getReturnAndCpi(t);
+      const gdpPerCap = gdp / pop;
+      const k1Total = p.k1 * gdpPerCap * Math.max(births, 0);
+      const k2Total = p.k2 * gdp * p.rg;
+      const k3Total = p.k3 * m2;
+      const k1pc = births > 0 ? k1Total / births : 0;
+      const k2pc = k2Total / pop;
+      const k3pc = k3Total / pop;
+
+      const deposit = (t === 0 ? k1pc : 0) + k2pc;
+      floor = (floor + deposit) * (1 + er);
+      k3Cum += k3pc / cpiIdx;
+
+      years.push({
+        t, m2, gdp, pop, cpiIdx,
+        floor, floorReal: floor / cpiIdx,
+        appliedReturn: er, appliedCpi: cpi
+      });
+
+      m2 += k1Total + k2Total + k3Total;
+      gdp = gdp * (1 + p.rg) * (1 + cpi);
+      pop *= (1 + p.pg);
+      births = Math.max(0, pop * p.pg);
+      cpiIdx *= (1 + cpi);
     }
     return years;
   }
@@ -685,6 +851,8 @@
       drawCompareTable(p, sim);
     } else if (activeTab === 'inflation') {
       drawInflationChart(p, sim);
+    } else if (activeTab === 'stress') {
+      drawStressChart(p, sim);
     } else {
       drawChart(sim, p);
     }
@@ -800,6 +968,95 @@
     });
   }
 
+  function drawStressChart(p, smoothSim){
+    const ctx = $('stress-chart').getContext('2d');
+    if (stressChart) stressChart.destroy();
+    const labels = Array.from({length: p.hz + 1}, (_, t) => t);
+
+    // Always show smooth baseline as reference
+    const smoothPath = smoothSim.map(s => s.floorReal);
+    const smoothFinal = smoothSim[smoothSim.length - 1].floorReal;
+
+    const datasets = [
+      {
+        label: 'Smooth baseline',
+        data: smoothPath,
+        borderColor: '#888780',
+        borderDash: [4,4],
+        borderWidth: 2,
+        backgroundColor: 'transparent',
+        tension: 0.2,
+        pointRadius: 0
+      }
+    ];
+
+    let stressFinal = smoothFinal;
+    let stressPath = smoothPath;
+    let stressLabel = 'Smooth baseline';
+
+    if (activeStress !== 'smooth') {
+      const stressSim = simulateStress(p, activeStress);
+      stressPath = stressSim.map(s => s.floorReal);
+      stressFinal = stressSim[stressSim.length - 1].floorReal;
+      stressLabel = STRESS_SEQUENCES[activeStress]?.label || 'Worst-case stack';
+      if (activeStress === 'all-bad') stressLabel = 'All three sequences (worst-case stack)';
+
+      datasets.push({
+        label: stressLabel,
+        data: stressPath,
+        borderColor: '#a32d2d',
+        borderWidth: 3,
+        backgroundColor: 'rgba(163,45,45,0.10)',
+        fill: '+1',
+        tension: 0.2,
+        pointRadius: 0
+      });
+
+      // Shade the affected period(s)
+      // Done via dataset annotations would require chartjs-plugin-annotation;
+      // instead we mark it with a thin overlay dataset that highlights the bad years
+    }
+
+    // Update headline stats
+    $('stress-sf').textContent = fmt(stressFinal);
+    const pctVsSmooth = smoothFinal > 0 ? ((stressFinal - smoothFinal) / smoothFinal * 100) : 0;
+    $('stress-sf-vs').textContent = activeStress === 'smooth'
+      ? '(reference)'
+      : (pctVsSmooth >= 0 ? '+' : '') + pctVsSmooth.toFixed(0) + '% vs. smooth baseline';
+
+    const stressIncome = stressFinal * p.wr;
+    $('stress-income').textContent = fmt(stressIncome);
+
+    const medianAmerican = 87571 * p.wr;  // ~$3,503/yr
+    const ratio = medianAmerican > 0 ? stressFinal / 87571 : 0;
+    $('stress-vs-median').textContent = ratio >= 1 ? ratio.toFixed(1) + '×' : (ratio*100).toFixed(0) + '%';
+
+    $('stress-legend').innerHTML = datasets.map(d =>
+      `<span><span class="swatch" style="background:${d.borderColor}"></span>${d.label}</span>`
+    ).join('');
+
+    const tickColor = '#888780';
+    const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const gridColor = isDark ? 'rgba(180,178,169,0.15)' : 'rgba(136,135,128,0.15)';
+
+    stressChart = new Chart(ctx, {
+      type: 'line',
+      data: { labels, datasets },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: c => c.dataset.label + ': ' + fmt(c.parsed.y) } }
+        },
+        scales: {
+          x: { title: { display: true, text: 'Years from launch (citizen age)', color: tickColor, font: { size: 12 } }, grid: { display: false }, ticks: { color: tickColor, font: { size: 11 }, maxTicksLimit: 8 } },
+          y: { title: { display: true, text: 'Stable Floor (real $)', color: tickColor, font: { size: 12 } }, ticks: { color: tickColor, font: { size: 11 }, callback: v => fmt(v) }, grid: { color: gridColor } }
+        },
+        interaction: { mode: 'index', intersect: false }
+      }
+    });
+  }
+
   function drawChart(sim, p){
     const ctx = $('chart').getContext('2d');
     if (chart) chart.destroy();
@@ -865,18 +1122,17 @@
   function showTab(name){
     activeTab = name;
     document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
-    $('chart-view').style.display = (name === 'compare' || name === 'inflation') ? 'none' : 'block';
+    $('chart-view').style.display = (name === 'compare' || name === 'inflation' || name === 'stress') ? 'none' : 'block';
     $('compare-view').style.display = name === 'compare' ? 'block' : 'none';
     $('inflation-view').style.display = name === 'inflation' ? 'block' : 'none';
+    $('stress-view').style.display = name === 'stress' ? 'block' : 'none';
 
     // Destroy any existing chart instances so they rebuild fresh against the
-    // newly-visible canvas with correct dimensions. Without this, charts inside
-    // previously-hidden containers can render at zero or stale dimensions.
+    // newly-visible canvas with correct dimensions.
     if (chart) { chart.destroy(); chart = null; }
     if (inflationChart) { inflationChart.destroy(); inflationChart = null; }
+    if (stressChart) { stressChart.destroy(); stressChart = null; }
 
-    // Defer the redraw to next animation frame so the browser has actually
-    // applied the display change and the canvas has real dimensions.
     requestAnimationFrame(() => {
       requestAnimationFrame(() => update());
     });
@@ -884,14 +1140,29 @@
 
   document.querySelectorAll('.mode-btn').forEach(b => b.addEventListener('click', () => applyMode(b.dataset.mode)));
   document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => showTab(t.dataset.tab)));
-  document.querySelectorAll('.pill').forEach(p => p.addEventListener('click', () => {
+  document.querySelectorAll('#compare-view .pill').forEach(p => p.addEventListener('click', () => {
     activeScenario = p.dataset.scenario;
-    document.querySelectorAll('.pill').forEach(x => x.classList.toggle('active', x === p));
+    document.querySelectorAll('#compare-view .pill').forEach(x => x.classList.toggle('active', x === p));
+    update();
+  }));
+  document.querySelectorAll('#stress-pills .pill').forEach(p => p.addEventListener('click', () => {
+    activeStress = p.dataset.stress;
+    document.querySelectorAll('#stress-pills .pill').forEach(x => x.classList.toggle('active', x === p));
+    update();
+  }));
+  document.querySelectorAll('.er-preset').forEach(b => b.addEventListener('click', () => {
+    $('er').value = b.dataset.er;
+    document.querySelectorAll('.er-preset').forEach(x => x.classList.toggle('active', x === b));
     update();
   }));
   ['k1','k2','k3','rg','pg','er','cpi','m2','gdp','pop','hz'].forEach(id => {
     $(id).addEventListener('input', () => {
       document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === 'X'));
+      // Clear ER preset highlight when user manually slides equity return
+      if (id === 'er') {
+        const v = $('er').value;
+        document.querySelectorAll('.er-preset').forEach(x => x.classList.toggle('active', x.dataset.er === v));
+      }
       update();
     });
   });
