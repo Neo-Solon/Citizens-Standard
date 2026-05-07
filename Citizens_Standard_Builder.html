@@ -427,6 +427,11 @@
     </span>
   </div>
 
+  <div id="config-banner" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 14px; margin-bottom: 16px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+    <span><strong>Your current configuration:</strong> <span id="config-summary">—</span></span>
+    <button id="reset-mode-b" style="padding: 4px 12px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); cursor: pointer; font-size: 12px; color: var(--text-muted); font-family: var(--font);">Reset to Mode B + Historical 6.5%</button>
+  </div>
+
   <div class="scenario-pills">
     <button class="pill active" data-scenario="median">Median outcome (real-world)</button>
     <button class="pill" data-scenario="average">Average outcome</button>
@@ -441,8 +446,8 @@
           <th class="right">Wealth at 65</th>
           <th class="right">Lifetime cash</th>
           <th class="right">Annual income at 65</th>
+          <th class="right">Total real value</th>
           <th>Funded by</th>
-          <th>Rules-based</th>
         </tr>
       </thead>
       <tbody id="compare-body"></tbody>
@@ -450,10 +455,9 @@
   </div>
 
   <p style="font-size: 12px; color: var(--text-dim); margin: 16px 0 0; line-height: 1.6;">
-    Citizens Standard delivers locked equity to every citizen automatically — no savings discipline required.
-    Real-world systems require individual savings effort that most Americans never achieve. The median 401(k) balance
-    at age 55-64 is $87,571 (Vanguard 2025). The average Social Security check is $24,917/year (SSA Mar 2026).
-    These are the numbers actual retirees live on, not projections of what disciplined savers could achieve.
+    <strong>Reading the comparison:</strong> "Wealth at 65" is locked savings/equity. "Lifetime cash" is total dividends/transfers received during working life and retirement. "Total real value" sums both — this is the fairest single number for cross-system comparison since Modes B and C make different tradeoffs between locked wealth and ongoing dividends.
+    Mode B is the cleanest apples-to-apples comparison with the Fed status quo since both target price stability. Mode A optimizes for wealth (gives up income); Mode C optimizes for monthly dividend (gives up locked wealth).
+    Citizens Standard delivers equity to every citizen automatically — no savings discipline required. Real-world systems require individual savings effort that most Americans never achieve.
   </p>
 </div>
 
@@ -859,21 +863,41 @@
   }
 
   function drawCompareTable(p, sim) {
+    // Update configuration banner
+    updateConfigBanner(p);
+
     const cmp = computeComparison(p, sim, activeScenario);
     const tbody = $('compare-body');
     tbody.innerHTML = '';
     cmp.forEach(row => {
       const tr = document.createElement('tr');
       if (row.highlight) tr.className = 'highlight';
-      const rulesClass = row.rules === '✓' ? 'badge-ok' : row.rules === '✗' ? 'badge-no' : 'badge-partial';
+      const totalValue = (row.wealth || 0) + (row.cash || 0);
       tr.innerHTML = `<td class="system-name">${row.name}</td>
                       <td class="right">${fmt(row.wealth)}</td>
                       <td class="right">${fmt(row.cash)}</td>
                       <td class="right">${fmt(row.income)}</td>
-                      <td>${row.fund}</td>
-                      <td><span class="${rulesClass}">${row.rules}</span></td>`;
+                      <td class="right"><strong>${fmt(totalValue)}</strong></td>
+                      <td>${row.fund}</td>`;
       tbody.appendChild(tr);
     });
+  }
+
+  function updateConfigBanner(p) {
+    // Identify which Mode (if any) the current settings match
+    const isModeA = Math.abs(p.k1 - 0.025) < 0.001 && Math.abs(p.k2 - 0.125) < 0.001 && Math.abs(p.k3) < 0.001 && Math.abs(p.cpi - (-0.016)) < 0.001;
+    const isModeB = Math.abs(p.k1 - 0.025) < 0.001 && Math.abs(p.k2 - 0.84) < 0.001 && Math.abs(p.k3) < 0.001 && Math.abs(p.cpi) < 0.001;
+    const isModeC = Math.abs(p.k1 - 0.025) < 0.001 && Math.abs(p.k2 - 0.125) < 0.001 && Math.abs(p.k3 - 0.04) < 0.001 && Math.abs(p.cpi - 0.02) < 0.001;
+
+    let modeLabel;
+    if (isModeA) modeLabel = '<span style="color: var(--teal-text);">Mode A — Maximum wealth</span>';
+    else if (isModeB) modeLabel = '<span style="color: var(--teal-text);">Mode B — Stable prices</span>';
+    else if (isModeC) modeLabel = '<span style="color: var(--teal-text);">Mode C — Monthly dividend</span>';
+    else modeLabel = '<span style="color: var(--coral);">Custom (does not match any documented Mode)</span>';
+
+    const erLabel = `${(p.er*100).toFixed(1)}% equity return`;
+    const cpiLabel = `${(p.cpi*100).toFixed(1)}% CPI`;
+    $('config-summary').innerHTML = `${modeLabel} · ${erLabel} · ${cpiLabel}`;
   }
 
   function drawInflationChart(p, sim) {
@@ -1166,6 +1190,16 @@
       update();
     });
   });
+
+  // Reset button on the comparison tab
+  const resetBtn = $('reset-mode-b');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      $('er').value = '6.5';
+      document.querySelectorAll('.er-preset').forEach(x => x.classList.toggle('active', x.dataset.er === '6.5'));
+      applyMode('B');
+    });
+  }
 
   applyMode('B');
 })();
