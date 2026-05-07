@@ -1195,10 +1195,17 @@
     document.querySelectorAll('.er-preset').forEach(x => x.classList.toggle('active', x === b));
     update();
   }));
+  // Sliders that define the Mode itself — moving these breaks out of a preset Mode
+  const modeDefiningSliders = ['k1', 'k2', 'k3', 'cpi'];
   ['k1','k2','k3','rg','pg','er','cpi','m2','gdp','pop','hz'].forEach(id => {
     $(id).addEventListener('input', () => {
-      activeMode = 'X';
-      document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === 'X'));
+      // Only mark as Custom if the user moved something that actually defines the Mode.
+      // Horizon, launch params (M2/GDP/Pop), and macro inputs (real growth, equity return)
+      // are display/projection settings, not Mode-defining choices.
+      if (modeDefiningSliders.includes(id)) {
+        activeMode = 'X';
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === 'X'));
+      }
       // Clear ER preset highlight when user manually slides equity return
       if (id === 'er') {
         const v = $('er').value;
