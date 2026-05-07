@@ -570,6 +570,7 @@
   let activeTab = 'floor';
   let activeScenario = 'median';
   let activeStress = 'smooth';
+  let activeMode = 'B';   // tracks the last Mode button clicked (A/B/C/X)
   let chart = null;
   let inflationChart = null;
   let stressChart = null;
@@ -884,16 +885,30 @@
   }
 
   function updateConfigBanner(p) {
-    // Identify which Mode (if any) the current settings match
-    const isModeA = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 0.125) < 0.005 && Math.abs(p.k3) < 0.005 && Math.abs(p.cpi - (-0.016)) < 0.005;
-    const isModeB = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 0.84) < 0.005 && Math.abs(p.k3) < 0.005 && Math.abs(p.cpi) < 0.005;
-    const isModeC = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 0.125) < 0.005 && Math.abs(p.k3 - 0.04) < 0.005 && Math.abs(p.cpi - 0.02) < 0.005;
-
     let modeLabel;
-    if (isModeA) modeLabel = '<span style="color: var(--teal-text);">Mode A — Maximum wealth</span>';
-    else if (isModeB) modeLabel = '<span style="color: var(--teal-text);">Mode B — Stable prices</span>';
-    else if (isModeC) modeLabel = '<span style="color: var(--teal-text);">Mode C — Monthly dividend</span>';
-    else modeLabel = '<span style="color: var(--coral);">Custom (does not match any documented Mode)</span>';
+    // activeMode tracks the user's explicit intent:
+    //   'A'/'B'/'C' → user clicked that Mode button
+    //   'X'         → user clicked Custom (always honor this)
+    //   anything else → fall back to value-detection
+    if (activeMode === 'A') {
+      modeLabel = '<span style="color: var(--teal-text);">Mode A — Maximum wealth</span>';
+    } else if (activeMode === 'B') {
+      modeLabel = '<span style="color: var(--teal-text);">Mode B — Stable prices</span>';
+    } else if (activeMode === 'C') {
+      modeLabel = '<span style="color: var(--teal-text);">Mode C — Monthly dividend</span>';
+    } else if (activeMode === 'X') {
+      // User explicitly clicked Custom — always honor that.
+      modeLabel = '<span style="color: var(--coral);">Custom (manually configured)</span>';
+    } else {
+      // Unknown state — try value-detection as a fallback.
+      const isModeA = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 0.125) < 0.005 && Math.abs(p.k3) < 0.005 && Math.abs(p.cpi - (-0.016)) < 0.005;
+      const isModeB = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 0.84) < 0.005 && Math.abs(p.k3) < 0.005 && Math.abs(p.cpi) < 0.005;
+      const isModeC = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 0.125) < 0.005 && Math.abs(p.k3 - 0.04) < 0.005 && Math.abs(p.cpi - 0.02) < 0.005;
+      if (isModeA) modeLabel = '<span style="color: var(--teal-text);">Mode A — Maximum wealth</span>';
+      else if (isModeB) modeLabel = '<span style="color: var(--teal-text);">Mode B — Stable prices</span>';
+      else if (isModeC) modeLabel = '<span style="color: var(--teal-text);">Mode C — Monthly dividend</span>';
+      else modeLabel = '<span style="color: var(--coral);">Custom configuration</span>';
+    }
 
     const erLabel = `${(p.er*100).toFixed(1)}% equity return`;
     const cpiLabel = `${(p.cpi*100).toFixed(1)}% CPI`;
@@ -1132,6 +1147,7 @@
   }
 
   function applyMode(mode){
+    activeMode = mode;
     document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
     if (presets[mode]){
       const pr = presets[mode];
@@ -1181,6 +1197,7 @@
   }));
   ['k1','k2','k3','rg','pg','er','cpi','m2','gdp','pop','hz'].forEach(id => {
     $(id).addEventListener('input', () => {
+      activeMode = 'X';
       document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === 'X'));
       // Clear ER preset highlight when user manually slides equity return
       if (id === 'er') {
