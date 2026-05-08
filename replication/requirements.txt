@@ -1,0 +1,12 @@
+# replication.py uses only the Python standard library.
+# This file is intentionally empty of dependencies; it exists to declare
+# the intended runtime environment and signal that no third-party packages
+# are required.
+#
+# Required:
+#   Python >= 3.7
+#
+# Optional (not used by replication.py, but useful if you want to extend it):
+#   pandas
+#   matplotlib
+#   numpy
