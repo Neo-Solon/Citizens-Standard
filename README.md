@@ -73,7 +73,7 @@ The Citizens Standard makes a structural claim: that locked, rules-based citizen
 
 ## Honest caveats
 
-- K3 modeled as a flat percent of M2, not Paper 1's full price-level path targeting formula. Launch-year values match; dynamic self-correction does not.
+- K3 modeled as a flat percent of M2, not the Citizens Standard's full price-level path targeting formula. Launch-year values match; dynamic self-correction does not.
 - Equity return is treated as nominal — for real returns, set CPI to 0.
 - Single-cohort projection — does not model multiple overlapping generations.
 - Fed status quo comparison uses real-world median data (Vanguard 2025, SSA 2026) rather than theoretical maximums.
