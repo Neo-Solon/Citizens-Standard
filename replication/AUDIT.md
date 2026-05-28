@@ -82,3 +82,37 @@ Script: code/credit_stress_test.py
 Run: python3 code/credit_stress_test.py
 Tests: 7 credit loss rates × 5 durations + 2008 and Depression historical calibrations
 Added: May 2026 in response to academic review questions on credit cycle resilience
+
+## Banking Architecture Stress Tests
+
+Added May 2026 in response to academic review questions on credit loss handling
+and Depression-era cascade dynamics (r/AcademicEconomics thread).
+
+### credit_stress_test.py
+Run: python3 code/credit_stress_test.py
+Tests: 7 credit loss rates (0.5%–10%/yr) × 5 durations (1–10 years)
+Calibrations: 2008 peak charge-off rate (3.0%/yr, FDIC) and Great Depression
+  equivalent (6.0%/yr, 4 years)
+Key finding: Bank equity buffer ($4,473B) absorbs 2008 and Depression-magnitude
+  losses without TLF activation. Payment system ($8,946B transaction pool)
+  protected under all scenarios. TLF ceiling ($492B) becomes binding only above
+  3.0%/yr sustained for 10 years — beyond any peacetime US precedent.
+
+### credit_cascade_test_v2.py
+Run: python3 code/credit_cascade_test_v2.py
+Tests: Fisher debt-deflation cascade (dynamic feedback loop) under 5 scenarios
+  across three toolkit configurations: no toolkit, 14-tool, 15-tool
+Cascade mechanics: equity depletion → lending contraction → term deposit
+  contraction → M2 contraction → asset price deflation (Fisher amplifier 0.80)
+  → additional defaults
+Tool 15 (M2 Contraction Floor, 3.0% of M2/yr): reduces acute cascade M2
+  contraction by 2.1–2.5pp vs 14-tool kit. 18-month sunset limits effectiveness
+  in prolonged (5yr+) scenarios by design.
+Key finding: full-reserve separation bounds maximum M2 contraction at 60% of
+  launch M2 (term deposit share). Historical 30% contraction (1930–33) was
+  possible because all deposits were simultaneously at risk. Under Citizens
+  Standard, transaction pool ($8,946B) is protected in all scenarios.
+References: Fisher (1933) Econometrica Vol.1 No.4; Benes & Kumhof (2012)
+  IMF WP/12/202 — both in Paper 1 references.
+Results informed addition of Tool 15 to Paper 1 emergency toolkit (Section 10.1)
+  and Paper 3 Section 4.2.1 and Section 5 failure mode analysis.
