@@ -113,7 +113,6 @@ Three companion scripts address credit loss and cascade dynamics:
 | Script | Description |
 |--------|-------------|
 | `credit_stress_test.py` | Static stress test: 7 loss rates × 5 durations. Verifies layered buffer structure (equity → TLF → payment system). |
-| `credit_cascade_test.py` | Fisher debt-deflation cascade model. Dynamic feedback: equity depletion → lending contraction → M2 contraction → asset deflation → additional defaults. |
 | `credit_cascade_test_v2.py` | 14-tool vs 15-tool comparison. Tests Tool 15 (M2 Contraction Floor) effectiveness across acute and prolonged scenarios. |
 
 Key finding: full-reserve separation protects the payment system ($8,946B transaction 
