@@ -74,3 +74,11 @@ Every variable in `authoritative_data.py` was checked against the latest availab
 ## Reproducibility
 
 All scripts in this bundle are deterministic — `numpy` random seeds are fixed. Running `python3 run_all_tables.py` reproduces every number in the paper exactly. Runtime is approximately 1 second on a modern single core for the full 16-configuration Monte Carlo grid (4 cohorts × 2 universes × 2 methods × 10,000 paths = 160,000 simulated lives).
+
+## Additional stress tests
+
+### Banking architecture credit stress test
+Script: code/credit_stress_test.py
+Run: python3 code/credit_stress_test.py
+Tests: 7 credit loss rates × 5 durations + 2008 and Depression historical calibrations
+Added: May 2026 in response to academic review questions on credit cycle resilience
