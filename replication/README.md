@@ -106,6 +106,22 @@ After running `python3 code/run_all_tables.py`, the following should appear in `
 
 These numbers should reproduce exactly. If they don't, something has changed in the environment (numpy version differences in random number generation are the most common cause).
 
+## Banking Architecture Stress Tests
+
+Three companion scripts address credit loss and cascade dynamics:
+
+| Script | Description |
+|--------|-------------|
+| `credit_stress_test.py` | Static stress test: 7 loss rates × 5 durations. Verifies layered buffer structure (equity → TLF → payment system). |
+| `credit_cascade_test.py` | Fisher debt-deflation cascade model. Dynamic feedback: equity depletion → lending contraction → M2 contraction → asset deflation → additional defaults. |
+| `credit_cascade_test_v2.py` | 14-tool vs 15-tool comparison. Tests Tool 15 (M2 Contraction Floor) effectiveness across acute and prolonged scenarios. |
+
+Key finding: full-reserve separation protects the payment system ($8,946B transaction 
+pool) under all scenarios including Depression-magnitude. M2 contraction is bounded 
+by the term deposit share (60% of M2 maximum). Tool 15 reduces acute cascade 
+magnitude by approximately 2-3pp; 18-month sunset limits effectiveness in prolonged 
+scenarios by design.
+
 ## License
 
 Code and data are released under CC BY 4.0. Attribution: cite the SSRN working paper.
