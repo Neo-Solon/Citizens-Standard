@@ -2,7 +2,7 @@
 
 > **Build your own monetary system.** Interactive companion to *The Citizens Standard* — adjust the K1, K2, K3 issuance channels and see how a citizen retires under your rules vs. seven alternative frameworks.
 
-A working tool for the constitutional monetary architecture introduced in *The Citizens Standard* ([SSRN link](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5575160)). Tune the framework's three issuance dials, watch the projection update live, and compare side-by-side against the Federal Reserve status quo, the Chicago Plan, Friedman's k-percent rule, Bitcoin, the Alaska Permanent Fund Dividend, tax-funded UBI, and Modern Monetary Theory.
+A working tool for the constitutional monetary architecture introduced in *The Citizens Standard* ([SSRN link](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5575160)). Tune the framework's three issuance dials, watch the projection update live, and compare side-by-side against the Federal Reserve status quo, the Chicago Plan, Friedman's k-percent rule, Bitcoin, the Alaska Permanent Fund Dividend, tax-funded UBI, and Modern Monetary Theory. Join the Discord: https://discord.gg/hFyzcXV54
 
 ## The three Modes
 
