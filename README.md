@@ -71,6 +71,7 @@ Each shows what it structurally delivers to a representative citizen: locked wea
 
 The Citizens Standard makes a structural claim: that locked, rules-based citizen wealth and modest monthly dividends, funded entirely by seigniorage rather than taxation, can deliver retirement security comparable to or better than the existing patchwork — without expanding tax burdens. The engine lets you test that claim against your own assumptions, and against seven competing frameworks running on the same numbers. If Fed status quo wins on retirement income under a particular setting, the engine shows it. The engine doesn't hide the tension; it foregrounds it.
 
+- Follow the work: https://www.reddit.com/r/CitizenStandard/
 - Real-time Discussion: https://discord.gg/hFyzcXV54
 
 ## Honest caveats
