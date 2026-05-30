@@ -4,7 +4,7 @@
 
 A working tool for the constitutional monetary architecture introduced in *The Citizens Standard* ([SSRN link](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5575160)). Tune the framework's three issuance dials, watch the projection update live, and compare side-by-side against the Federal Reserve status quo, the Chicago Plan, Friedman's k-percent rule, Bitcoin, the Alaska Permanent Fund Dividend, tax-funded UBI, and Modern Monetary Theory. 
 
-Join the Discord: https://discord.gg/hFyzcXV54
+Real-time Discussion: https://discord.gg/hFyzcXV54
 
 ## The three Modes
 
