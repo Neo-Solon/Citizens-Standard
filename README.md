@@ -4,8 +4,6 @@
 
 A working tool for the constitutional monetary architecture introduced in *The Citizens Standard* ([SSRN link](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5575160)). Tune the framework's three issuance dials, watch the projection update live, and compare side-by-side against the Federal Reserve status quo, the Chicago Plan, Friedman's k-percent rule, Bitcoin, the Alaska Permanent Fund Dividend, tax-funded UBI, and Modern Monetary Theory. 
 
-Real-time Discussion: https://discord.gg/hFyzcXV54
-
 ## The three Modes
 
 The framework offers three reference configurations for the K1 / K2 / K3 issuance channels:
@@ -72,6 +70,8 @@ Each shows what it structurally delivers to a representative citizen: locked wea
 ## Why this exists
 
 The Citizens Standard makes a structural claim: that locked, rules-based citizen wealth and modest monthly dividends, funded entirely by seigniorage rather than taxation, can deliver retirement security comparable to or better than the existing patchwork — without expanding tax burdens. The engine lets you test that claim against your own assumptions, and against seven competing frameworks running on the same numbers. If Fed status quo wins on retirement income under a particular setting, the engine shows it. The engine doesn't hide the tension; it foregrounds it.
+
+Real-time Discussion: https://discord.gg/hFyzcXV54
 
 ## Honest caveats
 
