@@ -1,98 +1,83 @@
 # The Citizens Standard — Interactive Engine
 
-> **Build your own monetary system.** Interactive companion to *The Citizens Standard* — adjust the K1, K2, K3 issuance channels and see how a citizen retires under your rules vs. seven alternative frameworks.
+An interactive model of **The Citizens Standard**, a constitutional monetary architecture that replaces central-bank discretion with three rules-based money-issuance channels and distributes every newly created dollar equally to all citizens.
 
-A working tool for the constitutional monetary architecture introduced in *The Citizens Standard* ([SSRN link](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5575160)). Tune the framework's three issuance dials, watch the projection update live, and compare side-by-side against the Federal Reserve status quo, the Chicago Plan, Friedman's k-percent rule, Bitcoin, the Alaska Permanent Fund Dividend, tax-funded UBI, and Modern Monetary Theory. 
+Open `Citizens_Standard_Engine.html` in any browser. No build step, no dependencies, no server — everything runs client-side.
 
-## The three Modes
+## What it does
 
-The framework offers three reference configurations for the K1 / K2 / K3 issuance channels:
+The engine projects one citizen's lifetime outcome under the framework and compares it to what people actually retire with today. You set the three issuance channels and the macro assumptions; it shows:
 
-| Mode | K1 (citizenship) | K2 (growth) | K3 (dividend) | Result |
-|------|------------------|-------------|---------------|--------|
-| **A** | 2.5% of GDP per capita | 12.5% of real growth | 0% | Pure stable-floor wealth building |
-| **B** | 2.5% of GDP per capita | 12.5% of real growth | 0.25% of M2 monthly | Wealth + small monthly dividend |
-| **C** | 2.5% of GDP per capita | 12.5% of real growth | 0.50% of M2 monthly | Wealth + larger dividend, more inflation pressure |
+- the **Stable Floor** — the locked, equity-invested capital account every citizen accrues — at the end of the horizon;
+- the **implied inflation** the configuration produces (derived from the channels, not assumed);
+- a side-by-side **comparison** against median and average US retirement outcomes and seven alternative monetary/transfer systems;
+- **stress tests** against historical bad sequences (Great Depression, 1970s stagflation, 2000s lost decade).
 
-Or build a **Custom** mode by adjusting any slider — the engine recalculates everything live.
+## The three issuance channels
 
-## What's in this repo
+Three rules, no discretion. Each is a slider.
 
-| File | Purpose |
-|------|---------|
-| `Citizens_Standard_Builder.html` | Standalone web engine. Sliders, charts, comparison view. Open in any browser. |
-| `Citizens_Standard_Builder.xlsx` | Six-sheet spreadsheet: Inputs, Projection, Summary, Comparison, Mode Presets, How It Works. |
-| `replication/` | Empirical replication materials for Paper 2 (the counterfactual benchmark study). |
-| `README.md` | This file. |
+- **K1 — Citizenship dividend.** A one-time deposit at birth equal to 2.5% of GDP per capita, paid into the citizen's Stable Floor.
+- **K2 — Growth channel.** New money matched to real economic growth: `capture% × real growth × M2` (on prior-year M2). At 100% capture, the money supply grows at exactly the real output rate — the definition of price stability. Below 100%, money grows slower than output and the price level falls.
+- **K3 — Citizen dividend.** A flat percentage of M2 issued each year and paid out as a monthly cash dividend. This is the only channel that pushes total issuance *above* real growth, so it is the only source of inflation.
 
-## Quick start
+## The three modes
 
-**Run the web engine.** Download `Citizens_Standard_Builder.html` and double-click it. It opens in your default browser. Adjust any slider; everything recalculates live. No installation, no server, works offline after first load.
+The mode buttons are presets over those channels. Defaults: 2% real growth, 0.5% population growth, 6.5% real equity return (Shiller long-run), 65-year horizon, and $22.7T M2 / $30.7T GDP / 342M population at launch.
 
-**Open the spreadsheet.** Download `Citizens_Standard_Builder.xlsx` and open it in Excel, Numbers, LibreOffice Calc, or Google Sheets. Edit only the yellow cells; everything else recalculates from formulas.
+| Mode | K2 | K3 | Implied inflation | Stable Floor at 65 | Character |
+|------|-----|-----|-------------------|--------------------|-----------|
+| **A — Rising real wages** | 12.5% | 0 | ≈ −1.7% (deflation) | ≈ $360K | Smallest floor, but every dollar of cash and wages gains ~+217% real purchasing power over a lifetime |
+| **B — Stable prices** | 100% | 0 | ≈ 0% | ≈ $1.87M | Full-rate issuance; largest locked floor; price-neutral |
+| **C — Monthly dividend** | 12.5% | 4% | ≈ +2.3% (inflation) | ≈ $358K | Same floor as A, plus a ~$230/month citizen dividend; mild inflation erodes cash |
 
-**Run the empirical replication.** See `replication/README.md`.
+Move any slider and the mode switches to **Custom**.
 
-## What you can adjust in the Engine
+Two properties the engine is built to make obvious:
 
-The engine exposes every variable the framework actually depends on:
+**1. Inflation is derived, not dialed.** It equals total new money (issuance ÷ M2) minus real growth. K1 and K2 can at most match real growth (Mode B → price stability) or fall short of it (Mode A → deflation). Only K3 lifts issuance above real growth, so only K3 creates inflation. Raise the K3 slider and watch the implied-inflation readout climb; set K2 to 100% with K3 at zero and it sits at zero.
 
-- **Issuance channels** — K1, K2, K3 percentages
-- **Macro environment** — real GDP growth, population growth, equity return, CPI inflation
-- **Launch conditions** — M2 money supply, nominal GDP, population, projection horizon
-- **Comparison settings** — personal savings rate, working-life span, Social Security replacement rate, UBI proposal level, MMT jobs guarantee wage
+**2. The Stable Floor is inflation-neutral.** It is invested in equities — a real asset earning a real return — so its real value does not move with the price level. That is why raising K3 (which only changes inflation and funds the dividend) leaves the K1+K2-funded floor unchanged. Modes A and C therefore share the same floor; what differs is whether the "extra" arrives as deflationary purchasing-power gains (A) or as a monthly dividend (C). Mode A's payoff is not a bigger floor — it is that money held *outside* the floor gains value.
 
-## Outputs
+## The comparison
 
-For your representative cohort (born at year 0, projected to the horizon you set):
+The **vs real outcomes** tab pits the configured cohort against eight reference points: the Fed status quo (median 401(k) + Social Security), the Chicago Plan, Friedman's k-rule, Bitcoin / fixed supply, an Alaska PFD-style dividend, a tax-funded UBI, and an MMT jobs guarantee. Scenarios let you swap the median 401(k) for the average, or apply the projected ~23% Social Security trust-depletion cut.
 
-- Stable Floor at horizon (real dollars, in launch-year purchasing power)
-- Annual real income at retirement (at the 4% safe withdrawal rate)
-- K3 monthly dividend per citizen
-- Total annual issuance as percent of M2 and percent of GDP
-- Year-by-year trajectories for M2, GDP, population, CPI, and the cohort's wealth
+Three fair-comparison rules are built in:
 
-## Comparison tab
+- **Social Security is in every row.** None of these proposals — the Citizens Standard included — abolishes SS, so crediting only some systems with it would distort the result. Every row carries the same SS benefit; the differences reflect what each system adds on top.
+- **Transfer figures are face-value.** UBI and Alaska-style dividends are shown without netting out the inflation those transfers would themselves generate. The Citizens Standard dividend is already in real terms (its inflation is derived here).
+- **A jobs guarantee is a wage floor, not retirement wealth.** The MMT row does not count lifetime wages as an accumulated stock, since workers earn wages under every system.
 
-Side-by-side comparison of eight monetary systems under identical economic assumptions:
+## Tabs
 
-1. **Citizens Standard** — your current configuration
-2. **Fed status quo** — personal savings + Social Security
-3. **Chicago Plan** — 100% reserve banking + personal savings
-4. **Friedman k-rule** — fixed money growth + personal savings
-5. **Bitcoin / fixed-supply** — savings vehicle, no inflation response
-6. **Alaska PFD-style** — sovereign wealth dividend at user-set level
-7. **UBI** — tax-funded universal basic income
-8. **MMT + jobs guarantee** — federal employment at $15/hr
+- **Stable Floor growth** — the account balance over the horizon.
+- **M2 trajectory** — the money-supply path.
+- **K1 / K2 / K3 over time** — issuance by channel.
+- **vs real outcomes** — the comparison above.
+- **Inflation paths** — the derived Citizens Standard rate vs each system's price-level behavior.
+- **Stress test** — outcomes if a historical bad sequence strikes during the working life.
 
-Each shows what it structurally delivers to a representative citizen: locked wealth, lifetime cash transfers, annual retirement income, funding source, rules-based or not.
+## What this is *not*
 
-## Why this exists
+The engine is for building intuition, not for policy calibration. Specifically:
 
-The Citizens Standard makes a structural claim: that locked, rules-based citizen wealth and modest monthly dividends, funded entirely by seigniorage rather than taxation, can deliver retirement security comparable to or better than the existing patchwork — without expanding tax burdens. The engine lets you test that claim against your own assumptions, and against seven competing frameworks running on the same numbers. If Fed status quo wins on retirement income under a particular setting, the engine shows it. The engine doesn't hide the tension; it foregrounds it.
+- It is a **forward projection** of one hypothetical cohort under constant macro assumptions — not the empirical historical reconstruction in Paper 2, which produces the ≈$1.32M Mode B figure from the actual earliest cohort.
+- Inflation is a **quantity-theory approximation** (issuance minus real growth), not the full price-level-targeting formula in the papers; K3 is modeled as a flat percentage of M2.
+- It models the three **base** modes only. The full framework also defines **Mode Ω** (an adaptive mode that shifts targets with conditions) and **Mode T** (the transition mode with the KT debt-retirement channel), which are covered in the papers.
+- Equity returns use a single base-case real rate except on the Stress tab; the main projection does not model sequence-of-returns risk, mode transitions, or emergency tools.
 
-- Follow the work: https://www.reddit.com/r/CitizenStandard/
-- Discord: https://discord.gg/hFyzcXV54
+## The papers
 
-## Honest caveats
+This engine accompanies the four-paper Citizens Standard series by **Neo-Solon**:
 
-- K3 modeled as a flat percent of M2, not the Citizens Standard's full price-level path targeting formula. Launch-year values match; dynamic self-correction does not.
-- Equity return is treated as nominal — for real returns, set CPI to 0.
-- Single-cohort projection — does not model multiple overlapping generations.
-- Fed status quo comparison uses real-world median data (Vanguard 2025, SSA 2026) rather than theoretical maximums.
+1. **Architecture** — the constitutional framework and the K1/K2/K3 and mode system.
+2. **Empirical / Counterfactual** — the historical reconstruction and Stable Floor results.
+3. **Transition** — moving from the current system, including debt retirement.
+4. **Statutory** — model legislative text.
 
-## Citation
-
-> Neo-Solon. *The Citizens Standard: A Constitutional Monetary Architecture with Mode-Selectable Inflation Regimes*. SSRN, 2026. Interactive companion engine: github.com/Neo-Solon/Citizens-Standard.
+*Available on SSRN — add links here.*
 
 ## License
 
-Open-source. Free to share, embed, modify, or adapt. Attribution to the paper appreciated.
-
-## Built from
-
-*The Citizens Standard*, Triple-Mode Edition (2026), by Neo-Solon. Pen name in homage to the Athenian reformer of 594 BC, whose reforms are referenced in the paper's conclusion as conceptual antecedent.
-
----
-
-*If you find an error in the model, want to add a comparator, or have ideas for additional features, open an issue.*
+Open-source and free to share, embed, or adapt.
