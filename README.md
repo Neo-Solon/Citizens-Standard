@@ -2,7 +2,7 @@
 
 An interactive model of **The Citizens Standard**, a constitutional monetary architecture that replaces central-bank discretion with three rules-based money-issuance channels and distributes every newly created dollar equally to all citizens.
 
-Open `Citizens_Standard_Engine.html` in any browser. No build step, no dependencies, no server — everything runs client-side.
+Open `Citizens_Standard_Engine.html` in any browser, or go to https://neo-solon.github.io/Citizens-Standard/Citizens_Standard_Engine.html. No build step, no dependencies, no server — everything runs client-side.
 
 ## What it does
 
