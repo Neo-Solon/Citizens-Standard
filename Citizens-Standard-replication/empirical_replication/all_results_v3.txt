@@ -1,0 +1,143 @@
+==========================================================================================
+CITIZENS STANDARD COUNTERFACTUAL — FULL RESULTS
+Reconstructed with authoritative data (FRED/BLS/Census/BEA latest vintages)
+Run date: 2026-05-12 audit
+==========================================================================================
+
+==========================================================================================
+SECTION 3.2  Illustrative years of K1 and K2 calibration
+==========================================================================================
+Year     M2 ($B)   GDP/cap nom    K1 nominal   K2 per cit nom   CPI ratio to 2025
+------------------------------------------------------------------------------------------
+1960  $      312$       3,002$       75.04$          15.12            10.87x
+1990  $    3,285$      23,891$      597.27$         120.49             2.46x
+2025  $   22,366$      90,000$    2,250.01$         691.76             1.00x
+
+==========================================================================================
+SECTION 4.1 - TABLE 1   Central scenario  (4.5% real equity return post-2025)
+==========================================================================================
+Cohort Born  Retire       Stable Floor    Median actual    Mean actual   vs median   vs mean
+------------------------------------------------------------------------------------------
+A      1960  2025    $      1,315,898$        260,000$      669,230       5.06x     1.97x
+B      1970  2035    $      1,367,196$        240,000$      649,230       5.70x     2.11x
+C      1980  2045    $      1,277,574$        220,000$      629,230       5.81x     2.03x
+D      1990  2055    $        844,376$        210,000$      619,230       4.02x     1.36x
+
+==========================================================================================
+SECTION 4.4  Cohort D sensitivity to post-2025 real equity assumption
+==========================================================================================
+Scenario        Real return     Stable Floor   4% + SS income    vs med   vs mean
+------------------------------------------------------------------------------------------
+Pessimistic           3.0%  $        558,851$         41,568     2.66x     0.90x
+Central               4.5%  $        844,376$         52,989     4.02x     1.36x
+Historical            6.5%  $      1,460,452$         77,632     6.95x     2.36x
+
+==========================================================================================
+SECTION 4.5  Decomposition of Cohort A central scenario (real 2025$)
+==========================================================================================
+  K1 deposit at birth (1960, real 2025$):  $         816.05  (0.06%)
+  K2 deposits cumulative (1960-2025):      $      67,892.46  (5.16%)
+  Total principal (real 2025$):            $      68,708.51  (5.22%)
+  Equity compounding gain:                 $   1,247,189.70  (94.78%)
+  Final Stable Floor:                      $   1,315,898.21  (100.00%)
+
+==========================================================================================
+SECTION 4.6 - TABLE 2  Annual retirement income at age 65 (2025 real $)
+==========================================================================================
+Cohort Retire     SS benefit   Median income    Mean income    Mode B income
+------------------------------------------------------------------------------------------
+A      2025    $     24,953$        35,353$       51,722$         77,589
+B      2035    $     19,214$        28,814$       45,183$         73,902
+C      2045    $     19,214$        28,014$       44,383$         70,317
+D      2055    $     19,214$        27,614$       43,983$         52,989
+
+==========================================================================================
+SECTION 5.1 - TABLE 3  Stress tests (Depression and Stagflation ages 25-41)
+==========================================================================================
+Cohort        Central    Depression   Stagflation   D ratio   S ratio  D vs med  S vs med
+------------------------------------------------------------------------------------------
+A      $   1,315,898$     479,942$     335,425     0.36x     0.25x     1.85x     1.29x
+B      $   1,367,196$     995,557$     674,273     0.73x     0.49x     4.15x     2.81x
+C      $   1,277,574$     585,373$     417,962     0.46x     0.33x     2.66x     1.90x
+D      $     844,376$     448,590$     307,930     0.53x     0.36x     2.14x     1.47x
+
+Below-median findings under stress:
+  Cohort A: above median under both stresses
+  Cohort B: above median under both stresses
+  Cohort C: above median under both stresses
+  Cohort D: above median under both stresses
+
+==========================================================================================
+SECTION 6  Monte Carlo bootstrap analysis (10,000 paths per configuration)
+==========================================================================================
+
+[Running Monte Carlo - takes ~1 second]...
+
+Monte Carlo runtime: 0.5 seconds for 16 configs x 10,000 paths = 160,000 simulated lives
+
+TABLE M1   Block bootstrap, 1929-2025 universe (Section 6.2)
+==========================================================================================
+Cohort         P5       P25       P50       P75       P95       Mean   P(<med)   P(<mean)
+------------------------------------------------------------------------------------------
+A         $  155K   $  450K   $  930K    $1.93M    $5.41M     $1.62M     12.2%      38.0%
+B         $  211K   $  603K    $1.28M    $2.70M    $7.62M     $2.29M      6.4%      27.0%
+C         $  275K   $  785K    $1.66M    $3.53M   $10.54M     $3.09M      3.0%      19.0%
+D         $  329K   $  895K    $1.92M    $4.14M   $12.05M     $3.53M      1.7%      15.3%
+
+TABLE M2   Configuration sensitivity (P50 and P5 across all 16 configs)
+==========================================================================================
+Cohort Configuration                  P50          P5     P(<med)
+------------------------------------------------------------------------------------------
+A      1929-2025, IID             $  934K     $  163K       11.9%
+A      1929-2025, BLOCK           $  930K     $  155K       12.2%
+A      1960-2025, IID              $1.03M     $  210K        7.7%
+A      1960-2025, BLOCK           $  965K     $  233K        6.6%
+B      1929-2025, IID              $1.29M     $  213K        6.6%
+B      1929-2025, BLOCK            $1.28M     $  211K        6.4%
+B      1960-2025, IID              $1.32M     $  259K        4.2%
+B      1960-2025, BLOCK            $1.26M     $  283K        3.4%
+C      1929-2025, IID              $1.70M     $  271K        3.4%
+C      1929-2025, BLOCK            $1.66M     $  275K        3.0%
+C      1960-2025, IID              $1.66M     $  303K        2.4%
+C      1960-2025, BLOCK            $1.57M     $  349K        1.4%
+D      1929-2025, IID              $1.90M     $  313K        2.0%
+D      1929-2025, BLOCK            $1.92M     $  329K        1.7%
+D      1960-2025, IID              $1.87M     $  337K        1.8%
+D      1960-2025, BLOCK            $1.75M     $  371K        1.1%
+
+==========================================================================================
+HEADLINE SUMMARY  (compare to paper's Abstract claims)
+==========================================================================================
+Deterministic central-scenario median advantage:
+  Cohort A: $   1,315,898  =  5.06x median
+  Cohort B: $   1,367,196  =  5.70x median
+  Cohort C: $   1,277,574  =  5.81x median
+  Cohort D: $     844,376  =  4.02x median
+
+Bootstrap median advantage (P50 / median actual, 1960-2025 block):
+  Cohort A: P50=$     965,359  =  3.71x median
+  Cohort B: P50=$   1,255,409  =  5.23x median
+  Cohort C: P50=$   1,567,687  =  7.13x median
+  Cohort D: P50=$   1,754,101  =  8.35x median
+
+Bootstrap median advantage (P50 / median actual, 1929-2025 block):
+  Cohort A: P50=$     930,389  =  3.58x median
+  Cohort B: P50=$   1,281,460  =  5.34x median
+  Cohort C: P50=$   1,660,300  =  7.55x median
+  Cohort D: P50=$   1,915,003  =  9.12x median
+
+Full output saved to all_results.txt
+
+
+==========================================================================================
+PART II — FORWARD TRANSITION COHORTS (Section 8) — FORWARD PROJECTION
+Full-rate K2; 0.5pp return compression during paydown window 2026-2071
+==========================================================================================
+
+Cohort  Born  Retire  Pessimistic    Central        Optimistic     Transition cost
+T1      2026  2091    $     327,873  $     593,225  $   1,430,549  -11.4%
+T2      2036  2101    $     395,120  $     717,060  $   1,732,750  -7.9%
+T3      2046  2111    $     473,128  $     862,111  $   2,090,735  -4.7%
+T4      2056  2121    $     562,468  $   1,029,284  $   2,507,336  -2.1%
+
+NOTE: forward projections conditional on assumed returns, NOT historical reconstructions.
