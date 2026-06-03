@@ -350,7 +350,7 @@
 <div class="card" style="background: var(--accent-bg); border-color: var(--accent); margin-bottom: 24px;">
   <p style="margin: 0 0 8px; font-weight: 600; color: var(--accent-text); font-size: 14px;">What you're looking at</p>
   <p style="margin: 0 0 8px; color: var(--accent-text); font-size: 13px; line-height: 1.65;">
-    The Citizens Standard is a constitutional monetary framework that replaces central-bank discretion with three rules-based issuance channels. Every dollar of new money is distributed equally to all citizens — split between locked retirement equity (the <strong>Stable Floor</strong>) and, in inflation Mode, monthly dividends.
+    The Citizens Standard is a constitutional monetary framework that replaces central-bank discretion with three rules-based issuance channels. Every dollar of new money is distributed equally to all citizens — split between locked citizen equity (the <strong>Stable Floor</strong>) and, in inflation Mode, monthly dividends.
   </p>
   <p style="margin: 0; color: var(--accent-text); font-size: 13px; line-height: 1.65;">
     <strong>How to use:</strong> Pick a Mode below to see one of the framework's three constitutional configurations. Adjust any slider to build your own. The stat cards and charts update live. The <em>vs. real outcomes</em> tab compares your configuration to what Americans actually retire with under today's system.
@@ -358,7 +358,7 @@
 </div>
 
 <div class="modes" role="tablist">
-  <button class="mode-btn" data-mode="A" title="Maximum lifetime wealth via deflation. No monthly dividend.">Mode A · Maximum wealth (deflation)</button>
+  <button class="mode-btn" data-mode="A" title="Mild deflation: every dollar a citizen holds gains purchasing power. No monthly dividend.">Mode A · Rising real wages (deflation)</button>
   <button class="mode-btn active" data-mode="B" title="Price stability. Highest Stable Floor without dividend.">Mode B · Stable prices (neutral)</button>
   <button class="mode-btn" data-mode="C" title="Monthly citizen dividend at the cost of lower locked wealth.">Mode C · Monthly dividend (inflation)</button>
   <button class="mode-btn" data-mode="X">Custom</button>
@@ -368,9 +368,9 @@
   <div class="card">
     <p class="card-title">Issuance channels</p>
     <div class="row"><span class="label">K1 — Citizenship</span><input type="range" id="k1" min="0" max="10" step="0.1" value="2.5"><span class="readout" id="k1r">2.5%</span></div>
-    <div class="row"><span class="label">K2 — Growth</span><input type="range" id="k2" min="0" max="100" step="0.5" value="84"><span class="readout" id="k2r">84%</span></div>
+    <div class="row"><span class="label">K2 — Growth</span><input type="range" id="k2" min="0" max="100" step="0.5" value="100"><span class="readout" id="k2r">100%</span></div>
     <div class="row"><span class="label">K3 — Dividend</span><input type="range" id="k3" min="0" max="6" step="0.1" value="0"><span class="readout" id="k3r">0.0%</span></div>
-    <p class="card-note">K1: % of GDP/capita per new citizen. K2: % of real growth captured. K3: % of M2 issued annually as monthly dividend.</p>
+    <p class="card-note">K1: % of GDP/capita per new citizen. K2: % of the real-growth-matched rate — 100% means M2 grows at the real-output rate, holding prices stable (Mode B). K3: % of M2 issued annually as a monthly citizen dividend.</p>
   </div>
 
   <div class="card">
@@ -383,7 +383,8 @@
       <button class="er-preset" data-er="4.5" title="Forward-looking forecasts from Vanguard, Research Affiliates, AQR for next decade.">Forecast 4.5%</button>
       <button class="er-preset active" data-er="6.5" title="Long-run US historical real return (Shiller 1871-2024).">Historical 6.5%</button>
     </div>
-    <div class="row"><span class="label">CPI inflation</span><input type="range" id="cpi" min="-3" max="6" step="0.1" value="0"><span class="readout" id="cpir">0.0%</span></div>
+    <div class="row"><span class="label">Implied inflation</span><span class="readout" id="cpir" style="font-weight:700; font-size:15px; flex:0 0 auto;">0.0%</span><span id="cpiChar" style="font-size:11px; margin-left:10px;"></span></div>
+    <p class="card-note" id="cpiBreakdown" style="margin-top:2px;">Derived from the channels above — not set by hand.</p>
   </div>
 </div>
 
@@ -456,21 +457,21 @@
 
   <p style="font-size: 12px; color: var(--text-dim); margin: 16px 0 0; line-height: 1.6;">
     <strong>Reading the comparison:</strong> "Wealth at 65" is locked savings/equity. "Lifetime cash" is total dividends/transfers received during working life and retirement. "Total real value" sums both — this is the fairest single number for cross-system comparison since Modes B and C make different tradeoffs between locked wealth and ongoing dividends.
-    Mode B is the cleanest apples-to-apples comparison with the Fed status quo since both target price stability. Mode A optimizes for wealth (gives up income); Mode C optimizes for monthly dividend (gives up locked wealth).
+    Mode B is the cleanest apples-to-apples comparison with the Fed status quo since both target price stability, and under identical return assumptions it produces the largest locked Stable Floor (it issues at the full real-growth-matched rate). Mode A optimizes for rising real wages and purchasing-power preservation — every dollar a citizen holds gains value — at the cost of a smaller locked floor and no income stream; Mode C optimizes for a monthly dividend (gives up locked wealth).
     Citizens Standard delivers equity to every citizen automatically — no savings discipline required. Real-world systems require individual savings effort that most Americans never achieve.
   </p>
 </div>
 
 <div id="inflation-view" style="display:none;">
   <div class="info-banner">
-    <strong>Inflation paths:</strong> Each system's CPI trajectory over 65 years.
+    <strong>Inflation paths:</strong> Each system's CPI trajectory over 65 years. The Citizens Standard rate is derived from your issuance settings, not assumed.
     The Citizens Standard's three Modes are deliberate constitutional targets.
     Other systems' inflation paths reflect their actual or theoretical behavior.
   </div>
   <div class="legend" id="inflation-legend"></div>
   <div class="chart-wrap"><canvas id="inflation-chart" role="img" aria-label="Inflation comparison chart"></canvas></div>
   <p style="font-size: 12px; color: var(--text-dim); margin: 16px 0 0; line-height: 1.6;">
-    The Citizens Standard line (thick green) tracks your CPI input directly — slide it to see how the constitutional target shifts.
+    The Citizens Standard line (thick green) is computed from your channel settings (issuance minus real growth) — raise K3 and watch it climb into inflation; set K2 to 100% with K3 off and it sits at zero.
     Fed status quo shows historical reality with stylized shock periods (recession episode and inflation spike).
     Bitcoin's deflation tracks your real growth rate (fixed supply meets growing economy).
     UBI and MMT show drift risk — fiscal pressure compounding over decades.
@@ -511,7 +512,7 @@
   <div style="background: var(--red-bg); border-left: 3px solid var(--red); padding: 14px 18px; border-radius: var(--radius); margin-bottom: 24px;">
     <p style="margin: 0 0 6px; font-weight: 600; color: var(--red); font-size: 13px;">⚠ This is an illustrative projection, not a guarantee.</p>
     <p style="margin: 0; font-size: 12px; color: var(--text); line-height: 1.6;">
-      The headline numbers (e.g., $2.1M Stable Floor at retirement under Mode B defaults) assume <strong>steady 6.5% real equity returns over 65 years with no major crashes, recessions, or secular slowdowns</strong>. Real-world outcomes will almost certainly differ — possibly by hundreds of thousands of dollars in either direction. Forward-looking equity return forecasts from Vanguard, Research Affiliates, and AQR currently project <strong>4-5% real for the next decade</strong>, not the long-run historical 6.5%. Use the Stress Test tab to see what the framework actually delivers under historical adverse sequences (Great Depression, 1970s stagflation, 2000s lost decade). The Citizens Standard's structural advantage over the status quo is robust, but the specific dollar figures depend heavily on assumptions you can adjust. <strong>Treat all projections as "could be very large wealth if conditions cooperate" rather than promises.</strong>
+      The headline numbers (e.g., $1.9M Stable Floor at retirement under Mode B defaults) assume <strong>steady 6.5% real equity returns over 65 years with no major crashes, recessions, or secular slowdowns</strong>. Real-world outcomes will almost certainly differ — possibly by hundreds of thousands of dollars in either direction. Forward-looking equity return forecasts from Vanguard, Research Affiliates, and AQR currently project <strong>4-5% real for the next decade</strong>, not the long-run historical 6.5%. Use the Stress Test tab to see what the framework actually delivers under historical adverse sequences (Great Depression, 1970s stagflation, 2000s lost decade). The Citizens Standard's structural advantage over the status quo is robust, but the specific dollar figures depend heavily on assumptions you can adjust. <strong>Treat all projections as "could be very large wealth if conditions cooperate" rather than promises.</strong>
     </p>
   </div>
 
@@ -527,8 +528,8 @@
   <p>For comparison columns, "median outcome" uses real-world median 401(k) balance ($87,571) at retirement age and actual SS average benefit. "Average outcome" uses Vanguard's average 401(k) balance ($244,750) and average SS. "After SS trust depletion" applies a 23% cut to Social Security benefits per Trustees' projections. None of these scenarios assume perfect savings discipline over 43 years — they reflect what Americans actually retire with.</p>
 
   <h3>Honest caveats</h3>
-  <p>K3 modeled as a flat percent of M2, not the paper's full price-level path targeting formula. Equity return treated as nominal — for real returns, set CPI to 0. Births computed as population × pop-growth (real demographics are more complex). The full paper's projections include stochastic returns, mode transitions, sequence-of-returns risk, and emergency tools — this engine is for intuition, not policy calibration.</p>
-  <p>Built from <em>The Citizens Standard, Triple-Mode Edition</em> (May 2026) by Neo-Solon. Open-source, free to share, embed, or adapt.</p>
+  <p>Inflation is derived from issuance (total new money as a share of M2, minus real growth), a quantity-theory approximation of the paper's price-level mechanism rather than its full targeting formula; K3 is modeled as a flat percent of M2. Equity return compounds the Stable Floor; real values are obtained by deflating with the derived price index, so deflationary Mode A shows a purchasing-power boost and inflationary Mode C is eroded. Births computed as population × pop-growth (real demographics are more complex). The full paper's projections include stochastic returns, mode transitions, sequence-of-returns risk, and emergency tools — this engine is for intuition, not policy calibration.</p>
+  <p>Built from <em>The Citizens Standard: A Constitutional Monetary Architecture with Mode-Selectable Inflation Regimes</em> (2026) by Neo-Solon. Open-source, free to share, embed, or adapt.</p>
 </footer>
 
 </div>
@@ -550,7 +551,7 @@
 
   const presets = {
     A: { k1: 2.5, k2: 12.5, k3: 0,   cpi: -1.6 },
-    B: { k1: 2.5, k2: 84,   k3: 0,   cpi: 0.0  },
+    B: { k1: 2.5, k2: 100,  k3: 0,   cpi: 0.0  },
     C: { k1: 2.5, k2: 12.5, k3: 4.0, cpi: 2.0  }
   };
 
@@ -576,19 +577,34 @@
   let stressChart = null;
 
   function readInputs(){
+    const k1 = parseFloat($('k1').value)/100;
+    const k2 = parseFloat($('k2').value)/100;
+    const k3 = parseFloat($('k3').value)/100;
+    const rg = parseFloat($('rg').value)/100;
+    const pg = parseFloat($('pg').value)/100;
+    const m2 = parseFloat($('m2').value)*1e12;
+    const gdp = parseFloat($('gdp').value)*1e12;
+    const pop = parseFloat($('pop').value)*1e6;
+
+    // Inflation is DERIVED, not dialed. By the quantity relation, the price level
+    // moves with the rate at which new money is created (total issuance ÷ M2)
+    // relative to real output growth. K1 and K2 can at most match real growth
+    // (full-rate K2 = Mode B = price stability); below that you get deflation
+    // (Mode A). Only K3 pushes issuance above real growth, so only K3 creates
+    // inflation (Mode C). Each channel's contribution to annual M2 growth:
+    const k1Share = k1 * (gdp / m2) * pg;   // K1: 2.5% of GDP/cap per new citizen
+    const k2Share = k2 * rg;                // K2: capture-rate × real growth
+    const k3Share = k3;                     // K3: flat % of M2
+    const m2growth = k1Share + k2Share + k3Share;
+    const cpi = m2growth - rg;              // implied annual inflation
+
     return {
-      k1: parseFloat($('k1').value)/100,
-      k2: parseFloat($('k2').value)/100,
-      k3: parseFloat($('k3').value)/100,
-      rg: parseFloat($('rg').value)/100,
-      pg: parseFloat($('pg').value)/100,
+      k1, k2, k3, rg, pg, m2, gdp, pop,
       er: parseFloat($('er').value)/100,
-      cpi: parseFloat($('cpi').value)/100,
-      m2: parseFloat($('m2').value)*1e12,
-      gdp: parseFloat($('gdp').value)*1e12,
-      pop: parseFloat($('pop').value)*1e6,
+      cpi,
       hz: parseInt($('hz').value),
-      wr: 0.04
+      wr: 0.04,
+      _m2growth: m2growth, _k1Share: k1Share, _k2Share: k2Share, _k3Share: k3Share
     };
   }
 
@@ -599,7 +615,20 @@
     $('rgr').textContent = (p.rg*100).toFixed(1) + '%';
     $('pgr').textContent = (p.pg*100).toFixed(1) + '%';
     $('err').textContent = (p.er*100).toFixed(1) + '%';
-    $('cpir').textContent = (p.cpi*100).toFixed(1) + '%';
+    const ci = p.cpi*100;
+    $('cpir').textContent = (ci>=0?'+':'') + ci.toFixed(1) + '%';
+    const character = ci > 0.25 ? 'inflationary' : (ci < -0.25 ? 'deflationary' : 'price-stable');
+    const col = ci > 0.25 ? 'var(--coral)' : (ci < -0.25 ? '#185fa5' : 'var(--teal-text)');
+    $('cpir').style.color = col;
+    if ($('cpiChar')) { $('cpiChar').textContent = character; $('cpiChar').style.color = col; }
+    if ($('cpiBreakdown')) {
+      $('cpiBreakdown').innerHTML =
+        'New money created: <strong>' + (p._m2growth*100).toFixed(2) + '%</strong> of M2/yr ' +
+        '(K2 ' + (p._k2Share*100>=0?'+':'') + (p._k2Share*100).toFixed(2) + ', ' +
+        'K3 ' + (p._k3Share*100>=0?'+':'') + (p._k3Share*100).toFixed(2) + ' pp) ' +
+        '&minus; real growth ' + (p.rg*100).toFixed(2) + '% = ' +
+        '<strong style="color:' + col + '">' + (ci>=0?'+':'') + ci.toFixed(2) + '%</strong>';
+    }
     $('m2r').textContent = '$' + (p.m2/1e12).toFixed(1) + 'T';
     $('gdpr').textContent = '$' + (p.gdp/1e12).toFixed(1) + 'T';
     $('popr').textContent = (p.pop/1e6).toFixed(0) + 'M';
@@ -615,7 +644,7 @@
     for (let t = 0; t <= p.hz; t++){
       const gdpPerCap = gdp / pop;
       const k1Total = p.k1 * gdpPerCap * Math.max(births, 0);
-      const k2Total = p.k2 * gdp * p.rg;
+      const k2Total = p.k2 * m2 * p.rg;
       const k3Total = p.k3 * m2;
       const k1pc = births > 0 ? k1Total / births : 0;
       const k2pc = k2Total / pop;
@@ -722,7 +751,7 @@
       const { er, cpi } = getReturnAndCpi(t);
       const gdpPerCap = gdp / pop;
       const k1Total = p.k1 * gdpPerCap * Math.max(births, 0);
-      const k2Total = p.k2 * gdp * p.rg;
+      const k2Total = p.k2 * m2 * p.rg;
       const k3Total = p.k3 * m2;
       const k1pc = births > 0 ? k1Total / births : 0;
       const k2pc = k2Total / pop;
@@ -891,7 +920,7 @@
     //   'X'         → user clicked Custom (always honor this)
     //   anything else → fall back to value-detection
     if (activeMode === 'A') {
-      modeLabel = '<span style="color: var(--teal-text);">Mode A — Maximum wealth</span>';
+      modeLabel = '<span style="color: var(--teal-text);">Mode A — Rising real wages</span>';
     } else if (activeMode === 'B') {
       modeLabel = '<span style="color: var(--teal-text);">Mode B — Stable prices</span>';
     } else if (activeMode === 'C') {
@@ -902,9 +931,9 @@
     } else {
       // Unknown state — try value-detection as a fallback.
       const isModeA = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 0.125) < 0.005 && Math.abs(p.k3) < 0.005 && Math.abs(p.cpi - (-0.016)) < 0.005;
-      const isModeB = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 0.84) < 0.005 && Math.abs(p.k3) < 0.005 && Math.abs(p.cpi) < 0.005;
+      const isModeB = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 1.00) < 0.005 && Math.abs(p.k3) < 0.005 && Math.abs(p.cpi) < 0.005;
       const isModeC = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 0.125) < 0.005 && Math.abs(p.k3 - 0.04) < 0.005 && Math.abs(p.cpi - 0.02) < 0.005;
-      if (isModeA) modeLabel = '<span style="color: var(--teal-text);">Mode A — Maximum wealth</span>';
+      if (isModeA) modeLabel = '<span style="color: var(--teal-text);">Mode A — Rising real wages</span>';
       else if (isModeB) modeLabel = '<span style="color: var(--teal-text);">Mode B — Stable prices</span>';
       else if (isModeC) modeLabel = '<span style="color: var(--teal-text);">Mode C — Monthly dividend</span>';
       else modeLabel = '<span style="color: var(--coral);">Custom configuration</span>';
@@ -963,7 +992,7 @@
     // Skipped to avoid clutter — visually identical to Fed.
 
     const datasets = [
-      { label: 'Citizens Standard (your CPI)', data: csPath, borderColor: '#0f6e56', borderWidth: 4, tension: 0, pointRadius: 0 },
+      { label: 'Citizens Standard (derived)', data: csPath, borderColor: '#0f6e56', borderWidth: 4, tension: 0, pointRadius: 0 },
       { label: 'Fed status quo (historical)', data: fedPath, borderColor: '#185fa5', borderWidth: 2, tension: 0.1, pointRadius: 0, borderDash: [4,4] },
       { label: 'Bitcoin (structural deflation)', data: btcPath, borderColor: '#ba7517', borderWidth: 2, tension: 0, pointRadius: 0 },
       { label: 'UBI (partial monetization)', data: ubiPath, borderColor: '#993c1d', borderWidth: 2, tension: 0, pointRadius: 0 },
@@ -1154,7 +1183,6 @@
       $('k1').value = pr.k1;
       $('k2').value = pr.k2;
       $('k3').value = pr.k3;
-      $('cpi').value = pr.cpi;
     }
     update();
   }
@@ -1196,8 +1224,8 @@
     update();
   }));
   // Sliders that define the Mode itself — moving these breaks out of a preset Mode
-  const modeDefiningSliders = ['k1', 'k2', 'k3', 'cpi'];
-  ['k1','k2','k3','rg','pg','er','cpi','m2','gdp','pop','hz'].forEach(id => {
+  const modeDefiningSliders = ['k1', 'k2', 'k3'];
+  ['k1','k2','k3','rg','pg','er','m2','gdp','pop','hz'].forEach(id => {
     $(id).addEventListener('input', () => {
       // Only mark as Custom if the user moved something that actually defines the Mode.
       // Horizon, launch params (M2/GDP/Pop), and macro inputs (real growth, equity return)
