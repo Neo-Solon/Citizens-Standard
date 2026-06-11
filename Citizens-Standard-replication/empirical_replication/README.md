@@ -139,28 +139,3 @@ The paper and this archive keep the two strictly separate and never present a Pa
 ## Data sources
 
 All historical series in `authoritative_data.py` are from authoritative public primary sources, verified to the latest available vintage. See `AUDIT.md` for the per-series verification table. Sources: FRED (M2SL, GDP), BEA (real GDP growth), BLS (CPI-U), US Census Bureau (population), Damodaran/NYU Stern (S&P 500 total returns), SCF 2022 (retirement-wealth benchmarks), Dimson-Marsh-Staunton (global returns for non-survivor analysis).
-
----
-
-## Banking architecture stress tests
-
-Two companion scripts in `code/` address credit-loss and cascade dynamics
-(added in response to academic review):
-
-| Script | Description |
-|--------|-------------|
-| `credit_stress_test_v2.py` | Static no-feedback bound. Layered waterfall: bank equity ($4,473B) → TLF ($492B) → term depositors; payment pool ($8,946B) always protected. Explicitly a lower bound. |
-| `credit_cascade_test_v3.py` | Dynamic Fisher debt-deflation cascade (the binding analysis). Corrected methodology: NET-M2 deflation ordering, double-entry injections, evidence-grounded transmission, modeled Tool 15 sunset, corrected current-system baseline. 14-tool vs 15-tool. |
-
-Read the two together: the static test shows the buffer stack holds absent
-amplification; the cascade shows what happens once losses compound through
-debt-deflation. Where they differ, the cascade governs. Full-reserve separation
-protects the payment system in both; M2 contraction is bounded by the term-
-deposit share (60% maximum). Tool 15 reduces acute cascade magnitude by ~3–4pp,
-sunset-bounded in prolonged scenarios.
-
-Run:
-```bash
-python3 code/credit_stress_test_v2.py
-python3 code/credit_cascade_test_v3.py
-```
