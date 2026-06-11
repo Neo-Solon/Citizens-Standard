@@ -26,11 +26,10 @@ Unlike the empirical counterfactual paper (2026b), which rests on a single Monte
 | `appendix_A2_kt_inflation.py` | A.2.3 | Blended bondholder MPC ~2.5%; CPI impact +0.04 / +0.16 / +0.55pp |
 | `appendix_A3_banking_synergy.py` | A.3 | Reserve gap $16.2T; credit-at-risk $810B/yr; KT offset 41–59% |
 | `appendix_A4_equity_rotation.py` | A.4 | Bottom-up equity rotation ~17%; peak demand <0.6% of cap; compression 0.4–0.6pp |
-| `appendix_A2_mode_t_stable.py` | A.2 | Continuity of citizen K2 across KT sunset; flat price level (Mode T-stable is a sound permanent steady state) |
-| `appendix_A5_lock_credibility.py` | A.5 | Constitutional-lock account-holder accumulation (Table A.5: 72.6M→132M, crossing the 130M electoral majority at Year 45); Year 38–45 lock window |
+| `appendix_A5_mode_t_stable.py` | A.5 | Continuity of citizen K2 across KT sunset; flat price level; lock window Y38–45 |
 | `appendix_A4_4_rotation_sensitivity.py` | A.4.4 | Rotation-fraction sensitivity (trajectory invariant across 15–35%); historical grounding (UK post-WWII, Canada 1990s) |
 
-A master script `run_all_appendix.py` runs all seven in sequence; `all_appendix_results.txt` is the captured output.
+A master script `run_all_appendix.py` runs all six in sequence; `all_appendix_results.txt` is the captured output.
 
 ---
 
@@ -54,7 +53,7 @@ Requirements: Python 3.10+, `matplotlib` (only for `make_figures.py`).
 
 ```bash
 cd code
-python run_all_appendix.py          # runs all seven appendix models
+python run_all_appendix.py          # runs all six appendix models
 python appendix_A2_debt_trajectory.py   # or run any module individually
 python make_figures.py              # regenerate the two figures
 ```
@@ -75,8 +74,7 @@ paper3_replication/
 │   ├── appendix_A2_kt_inflation.py
 │   ├── appendix_A3_banking_synergy.py
 │   ├── appendix_A4_equity_rotation.py
-│   ├── appendix_A2_mode_t_stable.py
-│   ├── appendix_A5_lock_credibility.py
+│   ├── appendix_A5_mode_t_stable.py
 │   ├── run_all_appendix.py
 │   └── make_figures.py
 └── figures/

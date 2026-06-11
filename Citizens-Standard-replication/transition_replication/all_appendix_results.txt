@@ -56,33 +56,6 @@ reduces issuance if consumer inflation rises. Cannot produce runaway
 inflation by construction.
 
 ##############################################################################
-# A.2  Mode T-stable
-##############################################################################
-==============================================================================
-MODE T-STABLE CONTINUITY (Appendix A.2 self-extinguishing claim)
-==============================================================================
-Continuity of citizen accumulation across the KT sunset:
-  K2 per citizen BEFORE sunset (Mode T):        $2,053/yr
-  K2 per citizen AFTER sunset (Mode T-stable):  $2,053/yr
-  -> IDENTICAL. KT never deposited into citizen accounts, so its
-     deactivation is invisible to Stable Floor accumulation.
-
-Price-level path under full-rate K2 (money grows at real-output rate):
-  Year  M2 growth   Real growth   Price level
-  ----------------------------------------------
-  0        1.8%        1.8%       1.000
-  10       1.8%        1.8%       1.000
-  20       1.8%        1.8%       1.000
-  30       1.8%        1.8%       1.000
-  40       1.8%        1.8%       1.000
-  50       1.8%        1.8%       1.000
-
-  Price level stays at 1.000 indefinitely: Mode T-stable is a sound
-  permanent steady state, not a temporary bridge.
-
-  (Constitutional-lock credibility timing is in appendix_A5_lock_credibility.py.)
-
-##############################################################################
 # A.3  Banking + KT synergy
 ##############################################################################
 ==============================================================================
@@ -214,42 +187,35 @@ fraction at the low end, so the central estimate is conservative.
 ==============================================================================
 
 ##############################################################################
-# A.5  Lock credibility
+# A.5  Mode T-stable
 ##############################################################################
 ==============================================================================
-APPENDIX A.5 -- CONSTITUTIONAL LOCK CREDIBILITY MODEL
+APPENDIX A.5 — MODE T-STABLE CONTINUITY
 ==============================================================================
+Continuity of citizen accumulation across the KT sunset:
+  K2 per citizen BEFORE sunset (Mode T):        $2,053/yr
+  K2 per citizen AFTER sunset (Mode T-stable):  $2,053/yr
+  -> IDENTICAL. KT never deposited into citizen accounts, so its
+     deactivation is invisible to Stable Floor accumulation.
 
-Three conditions for a durable lock:
-  C1  Electoral majority: >= 130M of 260M voting-age adults hold accounts
-  C2  Survival of one major market cycle (~7yr); met by Year 10-15
-  C3  Visible balances within 20yr of retirement ($25,000+ real, politically legible)
+Price-level path under full-rate K2 (money grows at real-output rate):
+  Year  M2 growth   Real growth   Price level
+  ----------------------------------------------
+  0        1.8%        1.8%       1.000
+  10       1.8%        1.8%       1.000
+  20       1.8%        1.8%       1.000
+  30       1.8%        1.8%       1.000
+  40       1.8%        1.8%       1.000
+  50       1.8%        1.8%       1.000
 
-Table A.5 -- account-holder accumulation (C1, the binding condition):
-------------------------------------------------------------------------------
-Year   Phase 1 voters    Opt-ins       Total AH      vs 130M   
-------------------------------------------------------------------------------
-25        9.6M              63M          72.6M        56%
-35       23.3M              63M          86.3M        66%
-40       30.1M              80M         110.1M        85%
-45       37.0M              95M         132.0M       102%  <- C1 met
-------------------------------------------------------------------------------
-C1 (electoral majority) crossed at Year 45: 132.0M (102% of 130M).
+  Price level stays at 1.000 indefinitely: Mode T-stable is a sound
+  permanent steady state, not a temporary bridge.
 
-Credibility window:
-  C2 met by Year 10-15; C3 met as Phase 1 balances grow visible by
-  the mid-30s; C1 crossed at Year 45. All three converge in the
-  Year 38-45 optimal lock window, with Year 50 the hard outer bound
-  (lock must precede first Phase 1 retirement claims at Year 65).
-
-  Historical calibration: Social Security reached durability ~25-30yr
-  post-enactment; Medicare ~15-20yr. Both consistent with Year 35-45.
-
-==============================================================================
-CONCLUSION: The binding electoral-majority condition is crossed at
-Year 45, placing the constitutional-lock window at Year 38-45,
-consistent with the durability timelines of comparable US programs.
-==============================================================================
+Constitutional lock credibility (Appendix A.5): three conditions --
+  electoral majority of account holders, a completed market cycle, and
+  politically legible balances -- converge in the Year 38-45 window,
+  consistent with the durability timelines of Social Security (~25-30
+  years) and Medicare (~15-20 years) post-enactment.
 
 ==============================================================================
 All appendix modules reproduced. See AUDIT.md for the validation table.

@@ -13,11 +13,10 @@ import sys
 MODULES = [
     ("A.2  Debt trajectory",      "appendix_A2_debt_trajectory"),
     ("A.2  KT inflation",         "appendix_A2_kt_inflation"),
-    ("A.2  Mode T-stable",        "appendix_A2_mode_t_stable"),
     ("A.3  Banking + KT synergy",  "appendix_A3_banking_synergy"),
     ("A.4  Equity rotation",      "appendix_A4_equity_rotation"),
     ("A.4.4 Rotation sensitivity","appendix_A4_4_rotation_sensitivity"),
-    ("A.5  Lock credibility",     "appendix_A5_lock_credibility"),
+    ("A.5  Mode T-stable",        "appendix_A5_mode_t_stable"),
 ]
 
 if __name__ == "__main__":

@@ -73,27 +73,15 @@ Two results close the "open empirical question" left in A.4. First, a formal sen
 
 ---
 
-## A.2 — Mode T-stable continuity (`appendix_A2_mode_t_stable.py`)
+## A.5 — Mode T-stable continuity (`appendix_A5_mode_t_stable.py`)
 
 | Quantity | Paper | Model | Match |
 |---|---|---|---|
 | K2 per citizen across KT sunset | identical (no discontinuity) | identical | ✓ |
 | Price level under full-rate K2 | constant (1.000) | 1.000 indefinitely | ✓ |
+| Constitutional-lock window | Year 38–45 | Year 38–45 | ✓ |
 
-The continuity result is the key structural claim: because KT never deposits into citizen Stable Floors, its deactivation is invisible to citizens, and full-rate K2 holds the price level constant indefinitely — so Mode T-stable is a sound permanent steady state, not a temporary bridge. This supports the A.2 self-extinguishing / soft-landing claim.
-
----
-
-## A.5 — Constitutional lock credibility (`appendix_A5_lock_credibility.py`)
-
-| Year | Phase 1 voters | Opt-ins | Total AH (paper) | Total AH (model) | vs 130M | Match |
-|---|---|---|---|---|---|---|
-| 25 | 9.6M | 63M | 72.6M | 72.6M | 56% | ✓ |
-| 35 | 23.3M | 63M | 86.3M | 86.3M | 66% | ✓ |
-| 40 | 30.1M | 80M | 110.1M | 110.1M | 85% | ✓ |
-| 45 | 37.0M | 95M | 132.0M | 132.0M | 102% | ✓ |
-
-Reproduces Table A.5 exactly. The binding condition C1 (electoral majority of account holders, ≥130M of ~260M voting-age adults) is crossed at Year 45 (132M = 102%). With C2 (one market cycle, met by Year 10–15) and C3 (politically legible balances by the mid-30s), all three conditions converge in the Year 38–45 optimal lock window, consistent with the durability timelines of Social Security (~25–30 years) and Medicare (~15–20 years) post-enactment.
+The continuity result is the key structural claim: because KT never deposits into citizen Stable Floors, its deactivation is invisible to citizens, and full-rate K2 holds the price level constant indefinitely — so Mode T-stable is a sound permanent steady state, not a temporary bridge.
 
 ---
 
