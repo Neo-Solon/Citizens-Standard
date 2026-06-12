@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Citizens Standard — Interactive Model Builder</title>
-<meta name="description" content="Interactive monetary policy model builder for the Citizens Standard framework. Tune K1, K2, K3 issuance channels and compare against seven alternative monetary systems using real-world median outcome data.">
+<meta name="description" content="Interactive monetary policy model builder for the Citizens Standard framework. Tune K1, K2, K3 and KI issuance channels and compare against seven alternative monetary systems using real-world median outcome data.">
 <style>
   :root {
     --bg: #fafaf7;
@@ -360,7 +360,7 @@
 <div class="modes" role="tablist">
   <button class="mode-btn" data-mode="A" title="Mild deflation: every dollar a citizen holds gains purchasing power. No monthly dividend.">Mode A · Rising real wages (deflation)</button>
   <button class="mode-btn active" data-mode="B" title="Price stability. Highest Stable Floor without dividend.">Mode B · Stable prices (neutral)</button>
-  <button class="mode-btn" data-mode="C" title="Monthly citizen dividend at the cost of lower locked wealth.">Mode C · Monthly dividend (inflation)</button>
+  <button class="mode-btn" data-mode="C" title="Modest ~2% inflation via the KI inflation-gap channel (K2 stays at full rate).">Mode C · Modest inflation</button>
   <button class="mode-btn" data-mode="X">Custom</button>
 </div>
 
@@ -369,8 +369,9 @@
     <p class="card-title">Issuance channels</p>
     <div class="row"><span class="label">K1 — Citizenship</span><input type="range" id="k1" min="0" max="10" step="0.1" value="2.5"><span class="readout" id="k1r">2.5%</span></div>
     <div class="row"><span class="label">K2 — Growth</span><input type="range" id="k2" min="0" max="100" step="0.5" value="100"><span class="readout" id="k2r">100%</span></div>
-    <div class="row"><span class="label">K3 — Dividend</span><input type="range" id="k3" min="0" max="6" step="0.1" value="0"><span class="readout" id="k3r">0.0%</span></div>
-    <p class="card-note">K1: % of GDP/capita per new citizen. K2: % of the real-growth-matched rate — 100% means M2 grows at the real-output rate, holding prices stable (Mode B). K3: % of M2 issued annually as a monthly citizen dividend.</p>
+    <div class="row"><span class="label">K3 — Dividend (κ_d)</span><input type="range" id="k3" min="0" max="40" step="1" value="0"><span class="readout" id="k3r">0%</span></div>
+    <div class="row"><span class="label">KI — Inflation-gap</span><input type="range" id="ki" min="0" max="6" step="0.1" value="0"><span class="readout" id="kir">0.0%</span></div>
+    <p class="card-note">K1: % of GDP/capita per new citizen. K2: % of the real-growth-matched rate — 100% means M2 grows at the real-output rate, holding prices stable (Mode B). K3: the consumer-dividend share κ_d — reallocates that share of the growth budget from locked floors to a monthly spendable dividend, price-neutral within the budget (it lowers the floor, not the price level). KI: the inflation-gap channel — % of M2 issued above the growth line, the only channel that creates inflation (Mode C).</p>
   </div>
 
   <div class="card">
@@ -409,7 +410,7 @@
 <div class="tabs" role="tablist">
   <div class="tab active" data-tab="floor">Stable Floor growth</div>
   <div class="tab" data-tab="m2">M2 trajectory</div>
-  <div class="tab" data-tab="income">K1, K2, K3 over time</div>
+  <div class="tab" data-tab="income">Channels over time</div>
   <div class="tab" data-tab="compare">vs. real outcomes</div>
   <div class="tab" data-tab="inflation">Inflation paths</div>
   <div class="tab" data-tab="stress">Stress test</div>
@@ -471,7 +472,7 @@
   <div class="legend" id="inflation-legend"></div>
   <div class="chart-wrap"><canvas id="inflation-chart" role="img" aria-label="Inflation comparison chart"></canvas></div>
   <p style="font-size: 12px; color: var(--text-dim); margin: 16px 0 0; line-height: 1.6;">
-    The Citizens Standard line (thick green) is computed from your channel settings (issuance minus real growth) — raise K3 and watch it climb into inflation; set K2 to 100% with K3 off and it sits at zero.
+    The Citizens Standard line (thick green) is computed from your channel settings (issuance minus real growth) — raise KI and watch it climb into inflation; set K2 to 100% with KI off and it sits at zero. Raising K3 (κ_d) pays a dividend without moving this line — it reallocates within the budget.
     Fed status quo shows historical reality with stylized shock periods (recession episode and inflation spike).
     Bitcoin's deflation tracks your real growth rate (fixed supply meets growing economy).
     UBI and MMT show drift risk — fiscal pressure compounding over decades.
@@ -524,11 +525,11 @@
   <p><strong>Bitcoin:</strong> Treated as a savings vehicle at the user-set equity return for fair comparison. Real Bitcoin returns have been wildly volatile and are not predictive.</p>
 
   <h3>Engine methodology</h3>
-  <p>Single-cohort projection: tracks one citizen born at year 0. K1 deposited once at birth; K2 deposited annually; K3 (when active) distributed monthly. Stable Floor compounds at the equity return rate. Real values deflate by CPI index. Each year, M2 expands by total issuance, GDP grows at real growth × CPI, and population grows at the pop-growth rate.</p>
+  <p>Single-cohort projection: tracks one citizen born at year 0. K1 deposited once at birth; K2 deposited annually into the locked floor; K3 (κ_d), when active, reallocates that share of the K2 budget into a monthly dividend; KI, when active, adds issuance above the growth line. Stable Floor compounds at the equity return rate. Real values deflate by CPI index. Each year, M2 expands by total issuance, GDP grows at real growth × CPI, and population grows at the pop-growth rate.</p>
   <p>For comparison columns, "median outcome" uses real-world median 401(k) balance ($87,571) at retirement age and actual SS average benefit. "Average outcome" uses Vanguard's average 401(k) balance ($244,750) and average SS. "After SS trust depletion" applies a 23% cut to Social Security benefits per Trustees' projections. None of these scenarios assume perfect savings discipline over 43 years — they reflect what Americans actually retire with.</p>
 
   <h3>Honest caveats</h3>
-  <p>Inflation is derived from issuance (total new money as a share of M2, minus real growth), a quantity-theory approximation of the paper's price-level mechanism rather than its full targeting formula; K3 is modeled as a flat percent of M2. Equity return compounds the Stable Floor; real values are obtained by deflating with the derived price index, so deflationary Mode A shows a purchasing-power boost and inflationary Mode C is eroded. Births computed as population × pop-growth (real demographics are more complex). The full paper's projections include stochastic returns, mode transitions, sequence-of-returns risk, and emergency tools — this engine is for intuition, not policy calibration.</p>
+  <p>Inflation is derived from issuance (total new money as a share of M2, minus real growth), a quantity-theory approximation of the paper's price-level mechanism rather than its full targeting formula. K3 (κ_d) reallocates a share of the growth budget into a price-neutral dividend — the engine treats it as fully absorbed by the transactional circuit, so it lowers the floor without moving prices; beyond the M^T ceiling it would instead add to inflation (Mode C). KI is modeled as a flat percent of M2 issued above the growth line, and is the channel that moves the price level. Equity return compounds the Stable Floor; real values are obtained by deflating with the derived price index, so deflationary Mode A shows a purchasing-power boost and inflationary Mode C is eroded. Births computed as population × pop-growth (real demographics are more complex). The full paper's projections include stochastic returns, mode transitions, sequence-of-returns risk, and emergency tools — this engine is for intuition, not policy calibration.</p>
   <p>Built from <em>The Citizens Standard: A Constitutional Monetary Architecture with Mode-Selectable Inflation Regimes</em> (2026) by Neo-Solon. Open-source, free to share, embed, or adapt.</p>
 </footer>
 
@@ -550,9 +551,9 @@
   };
 
   const presets = {
-    A: { k1: 2.5, k2: 12.5, k3: 0,   cpi: -1.6 },
-    B: { k1: 2.5, k2: 100,  k3: 0,   cpi: 0.0  },
-    C: { k1: 2.5, k2: 12.5, k3: 4.0, cpi: 2.0  }
+    A: { k1: 2.5, k2: 12.5, k3: 0, ki: 0,   cpi: -1.6 },
+    B: { k1: 2.5, k2: 100,  k3: 0, ki: 0,   cpi: 0.0  },
+    C: { k1: 2.5, k2: 100,  k3: 0, ki: 2.0, cpi: 2.0  }
   };
 
   // REAL-WORLD DATA (verified from sources, see footer)
@@ -579,7 +580,8 @@
   function readInputs(){
     const k1 = parseFloat($('k1').value)/100;
     const k2 = parseFloat($('k2').value)/100;
-    const k3 = parseFloat($('k3').value)/100;
+    const kd = parseFloat($('k3').value)/100;   // K3 consumer-dividend share κ_d
+    const ki = parseFloat($('ki').value)/100;   // KI inflation-gap channel (additive % of M2)
     const rg = parseFloat($('rg').value)/100;
     const pg = parseFloat($('pg').value)/100;
     const m2 = parseFloat($('m2').value)*1e12;
@@ -590,28 +592,30 @@
     // moves with the rate at which new money is created (total issuance ÷ M2)
     // relative to real output growth. K1 and K2 can at most match real growth
     // (full-rate K2 = Mode B = price stability); below that you get deflation
-    // (Mode A). Only K3 pushes issuance above real growth, so only K3 creates
-    // inflation (Mode C). Each channel's contribution to annual M2 growth:
+    // (Mode A). K3 (κ_d) only REALLOCATES part of the K2 budget from floors to a
+    // spendable dividend — same total issuance, so it is price-neutral. Only KI
+    // adds issuance above the growth line, so only KI creates inflation (Mode C).
     const k1Share = k1 * (gdp / m2) * pg;   // K1: 2.5% of GDP/cap per new citizen
-    const k2Share = k2 * rg;                // K2: capture-rate × real growth
-    const k3Share = k3;                     // K3: flat % of M2
-    const m2growth = k1Share + k2Share + k3Share;
-    const cpi = m2growth - rg;              // implied annual inflation
+    const k2Share = k2 * rg;                // K2: full growth budget (K3 reallocated within it)
+    const kiShare = ki;                     // KI: additive % of M2
+    const m2growth = k1Share + k2Share + kiShare;
+    const cpi = m2growth - rg;              // implied annual inflation (K3/κ_d does not enter)
 
     return {
-      k1, k2, k3, rg, pg, m2, gdp, pop,
+      k1, k2, k3: kd, ki, rg, pg, m2, gdp, pop,
       er: parseFloat($('er').value)/100,
       cpi,
       hz: parseInt($('hz').value),
       wr: 0.04,
-      _m2growth: m2growth, _k1Share: k1Share, _k2Share: k2Share, _k3Share: k3Share
+      _m2growth: m2growth, _k1Share: k1Share, _k2Share: k2Share, _kiShare: kiShare
     };
   }
 
   function updateReadouts(p){
     $('k1r').textContent = (p.k1*100).toFixed(1) + '%';
     $('k2r').textContent = (p.k2*100).toFixed(1) + '%';
-    $('k3r').textContent = (p.k3*100).toFixed(1) + '%';
+    $('k3r').textContent = (p.k3*100).toFixed(0) + '%';
+    if ($('kir')) $('kir').textContent = (p.ki*100).toFixed(1) + '%';
     $('rgr').textContent = (p.rg*100).toFixed(1) + '%';
     $('pgr').textContent = (p.pg*100).toFixed(1) + '%';
     $('err').textContent = (p.er*100).toFixed(1) + '%';
@@ -625,7 +629,7 @@
       $('cpiBreakdown').innerHTML =
         'New money created: <strong>' + (p._m2growth*100).toFixed(2) + '%</strong> of M2/yr ' +
         '(K2 ' + (p._k2Share*100>=0?'+':'') + (p._k2Share*100).toFixed(2) + ', ' +
-        'K3 ' + (p._k3Share*100>=0?'+':'') + (p._k3Share*100).toFixed(2) + ' pp) ' +
+        'KI ' + (p._kiShare*100>=0?'+':'') + (p._kiShare*100).toFixed(2) + ' pp) ' +
         '&minus; real growth ' + (p.rg*100).toFixed(2) + '% = ' +
         '<strong style="color:' + col + '">' + (ci>=0?'+':'') + ci.toFixed(2) + '%</strong>';
     }
@@ -644,8 +648,10 @@
     for (let t = 0; t <= p.hz; t++){
       const gdpPerCap = gdp / pop;
       const k1Total = p.k1 * gdpPerCap * Math.max(births, 0);
-      const k2Total = p.k2 * m2 * p.rg;
-      const k3Total = p.k3 * m2;
+      const k2Budget = p.k2 * m2 * p.rg;        // full growth budget
+      const k3Total = p.k3 * k2Budget;           // K3 = κ_d share, reallocated to dividend
+      const k2Total = k2Budget - k3Total;        // remainder stays in locked floors
+      const kiTotal = p.ki * m2;                 // KI: additive inflation channel
       const k1pc = births > 0 ? k1Total / births : 0;
       const k2pc = k2Total / pop;
       const k3pc = k3Total / pop;
@@ -656,13 +662,13 @@
 
       years.push({
         t, m2, gdp, pop, cpiIdx,
-        k1Total, k2Total, k3Total,
+        k1Total, k2Total, k3Total, kiTotal,
         k1pc, k2pc, k3pc,
         floor, floorReal: floor / cpiIdx,
         k3Monthly: k3pc / 12
       });
 
-      m2 += k1Total + k2Total + k3Total;
+      m2 += k1Total + k2Budget + kiTotal;
       gdp = gdp * (1 + p.rg) * (1 + p.cpi);
       pop *= (1 + p.pg);
       births = Math.max(0, pop * p.pg);
@@ -751,8 +757,10 @@
       const { er, cpi } = getReturnAndCpi(t);
       const gdpPerCap = gdp / pop;
       const k1Total = p.k1 * gdpPerCap * Math.max(births, 0);
-      const k2Total = p.k2 * m2 * p.rg;
-      const k3Total = p.k3 * m2;
+      const k2Budget = p.k2 * m2 * p.rg;        // full growth budget
+      const k3Total = p.k3 * k2Budget;           // K3 = κ_d share, reallocated to dividend
+      const k2Total = k2Budget - k3Total;        // remainder stays in locked floors
+      const kiTotal = p.ki * m2;                 // KI: additive inflation channel
       const k1pc = births > 0 ? k1Total / births : 0;
       const k2pc = k2Total / pop;
       const k3pc = k3Total / pop;
@@ -767,7 +775,7 @@
         appliedReturn: er, appliedCpi: cpi
       });
 
-      m2 += k1Total + k2Total + k3Total;
+      m2 += k1Total + k2Budget + kiTotal;
       gdp = gdp * (1 + p.rg) * (1 + cpi);
       pop *= (1 + p.pg);
       births = Math.max(0, pop * p.pg);
@@ -877,7 +885,7 @@
     $('sf').textContent = fmt(last.floorReal);
     $('ari').textContent = fmt(last.floorReal * p.wr);
     $('k3d').textContent = y1.k3Monthly > 0 ? fmt(y1.k3Monthly) : '—';
-    const totalIssY1 = y1.k1Total + y1.k2Total + y1.k3Total;
+    const totalIssY1 = y1.k1Total + y1.k2Total + y1.k3Total + y1.kiTotal;
     $('iss').textContent = (totalIssY1 / p.m2 * 100).toFixed(2) + '%';
     $('cgdp').textContent = (totalIssY1 / p.gdp * 100).toFixed(2) + '%';
 
@@ -924,7 +932,7 @@
     } else if (activeMode === 'B') {
       modeLabel = '<span style="color: var(--teal-text);">Mode B — Stable prices</span>';
     } else if (activeMode === 'C') {
-      modeLabel = '<span style="color: var(--teal-text);">Mode C — Monthly dividend</span>';
+      modeLabel = '<span style="color: var(--teal-text);">Mode C — Modest inflation</span>';
     } else if (activeMode === 'X') {
       // User explicitly clicked Custom — always honor that.
       modeLabel = '<span style="color: var(--coral);">Custom (manually configured)</span>';
@@ -932,10 +940,10 @@
       // Unknown state — try value-detection as a fallback.
       const isModeA = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 0.125) < 0.005 && Math.abs(p.k3) < 0.005 && Math.abs(p.cpi - (-0.016)) < 0.005;
       const isModeB = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 1.00) < 0.005 && Math.abs(p.k3) < 0.005 && Math.abs(p.cpi) < 0.005;
-      const isModeC = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 0.125) < 0.005 && Math.abs(p.k3 - 0.04) < 0.005 && Math.abs(p.cpi - 0.02) < 0.005;
+      const isModeC = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 1.00) < 0.005 && Math.abs(p.ki - 0.02) < 0.005 && Math.abs(p.cpi - 0.02) < 0.005;
       if (isModeA) modeLabel = '<span style="color: var(--teal-text);">Mode A — Rising real wages</span>';
       else if (isModeB) modeLabel = '<span style="color: var(--teal-text);">Mode B — Stable prices</span>';
-      else if (isModeC) modeLabel = '<span style="color: var(--teal-text);">Mode C — Monthly dividend</span>';
+      else if (isModeC) modeLabel = '<span style="color: var(--teal-text);">Mode C — Modest inflation</span>';
       else modeLabel = '<span style="color: var(--coral);">Custom configuration</span>';
     }
 
@@ -1183,6 +1191,7 @@
       $('k1').value = pr.k1;
       $('k2').value = pr.k2;
       $('k3').value = pr.k3;
+      $('ki').value = pr.ki;
     }
     update();
   }
@@ -1224,8 +1233,8 @@
     update();
   }));
   // Sliders that define the Mode itself — moving these breaks out of a preset Mode
-  const modeDefiningSliders = ['k1', 'k2', 'k3'];
-  ['k1','k2','k3','rg','pg','er','m2','gdp','pop','hz'].forEach(id => {
+  const modeDefiningSliders = ['k1', 'k2', 'k3', 'ki'];
+  ['k1','k2','k3','ki','rg','pg','er','m2','gdp','pop','hz'].forEach(id => {
     $(id).addEventListener('input', () => {
       // Only mark as Custom if the user moved something that actually defines the Mode.
       // Horizon, launch params (M2/GDP/Pop), and macro inputs (real growth, equity return)
