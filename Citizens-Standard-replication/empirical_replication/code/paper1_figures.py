@@ -31,9 +31,9 @@ DRIFT = {"current":0.03, "C":0.02, "B":0.0, "A":-0.016}
 # M2 growth rates (full-rate Mode B ~2%; Mode A 0.35%; C 4.5%; current 6.5%)
 M2G = {"current":0.065, "C":0.045, "B":0.020, "A":0.0035}
 
-# Validated full-rate Stable Floor real figures (2025$, projected launch cohort)
-# Anchored to empirical paper full-rate: A ~$1.70M, B ~$1.32M (historical anchor), C ~$145K
-SF_REAL = {"A":1.70e6, "B":1.32e6, "C":0.145e6}
+# Validated residual-calibration Stable Floor real figures (2025$, projected launch cohort)
+# Anchored to empirical paper full-rate: A ~$1.70M, B ~$1.29M (historical anchor), C ~$145K
+SF_REAL = {"A":1.70e6, "B":1.29e6, "C":0.145e6}
 MEDIAN_401K = 95e3
 
 def cpi_path(drift, years=YEARS):
@@ -72,14 +72,14 @@ def fig1_wealth_accumulation(path):
     ax1.set_xlabel("Age (years from birth)"); ax1.set_ylabel("$K (nominal)")
     ax1.legend(); ax1.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x,_:f"${x:.0f}K"))
     # REAL
-    labels={"A":"Mode A (real — ~$1.7M at 65)","B":"Mode B (real — ~$1.32M at 65)","C":"Mode C (real — ~$145K at 65)"}
+    labels={"A":"Mode A (real — ~$1.7M at 65)","B":"Mode B (real — ~$1.29M at 65)","C":"Mode C (real — ~$145K at 65)"}
     for m in ["A","B","C"]:
         real=real_accum(SF_REAL[m])
         ax2.plot(t,real/1e3,color=C[m],lw=2.5,label=labels[m])
     ax2.plot(t,real_accum(MEDIAN_401K)/1e3,":",color=C["current"],lw=2.2,label="Median US 401(k) (~$95K)")
     # endpoint annotations
     ax2.annotate("$1.7M",(YEARS,SF_REAL["A"]/1e3),color=C["A"],fontweight="bold",fontsize=11,xytext=(3,0),textcoords="offset points")
-    ax2.annotate("$1.32M",(YEARS,SF_REAL["B"]/1e3),color=C["B"],fontweight="bold",fontsize=11,xytext=(3,-12),textcoords="offset points")
+    ax2.annotate("$1.29M",(YEARS,SF_REAL["B"]/1e3),color=C["B"],fontweight="bold",fontsize=11,xytext=(3,-12),textcoords="offset points")
     ax2.annotate("$145K",(YEARS,SF_REAL["C"]/1e3),color=C["C"],fontweight="bold",fontsize=11,xytext=(3,0),textcoords="offset points")
     ax2.set_title("Stable Floor — Real (2025 Dollars)")
     ax2.set_xlabel("Age (years from birth)"); ax2.set_ylabel("$K (2025 dollars)")
@@ -139,7 +139,7 @@ def fig3_composite(path):
     # Panel 3: stable floor real
     ax=axes[1,0]
     ax.plot(t,real_accum(SF_REAL["A"])/1e3,color=C["A"],lw=2.3,label="Mode A (~$1.7M real)")
-    ax.plot(t,real_accum(SF_REAL["B"])/1e3,color=C["B"],lw=2.3,label="Mode B (~$1.32M real)")
+    ax.plot(t,real_accum(SF_REAL["B"])/1e3,color=C["B"],lw=2.3,label="Mode B (~$1.29M real)")
     ax.plot(t,real_accum(SF_REAL["C"])/1e3,color=C["C"],lw=2.3,label="Mode C floor (~$145K)")
     ax.plot(t,real_accum(MEDIAN_401K)/1e3,":",color=C["current"],lw=2.2,label="Median US 401(k) (~$95K)")
     ax.set_title("Stable Floor Capital Stake (2025 Dollars)")

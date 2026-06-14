@@ -12,6 +12,7 @@ from authoritative_data import (
     CPI_DECDEC, CPI_ANNUAL, SP500_NOMINAL, GDP_NOMINAL_B,
     REAL_GDP_GROWTH, M2_BILLIONS, POPULATION_M, real_sp500_return,
 )
+from authoritative_newcitizens import k1_residual_deduction_per_capita
 
 
 # Post-2025 projection assumptions (CBO Long-Term Budget Outlook 2025).
@@ -23,7 +24,12 @@ POST_GDP_NOMINAL_GR_PCT  = 4.0
 
 # Methodology constants from the paper.
 K1_FRACTION = 0.025  # 2.5% of GDP per capita at birth
-K2_FRACTION = 1.0    # FULL real-growth-matched rate (Mode T true price stability)
+K2_FRACTION = 1.0    # share of the real-growth line allocated to K2 before the K1 residual
+# Residual calibration: K2_agg = g_r*M2 - K1_agg, so that total new money equals
+# the real-growth line (zero drift in growth years). K1_agg is funded first from
+# the line; K2 receives the remainder. Set False to recover the legacy full-rate
+# convention (K2 = g_r*M2 with K1 issued on top, ~0.04% overshoot).
+K2_RESIDUAL = True
 
 # ----- Reference benchmarks (SCF 2022 + DB pension adjustments) -----
 BENCHMARKS = {
@@ -121,12 +127,17 @@ def compute_cohort(
 
     Methodology:
       * K1 = 2.5% of GDP per capita at birth year (nominal).
-      * K2 = 0.5 * max(0, real GDP growth) * M2[y-1] / pop[y]  (nominal).
+      * K2 = max(0, real GDP growth) * M2[y-1] / pop[y], less the per-citizen
+        K1 residual when K2_RESIDUAL (so K1_agg + K2_agg = the real-growth line).
+        The K1 residual draws on the deposit-weighted new-citizen count (births
+        full, naturalizations pro-rated by (65-age)/65).
       * Both deflated to 2025$ via the annual CPI ratio.
       * Real return per year = Fisher from S&P nominal and CPI Dec-Dec,
         except in stress windows (override) or post-2025 (constant scenario).
       * Deposit-then-compound: deposit credited at start of year, earns
         that year's return.
+      * In contraction years real growth <= 0 so K2 = 0; K1 still flows,
+        a small counter-cyclical injection (the line is not clawed back).
     """
     cpi_2025 = data[2025]["cpi_ann"]
 
@@ -147,7 +158,16 @@ def compute_cohort(
 
         prev_m2_dollars = (data[y - 1]["M2"] * 1e9) if (y - 1) in data else d["M2"] * 1e9
         rgdp_clamped = max(0.0, d["rgdp"] / 100.0)
-        k2_nom = (rgdp_clamped * prev_m2_dollars * K2_FRACTION) / (d["pop"] * 1e6)
+        pop_persons = d["pop"] * 1e6
+        k2_nom = (rgdp_clamped * prev_m2_dollars * K2_FRACTION) / pop_persons
+        if K2_RESIDUAL:
+            # Fund K1 first from the real-growth line; K2 gets the remainder.
+            # When K2 is already 0 (contraction year) there is nothing to net
+            # against, so K1 flows on top (counter-cyclical), and K2 stays 0.
+            deduction = k1_residual_deduction_per_capita(
+                y, gdp_pc_nom_dollars, pop_persons, K1_FRACTION
+            )
+            k2_nom = max(0.0, k2_nom - deduction)
 
         k1_real = deflate(k1_nom, y)
         k2_real = deflate(k2_nom, y)

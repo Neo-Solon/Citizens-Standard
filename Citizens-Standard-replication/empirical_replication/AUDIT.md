@@ -41,6 +41,8 @@ Run `python run_all_tables.py` to confirm.
 
 ## 3. v3 full-rate validation
 
+> Note: v3.1 makes the **residual** calibration the default (Section 7). The figures in this section are the v3 full-rate figures, recovered with `K2_RESIDUAL=False`; they remain the faithfulness baseline the residual is measured against.
+
 The calibration change (K2_FRACTION 0.5 → 1.0) was validated through multiple independent checks:
 
 **Mechanical check.** Full-rate K2 deposits are exactly 2.000× the half-rate deposits for every cohort; K1 and all returns are identical. The change does only what it should.
@@ -83,10 +85,10 @@ The forward transition cohorts (`transition_cohorts_v3.py`) use the same per-yea
 
 | Cohort | Pessimistic | Central | Optimistic | Transition cost |
 |---|---|---|---|---|
-| T1 | $327,873 | $593,225 | $1,430,549 | −11.4% |
-| T2 | $395,120 | $717,060 | $1,732,750 | −7.9% |
-| T3 | $473,128 | $862,111 | $2,090,735 | −4.7% |
-| T4 | $562,468 | $1,029,284 | $2,507,336 | −2.1% |
+| T1 | $322,105 | $582,542 | $1,404,338 | −11.4% |
+| T2 | $388,727 | $705,184 | $1,703,534 | −7.9% |
+| T3 | $466,087 | $848,974 | $2,058,290 | −4.7% |
+| T4 | $554,772 | $1,014,858 | $2,471,530 | −2.1% |
 
 These are **forward projections**, conditional on the stated return assumptions, and are kept strictly separate from the historical reconstruction of Part I.
 
@@ -99,3 +101,31 @@ The companion transition and statutory papers rely on these figures, verified ag
 - Gross federal debt $39.0T; debt held by public $31.4T (~100% of GDP); intragovernmental $7.6T (CRFB, March 2026; corroborated by CBO 2026 Outlook).
 - "Intragovernmental debt has no net effect on the government's overall finances" (CRFB, direct quotation; corroborated by CBO).
 - CBO projection of debt held by the public rising under current law (CBO Long-Term Budget Outlook).
+
+---
+
+## 7. v3.1 residual K1-funding recalibration
+
+The v3 full-rate engine paid K1 *on top of* the real-growth line (K1_agg + g_r·M2), a ~0.04% overshoot inconsistent with zero drift. v3.1 funds K1 from the line and gives K2 the residual (K2_agg = g_r·M2 − K1_agg). The change is gated by `K2_RESIDUAL` (default `True`).
+
+**Engine faithfulness (both directions):**
+
+| Cohort | v3 full-rate (`K2_RESIDUAL=False`) | v3.1 residual (default) |
+|---|---|---|
+| A | $1,315,898 (matches published v3) | $1,290,675 |
+| B | $1,367,196 | $1,342,247 |
+| C | $1,277,574 | $1,253,891 |
+| D | $844,376 | $825,881 |
+
+Setting `K2_RESIDUAL=False` recovers the published v3 figures exactly, confirming the residual is the only change.
+
+**Cross-validation.** The residual headline was confirmed by an independent path (full-rate floor minus the future value of the compounded per-citizen K1 deductions), agreeing to within the effect of 7 contraction years (1960–2025) in which K2 = 0 and K1 flows on top — a small counter-cyclical injection that the direct engine handles and the simple FV path does not.
+
+**New-citizen data verification (`authoritative_newcitizens.py`):**
+
+| Series | Source | Anchor checks |
+|---|---|---|
+| Births (annual) | NCHS NVSS | 2007 peak 4.32M; 2024 final 3,628,934; −16% 2007→2023; +1% 2023→2024 — all match |
+| Naturalizations (annual) | DHS OHSS / USCIS | FY2024 818,500; FY2023 878,460; FY2022 969,380; 2008 peak 1,046,539; 2020 trough 628,260; series 2010–2019 mean 729k vs official 730,100 |
+
+K1_agg with FY2024 flows ≈ $9.0B (deposit-weighted: births full, naturalizations pro-rated at mean age 34), leaving K2 ≈ $438B (~$1,282/citizen) of the $447B line.

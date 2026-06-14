@@ -14,7 +14,8 @@ cohorts accumulate entirely post-2025 and therefore use ASSUMED returns:
 pessimistic 3.0%, central 4.5%, optimistic 6.5% real.
 """
 
-from deterministic_engine_v3 import build_dataset, K1_FRACTION, K2_FRACTION
+from deterministic_engine_v3 import build_dataset, K1_FRACTION, K2_FRACTION, K2_RESIDUAL
+from authoritative_newcitizens import k1_residual_deduction_per_capita
 
 # Forward transition cohorts: (label, birth_year, retire_year)
 TRANSITION_COHORTS = [
@@ -55,7 +56,11 @@ def compute_transition_cohort(data, birth, retire, base_return,
         k1_nom = gdp_pc_nom * K1_FRACTION if y == birth else 0.0
         prev_m2 = (data[y - 1]["M2"] * 1e9) if (y - 1) in data else d["M2"] * 1e9
         rgdp = max(0.0, d["rgdp"] / 100.0)
-        k2_nom = (rgdp * prev_m2 * K2_FRACTION) / (d["pop"] * 1e6)
+        pop_persons = d["pop"] * 1e6
+        k2_nom = (rgdp * prev_m2 * K2_FRACTION) / pop_persons
+        if K2_RESIDUAL:
+            k2_nom = max(0.0, k2_nom - k1_residual_deduction_per_capita(
+                y, gdp_pc_nom, pop_persons, K1_FRACTION))
 
         k1_real = deflate(k1_nom, y)
         k2_real = deflate(k2_nom, y)

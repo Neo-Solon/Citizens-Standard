@@ -27,11 +27,12 @@ from authoritative_data import (
     REAL_GDP_GROWTH, M2_BILLIONS, POPULATION_M, real_sp500_return,
 )
 from deterministic_engine_v3 import (
-    K1_FRACTION, K2_FRACTION,
+    K1_FRACTION, K2_FRACTION, K2_RESIDUAL,
     POST_M2_NOMINAL_GR_PCT, POST_GDP_NOMINAL_GR_PCT,
     POST_POPULATION_GR_PCT, POST_CPI_PCT, POST_REAL_GDP_GROWTH_PCT,
     BENCHMARKS, COHORTS, build_dataset,
 )
+from authoritative_newcitizens import k1_residual_deduction_per_capita
 
 
 # =============================================================================
@@ -158,6 +159,12 @@ def simulate_cohort(birth_year, retire_year, n_paths, universe_name,
 
         rgdp_year = np.maximum(0.0, drawn_rgdp_pct[:, i] / 100.0)  # (P,)
         k2_nom_per_path = (rgdp_year * prev_M2_dollars * K2_FRACTION) / pop_persons
+        if K2_RESIDUAL:
+            # K1 funded first from the line; K2 is the per-path remainder.
+            deduction = k1_residual_deduction_per_capita(
+                y, gdp_pc_dollars, pop_persons, K1_FRACTION
+            )
+            k2_nom_per_path = np.maximum(0.0, k2_nom_per_path - deduction)
         nominal_deposit = k1_nom + k2_nom_per_path
         deposits_real[:, i] = nominal_deposit * deflator[:, i]
 
