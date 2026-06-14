@@ -47,7 +47,7 @@ US_EQUITY_MKT = 55e12       # total US equity market cap (SIFMA 2025)
 M2_0          = 22.4e12     # M2 at launch
 KT_PCT_M2     = 0.015       # KT calibrated to 1.5% of M2
 KT_ANNUAL     = M2_0 * KT_PCT_M2   # ~$336B/yr at launch
-SF_FLOW_0     = 455e9       # Stable Floor (K1+K2) equity purchases at launch (full-rate Mode T)
+SF_FLOW_0     = 447e9       # Stable Floor (K1+K2) equity purchases at launch (residual K1-funded line)
 PE_ELASTICITY = 3.0         # PE response to flow/mktcap (transition paper)
 
 ROTATION_RANGE = [0.15, 0.17, 0.25, 0.35]   # full assumed range + central

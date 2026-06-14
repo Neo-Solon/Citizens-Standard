@@ -9,8 +9,8 @@ scarcer, a fraction rotates into equities. A bottom-up decomposition by holder
 mandate gives a central estimate of ~17% (the two largest holders, foreign
 central banks and the Fed, rotate almost nothing). The paper uses a 15-35%
 range and reports the result is robust across it. Combined Stable-Floor plus
-bond-rotation equity demand peaks at ~0.94% of market capitalization per
-year (the Stable Floor flow alone is ~0.83%), well within the range of
+bond-rotation equity demand peaks at ~0.92% of market capitalization per
+year (the Stable Floor flow alone is ~0.81%), well within the range of
 existing systematic flows. The transition-specific compression — the part
 that reverts when KT sunsets — is driven by the KT bond-rotation flow only;
 the permanent Stable Floor flow is a steady-state feature, not a transition cost.
@@ -20,7 +20,7 @@ US_EQUITY_MKT = 55e12       # total US equity market cap (SIFMA 2025)
 M2_0 = 22.4e12
 KT_PCT_M2 = 0.015
 KT_ANNUAL = M2_0 * KT_PCT_M2
-SF_FLOW_0 = 455e9           # Stable Floor (K1+K2) equity purchases at launch (full-rate Mode B/T)
+SF_FLOW_0 = 447e9           # Stable Floor (K1+K2) equity purchases at launch (residual K1-funded line)
 PE_ELASTICITY = 3.0         # PE response to flow/mktcap (transition paper)
 
 # Equity-rotation fraction by holder class (bottom-up by mandate).
@@ -74,8 +74,8 @@ if __name__ == "__main__":
               f"{pct:>5.2f}%        +{comp:.2f}pp{tag}")
     print()
     print("For comparison: 401k+IRA contributions ~1.4% of mkt cap/yr; QE peak ~2.6%.")
-    print("Combined transition-era equity demand peaks at ~0.94% of market cap")
-    print("(Stable Floor flow alone ~0.83%); permanent SF flow is steady-state.")
+    print("Combined transition-era equity demand peaks at ~0.92% of market cap")
+    print("(Stable Floor flow alone ~0.81%); permanent SF flow is steady-state.")
     print("Transition-specific compression ~0.4-0.6pp (KT-rotation driven), reverting")
     print("to baseline once KT sunsets. The precise rotation fraction is an open")
     print("empirical question; results are robust across the 15-35% range.")

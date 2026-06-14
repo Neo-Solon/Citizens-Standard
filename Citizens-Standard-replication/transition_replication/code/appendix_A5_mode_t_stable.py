@@ -7,9 +7,9 @@ credibility timing of Appendix A.5.
 
 CLAIMS:
   - When KT deactivates (public debt retired), the system continues as
-    Mode T-stable: K1 + full-rate K2 at true price stability. The transition
+    Mode T-stable: K1 + residual K1-funded K2 at true price stability. The transition
     is INVISIBLE to citizen Stable Floors because KT never deposited into them.
-  - Full-rate K2 means money supply grows at the rate of real output, holding
+  - Residual K1-funded K2 (K1+K2 at the real-growth line) means money supply grows at the rate of real output, holding
     the price level constant indefinitely (a sound permanent steady state).
   - The constitutional lock becomes durable when an electoral majority of
     account holders coincides with a completed market cycle and politically
@@ -19,17 +19,21 @@ CLAIMS:
 M2_0 = 22.4e12
 POP_0 = 341.8e6
 G_REAL = 0.018
+K1_RESIDUAL_FRAC = 0.022   # K1_agg as share of the real-growth line (deposit-weighted
+                           # new citizens: births full + naturalizations pro-rated). K1 is
+                           # funded from the line first; K2 is the residual.
 
 
 def k2_per_citizen(year_offset):
-    """Full-rate K2 per citizen; identical before and after KT deactivation."""
+    """Residual K1-funded K2 per citizen; identical before and after KT deactivation."""
     m2 = M2_0 * (1 + G_REAL) ** year_offset
     pop = POP_0 * (1 + 0.004) ** year_offset
-    return (G_REAL * m2) / pop
+    return (G_REAL * m2) * (1 - K1_RESIDUAL_FRAC) / pop
 
 
 def price_level_path(years=range(0, 51, 10)):
-    """Under full-rate K2, money grows at real-output rate -> price level flat."""
+    """Residual K1-funded K2: K1+K2 = the real-growth line, so money grows at
+    the real-output rate and the price level is flat in growth years."""
     rows = []
     pl = 1.0
     for yr in years:
@@ -56,7 +60,7 @@ if __name__ == "__main__":
     print(f"  -> IDENTICAL. KT never deposited into citizen accounts, so its")
     print(f"     deactivation is invisible to Stable Floor accumulation.")
     print()
-    print("Price-level path under full-rate K2 (money grows at real-output rate):")
+    print("Price-level path under residual K1-funded K2 (money grows at real-output rate):")
     print(f"  {'Year':<6}{'M2 growth':<12}{'Real growth':<14}{'Price level'}")
     print("  " + "-" * 46)
     for yr, m2g, rg, pl in price_level_path():

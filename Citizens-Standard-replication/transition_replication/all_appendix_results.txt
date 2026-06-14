@@ -113,13 +113,13 @@ WEIGHTED ROTATION ESTIMATE        16.8%
 
 Rotation    Bond->Eq ($B)   Combined ($B)   % of mkt cap  Compression
 ------------------------------------------------------------------------
-15.0%       $    50          $   505           0.92%        +0.27pp
-16.8%       $    57          $   512           0.93%        +0.31pp  <- central
-35.0%       $   118          $   573           1.04%        +0.64pp
+15.0%       $    50          $   497           0.90%        +0.27pp
+16.8%       $    57          $   504           0.92%        +0.31pp  <- central
+35.0%       $   118          $   565           1.03%        +0.64pp
 
 For comparison: 401k+IRA contributions ~1.4% of mkt cap/yr; QE peak ~2.6%.
-Combined transition-era equity demand peaks at ~0.94% of market cap
-(Stable Floor flow alone ~0.83%); permanent SF flow is steady-state.
+Combined transition-era equity demand peaks at ~0.92% of market cap
+(Stable Floor flow alone ~0.81%); permanent SF flow is steady-state.
 Transition-specific compression ~0.4-0.6pp (KT-rotation driven), reverting
 to baseline once KT sunsets. The precise rotation fraction is an open
 empirical question; results are robust across the 15-35% range.
@@ -135,19 +135,19 @@ PART 1 -- SENSITIVITY OF THE EQUITY EFFECT TO THE ROTATION FRACTION
 ------------------------------------------------------------------------------
 Rotation    Bond->Eq ($B)   Combined ($B)   % of mkt cap  Compression   
 ------------------------------------------------------------------------------
-  15%       $    50          $   505           0.92%        +0.27pp
-  17%       $    57          $   512           0.93%        +0.31pp  <- central
-  25%       $    84          $   539           0.98%        +0.46pp
-  35%       $   118          $   573           1.04%        +0.64pp
+  15%       $    50          $   497           0.90%        +0.27pp
+  17%       $    57          $   504           0.92%        +0.31pp  <- central
+  25%       $    84          $   531           0.97%        +0.46pp
+  35%       $   118          $   565           1.03%        +0.64pp
 ------------------------------------------------------------------------------
 Across the full 15-35% range:
-  Combined equity demand: 0.92% -> 1.04% of market cap (spread 0.12pp)
+  Combined equity demand: 0.90% -> 1.03% of market cap (spread 0.12pp)
   Forward return compression: +0.27pp -> +0.64pp (both transient; revert once KT sunsets)
   For comparison: 401k+IRA contributions ~1.4% of mkt cap/yr; QE peak ~2.6%.
 
   Stress beyond the assumed range:
-    rotation 50%: combined 1.13% of mkt cap, compression +0.92pp
-    rotation 75%: combined 1.29% of mkt cap, compression +1.37pp
+    rotation 50%: combined 1.12% of mkt cap, compression +0.92pp
+    rotation 75%: combined 1.27% of mkt cap, compression +1.37pp
 
   INVARIANT QUANTITIES (independent of rotation fraction):
     - Debt trajectory: 102% -> retired by ~Year 45 (solvency is an
@@ -193,12 +193,12 @@ fraction at the low end, so the central estimate is conservative.
 APPENDIX A.5 — MODE T-STABLE CONTINUITY
 ==============================================================================
 Continuity of citizen accumulation across the KT sunset:
-  K2 per citizen BEFORE sunset (Mode T):        $2,053/yr
-  K2 per citizen AFTER sunset (Mode T-stable):  $2,053/yr
+  K2 per citizen BEFORE sunset (Mode T):        $2,007/yr
+  K2 per citizen AFTER sunset (Mode T-stable):  $2,007/yr
   -> IDENTICAL. KT never deposited into citizen accounts, so its
      deactivation is invisible to Stable Floor accumulation.
 
-Price-level path under full-rate K2 (money grows at real-output rate):
+Price-level path under residual K1-funded K2 (money grows at real-output rate):
   Year  M2 growth   Real growth   Price level
   ----------------------------------------------
   0        1.8%        1.8%       1.000

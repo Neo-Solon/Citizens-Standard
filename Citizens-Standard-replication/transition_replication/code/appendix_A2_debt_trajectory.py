@@ -98,7 +98,7 @@ def run_trajectory(debt_0=DEBT_PUBLIC, use_kt=True, kt_pct_m2=KT_PCT_M2,
         # Optional K2 diversion (not recommended; included for sensitivity)
         k2_div = 0.0
         if k2_diversion > 0 and yr >= k2_divert_from_year:
-            k2_agg = G_NOM * m2  # full-rate K2 aggregate
+            k2_agg = G_NOM * m2 * (1 - 0.022)  # residual K2 aggregate (K1 funded from the line first)
             k2_div = k2_agg * k2_diversion
 
         total_available = surplus + kt + k2_div

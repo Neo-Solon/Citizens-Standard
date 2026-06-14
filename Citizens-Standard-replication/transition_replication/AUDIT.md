@@ -78,10 +78,10 @@ Two results close the "open empirical question" left in A.4. First, a formal sen
 | Quantity | Paper | Model | Match |
 |---|---|---|---|
 | K2 per citizen across KT sunset | identical (no discontinuity) | identical | ✓ |
-| Price level under full-rate K2 | constant (1.000) | 1.000 indefinitely | ✓ |
+| Price level under residual K1-funded K2 | constant (1.000) | 1.000 indefinitely | ✓ |
 | Constitutional-lock window | Year 38–45 | Year 38–45 | ✓ |
 
-The continuity result is the key structural claim: because KT never deposits into citizen Stable Floors, its deactivation is invisible to citizens, and full-rate K2 holds the price level constant indefinitely — so Mode T-stable is a sound permanent steady state, not a temporary bridge.
+The continuity result is the key structural claim: because KT never deposits into citizen Stable Floors, its deactivation is invisible to citizens, and residual K1-funded K2 holds the price level constant indefinitely — so Mode T-stable is a sound permanent steady state, not a temporary bridge.
 
 ---
 
@@ -93,4 +93,4 @@ The paper narrative and the trajectory model are reconciled as follows. KT retir
 
 ## Relationship to the empirical paper's engine
 
-This package is independent of the Monte Carlo engine in the counterfactual paper's replication archive (2026b). The transition models here are deterministic and parameterized from stated figures; they do not resample historical data. Where the two papers share a parameter (e.g., full-rate K2, ~$31.4T public debt), the values are identical across both archives.
+This package is independent of the Monte Carlo engine in the counterfactual paper's replication archive (2026b). The transition models here are deterministic and parameterized from stated figures; they do not resample historical data. Where the two papers share a parameter (e.g., residual K1-funded K2, ~$31.4T public debt), the values are identical across both archives.
