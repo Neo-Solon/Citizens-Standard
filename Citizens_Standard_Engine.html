@@ -368,10 +368,11 @@
   <div class="card">
     <p class="card-title">Issuance channels</p>
     <div class="row"><span class="label">K1 — Citizenship</span><input type="range" id="k1" min="0" max="10" step="0.1" value="2.5"><span class="readout" id="k1r">2.5%</span></div>
-    <div class="row"><span class="label">K2 — Growth</span><input type="range" id="k2" min="0" max="100" step="0.5" value="100"><span class="readout" id="k2r">100%</span></div>
-    <div class="row"><span class="label">K3 — Dividend (κ_d)</span><input type="range" id="k3" min="0" max="40" step="1" value="0"><span class="readout" id="k3r">0%</span></div>
-    <div class="row"><span class="label">KI — Inflation-gap</span><input type="range" id="ki" min="0" max="6" step="0.1" value="0"><span class="readout" id="kir">0.0%</span></div>
-    <p class="card-note">K1: % of GDP/capita per new citizen. K2: % of the real-growth-matched rate — 100% means M2 grows at the real-output rate, holding prices stable (Mode B). K3: the consumer-dividend share κ_d — reallocates that share of the growth budget from locked floors to a monthly spendable dividend, price-neutral within the budget (it lowers the floor, not the price level). KI: the inflation-gap channel — % of M2 issued above the growth line, the only channel that creates inflation (Mode C).</p>
+    <div class="row"><span class="label">K2 — Growth rate</span><input type="range" id="k2" min="0" max="100" step="0.5" value="100"><span class="readout" id="k2r">100%</span></div>
+    <div class="row"><span class="label">K2 / K3 split (κ_d)</span><input type="range" id="k3" min="0" max="100" step="1" value="0"><span class="readout" id="k3r">0%</span></div>
+    <p class="card-note" id="splitNote" style="margin:2px 0 0;color:var(--teal-text)">Growth budget → <strong id="splitFloor">100%</strong> locked floor (K2) · <strong id="splitDiv">0%</strong> spendable dividend (K3). Always sums to 100% — moving the dividend up lowers the floor by the same dollars; total money issued is unchanged.</p>
+    <div class="row" style="margin-top:8px"><span class="label">KI — Inflation-gap</span><input type="range" id="ki" min="0" max="6" step="0.1" value="0"><span class="readout" id="kir">0.0%</span></div>
+    <p class="card-note">K1: % of GDP per capita per new citizen. <strong>K2 — Growth rate:</strong> the share of the real-growth-matched budget that is issued — 100% holds prices stable (Mode B), ~12.5% gives mild deflation (Mode A). This sets <em>how much</em> new money is created. <strong>K2/K3 split (κ_d):</strong> of that one budget, how much locks into Stable Floors (K2) versus pays out as a monthly dividend (K3) — the two shares sum to 100% and the split is price-neutral (it moves money between locked and spendable, not the total). <strong>KI — Inflation-gap:</strong> % of M2 issued <em>above</em> the growth line; the only channel that creates inflation (Mode C).</p>
   </div>
 
   <div class="card">
@@ -405,15 +406,19 @@
   <div class="stat"><p class="stat-label">K3 monthly / citizen</p><p class="stat-val" id="k3d">—</p><p class="stat-sub">year 1 dividend</p></div>
   <div class="stat"><p class="stat-label">Issuance / M2</p><p class="stat-val" id="iss">—</p><p class="stat-sub">total annual, year 1</p></div>
   <div class="stat"><p class="stat-label">Cost / GDP</p><p class="stat-val" id="cgdp">—</p><p class="stat-sub">total annual, year 1</p></div>
+  <div class="stat"><p class="stat-label">Lifetime dividend</p><p class="stat-val" id="ltd">—</p><p class="stat-sub">cumulative K3, real</p></div>
+  <div class="stat"><p class="stat-label">Total lifetime value</p><p class="stat-val" id="tlv">—</p><p class="stat-sub">floor + dividends</p></div>
 </div>
 
 <div class="tabs" role="tablist">
   <div class="tab active" data-tab="floor">Stable Floor growth</div>
   <div class="tab" data-tab="m2">M2 trajectory</div>
   <div class="tab" data-tab="income">Channels over time</div>
+  <div class="tab" data-tab="frontier">Split frontier</div>
   <div class="tab" data-tab="compare">vs. real outcomes</div>
   <div class="tab" data-tab="inflation">Inflation paths</div>
   <div class="tab" data-tab="stress">Stress test</div>
+  <div class="tab" data-tab="modet">Debt transition (Mode T)</div>
 </div>
 
 <div id="chart-view">
@@ -425,7 +430,7 @@
   <div class="info-banner">
     <strong>This comparison uses verified real-world data, not theoretical maximums.</strong>
     <span style="display: block; margin-top: 6px; font-size: 12px; opacity: 0.9;">
-      Median 401(k) balance from Vanguard's 2025 <em>How America Saves</em> report ($87,571 at age 55-64). Average Social Security benefit from SSA's March 2026 Statistical Snapshot ($24,953/year). The "after SS trust depletion" scenario applies the 23% benefit cut projected by the 2025 SSA Trustees Report. Half of Americans actually retire with less than the median values shown.
+      Median 401(k) balance from Vanguard's 2025 <em>How America Saves</em> report ($95,642 at age 55-64). Average Social Security benefit from SSA's March 2026 Statistical Snapshot ($24,953/year). The "after SS trust depletion" scenario applies the 23% benefit cut projected by the 2025 SSA Trustees Report. Half of Americans actually retire with less than the median values shown.
     </span>
   </div>
 
@@ -497,7 +502,7 @@
   <div class="stats" style="margin-top: 16px;">
     <div class="stat"><p class="stat-label">Stable Floor under stress</p><p class="stat-val" id="stress-sf">—</p><p class="stat-sub" id="stress-sf-vs">vs. smooth baseline</p></div>
     <div class="stat"><p class="stat-label">Real income at retirement</p><p class="stat-val" id="stress-income">—</p><p class="stat-sub">at 4% withdrawal</p></div>
-    <div class="stat"><p class="stat-label">vs. median American</p><p class="stat-val" id="stress-vs-median">—</p><p class="stat-sub">$87,571 Vanguard 2025</p></div>
+    <div class="stat"><p class="stat-label">vs. median American</p><p class="stat-val" id="stress-vs-median">—</p><p class="stat-sub">$95,642 Vanguard 2025</p></div>
   </div>
 
   <div class="legend" id="stress-legend"></div>
@@ -506,6 +511,36 @@
   <p style="font-size: 12px; color: var(--text-dim); margin: 16px 0 0; line-height: 1.6;">
     <strong>Sources for historical sequences:</strong>
     Robert Shiller's annual real returns dataset (Yale, 1871-present). Great Depression: 1929-1944 produced ~1.5% annualized real return after the crash and recovery. 1970s Stagflation: 1966-1982 produced ~−1.0% annualized real return alongside ~7.5% CPI. Lost Decade: 2000-2009 produced ~−3% annualized real return. Each scenario applies these sequences as a contiguous bad period during the citizen's working life, then resumes long-run normal returns.
+  </p>
+</div>
+
+<div id="modet-view" style="display:none;">
+  <div class="info-banner">
+    <strong>What this answers:</strong> "How does the framework retire the national debt — and tighten when needed?" Under <strong>Mode T</strong>, citizen K1/K2 keep running at full Mode-B price stability, while <strong>KT</strong> retires the legacy debt down to a small <strong>operational floor</strong> — not to zero. The floor is kept on purpose: it's the financial system's safe-asset benchmark and the standing base for monetary operations. KT runs <strong>symmetrically</strong>: it retires excess debt in normal times, and in <strong>reverse</strong> — issuing short-term bills to drain transactional money — when inflation runs hot. Retiring debt as a fiscal <em>burden</em> (interest, rollover risk) is the goal; the small remaining stock is debt held by choice, as a tool.
+  </div>
+
+  <div style="display:flex; flex-wrap:wrap; gap:18px; align-items:center; margin-top:14px;">
+    <div class="row" style="flex:1; min-width:200px; margin:0;"><span class="label">KT rate (% of M2)</span><input type="range" id="ktr" min="0" max="3" step="0.1" value="1.5"><span class="readout" id="ktrr">1.5%</span></div>
+    <div class="row" style="flex:1; min-width:200px; margin:0;"><span class="label">Primary surplus (% GDP)</span><input type="range" id="psr" min="0" max="3" step="0.1" value="1.5"><span class="readout" id="psrr">1.5%</span></div>
+    <div class="row" style="flex:1; min-width:200px; margin:0;"><span class="label">Operational floor (% GDP)</span><input type="range" id="flr" min="0" max="30" step="1" value="15"><span class="readout" id="flrr">15%</span></div>
+  </div>
+  <div class="scenario-pills" id="modet-pills" style="margin-top:12px;">
+    <button class="pill active" data-shock="none">No shock</button>
+    <button class="pill" data-shock="infl">Inflation shock, Years 45–50 (watch reverse-KT drain money)</button>
+  </div>
+
+  <div class="stats" style="margin-top: 16px;">
+    <div class="stat"><p class="stat-label">Debt/GDP at enactment</p><p class="stat-val" id="modet-y0">—</p><p class="stat-sub">public debt, today</p></div>
+    <div class="stat"><p class="stat-label">Debt/GDP at Year 30</p><p class="stat-val" id="modet-y30">—</p><p class="stat-sub">vs CBO 156% by 2055</p></div>
+    <div class="stat"><p class="stat-label">Reaches op. floor</p><p class="stat-val" id="modet-retire">—</p><p class="stat-sub">debt burden retired</p></div>
+    <div class="stat"><p class="stat-label">Operational floor</p><p class="stat-val" id="modet-kt">—</p><p class="stat-sub">safe-asset benchmark</p></div>
+  </div>
+
+  <div class="legend" id="modet-legend"></div>
+  <div class="chart-wrap"><canvas id="modet-chart" role="img" aria-label="Debt-to-GDP transition chart"></canvas></div>
+
+  <p style="font-size: 12px; color: var(--text-dim); margin: 16px 0 0; line-height: 1.6;">
+    <strong>Mode T calibration (Transition paper, 2026c §4, extended):</strong> public debt ≈ $31.4T at enactment (~102% of GDP); KT at 1.5% of M2; primary surplus 0 → 1.5% of GDP over 25 years; coupon repricing ~4.5% → ~1.5% by Year 6. KT retires the legacy debt down to a small <strong>operational floor</strong> (default ~15% of GDP) rather than to zero — eliminating debt as a fiscal burden while keeping a safe-asset benchmark and a standing base for the <strong>reverse-KT drain</strong> (the contractionary / QT-equivalent tool). The inflation-shock scenario shows reverse-KT issuing bills to soak up money — the stock lifts above the floor, then normalizes. Reduced-form sketch, illustrative; separate from the cohort-floor projection on the other tabs.
   </p>
 </div>
 
@@ -518,7 +553,7 @@
   </div>
 
   <h3>Real-world data sources</h3>
-  <p><strong>401(k) balances:</strong> Vanguard, <em>How America Saves 2025</em>. Median balance at age 55-64 is $87,571; average is $244,750. Median is more representative of typical outcomes; the average is skewed by high-balance accounts.</p>
+  <p><strong>401(k) balances:</strong> Vanguard, <em>How America Saves 2025</em>. Median balance at age 55-64 is $95,642; average is $271,320. Median is more representative of typical outcomes; the average is skewed by high-balance accounts.</p>
   <p><strong>Social Security:</strong> SSA Monthly Statistical Snapshot, March 2026. Average retired-worker benefit: $2,079.49/month ($24,953/year). Replacement rate for the average earner: ~37-42% of late-career earnings (CBO, SSA 2024-2025).</p>
   <p><strong>Trust fund depletion:</strong> 2025 SSA Trustees Report projects the OASI trust fund will be unable to pay full benefits beginning around 2034, after which only ~77-81% of scheduled benefits would be payable.</p>
   <p><strong>Alaska Permanent Fund Dividend:</strong> Alaska Department of Revenue. Recent dividends ranged $1,200-$3,300/year; default in this engine is $1,700.</p>
@@ -526,7 +561,7 @@
 
   <h3>Engine methodology</h3>
   <p>Single-cohort projection: tracks one citizen born at year 0. K1 deposited once at birth; K2 deposited annually into the locked floor; K3 (κ_d), when active, reallocates that share of the K2 budget into a monthly dividend; KI, when active, adds issuance above the growth line. Stable Floor compounds at the equity return rate. Real values deflate by CPI index. Each year, M2 expands by total issuance, GDP grows at real growth × CPI, and population grows at the pop-growth rate.</p>
-  <p>For comparison columns, "median outcome" uses real-world median 401(k) balance ($87,571) at retirement age and actual SS average benefit. "Average outcome" uses Vanguard's average 401(k) balance ($244,750) and average SS. "After SS trust depletion" applies a 23% cut to Social Security benefits per Trustees' projections. None of these scenarios assume perfect savings discipline over 43 years — they reflect what Americans actually retire with.</p>
+  <p>For comparison columns, "median outcome" uses real-world median 401(k) balance ($95,642) at retirement age and actual SS average benefit. "Average outcome" uses Vanguard's average 401(k) balance ($271,320) and average SS. "After SS trust depletion" applies a 23% cut to Social Security benefits per Trustees' projections. None of these scenarios assume perfect savings discipline over 43 years — they reflect what Americans actually retire with.</p>
 
   <h3>Honest caveats</h3>
   <p>Inflation is derived from issuance (total new money as a share of M2, minus real growth), a quantity-theory approximation of the paper's price-level mechanism rather than its full targeting formula. K3 (κ_d) reallocates a share of the growth budget into a price-neutral dividend — the engine treats it as fully absorbed by the transactional circuit, so it lowers the floor without moving prices; beyond the M^T ceiling it would instead add to inflation (Mode C). KI is modeled as a flat percent of M2 issued above the growth line, and is the channel that moves the price level. Equity return compounds the Stable Floor; real values are obtained by deflating with the derived price index, so deflationary Mode A shows a purchasing-power boost and inflationary Mode C is eroded. Births computed as population × pop-growth (real demographics are more complex). The full paper's projections include stochastic returns, mode transitions, sequence-of-returns risk, and emergency tools — this engine is for intuition, not policy calibration.</p>
@@ -558,8 +593,8 @@
 
   // REAL-WORLD DATA (verified from sources, see footer)
   const REAL_DATA = {
-    median401k_at_retirement: 87571,    // Vanguard 2025: median 55-64 401(k) balance
-    avg401k_at_retirement: 244750,      // Vanguard 2025: average 55-64 401(k) balance
+    median401k_at_retirement: 95642,    // Vanguard 2025: median 55-64 401(k) balance
+    avg401k_at_retirement: 271320,      // Vanguard 2025: average 55-64 401(k) balance
     avgSS_annual: 24953,                // SSA Mar 2026: $2,079.49/mo × 12
     ssReplacementRate: 0.40,            // SSA/CBO: ~40% for average earner
     ssCutAfterDepletion: 0.23,          // SSA Trustees: ~23% cut after 2034
@@ -572,10 +607,12 @@
   let activeTab = 'floor';
   let activeScenario = 'median';
   let activeStress = 'smooth';
+  let modetShock = 'none';
   let activeMode = 'B';   // tracks the last Mode button clicked (A/B/C/X)
   let chart = null;
   let inflationChart = null;
   let stressChart = null;
+  let modetChart = null;
 
   function readInputs(){
     const k1 = parseFloat($('k1').value)/100;
@@ -598,7 +635,8 @@
     const k1Share = k1 * (gdp / m2) * pg;   // K1: 2.5% of GDP/cap per new citizen
     const k2Share = k2 * rg;                // K2: full growth budget (K3 reallocated within it)
     const kiShare = ki;                     // KI: additive % of M2
-    const m2growth = k1Share + k2Share + kiShare;
+    const growthIssued = Math.max(k1Share, k2Share); // total non-KI issuance: K1 is carved OUT of the budget (paper: K1+K2+K3 = g_r·M2), K2/K3 are the residual
+    const m2growth = growthIssued + kiShare;
     const cpi = m2growth - rg;              // implied annual inflation (K3/κ_d does not enter)
 
     return {
@@ -607,7 +645,7 @@
       cpi,
       hz: parseInt($('hz').value),
       wr: 0.04,
-      _m2growth: m2growth, _k1Share: k1Share, _k2Share: k2Share, _kiShare: kiShare
+      _m2growth: m2growth, _k1Share: k1Share, _k2Share: growthIssued, _kiShare: kiShare
     };
   }
 
@@ -615,6 +653,8 @@
     $('k1r').textContent = (p.k1*100).toFixed(1) + '%';
     $('k2r').textContent = (p.k2*100).toFixed(1) + '%';
     $('k3r').textContent = (p.k3*100).toFixed(0) + '%';
+    if ($('splitFloor')) $('splitFloor').textContent = Math.round((1-p.k3)*100) + '%';
+    if ($('splitDiv'))   $('splitDiv').textContent   = Math.round(p.k3*100) + '%';
     if ($('kir')) $('kir').textContent = (p.ki*100).toFixed(1) + '%';
     $('rgr').textContent = (p.rg*100).toFixed(1) + '%';
     $('pgr').textContent = (p.pg*100).toFixed(1) + '%';
@@ -649,8 +689,9 @@
       const gdpPerCap = gdp / pop;
       const k1Total = p.k1 * gdpPerCap * Math.max(births, 0);
       const k2Budget = p.k2 * m2 * p.rg;        // full growth budget
-      const k3Total = p.k3 * k2Budget;           // K3 = κ_d share, reallocated to dividend
-      const k2Total = k2Budget - k3Total;        // remainder stays in locked floors
+      const splitBudget = Math.max(0, k2Budget - k1Total); // K1 paid first; K2/K3 split the residual
+      const k3Total = p.k3 * splitBudget;           // K3 = κ_d share, reallocated to dividend
+      const k2Total = splitBudget - k3Total;        // remainder stays in locked floors
       const kiTotal = p.ki * m2;                 // KI: additive inflation channel
       const k1pc = births > 0 ? k1Total / births : 0;
       const k2pc = k2Total / pop;
@@ -668,7 +709,7 @@
         k3Monthly: k3pc / 12
       });
 
-      m2 += k1Total + k2Budget + kiTotal;
+      m2 += k1Total + splitBudget + kiTotal;
       gdp = gdp * (1 + p.rg) * (1 + p.cpi);
       pop *= (1 + p.pg);
       births = Math.max(0, pop * p.pg);
@@ -758,8 +799,9 @@
       const gdpPerCap = gdp / pop;
       const k1Total = p.k1 * gdpPerCap * Math.max(births, 0);
       const k2Budget = p.k2 * m2 * p.rg;        // full growth budget
-      const k3Total = p.k3 * k2Budget;           // K3 = κ_d share, reallocated to dividend
-      const k2Total = k2Budget - k3Total;        // remainder stays in locked floors
+      const splitBudget = Math.max(0, k2Budget - k1Total); // K1 paid first; K2/K3 split the residual
+      const k3Total = p.k3 * splitBudget;           // K3 = κ_d share, reallocated to dividend
+      const k2Total = splitBudget - k3Total;        // remainder stays in locked floors
       const kiTotal = p.ki * m2;                 // KI: additive inflation channel
       const k1pc = births > 0 ? k1Total / births : 0;
       const k2pc = k2Total / pop;
@@ -775,7 +817,7 @@
         appliedReturn: er, appliedCpi: cpi
       });
 
-      m2 += k1Total + k2Budget + kiTotal;
+      m2 += k1Total + splitBudget + kiTotal;
       gdp = gdp * (1 + p.rg) * (1 + cpi);
       pop *= (1 + p.pg);
       births = Math.max(0, pop * p.pg);
@@ -888,6 +930,9 @@
     const totalIssY1 = y1.k1Total + y1.k2Total + y1.k3Total + y1.kiTotal;
     $('iss').textContent = (totalIssY1 / p.m2 * 100).toFixed(2) + '%';
     $('cgdp').textContent = (totalIssY1 / p.gdp * 100).toFixed(2) + '%';
+    const lifetimeDiv = sim.reduce((s, y) => s + (y.k3pc || 0) / y.cpiIdx, 0);
+    $('ltd').textContent = lifetimeDiv > 0 ? fmt(lifetimeDiv) : '—';
+    $('tlv').textContent = fmt(last.floorReal + lifetimeDiv);
 
     if (activeTab === 'compare') {
       drawCompareTable(p, sim);
@@ -895,6 +940,10 @@
       drawInflationChart(p, sim);
     } else if (activeTab === 'stress') {
       drawStressChart(p, sim);
+    } else if (activeTab === 'frontier') {
+      drawFrontier(p);
+    } else if (activeTab === 'modet') {
+      drawModeT(p);
     } else {
       drawChart(sim, p);
     }
@@ -1103,8 +1152,8 @@
     const stressIncome = stressFinal * p.wr;
     $('stress-income').textContent = fmt(stressIncome);
 
-    const medianAmerican = 87571 * p.wr;  // ~$3,503/yr
-    const ratio = medianAmerican > 0 ? stressFinal / 87571 : 0;
+    const medianAmerican = 95642 * p.wr;  // ~$3,503/yr
+    const ratio = medianAmerican > 0 ? stressFinal / 95642 : 0;
     $('stress-vs-median').textContent = ratio >= 1 ? ratio.toFixed(1) + '×' : (ratio*100).toFixed(0) + '%';
 
     $('stress-legend').innerHTML = datasets.map(d =>
@@ -1183,6 +1232,128 @@
     });
   }
 
+  // Frontier: sweep the K2/K3 split (κ_d) from all-floor to all-dividend and show
+  // how the Stable Floor at horizon trades off against cumulative lifetime dividends.
+  // Total value declines as κ_d rises because locked floors compound while dividends
+  // are spent — this is why κ_d = 0 is the wealth-maximizing choice (paper, Result/Prop 8).
+  function drawFrontier(p){
+    const ctx = $('chart').getContext('2d');
+    if (chart) chart.destroy();
+    const pts = 21, kappas = [], floors = [], divs = [], totals = [];
+    for (let i = 0; i < pts; i++){
+      const kd = i / (pts - 1);                 // 0 .. 1
+      const s = simulate({ ...p, k3: kd });      // cpi is independent of κ_d, so reuse p
+      const last = s[s.length - 1];
+      const lifeDiv = s.reduce((acc, y) => acc + (y.k3pc || 0) / y.cpiIdx, 0);
+      kappas.push(Math.round(kd * 100));
+      floors.push(last.floorReal);
+      divs.push(lifeDiv);
+      totals.push(last.floorReal + lifeDiv);
+    }
+    const datasets = [
+      { label: 'Stable Floor at horizon (K2)', data: floors, borderColor: '#185fa5', backgroundColor: 'rgba(24,95,165,0.08)', fill: true,  tension: 0.2, pointRadius: 0 },
+      { label: 'Lifetime dividend (K3)',        data: divs,   borderColor: '#ba7517', backgroundColor: 'transparent',        fill: false, tension: 0.2, pointRadius: 0 },
+      { label: 'Total lifetime value',          data: totals, borderColor: '#0f6e56', backgroundColor: 'transparent', borderDash: [5,4], fill: false, tension: 0.2, pointRadius: 0 }
+    ];
+    $('legend').innerHTML = '<span><span class="swatch" style="background:#185fa5"></span>Stable Floor (K2)</span><span><span class="swatch" style="background:#ba7517"></span>Lifetime dividend (K3)</span><span><span class="swatch" style="background:#0f6e56"></span>Total value</span>';
+    const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const tickColor = '#888780';
+    const gridColor = isDark ? 'rgba(180,178,169,0.15)' : 'rgba(136,135,128,0.15)';
+    chart = new Chart(ctx, {
+      type: 'line',
+      data: { labels: kappas, datasets },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { title: items => 'Dividend share κ_d = ' + items[0].label + '%  (floor share ' + (100 - items[0].label) + '%)', label: c => c.dataset.label + ': ' + fmt(c.parsed.y) } }
+        },
+        scales: {
+          x: { title: { display: true, text: 'Dividend share κ_d (%)  —  floor share is the remainder', color: tickColor, font: { size: 12 } }, grid: { display: false }, ticks: { color: tickColor, font: { size: 11 }, maxTicksLimit: 11 } },
+          y: { ticks: { color: tickColor, font: { size: 11 }, callback: v => fmt(v) }, grid: { color: gridColor } }
+        },
+        interaction: { mode: 'index', intersect: false }
+      }
+    });
+  }
+
+  // Mode T — transition debt dynamics (Transition paper 2026c §4). Citizen K1/K2 run
+  // at Mode B throughout; KT issues ~1.5% of M2/yr to redeem public debt (asset swap,
+  // price-neutral). Primary surplus phases 0 -> 1.5% of GDP over 25y; average coupon
+  // reprices 4.5% -> 1.5% by ~Y6. Reproduces 102% -> ~39% @ Y30 -> retirement ~Y45.
+  function drawModeT(p){
+    const ctx = $('modet-chart').getContext('2d');
+    if (modetChart) modetChart.destroy();
+    const D0 = 31.4e12;                          // public debt held by the public
+    const GDP0 = p.gdp, M2_0 = p.m2, rg = p.rg;
+    const ktRate = (parseFloat($('ktr').value) || 1.5) / 100;
+    const psMax  = (parseFloat($('psr').value) || 1.5) / 100;
+    const psYears = 25, r0 = 0.045, rFin = 0.015, rYears = 6;
+    const m2g = rg + 0.5 * ktRate;               // citizen ~2% + half of KT expands circulating M2
+    const hz = 55;
+    const floorPct = (parseFloat($('flr').value) || 0) / 100;   // operational floor, % of GDP
+    const shock = (modetShock === 'infl');
+    const shockA = 45, shockB = 50;                             // shock fired near/at the floor
+    function trajectory(withShock){
+      let D = D0, reach = null, y30 = null; const series = [];
+      for (let t = 0; t <= hz; t++){
+        const GDP = GDP0 * Math.pow(1 + rg, t);
+        const floorAmt = floorPct * GDP;
+        series.push(Math.max(0, D) / GDP * 100);
+        if (t === 30) y30 = Math.max(0, D) / GDP * 100;
+        if (reach === null && D <= floorAmt * 1.02) reach = t;
+        const M2 = M2_0 * Math.pow(1 + m2g, t);
+        const r = Math.max(rFin, r0 - (r0 - rFin) * Math.min(t / rYears, 1));
+        const ps = psMax * Math.min(t / psYears, 1) * GDP;
+        if (withShock && t >= shockA && t < shockB){
+          D = D + r * D + ktRate * M2;                          // reverse-KT: issue bills to DRAIN money
+        } else if (D > floorAmt){
+          D = Math.max(floorAmt, D + r * D - ps - ktRate * M2); // retire excess down to the floor
+        } else {
+          D = floorAmt;                                         // hold at the operational floor
+        }
+      }
+      return { series, reach, y30 };
+    }
+    const main = trajectory(shock);
+    const ref0 = trajectory(false);
+    const years = Array.from({ length: hz + 1 }, (_, t) => t);
+    const cbo   = years.map(t => 102 + 1.8 * t);            // CBO: 102% -> 156% by Y30 -> rising
+    $('modet-y0').textContent = (D0 / GDP0 * 100).toFixed(0) + '%';
+    $('modet-y30').textContent = (ref0.y30 != null ? ref0.y30.toFixed(0) : '—') + '%';
+    $('modet-retire').textContent = ref0.reach != null ? '~Year ' + ref0.reach : '> ' + hz + ' yrs';
+    $('modet-kt').textContent = (floorPct * 100).toFixed(0) + '% of GDP';
+    const datasets = [{ label: 'Citizens Standard (Mode T)', data: main.series, borderColor: '#0f6e56', backgroundColor: 'rgba(15,110,86,0.10)', fill: true, tension: 0.2, pointRadius: 0 }];
+    let legend = '<span><span class="swatch" style="background:#0f6e56"></span>Citizens Standard (Mode T)</span>';
+    if (shock){
+      datasets.push({ label: 'Mode T (no shock)', data: ref0.series, borderColor: '#0f6e56', backgroundColor: 'transparent', borderDash: [2,3], fill: false, tension: 0.2, pointRadius: 0 });
+      legend += '<span><span class="swatch" style="background:#0f6e56;opacity:0.55"></span>No-shock path</span>';
+    }
+    datasets.push({ label: 'CBO baseline (no reform)', data: cbo, borderColor: '#993c1d', backgroundColor: 'transparent', borderDash: [5,4], fill: false, tension: 0.2, pointRadius: 0 });
+    legend += '<span><span class="swatch" style="background:#993c1d"></span>CBO baseline (no reform)</span>';
+    $('modet-legend').innerHTML = legend;
+    const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const tickColor = '#888780';
+    const gridColor = isDark ? 'rgba(180,178,169,0.15)' : 'rgba(136,135,128,0.15)';
+    const xtitle = shock ? 'Years from enactment  —  reverse-KT issues bills to drain money during the Y45–50 shock, then normalizes' : 'Years from enactment';
+    modetChart = new Chart(ctx, {
+      type: 'line',
+      data: { labels: years, datasets },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { title: i => 'Year ' + i[0].label, label: c => c.dataset.label + ': ' + c.parsed.y.toFixed(0) + '% of GDP' } }
+        },
+        scales: {
+          x: { title: { display: true, text: xtitle, color: tickColor, font: { size: 12 } }, grid: { display: false }, ticks: { color: tickColor, font: { size: 11 }, maxTicksLimit: 8 } },
+          y: { title: { display: true, text: 'Public debt / GDP', color: tickColor, font: { size: 12 } }, beginAtZero: true, ticks: { color: tickColor, font: { size: 11 }, callback: v => v + '%' }, grid: { color: gridColor } }
+        },
+        interaction: { mode: 'index', intersect: false }
+      }
+    });
+  }
+
   function applyMode(mode){
     activeMode = mode;
     document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
@@ -1199,16 +1370,18 @@
   function showTab(name){
     activeTab = name;
     document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
-    $('chart-view').style.display = (name === 'compare' || name === 'inflation' || name === 'stress') ? 'none' : 'block';
+    $('chart-view').style.display = (name === 'compare' || name === 'inflation' || name === 'stress' || name === 'modet') ? 'none' : 'block';
     $('compare-view').style.display = name === 'compare' ? 'block' : 'none';
     $('inflation-view').style.display = name === 'inflation' ? 'block' : 'none';
     $('stress-view').style.display = name === 'stress' ? 'block' : 'none';
+    $('modet-view').style.display = name === 'modet' ? 'block' : 'none';
 
     // Destroy any existing chart instances so they rebuild fresh against the
     // newly-visible canvas with correct dimensions.
     if (chart) { chart.destroy(); chart = null; }
     if (inflationChart) { inflationChart.destroy(); inflationChart = null; }
     if (stressChart) { stressChart.destroy(); stressChart = null; }
+    if (modetChart) { modetChart.destroy(); modetChart = null; }
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => update());
@@ -1225,6 +1398,15 @@
   document.querySelectorAll('#stress-pills .pill').forEach(p => p.addEventListener('click', () => {
     activeStress = p.dataset.stress;
     document.querySelectorAll('#stress-pills .pill').forEach(x => x.classList.toggle('active', x === p));
+    update();
+  }));
+  document.querySelectorAll('#modet-pills .pill').forEach(p => p.addEventListener('click', () => {
+    modetShock = p.dataset.shock;
+    document.querySelectorAll('#modet-pills .pill').forEach(x => x.classList.toggle('active', x === p));
+    update();
+  }));
+  [['ktr',1],['psr',1],['flr',0]].forEach(([id,dec]) => $(id).addEventListener('input', () => {
+    $(id + 'r').textContent = parseFloat($(id).value).toFixed(dec) + '%';
     update();
   }));
   document.querySelectorAll('.er-preset').forEach(b => b.addEventListener('click', () => {
