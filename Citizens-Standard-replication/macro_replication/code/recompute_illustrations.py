@@ -20,7 +20,7 @@ stated in those sections. All inputs are anchored to the architectural paper
 #   Leak = kappa_W * (Delta / mu_star) * (1 - s_t)
 # ---------------------------------------------------------------------------
 M2 = 22_366.0          # $B, anchored (Neo-Solon 2026a, A.1)
-DELTA_B = 455.0        # $B, Mode B annual issuance (Neo-Solon 2026a, Section 5.1)
+DELTA_B = 447.0        # $B, Mode B annual issuance = K1+K2 line (Neo-Solon 2026a, Section 5.1)
 DELTA_A = 80.0         # $B, Mode A annual issuance (Neo-Solon 2026a, Table 2)
 
 
@@ -41,14 +41,14 @@ def section_3_2a():
     # Central case: kappa_W = 0.03, mu* = 0.15, s_t = 0 (launch, worst case)
     lk_b = leak(DELTA_B, 0.03, 0.15, 0.0)
     print(f"Mode B central (kappa_W=0.03, mu*=0.15, s_t=0):")
-    print(f"   leak = ${lk_b:,.0f}B  =  {pct_m2(lk_b):.2f}% of M2   [paper: ~$91B, 0.41%]")
+    print(f"   leak = ${lk_b:,.0f}B  =  {pct_m2(lk_b):.2f}% of M2   [paper: ~$89B, 0.40%]")
 
     # Full band: low end (0.02, 0.25) and high end (0.05, 0.10)
     lk_lo = leak(DELTA_B, 0.02, 0.25, 0.0)
     lk_hi = leak(DELTA_B, 0.05, 0.10, 0.0)
     print(f"Mode B band: ${lk_lo:,.0f}B - ${lk_hi:,.0f}B "
           f"= {pct_m2(lk_lo):.2f}% - {pct_m2(lk_hi):.2f}% of M2   "
-          f"[paper: $36B-$228B, 0.16%-1.02%]")
+          f"[paper: $36B-$224B, 0.16%-1.00%]")
 
     # Mode A central
     lk_a = leak(DELTA_A, 0.03, 0.15, 0.0)
@@ -60,7 +60,7 @@ def section_3_2a():
     for s in [0.0, 0.25, 0.50, 0.75, 0.90]:
         lk = leak(DELTA_B, 0.03, 0.15, s)
         print(f"   s_t={s:>4.2f}  ->  {pct_m2(lk):.2f}% of M2")
-    print("   [paper: 0.41 / 0.31 / 0.20 / 0.10 / 0.04 %]")
+    print("   [paper: 0.40 / 0.30 / 0.20 / 0.10 / 0.04 %]")
     print()
 
 
@@ -68,7 +68,7 @@ def section_3_2a():
 # SECTION 6.5 — structural-buyer valuation premium
 #   A* = gross - L_t ;   premium = A* / phi  (against capitalization)
 # ---------------------------------------------------------------------------
-GROSS = 455.0          # $B/yr gross FDCA equity purchase (Neo-Solon 2026a)
+GROSS = 447.0          # $B/yr gross FDCA equity purchase = K1+K2 line (Neo-Solon 2026a)
 CAP = 55_000.0         # $B total US equity capitalization (order of magnitude)
 
 
@@ -86,9 +86,9 @@ def section_6_5():
     for dd in [0.40, 0.60, 0.90]:
         a_star = net_absorption(GROSS, dd)
         print(f"   L_t={dd:>4.0%}  ->  A* = ${a_star:,.0f}B/yr = {100*a_star/CAP:.2f}% of cap")
-    print("   [paper: $273B/0.50% , $182B/0.33% , $45B/0.08%]")
+    print("   [paper: $268B/0.49% , $179B/0.33% , $45B/0.08%]")
 
-    # Premium at mid drawdown (A* ~ $182B, 0.33% of cap) across supply elasticity phi
+    # Premium at mid drawdown (A* ~ $179B, 0.33% of cap) across supply elasticity phi
     a_mid = net_absorption(GROSS, 0.60)
     base_pct = 100.0 * a_mid / CAP
     print(f"\nValuation premium at mid drawdown (A*=${a_mid:,.0f}B, {base_pct:.2f}% of cap):")

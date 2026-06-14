@@ -5,12 +5,12 @@ Numerical demonstration of Proposition 3 (convergence of the path-targeting
 dividend rule) from:
 
     Neo-Solon (2026e). The Citizens Standard: A Macroeconomic Model of a
-    Two-Circuit Monetary System. Working Paper. Section 4.3, Section 4.6,
+    Two-Circuit Monetary System. Working Paper. Section 4.4, Section 4.7,
     Appendix A.2 (Proposition 3).
 
 PROPOSITION 3 (restated).
-Let x_t = ln[desired_CPI(t) / CPI(t)] be the log price-path gap. The K3
-path-targeting rule injects g_K3(t) = lambda * x_{t-1}. With psi > 0 the
+Let x_t = ln[desired_CPI(t) / CPI(t)] be the log price-path gap. The KI
+path-targeting rule injects g_KI(t) = lambda * x_{t-1}. With psi > 0 the
 within-period pass-through from path-closure issuance to realized inflation,
 the gap evolves as:
 
@@ -25,10 +25,10 @@ This script does NOT prove the proposition (the proof is closed-form and
 stands alone in Appendix A.2). It simply *demonstrates* the classification
 by iterating the gap recursion across the parameter space and confirming the
 observed behavior matches the analytic regime boundaries. It also confirms
-the Mode T damper K3_T (effective gain chi*lambda <= lambda) inherits
+the Mode T damper KI_T (effective gain chi*lambda <= lambda) inherits
 convergence with strictly more margin.
 
-Reproduces the regime classification underlying Sections 3.5, 4.3, and 4.6.
+Reproduces the regime classification underlying Sections 3.5, 4.4, and 4.7.
 """
 
 import numpy as np
@@ -89,7 +89,7 @@ def analytic_regime(psi, lam):
 
 
 def main():
-    lam = 0.5  # baseline closure gain (paper Section 4.3)
+    lam = 0.5  # baseline closure gain (paper Section 4.4)
     print("=" * 70)
     print("PROPOSITION 3 — convergence regime classification (lambda = 0.5)")
     print("=" * 70)
@@ -111,7 +111,7 @@ def main():
     print()
 
     # --- The self-correction claim: any measured psi can be stabilized by lam < 1/psi
-    print("SELF-CORRECTION (Sections 3.5 / 4.3): for any psi, choose lambda < 1/psi")
+    print("SELF-CORRECTION (Sections 3.5 / 4.4): for any psi, choose lambda < 1/psi")
     print("-" * 70)
     for psi in [1.0, 2.0, 4.0, 8.0]:
         lam_safe = 0.9 / psi          # any lambda < 1/psi works; 0.9/psi is safely inside
@@ -120,8 +120,8 @@ def main():
         print(f"  psi={psi:>4.1f}  ->  choose lambda={lam_safe:.3f}  (psi*lambda={psi*lam_safe:.2f})  ->  {observed}")
     print()
 
-    # --- K3_T inherits stability: effective gain chi*lambda <= lambda
-    print("MODE T DAMPER K3_T (Section 4.6): effective gain chi*lambda <= lambda")
+    # --- KI_T inherits stability: effective gain chi*lambda <= lambda
+    print("MODE T DAMPER KI_T (Section 4.7): effective gain chi*lambda <= lambda")
     print("inherits convergence with strictly MORE margin for any chi in [0,1]")
     print("-" * 70)
     psi = 1.8  # a deliberately near-boundary pass-through at baseline lambda
@@ -134,8 +134,8 @@ def main():
         observed, _ = classify(path)
         print(f"  chi={chi:>4.2f}  ->  psi*chi*lambda={g:.3f}  ->  {observed}")
     print()
-    print("Conclusion: K3_T cannot oscillate on any setting the steady-state rule does not,")
-    print("and is strictly more stable whenever chi < 1. Matches Section 4.6 / Proposition 3.")
+    print("Conclusion: KI_T cannot oscillate on any setting the steady-state rule does not,")
+    print("and is strictly more stable whenever chi < 1. Matches Section 4.7 / Proposition 3.")
     print("=" * 70)
 
 
