@@ -3,7 +3,7 @@
   K1 aggregate       : $9.0B          (paper: ~$9B)
   growth-matched line: $447.3B        (paper: ~$447B)
   K2 (Mode B)        : $438.3B        (paper: ~$438B)
-  KI (Mode C launch) : $712B         (paper: ~$712B)
+  KI (Mode C launch) : $816B         (paper: ~$816B)
 
 === (B) Y.4 on the real engine: does holding ZERO cost the citizen dividend? ===
   Citizen dividend K3 = kappa_d * (g_r*M2 - K1_agg), drawn from the GROWTH budget,

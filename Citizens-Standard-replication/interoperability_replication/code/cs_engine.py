@@ -19,17 +19,21 @@ def growth_budget():   return g_r * M2               # growth-matched line, $B
 def K2_modeB():        return growth_budget() - K1_agg()   # residual after K1
 def K3(kappa_d):       return kappa_d * (growth_budget() - K1_agg())   # consumer dividend
 def K2_with_K3(kappa_d): return (1-kappa_d)*(growth_budget()-K1_agg()) # K3 shares K2 budget
-def KI_pathtarget(gap_closure, K1pK2):
-    return max(0.0, (gap_closure + g_r + pop_g)*M2 - K1pK2)  # price-level path targeting
+def KI_pathtarget(gap, K1pK2, pi_star=0.02, lam=0.5):
+    # Corrected price-level-path-targeting rule (see Paper 1, sec 6.1):
+    # maintenance term (pi* + g_r) sustains the target; error-correction lam*gap -> 0 on path.
+    # Population growth does NOT enter the aggregate rate.
+    return max(0.0, (pi_star + g_r + lam*gap)*M2 - K1pK2)
 
 print("=== (A) Does the real engine reproduce the PAPERS' OWN launch figures? ===")
 print(f"  K1 per new citizen : ${K1_per_citizen():,.0f}      (paper: ~$2,250)")
 print(f"  K1 aggregate       : ${K1_agg():.1f}B          (paper: ~$9B)")
 print(f"  growth-matched line: ${growth_budget():.1f}B        (paper: ~$447B)")
 print(f"  K2 (Mode B)        : ${K2_modeB():.1f}B        (paper: ~$438B)")
-# Mode C: KI launch with K1+K2 ~ $80B contributing, ~1.04% gap closure in yr 1
-KI = KI_pathtarget(0.0104, 80.0)
-print(f"  KI (Mode C launch) : ${KI:.0f}B         (paper: ~$712B)")
+# Mode C: clean launch -> gap=0, so KI is at its maintenance rate (pi*+g_r=4% of M2).
+# Mode C non-KI issuance (low-rate K2 with K1 netted) ~ 0.35% of M2 ~ $78B.
+KI = KI_pathtarget(0.0, 78.3)
+print(f"  KI (Mode C launch) : ${KI:.0f}B         (paper: ~$816B)")
 
 print("\n=== (B) Y.4 on the real engine: does holding ZERO cost the citizen dividend? ===")
 print("  Citizen dividend K3 = kappa_d * (g_r*M2 - K1_agg), drawn from the GROWTH budget,")

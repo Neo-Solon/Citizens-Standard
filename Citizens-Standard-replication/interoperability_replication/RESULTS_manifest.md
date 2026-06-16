@@ -11,7 +11,7 @@ in the stochastic scripts). Environment in `requirements.txt`.
 | K1 aggregate | $9.0B | cs_engine.py | (A) |
 | Growth-matched line (g_r·M2) | $447B | cs_engine.py | (A) |
 | K2 (Mode B) | $438B | cs_engine.py | (A) |
-| KI (Mode C launch) | $712B | cs_engine.py | (A) |
+| KI (Mode C launch) | $816B | cs_engine.py | (A) |
 | Citizen dividend K3, flat across regimes | $219B | cs_engine.py | (B); fig_A1_dividend.png |
 | Bundled dividend (0% / +2% / +3%) | $0 / $447B / $671B | cs_engine.py | (B); fig_A1 |
 
