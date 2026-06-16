@@ -7,11 +7,12 @@ runs independently.
 
 ```
 Citizens-Standard-replication/
-├── empirical_replication/         ← Paper 2  Historical Counterfactual          (SSRN 6735078)
-├── transition_replication/        ← Paper 3  Transition Architecture            (SSRN 6810741)
-├── macro_replication/             ← Paper 5  Macroeconomic Model                (SSRN 6939418)
-├── banking_replication/           ← Paper 6  Full-Reserve Banking & Inside Money (SSRN 6939498)
-└── interoperability_replication/  ← Paper 7  External Interoperability          (SSRN 6939600)
+├── empirical_replication/         ← Paper 2  Historical Counterfactual                        (SSRN 6735078)
+├── transition_replication/        ← Paper 3  Transition Architecture                          (SSRN 6810741)
+├── macro_replication/             ← Paper 5  Macroeconomic Model                              (SSRN 6939418)
+├── banking_replication/           ← Paper 6  Full-Reserve Banking and the Two-Circuit System  (SSRN 6939498)
+├── interoperability_replication/  ← Paper 7  External Interoperability                        (SSRN 6939600)
+└── structural_buyer_replication/  ← Paper 8  Structural Buyer                                 (SSRN 6945320)
 ```
 
 ## Which subfolder reproduces what
@@ -51,13 +52,19 @@ Citizens-Standard-replication/
   map), `outputs/` (captured stdout from every script), a pinned `requirements.txt`, and
   `LICENSE.txt`.
 
+- **structural_buyer_replication/ — Paper 8.** A code-only computational supplement (no dataset, no
+  figures) that verifies the numerical claims behind the analytically-tractable propositions: the
+  bounded valuation premium A\*/φ and its stability band (Prop 1), the steady-state identity I\* = A\*
+  with geometric repricing decay and total repricing A\*/φ (Prop 2), the κ_W-bounded consumption leak
+  (Prop 3), and the mirror-voting neutrality identity (Prop 7), plus the ownership-plateau result
+  ψ\* = c·dur (Appendix A.6). Propositions 4–6 are mechanism/threshold results argued in the main
+  text. Pure Python (`numpy`).
+
 ## Papers without a standalone package
 
 Papers 1 (Architecture, SSRN 6702518) and 4 (Statutory Implementation, SSRN 6873798) have no
 standalone computational model; they cite the figures reproduced in the archives above. Paper 1's
-interactive companion is the `Citizens_Standard_Engine.html` at the repository root. Paper 8
-(Structural Buyer, SSRN 6945320) is an analytical extension and currently ships no standalone
-package.
+interactive companion is the `Citizens_Standard_Engine.html` at the repository root.
 
 ## How to run
 
@@ -88,6 +95,10 @@ python3 run_all.py > ../all_results.txt  # five verifiers + four figures
 cd interoperability_replication
 pip install -r requirements.txt
 python run_all.py                        # deterministic; full claim → output map in RESULTS_manifest.md
+
+# Paper 8 — structural buyer
+cd structural_buyer_replication/code
+python3 run_all.py                       # five proposition verifiers (no dataset, no figures)
 ```
 
 Each model is parameterized from the figures stated in its header. Where a subfolder ships an
