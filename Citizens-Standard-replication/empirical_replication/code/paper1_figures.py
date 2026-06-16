@@ -29,11 +29,12 @@ YEARS = 65
 # Drifts
 DRIFT = {"current":0.03, "C":0.02, "B":0.0, "A":-0.016}
 # M2 growth rates (full-rate Mode B ~2%; Mode A 0.35%; C 4.5%; current 6.5%)
-M2G = {"current":0.065, "C":0.045, "B":0.020, "A":0.0035}
+M2G = {"current":0.065, "C":0.040, "B":0.020, "A":0.0035}
 
 # Validated residual-calibration Stable Floor real figures (2025$, projected launch cohort)
-# Anchored to empirical paper full-rate: A ~$1.70M, B ~$1.29M (historical anchor), C ~$145K
-SF_REAL = {"A":1.70e6, "B":1.29e6, "C":0.145e6}
+# Corrected real-return Stable Floor (2025$, projected launch cohort, central 4.5%): see Paper 1 Fig 3.
+# A ~$160K, B ~$745K (full-rate), C ~$158K (shares A's K1/K2; equity floor not eroded by inflation).
+SF_REAL = {"A":0.160e6, "B":0.745e6, "C":0.158e6}
 MEDIAN_401K = 95e3
 
 def cpi_path(drift, years=YEARS):
@@ -72,15 +73,15 @@ def fig1_wealth_accumulation(path):
     ax1.set_xlabel("Age (years from birth)"); ax1.set_ylabel("$K (nominal)")
     ax1.legend(); ax1.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x,_:f"${x:.0f}K"))
     # REAL
-    labels={"A":"Mode A (real — ~$1.7M at 65)","B":"Mode B (real — ~$1.29M at 65)","C":"Mode C (real — ~$145K at 65)"}
+    labels={"A":"Mode A (real — ~$160K at 65)","B":"Mode B (real — ~$745K at 65)","C":"Mode C (real — ~$158K at 65)"}
     for m in ["A","B","C"]:
         real=real_accum(SF_REAL[m])
         ax2.plot(t,real/1e3,color=C[m],lw=2.5,label=labels[m])
     ax2.plot(t,real_accum(MEDIAN_401K)/1e3,":",color=C["current"],lw=2.2,label="Median US 401(k) (~$95K)")
     # endpoint annotations
-    ax2.annotate("$1.7M",(YEARS,SF_REAL["A"]/1e3),color=C["A"],fontweight="bold",fontsize=11,xytext=(3,0),textcoords="offset points")
-    ax2.annotate("$1.29M",(YEARS,SF_REAL["B"]/1e3),color=C["B"],fontweight="bold",fontsize=11,xytext=(3,-12),textcoords="offset points")
-    ax2.annotate("$145K",(YEARS,SF_REAL["C"]/1e3),color=C["C"],fontweight="bold",fontsize=11,xytext=(3,0),textcoords="offset points")
+    ax2.annotate("$160K",(YEARS,SF_REAL["A"]/1e3),color=C["A"],fontweight="bold",fontsize=11,xytext=(3,0),textcoords="offset points")
+    ax2.annotate("$745K",(YEARS,SF_REAL["B"]/1e3),color=C["B"],fontweight="bold",fontsize=11,xytext=(3,-12),textcoords="offset points")
+    ax2.annotate("$158K",(YEARS,SF_REAL["C"]/1e3),color=C["C"],fontweight="bold",fontsize=11,xytext=(3,0),textcoords="offset points")
     ax2.set_title("Stable Floor — Real (2025 Dollars)")
     ax2.set_xlabel("Age (years from birth)"); ax2.set_ylabel("$K (2025 dollars)")
     ax2.legend(loc="upper left"); ax2.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x,_:f"${x:.0f}K"))
@@ -138,9 +139,9 @@ def fig3_composite(path):
     ax.set_xlabel("Years from launch"); ax.set_ylabel("M2 ($T, log scale)"); ax.legend()
     # Panel 3: stable floor real
     ax=axes[1,0]
-    ax.plot(t,real_accum(SF_REAL["A"])/1e3,color=C["A"],lw=2.3,label="Mode A (~$1.7M real)")
-    ax.plot(t,real_accum(SF_REAL["B"])/1e3,color=C["B"],lw=2.3,label="Mode B (~$1.29M real)")
-    ax.plot(t,real_accum(SF_REAL["C"])/1e3,color=C["C"],lw=2.3,label="Mode C floor (~$145K)")
+    ax.plot(t,real_accum(SF_REAL["A"])/1e3,color=C["A"],lw=2.3,label="Mode A (~$160K real)")
+    ax.plot(t,real_accum(SF_REAL["B"])/1e3,color=C["B"],lw=2.3,label="Mode B (~$745K real)")
+    ax.plot(t,real_accum(SF_REAL["C"])/1e3,color=C["C"],lw=2.3,label="Mode C floor (~$158K)")
     ax.plot(t,real_accum(MEDIAN_401K)/1e3,":",color=C["current"],lw=2.2,label="Median US 401(k) (~$95K)")
     ax.set_title("Stable Floor Capital Stake (2025 Dollars)")
     ax.set_xlabel("Age (years from birth)"); ax.set_ylabel("$K (2025 dollars)")
@@ -308,17 +309,19 @@ def fig8_transitions(path):
     ax.set_title("Price Level: C → Transition at Yr 30"); ax.set_xlabel("Years"); ax.set_ylabel("CPI (1.0 = launch)"); ax.legend(fontsize=8)
     # Panel 3: K3 activate/deactivate
     ax=axes[1,0]
-    k3a=np.where(t>=30,280,0); k3a=np.where(t<30,0,280.0)
-    k3_ac=np.where(t>=30,280,0.0)
-    k3_end=np.where(t<30,280,0.0); k3_end[t<5]=np.linspace(173,280,(t<5).sum())
-    ax.plot(t,k3_ac,color=C["C"],lw=2.5,label="A→C: K3 activates")
-    ax.plot(t,np.where(t<30,280,0.0),"--",color=C["A"],lw=2,label="C→A: K3 ends")
+    # Mode C citizen dividend (KI), flat ~$199 at launch scaling toward ~$210; not the old 173->280 ramp.
+    k3_ac=np.where(t>=30,210,0.0)
+    ax.plot(t,k3_ac,color=C["C"],lw=2.5,label="A→C: KI dividend activates (~$199–210/mo)")
+    ax.plot(t,np.where(t<30,210,0.0),"--",color=C["A"],lw=2,label="C→A: dividend ends")
     ax.axvline(30,ls=":",color="gray",alpha=0.6)
     ax.set_title("K3 Channel Activates / Deactivates Cleanly"); ax.set_xlabel("Years"); ax.set_ylabel("$/month per citizen"); ax.legend(fontsize=9)
     # Panel 4: lifetime real value by scenario
     ax=axes[1,1]
     labels=["Pure A","Pure B","Pure C","A→B@30","A→C@30","B→C@30","C→A@30","C→B@30"]
-    vals=[1700,1320,145,1480,520,640,950,820]  # full-rate: Pure B now 1320 (was ~1550)
+    # Lifetime real captured value (floor + cumulative KI), derived from the corrected transition
+    # engine (mode switch at age 30, central 4.5% return) -- reproducible via transition_lifetime.py.
+    # Pure A/B = floor only; Pure C = floor $158K + KI $262K = $420K. Transitions switch at age 30.
+    vals=[159,745,420,343,332,734,247,431]
     cols=[C["A"],C["B"],C["C"],C["A"],C["C"],C["C"],C["A"],C["B"]]
     ax.bar(range(8),vals,color=cols)
     ax.set_xticks(range(8)); ax.set_xticklabels(labels,rotation=30,ha="right",fontsize=9)
