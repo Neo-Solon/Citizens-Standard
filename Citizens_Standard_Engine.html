@@ -360,7 +360,7 @@
 <div class="modes" role="tablist">
   <button class="mode-btn" data-mode="A" title="Mild deflation: every dollar a citizen holds gains purchasing power. No monthly dividend.">Mode A · Rising real wages (deflation)</button>
   <button class="mode-btn active" data-mode="B" title="Price stability. Highest Stable Floor without dividend.">Mode B · Stable prices (neutral)</button>
-  <button class="mode-btn" data-mode="C" title="Modest ~2% inflation. K1/K2 stay at Mode A's low floor rate; the KI inflation-gap channel funds a meaningful monthly dividend (~$210/citizen). Trades a smaller locked floor for visible income now.">Mode C · Modest inflation + dividend</button>
+  <button class="mode-btn" data-mode="C" title="Modest ~2% inflation. K1/K2 stay at a low floor-building rate; the KI inflation-gap channel funds a meaningful monthly dividend (~$210/citizen). Trades a smaller locked floor for visible income now.">Mode C · Modest inflation + dividend</button>
   <button class="mode-btn" data-mode="D" title="Price stability AND a standing dividend. K2/K3 split the full growth budget — half builds your locked floor, half pays out as spendable income — with zero inflation (KI off). A dividend without the inflation tax.">Mode D · Dividend, no inflation</button>
   <button class="mode-btn" data-mode="X">Custom</button>
 </div>
@@ -380,11 +380,11 @@
     <p class="card-title">Macro environment</p>
     <div class="row"><span class="label">Real growth</span><input type="range" id="rg" min="-1" max="5" step="0.1" value="2.0"><span class="readout" id="rgr">2.0%</span></div>
     <div class="row"><span class="label">Pop. growth</span><input type="range" id="pg" min="-0.5" max="2" step="0.1" value="0.5"><span class="readout" id="pgr">0.5%</span></div>
-    <div class="row"><span class="label">Equity return</span><input type="range" id="er" min="2" max="10" step="0.1" value="7.0"><span class="readout" id="err">7.0%</span></div>
+    <div class="row"><span class="label">Equity real return</span><input type="range" id="er" min="2" max="10" step="0.1" value="4.5"><span class="readout" id="err">4.5%</span></div>
     <div style="display: flex; gap: 6px; margin: -4px 0 8px; padding-left: 142px; flex-wrap: wrap;">
       <button class="er-preset" data-er="3.0" title="Conservative: lost-decade-style returns (2000s).">Pessimistic 3%</button>
-      <button class="er-preset" data-er="4.5" title="Forward-looking forecasts from Vanguard, Research Affiliates, AQR for next decade.">Forecast 4.5%</button>
-      <button class="er-preset active" data-er="6.5" title="Long-run US historical real return (Shiller 1871-2024).">Historical 6.5%</button>
+      <button class="er-preset active" data-er="4.5" title="Forward-looking central forecast (Vanguard, Research Affiliates, AQR) for the next decade.">Central 4.5%</button>
+      <button class="er-preset" data-er="6.5" title="Long-run US historical real return (Shiller 1871-2024).">Historical 6.5%</button>
     </div>
     <div class="row"><span class="label">Implied inflation</span><span class="readout" id="cpir" style="font-weight:700; font-size:15px; flex:0 0 auto;">0.0%</span><span id="cpiChar" style="font-size:11px; margin-left:10px;"></span></div>
     <p class="card-note" id="cpiBreakdown" style="margin-top:2px;">Derived from the channels above — not set by hand.</p>
@@ -438,7 +438,7 @@
 
   <div id="config-banner" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 14px; margin-bottom: 16px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
     <span><strong>Your current configuration:</strong> <span id="config-summary">—</span></span>
-    <button id="reset-mode-b" style="padding: 4px 12px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); cursor: pointer; font-size: 12px; color: var(--text-muted); font-family: var(--font);">Reset to Mode B + Historical 6.5%</button>
+    <button id="reset-mode-b" style="padding: 4px 12px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); cursor: pointer; font-size: 12px; color: var(--text-muted); font-family: var(--font);">Reset to Mode B + Central 4.5%</button>
   </div>
 
   <div class="scenario-pills">
@@ -550,7 +550,7 @@
   <div style="background: var(--red-bg); border-left: 3px solid var(--red); padding: 14px 18px; border-radius: var(--radius); margin-bottom: 24px;">
     <p style="margin: 0 0 6px; font-weight: 600; color: var(--red); font-size: 13px;">⚠ This is an illustrative projection, not a guarantee.</p>
     <p style="margin: 0; font-size: 12px; color: var(--text); line-height: 1.6;">
-      The headline numbers (e.g., $1.9M Stable Floor at retirement under Mode B defaults) assume <strong>steady 6.5% real equity returns over 65 years with no major crashes, recessions, or secular slowdowns</strong>. Real-world outcomes will almost certainly differ — possibly by hundreds of thousands of dollars in either direction. Forward-looking equity return forecasts from Vanguard, Research Affiliates, and AQR currently project <strong>4-5% real for the next decade</strong>, not the long-run historical 6.5%. Use the Stress Test tab to see what the framework actually delivers under historical adverse sequences (Great Depression, 1970s stagflation, 2000s lost decade). The Citizens Standard's structural advantage over the status quo is robust, but the specific dollar figures depend heavily on assumptions you can adjust. <strong>Treat all projections as "could be very large wealth if conditions cooperate" rather than promises.</strong>
+      The headline numbers (e.g., the ~$0.74M Mode B Stable Floor at the 4.5% real central default, or ~$1.83M at the 6.5% historical preset) assume <strong>steady real equity returns over 65 years with no major crashes, recessions, or secular slowdowns</strong>. Real-world outcomes will almost certainly differ — possibly by hundreds of thousands of dollars in either direction. Forward-looking equity return forecasts from Vanguard, Research Affiliates, and AQR currently project <strong>4-5% real for the next decade</strong>, not the long-run historical 6.5%. Use the Stress Test tab to see what the framework actually delivers under historical adverse sequences (Great Depression, 1970s stagflation, 2000s lost decade). The Citizens Standard's structural advantage over the status quo is robust, but the specific dollar figures depend heavily on assumptions you can adjust. <strong>Treat all projections as "could be very large wealth if conditions cooperate" rather than promises.</strong>
     </p>
   </div>
 
@@ -562,11 +562,11 @@
   <p><strong>Bitcoin:</strong> Treated as a savings vehicle at the user-set equity return for fair comparison. Real Bitcoin returns have been wildly volatile and are not predictive.</p>
 
   <h3>Engine methodology</h3>
-  <p>Single-cohort projection: tracks one citizen born at year 0. K1 deposited once at birth; K2 deposited annually into the locked floor; K3 (κ_d), when active, reallocates that share of the K2 budget into a monthly dividend; KI, when active, adds issuance above the growth line. Stable Floor compounds at the equity return rate. Real values deflate by CPI index. Each year, M2 expands by total issuance, GDP grows at real growth × CPI, and population grows at the pop-growth rate.</p>
+  <p>Single-cohort projection: tracks one citizen born at year 0. K1 deposited once at birth; K2 deposited annually into the locked floor; K3 (κ_d), when active, reallocates that share of the K2 budget into a monthly dividend; KI, when active, adds issuance above the growth line. The Stable Floor's real value compounds at the real equity return (uniform across Modes). Dividends and cash are shown in real, CPI-deflated terms. Each year, M2 expands by total issuance, GDP grows at real growth × CPI, and population grows at the pop-growth rate.</p>
   <p>For comparison columns, "median outcome" uses real-world median 401(k) balance ($95,642) at retirement age and actual SS average benefit. "Average outcome" uses Vanguard's average 401(k) balance ($271,320) and average SS. "After SS trust depletion" applies a 23% cut to Social Security benefits per Trustees' projections. None of these scenarios assume perfect savings discipline over 43 years — they reflect what Americans actually retire with.</p>
 
   <h3>Honest caveats</h3>
-  <p>Inflation is derived from issuance (total new money as a share of M2, minus real growth), a quantity-theory approximation of the paper's price-level mechanism rather than its full targeting formula. K3 (κ_d) reallocates a share of the growth budget into a price-neutral dividend — the engine treats it as fully absorbed by the transactional circuit, so it lowers the floor without moving prices; beyond the M^T ceiling it would instead add to inflation (Mode C). KI is modeled as a flat percent of M2 issued above the growth line, and is the channel that moves the price level. Equity return compounds the Stable Floor; real values are obtained by deflating with the derived price index, so deflationary Mode A shows a purchasing-power boost and inflationary Mode C is eroded. Births computed as population × pop-growth (real demographics are more complex). The full paper's projections include stochastic returns, mode transitions, sequence-of-returns risk, and emergency tools — this engine is for intuition, not policy calibration.</p>
+  <p>Inflation is derived from issuance (total new money as a share of M2, minus real growth), a quantity-theory approximation of the paper's price-level mechanism rather than its full targeting formula. K3 (κ_d) reallocates a share of the growth budget into a price-neutral dividend — the engine treats it as fully absorbed by the transactional circuit, so it lowers the floor without moving prices; beyond the M^T ceiling it would instead add to inflation (Mode C). KI is modeled as a flat percent of M2 issued above the growth line, and is the channel that moves the price level. The Stable Floor holds total-market equity, so its real value compounds at the real equity return, uniform across Modes &mdash; a real asset's real return does not depend on the Mode's CPI regime. Deflation and inflation therefore act on the circulating pool (cash, wages, and the KI/K3 dividends, shown in real terms), not on the real value of the locked equity floor: Mode A's deflation appears as rising real wages and appreciating cash rather than a larger floor. Births computed as population × pop-growth (real demographics are more complex). The full paper's projections include stochastic returns, mode transitions, sequence-of-returns risk, and emergency tools — this engine is for intuition, not policy calibration.</p>
   <p>Built from <em>The Citizens Standard: A Constitutional Monetary Architecture with Mode-Selectable Inflation Regimes</em> (2026) by Neo-Solon. Open-source, free to share, embed, or adapt.</p>
 </footer>
 
@@ -588,7 +588,7 @@
   };
 
   const presets = {
-    A: { k1: 2.5, k2: 12.5, k3: 0,  ki: 0,    cpi: -1.6 },
+    A: { k1: 2.5, k2: 20,   k3: 0,  ki: 0,    cpi: -1.6 },
     B: { k1: 2.5, k2: 100,  k3: 0,  ki: 0,    cpi: 0.0  },
     C: { k1: 2.5, k2: 12.5, k3: 0,  ki: 3.75, cpi: 2.0  },
     D: { k1: 2.5, k2: 100,  k3: 50, ki: 0,    cpi: 0.0  }
@@ -685,7 +685,7 @@
   function simulate(p){
     const years = [];
     let m2 = p.m2, gdp = p.gdp, pop = p.pop;
-    let cpiIdx = 1.0, floor = 0, k3Cum = 0;
+    let cpiIdx = 1.0, floor = 0, floorReal = 0, k3Cum = 0;
     let births = pop * p.pg;
 
     for (let t = 0; t <= p.hz; t++){
@@ -701,14 +701,20 @@
       const k3pc = k3Total / pop;
 
       const deposit = (t === 0 ? k1pc : 0) + k2pc;
-      floor = (floor + deposit) * (1 + p.er);
+      // Stable Floor holds total-market EQUITY: its REAL value compounds at the REAL
+      // equity return, uniform across Modes (a real asset's real return does not depend
+      // on the Mode's CPI regime). Deflation/inflation acts on the circulating pool
+      // (cash, wages, dividends), NOT on the real value of the locked equity floor.
+      const depositReal = deposit / cpiIdx;
+      floorReal = (floorReal + depositReal) * (1 + p.er);
+      floor = floorReal * cpiIdx;
       k3Cum += k3pc / cpiIdx;
 
       years.push({
         t, m2, gdp, pop, cpiIdx,
         k1Total, k2Total, k3Total, kiTotal,
         k1pc, k2pc, k3pc,
-        floor, floorReal: floor / cpiIdx,
+        floor, floorReal,
         k3Monthly: k3pc / 12
       });
 
@@ -767,7 +773,7 @@
     // matching the stress sequence's start age and duration.
     const years = [];
     let m2 = p.m2, gdp = p.gdp, pop = p.pop;
-    let cpiIdx = 1.0, floor = 0, k3Cum = 0;
+    let cpiIdx = 1.0, floor = 0, floorReal = 0, k3Cum = 0;
     let births = pop * p.pg;
 
     // For 'all-bad': stack all three sequences sequentially during working years
@@ -811,12 +817,14 @@
       const k3pc = k3Total / pop;
 
       const deposit = (t === 0 ? k1pc : 0) + k2pc;
-      floor = (floor + deposit) * (1 + er);
+      const depositReal = deposit / cpiIdx;
+      floorReal = (floorReal + depositReal) * (1 + er);
+      floor = floorReal * cpiIdx;
       k3Cum += k3pc / cpiIdx;
 
       years.push({
         t, m2, gdp, pop, cpiIdx,
-        floor, floorReal: floor / cpiIdx,
+        floor, floorReal,
         appliedReturn: er, appliedCpi: cpi
       });
 
@@ -938,7 +946,7 @@
     $('ltd').textContent = lifetimeDiv > 0 ? fmt(lifetimeDiv) : '—';
     $('tlv').textContent = fmt(last.floorReal + lifetimeDiv);
 
-    const erR = [0.05, 0.07, 0.09];
+    const erR = [0.03, 0.045, 0.065];
     const erF = erR.map(r => { const s = simulate(Object.assign({}, p, { er: r })); return s[s.length - 1].floorReal; });
     if ($('erSens')) $('erSens').innerHTML =
       'Stable Floor by equity real return &mdash; ' +
@@ -1453,8 +1461,8 @@
   const resetBtn = $('reset-mode-b');
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
-      $('er').value = '6.5';
-      document.querySelectorAll('.er-preset').forEach(x => x.classList.toggle('active', x.dataset.er === '6.5'));
+      $('er').value = '4.5';
+      document.querySelectorAll('.er-preset').forEach(x => x.classList.toggle('active', x.dataset.er === '4.5'));
       applyMode('B');
     });
   }
