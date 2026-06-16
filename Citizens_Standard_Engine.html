@@ -353,14 +353,15 @@
     The Citizens Standard is a constitutional monetary framework that replaces central-bank discretion with three rules-based issuance channels. Every dollar of new money is distributed equally to all citizens — split between locked citizen equity (the <strong>Stable Floor</strong>) and, in inflation Mode, monthly dividends.
   </p>
   <p style="margin: 0; color: var(--accent-text); font-size: 13px; line-height: 1.65;">
-    <strong>How to use:</strong> Pick a Mode below to see one of the framework's three constitutional configurations. Adjust any slider to build your own. The stat cards and charts update live. The <em>vs. real outcomes</em> tab compares your configuration to what Americans actually retire with under today's system.
+    <strong>How to use:</strong> Pick a Mode below to see one of the framework's four constitutional configurations. Adjust any slider to build your own. The stat cards and charts update live. The <em>vs. real outcomes</em> tab compares your configuration to what Americans actually retire with under today's system.
   </p>
 </div>
 
 <div class="modes" role="tablist">
   <button class="mode-btn" data-mode="A" title="Mild deflation: every dollar a citizen holds gains purchasing power. No monthly dividend.">Mode A · Rising real wages (deflation)</button>
   <button class="mode-btn active" data-mode="B" title="Price stability. Highest Stable Floor without dividend.">Mode B · Stable prices (neutral)</button>
-  <button class="mode-btn" data-mode="C" title="Modest ~2% inflation via the KI inflation-gap channel (K2 stays at full rate).">Mode C · Modest inflation</button>
+  <button class="mode-btn" data-mode="C" title="Modest ~2% inflation. K1/K2 stay at Mode A's low floor rate; the KI inflation-gap channel funds a meaningful monthly dividend (~$210/citizen). Trades a smaller locked floor for visible income now.">Mode C · Modest inflation + dividend</button>
+  <button class="mode-btn" data-mode="D" title="Price stability AND a standing dividend. K2/K3 split the full growth budget — half builds your locked floor, half pays out as spendable income — with zero inflation (KI off). A dividend without the inflation tax.">Mode D · Dividend, no inflation</button>
   <button class="mode-btn" data-mode="X">Custom</button>
 </div>
 
@@ -369,7 +370,7 @@
     <p class="card-title">Issuance channels</p>
     <div class="row"><span class="label">K1 — Citizenship</span><input type="range" id="k1" min="0" max="10" step="0.1" value="2.5"><span class="readout" id="k1r">2.5%</span></div>
     <div class="row"><span class="label">K2 — Growth rate</span><input type="range" id="k2" min="0" max="100" step="0.5" value="100"><span class="readout" id="k2r">100%</span></div>
-    <div class="row"><span class="label">K2 / K3 split (κ_d)</span><input type="range" id="k3" min="0" max="100" step="1" value="0"><span class="readout" id="k3r">0%</span></div>
+    <div class="row"><span class="label">K2 / K3 split — dividend share (κ_d)</span><input type="range" id="k3" min="0" max="100" step="1" value="0"><span class="readout" id="k3r">0%</span></div>
     <p class="card-note" id="splitNote" style="margin:2px 0 0;color:var(--teal-text)">Growth budget → <strong id="splitFloor">100%</strong> locked floor (K2) · <strong id="splitDiv">0%</strong> spendable dividend (K3). Always sums to 100% — moving the dividend up lowers the floor by the same dollars; total money issued is unchanged.</p>
     <div class="row" style="margin-top:8px"><span class="label">KI — Inflation-gap</span><input type="range" id="ki" min="0" max="6" step="0.1" value="0"><span class="readout" id="kir">0.0%</span></div>
     <p class="card-note">K1: % of GDP per capita per new citizen. <strong>K2 — Growth rate:</strong> the share of the real-growth-matched budget that is issued — 100% holds prices stable (Mode B), ~12.5% gives mild deflation (Mode A). This sets <em>how much</em> new money is created. <strong>K2/K3 split (κ_d):</strong> of that one budget, how much locks into Stable Floors (K2) versus pays out as a monthly dividend (K3) — the two shares sum to 100% and the split is price-neutral (it moves money between locked and spendable, not the total). <strong>KI — Inflation-gap:</strong> % of M2 issued <em>above</em> the growth line; the only channel that creates inflation (Mode C).</p>
@@ -379,7 +380,7 @@
     <p class="card-title">Macro environment</p>
     <div class="row"><span class="label">Real growth</span><input type="range" id="rg" min="-1" max="5" step="0.1" value="2.0"><span class="readout" id="rgr">2.0%</span></div>
     <div class="row"><span class="label">Pop. growth</span><input type="range" id="pg" min="-0.5" max="2" step="0.1" value="0.5"><span class="readout" id="pgr">0.5%</span></div>
-    <div class="row"><span class="label">Equity return</span><input type="range" id="er" min="2" max="10" step="0.1" value="6.5"><span class="readout" id="err">6.5%</span></div>
+    <div class="row"><span class="label">Equity return</span><input type="range" id="er" min="2" max="10" step="0.1" value="7.0"><span class="readout" id="err">7.0%</span></div>
     <div style="display: flex; gap: 6px; margin: -4px 0 8px; padding-left: 142px; flex-wrap: wrap;">
       <button class="er-preset" data-er="3.0" title="Conservative: lost-decade-style returns (2000s).">Pessimistic 3%</button>
       <button class="er-preset" data-er="4.5" title="Forward-looking forecasts from Vanguard, Research Affiliates, AQR for next decade.">Forecast 4.5%</button>
@@ -403,12 +404,13 @@
 <div class="stats">
   <div class="stat"><p class="stat-label">Stable Floor at horizon</p><p class="stat-val" id="sf">—</p><p class="stat-sub">launch-year purchasing power</p></div>
   <div class="stat"><p class="stat-label">Annual real income</p><p class="stat-val" id="ari">—</p><p class="stat-sub">at 4% withdrawal</p></div>
-  <div class="stat"><p class="stat-label">K3 monthly / citizen</p><p class="stat-val" id="k3d">—</p><p class="stat-sub">year 1 dividend</p></div>
+  <div class="stat"><p class="stat-label">Monthly dividend / citizen</p><p class="stat-val" id="k3d">—</p><p class="stat-sub">year 1 &middot; &kappa;_d + KI</p></div>
   <div class="stat"><p class="stat-label">Issuance / M2</p><p class="stat-val" id="iss">—</p><p class="stat-sub">total annual, year 1</p></div>
   <div class="stat"><p class="stat-label">Cost / GDP</p><p class="stat-val" id="cgdp">—</p><p class="stat-sub">total annual, year 1</p></div>
-  <div class="stat"><p class="stat-label">Lifetime dividend</p><p class="stat-val" id="ltd">—</p><p class="stat-sub">cumulative K3, real</p></div>
+  <div class="stat"><p class="stat-label">Lifetime dividend</p><p class="stat-val" id="ltd">—</p><p class="stat-sub">cumulative, real</p></div>
   <div class="stat"><p class="stat-label">Total lifetime value</p><p class="stat-val" id="tlv">—</p><p class="stat-sub">floor + dividends</p></div>
 </div>
+<p class="card-note" id="erSens" style="margin:10px 2px 0;color:var(--text-muted)">—</p>
 
 <div class="tabs" role="tablist">
   <div class="tab active" data-tab="floor">Stable Floor growth</div>
@@ -463,7 +465,7 @@
 
   <p style="font-size: 12px; color: var(--text-dim); margin: 16px 0 0; line-height: 1.6;">
     <strong>Reading the comparison:</strong> "Wealth at 65" is locked savings/equity. "Lifetime cash" is total dividends/transfers received during working life and retirement. "Total real value" sums both — this is the fairest single number for cross-system comparison since Modes B and C make different tradeoffs between locked wealth and ongoing dividends.
-    Mode B is the cleanest apples-to-apples comparison with the Fed status quo since both target price stability, and under identical return assumptions it produces the largest locked Stable Floor (it issues at the full real-growth-matched rate). Mode A optimizes for rising real wages and purchasing-power preservation — every dollar a citizen holds gains value — at the cost of a smaller locked floor and no income stream; Mode C optimizes for a monthly dividend (gives up locked wealth).
+    Mode B is the cleanest apples-to-apples comparison with the Fed status quo since both target price stability, and under identical return assumptions it produces the largest locked Stable Floor (it issues at the full real-growth-matched rate). Mode A optimizes for rising real wages and purchasing-power preservation — every dollar a citizen holds gains value — at the cost of a smaller locked floor and no income stream; Mode C optimizes for a monthly dividend funded by modest inflation (gives up locked wealth); Mode D pays a standing dividend with zero inflation by splitting the growth budget, trading part of the floor for current income.
     Citizens Standard delivers equity to every citizen automatically — no savings discipline required. Real-world systems require individual savings effort that most Americans never achieve.
   </p>
 </div>
@@ -471,7 +473,7 @@
 <div id="inflation-view" style="display:none;">
   <div class="info-banner">
     <strong>Inflation paths:</strong> Each system's CPI trajectory over 65 years. The Citizens Standard rate is derived from your issuance settings, not assumed.
-    The Citizens Standard's three Modes are deliberate constitutional targets.
+    The Citizens Standard's four Modes are deliberate constitutional targets.
     Other systems' inflation paths reflect their actual or theoretical behavior.
   </div>
   <div class="legend" id="inflation-legend"></div>
@@ -586,9 +588,10 @@
   };
 
   const presets = {
-    A: { k1: 2.5, k2: 12.5, k3: 0, ki: 0,   cpi: -1.6 },
-    B: { k1: 2.5, k2: 100,  k3: 0, ki: 0,   cpi: 0.0  },
-    C: { k1: 2.5, k2: 100,  k3: 0, ki: 2.0, cpi: 2.0  }
+    A: { k1: 2.5, k2: 12.5, k3: 0,  ki: 0,    cpi: -1.6 },
+    B: { k1: 2.5, k2: 100,  k3: 0,  ki: 0,    cpi: 0.0  },
+    C: { k1: 2.5, k2: 12.5, k3: 0,  ki: 3.75, cpi: 2.0  },
+    D: { k1: 2.5, k2: 100,  k3: 50, ki: 0,    cpi: 0.0  }
   };
 
   // REAL-WORLD DATA (verified from sources, see footer)
@@ -926,13 +929,21 @@
 
     $('sf').textContent = fmt(last.floorReal);
     $('ari').textContent = fmt(last.floorReal * p.wr);
-    $('k3d').textContent = y1.k3Monthly > 0 ? fmt(y1.k3Monthly) : '—';
+    const divM = ((y1.k3pc || 0) + (y1.pop > 0 ? y1.kiTotal / y1.pop : 0)) / 12;
+    $('k3d').textContent = divM > 0 ? fmt(divM) : '—';
     const totalIssY1 = y1.k1Total + y1.k2Total + y1.k3Total + y1.kiTotal;
     $('iss').textContent = (totalIssY1 / p.m2 * 100).toFixed(2) + '%';
     $('cgdp').textContent = (totalIssY1 / p.gdp * 100).toFixed(2) + '%';
-    const lifetimeDiv = sim.reduce((s, y) => s + (y.k3pc || 0) / y.cpiIdx, 0);
+    const lifetimeDiv = sim.reduce((s, y) => s + ((y.k3pc || 0) + (y.pop > 0 ? y.kiTotal / y.pop : 0)) / y.cpiIdx, 0);
     $('ltd').textContent = lifetimeDiv > 0 ? fmt(lifetimeDiv) : '—';
     $('tlv').textContent = fmt(last.floorReal + lifetimeDiv);
+
+    const erR = [0.05, 0.07, 0.09];
+    const erF = erR.map(r => { const s = simulate(Object.assign({}, p, { er: r })); return s[s.length - 1].floorReal; });
+    if ($('erSens')) $('erSens').innerHTML =
+      'Stable Floor by equity real return &mdash; ' +
+      erR.map((r, i) => '<strong>' + (r * 100).toFixed(1) + '%</strong> ' + fmt(erF[i])).join(' &middot; ') +
+      ' <span style="opacity:.65">(model default ' + (p.er * 100).toFixed(1) + '%)</span>';
 
     if (activeTab === 'compare') {
       drawCompareTable(p, sim);
@@ -981,18 +992,22 @@
     } else if (activeMode === 'B') {
       modeLabel = '<span style="color: var(--teal-text);">Mode B — Stable prices</span>';
     } else if (activeMode === 'C') {
-      modeLabel = '<span style="color: var(--teal-text);">Mode C — Modest inflation</span>';
+      modeLabel = '<span style="color: var(--teal-text);">Mode C — Modest inflation + dividend</span>';
+    } else if (activeMode === 'D') {
+      modeLabel = '<span style="color: var(--teal-text);">Mode D — Dividend, no inflation</span>';
     } else if (activeMode === 'X') {
       // User explicitly clicked Custom — always honor that.
       modeLabel = '<span style="color: var(--coral);">Custom (manually configured)</span>';
     } else {
       // Unknown state — try value-detection as a fallback.
-      const isModeA = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 0.125) < 0.005 && Math.abs(p.k3) < 0.005 && Math.abs(p.cpi - (-0.016)) < 0.005;
-      const isModeB = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 1.00) < 0.005 && Math.abs(p.k3) < 0.005 && Math.abs(p.cpi) < 0.005;
-      const isModeC = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 1.00) < 0.005 && Math.abs(p.ki - 0.02) < 0.005 && Math.abs(p.cpi - 0.02) < 0.005;
+      const isModeA = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 0.125) < 0.005 && Math.abs(p.k3) < 0.005 && Math.abs(p.ki) < 0.005 && Math.abs(p.cpi - (-0.016)) < 0.006;
+      const isModeB = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 1.00) < 0.005 && Math.abs(p.k3) < 0.005 && Math.abs(p.ki) < 0.005 && Math.abs(p.cpi) < 0.005;
+      const isModeC = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 0.125) < 0.005 && Math.abs(p.k3) < 0.005 && Math.abs(p.ki - 0.0375) < 0.006 && Math.abs(p.cpi - 0.02) < 0.006;
+      const isModeD = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 1.00) < 0.005 && Math.abs(p.k3 - 0.50) < 0.005 && Math.abs(p.ki) < 0.005 && Math.abs(p.cpi) < 0.005;
       if (isModeA) modeLabel = '<span style="color: var(--teal-text);">Mode A — Rising real wages</span>';
       else if (isModeB) modeLabel = '<span style="color: var(--teal-text);">Mode B — Stable prices</span>';
-      else if (isModeC) modeLabel = '<span style="color: var(--teal-text);">Mode C — Modest inflation</span>';
+      else if (isModeC) modeLabel = '<span style="color: var(--teal-text);">Mode C — Modest inflation + dividend</span>';
+      else if (isModeD) modeLabel = '<span style="color: var(--teal-text);">Mode D — Dividend, no inflation</span>';
       else modeLabel = '<span style="color: var(--coral);">Custom configuration</span>';
     }
 
