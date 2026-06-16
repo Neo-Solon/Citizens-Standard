@@ -106,7 +106,9 @@ replication_v3/
 │   ├── mc_plots.py / mc_plots_v3.py ← figure generation (v1 / v3)
 │   ├── make_fig_M5.py               ← Figure M5, forward transition cohorts (NEW)
 │   ├── build_csv.py                 ← exports authoritative_data.py as CSV
-│   └── compare_to_paper.py          ← audits paper claims against reconstruction
+│   ├── compare_to_paper.py          ← audits paper claims against reconstruction
+│   ├── paper1_figures.py            ← architecture-paper Stable Floor figures (real-return floors A $160K / B $745K / C $158K)
+│   └── transition_lifetime.py       ← lifetime real value by mode-transition scenario (reproduces the 8-bar panel in paper1_figures.py)
 └── figures/
     ├── figure_M1_distributions_v3.png        ← MC distributions (full-rate)
     ├── figure_M2_percentile_bands_v3.png     ← MC percentile bands (full-rate)
