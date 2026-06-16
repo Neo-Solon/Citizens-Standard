@@ -1,4 +1,4 @@
-# Replication package — The Citizens Standard: Banking, Inside Money, and the Two-Circuit System (Neo-Solon, 2026f)
+# Replication package — The Citizens Standard: Full-Reserve Banking and the Two-Circuit System (Neo-Solon, 2026f)
 
 This package reproduces every quantitative claim and figure in the banking paper. All
 code is pure Python with `numpy` and `matplotlib` only (no SciPy). From `code/`:
