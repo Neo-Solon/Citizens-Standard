@@ -77,7 +77,7 @@ This engine accompanies the eight-paper Citizens Standard series by **Neo-Solon*
 3. **Transition** — moving from the current system, including debt retirement. *(SSRN 6810741)*
 4. **Statutory** — model legislative text. *(SSRN 6873798)*
 5. **Macroeconomic Model** — the dynamic model and determinacy results. *(SSRN 6939418)*
-6. **Full-Reserve Banking** — inside money, intermediation, and the banking architecture. *(SSRN 6939498)*
+6. **Full-Reserve Banking and the Two-Circuit System** — inside money, intermediation, and payment-credit separation. *(SSRN 6939498)*
 7. **External Interoperability** — the EQUA-class settlement layer and common anchor. *(SSRN 6939600)*
 8. **Structural Buyer** — the structural-buyer mechanism. *(SSRN 6945320)*
 
