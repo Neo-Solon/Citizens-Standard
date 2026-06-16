@@ -1,62 +1,97 @@
-# Citizens Standard — Replication Archives
+# The Citizens Standard — Replication Archives
 
-This repository contains the reproducibility archives for the Citizens Standard
-research program. Each paper with a computational model has its own self-contained
-subfolder; each subfolder reproduces the figures printed in its paper.
+This directory holds the reproducibility archives for the Citizens Standard research
+program. Every paper with a computational component has its own self-contained subfolder
+that regenerates the figures and quantitative claims printed in that paper. Each subfolder
+runs independently.
 
 ```
 Citizens-Standard-replication/
-├── empirical_replication/      ← Paper 2 (Counterfactual & Forward Projection, SSRN 6735078)
-│   ├── code/                     Monte Carlo + deterministic engines, cohort tables,
-│   │                             and the banking stress tests:
-│   │                               credit_stress_test_v2.py   (static no-feedback bound)
-│   │                               credit_cascade_test_v3.py  (dynamic Fisher cascade)
-│   ├── data/                     historical input CSVs
-│   ├── figures/                  generated figures
-│   ├── AUDIT.md                  figure-by-figure reproduction record
-│   └── README.md
-│
-└── transition_replication/     ← Paper 3 (Transition Architecture, SSRN 6810741)
-    ├── code/                     Technical Appendix models:
-    │                               A.2 debt trajectory, KT inflation, Mode T-stable
-    │                               A.3 banking + KT synergy
-    │                               A.4 equity rotation; A.4.4 rotation sensitivity
-    │                               A.5 constitutional-lock credibility
-    ├── figures/
-    ├── AUDIT.md
-    └── README.md
+├── empirical_replication/         ← Paper 2  Historical Counterfactual          (SSRN 6735078)
+├── transition_replication/        ← Paper 3  Transition Architecture            (SSRN 6810741)
+├── macro_replication/             ← Paper 5  Macroeconomic Model                (SSRN 6939418)
+├── banking_replication/           ← Paper 6  Full-Reserve Banking & Inside Money (SSRN 6939498)
+└── interoperability_replication/  ← Paper 7  External Interoperability          (SSRN 6939600)
 ```
 
 ## Which subfolder reproduces what
 
-- **empirical_replication/** — the Monte Carlo and historical-counterfactual
-  results of Paper 2 (cohort outcomes, percentile bands, stress cohorts, forward
-  transition projection), plus the banking architecture stress tests that
-  informed Tool 15.
-- **transition_replication/** — the deterministic Technical Appendix models of
-  Paper 3 (debt-retirement trajectory, KT consumer-price neutrality, banking/KT
-  synergy, equity rotation and its sensitivity, constitutional-lock timing).
+- **empirical_replication/ — Paper 2.** The Monte Carlo and historical-counterfactual engine
+  (1960–2055): cohort outcomes, percentile bands, stress cohorts, and the forward transition
+  projection, plus the banking stress tests — a static no-feedback bound and a dynamic Fisher
+  cascade — that informed Tool 15. Ships `data/` (historical input CSVs), the generated M1–M5
+  figures, and an `AUDIT.md` figure-by-figure reproduction record.
 
-Papers 1 (Architecture) and 4 (Statutory) have no standalone computational models;
-they cite the figures reproduced in these two archives.
+- **transition_replication/ — Paper 3.** The deterministic Technical Appendix models:
+  debt-retirement trajectory and KT consumer-price neutrality (A.2), banking/KT synergy (A.3),
+  equity rotation and its sensitivity (A.4 / A.4.4), and constitutional-lock credibility (A.5).
+  Includes an `AUDIT.md`.
+
+- **macro_replication/ — Paper 5.** A computational supplement to the theory paper. The
+  propositions are proved in closed form and stand on their own; the scripts let a reader watch
+  them behave — Proposition 3 (convergence classification), 4 (labor-supply bounds), 5 (two-speed
+  delayed-feedback damping), 6 (impulse responses of the linearized two-circuit system), 7
+  (forward-looking determinacy without a Taylor principle), and 8 (welfare-optimal dividend share)
+  — and recompute every illustrative magnitude from the printed inputs. There is no dataset; the
+  worked numbers are illustrations, not calibrations.
+
+- **banking_replication/ — Paper 6.** Reproduces the five banking propositions and four figures:
+  the transactional-money price level with the KI throttle offsetting inside money one-for-one
+  (B1), the lending cap and the ≈0.13 inside-money share under the binding collateral bound (B2),
+  the throttle's price-path preservation (B3), the implied minimum capital requirement (B4), and
+  the run-proof locked-floor result (B5). Pure Python (`numpy`/`matplotlib`, no SciPy).
+
+- **interoperability_replication/ — Paper 7.** Reproduces every quantitative result in Paper 7,
+  split into two classes held to different standards. The **domestic** results are computed on the
+  CS issuance engine at real launch calibration (M2 = $22,366B, 2% real growth, K1 = 2.5% of GDP
+  per capita) and reproduce the published figures to the dollar. The **external EQUA layer** is a
+  proposed mechanism with no real-world instance, so its results are reported as a
+  calibrated-mechanism finding — robust across the observed ranges of cross-country productivity
+  growth and wage stickiness — not a forecast. Ships `RESULTS_manifest.md` (claim → script → output
+  map), `outputs/` (captured stdout from every script), a pinned `requirements.txt`, and
+  `LICENSE.txt`.
+
+## Papers without a standalone package
+
+Papers 1 (Architecture, SSRN 6702518) and 4 (Statutory Implementation, SSRN 6873798) have no
+standalone computational model; they cite the figures reproduced in the archives above. Paper 1's
+interactive companion is the `Citizens_Standard_Engine.html` at the repository root. Paper 8
+(Structural Buyer, SSRN 6945320) is an analytical extension and currently ships no standalone
+package.
 
 ## How to run
 
-Each subfolder is independent. From within a subfolder:
+Each subfolder is independent. Python 3.10+ with `numpy` and `matplotlib` covers all five packages;
+`interoperability_replication/` additionally pins its environment in `requirements.txt`.
 
 ```bash
-# empirical
+# Paper 2 — empirical
 cd empirical_replication
 python3 code/run_all_tables_v3.py        # Part I tables
 python3 code/transition_cohorts_v3.py    # Part II forward cohorts
 python3 code/credit_stress_test_v2.py    # static banking stress bound
-python3 code/credit_cascade_test_v3.py   # dynamic cascade
+python3 code/credit_cascade_test_v3.py   # dynamic Fisher cascade
 
-# transition
-cd transition_replication
-python3 code/run_all_appendix.py         # all appendix models
+# Paper 3 — transition
+cd transition_replication/code
+python3 run_all_appendix.py              # all Technical Appendix models
+
+# Paper 5 — macro
+cd macro_replication/code
+python3 run_all.py                       # all proposition checks + figures
+
+# Paper 6 — banking
+cd banking_replication/code
+python3 run_all.py > ../all_results.txt  # five verifiers + four figures
+
+# Paper 7 — interoperability
+cd interoperability_replication
+pip install -r requirements.txt
+python run_all.py                        # deterministic; full claim → output map in RESULTS_manifest.md
 ```
 
-Requirements: Python 3.10+, with `matplotlib`/`numpy` for the figure scripts.
-Each model is parameterized from the figures stated in its header; see each
-subfolder's `AUDIT.md` for the reproduction record.
+Each model is parameterized from the figures stated in its header. Where a subfolder ships an
+`AUDIT.md` (empirical, transition), that file carries the figure-by-figure reproduction record.
+Where results are calibrated mechanisms rather than empirical forecasts — the EQUA layer in
+Paper 7, the illustrative magnitudes in Paper 5 — the package labels them as such, so a reader
+never mistakes a mechanism demonstration for a calibrated prediction.
