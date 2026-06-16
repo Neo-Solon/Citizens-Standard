@@ -1,102 +1,44 @@
+==========================================================================
+REWORKED PAPER 6 -- FULL-RESERVE BANKING: quantitative results
+==========================================================================
 
-########################################################################
-# RUNNING verify_B1.py
-########################################################################
-====================================================================
-PART 1 — one-for-one KI offset holds M_T on target  [B1(i)]
-====================================================================
-  D=0.0 -> M_o=1.00, effective M_T=1.00 (on target=True)
-  D=0.4 -> M_o=0.80, effective M_T=1.00 (on target=True)
-  D=0.8 -> M_o=0.60, effective M_T=1.00 (on target=True)
-  D=1.6 -> M_o=0.20, effective M_T=1.00 (on target=True)
-  offset exact for all D: True
-====================================================================
-PART 2 — determinacy carries over to M_T (Prop 7 root)  [B1(ii)]
-====================================================================
-  alpha=4.0 phi=0.5 -> theta=1.375 (>1: determinate)
-  alpha=2.0 phi=0.0 -> theta=1.500 (>1: determinate)
-  determinacy unchanged in form when outside aggregate replaced by M_T: True
-====================================================================
-PART 3 — KI saturates iff d_T*D > M*  [B1(iii)]
-====================================================================
-  D=1.0 -> required M_o=0.50, feasible=True
-  D=2.0 -> required M_o=0.00, feasible=True
-  D=2.4 -> required M_o=-0.20, feasible=False
-  saturation boundary d_T*D=M* at D=2.0; logic verified: True
-====================================================================
-All B1 claims reproduced: True
-====================================================================
+[R1] COMPLETE MONETARY CONTROL
+  inside-money share of the money stock:  today ~0.80  |  CS full-reserve 0.00
+  -> M_T = M_o exactly; throttle sets M_o directly; no offset, no saturation.
+  determinacy root theta = 1+(1+phi)/alpha = 3.00 > 1 (applies to M_o directly)
 
-########################################################################
-# RUNNING verify_B2.py
-########################################################################
-====================================================================
-PART 1 — collateral binds because floors are non-pledgeable  [B2]
-====================================================================
-  capital     = 1.250
-  reserves    = 1.200
-  collateral  = 0.300
-  L_max=0.300 binding=collateral ; sigma=0.130
-====================================================================
-PART 2 — the lock shrinks the collateral BASE ~1/phi (~7x)  [B2]
-====================================================================
-  collateral base: locked=0.30  unlocked=2.00  ratio=6.7x (=1/phi)
-====================================================================
-PART 3 — removing the lock: a prudential cap binds, share ~3x  [B2]
-====================================================================
-  unlocked caps: {'capital': 1.25, 'reserves': 1.2, 'collateral': 2.0} -> binding=reserves at L=1.20, sigma=0.375
-  realized share ratio no-lock/lock = 2.9x
-====================================================================
-All B2 claims reproduced: True
-====================================================================
+[R2] TRANSACTION AGGREGATE ENTIRELY SOVEREIGN
+  today: ~$18.0T of $22.4T money stock is a private bank liability (inside money)
+  CS:    transaction money is 100% sovereign reserves; term deposits are
+         investment claims (not money); the locked floor is equity (not a deposit).
 
-########################################################################
-# RUNNING verify_B3.py
-########################################################################
-====================================================================
-PART 1 — controllability ceiling d_T*D <= (1-beta)*M*  [B3]
-====================================================================
-  beta=0.25 -> controllable iff D <= 1.500
-====================================================================
-PART 2 — baseline inside money sits inside the ceiling  [B3]
-====================================================================
-  baseline d_T*D=0.150  vs ceiling (1-beta)*M*=0.750 -> controllable=True
-====================================================================
-All B3 claims reproduced: True
-====================================================================
+[R3] CREDIT SUPPLY UNDER FULL RESERVE
+  (a) term-deposit pool at launch ~ 60% x M2 = $13.4T
+      leverage cap 4:1 -> equity $4.5T, bank credit capacity $17.9T
+  (b) full-reserve conversion removes bank money creation (one-time contraction).
+      sovereign offset: TLF 12%-38% + KT 41%-59% = 53%-97% of credit-at-risk;
+      residual absorbed by the conditional KI_T damper -> coverage approaches full.
+  (c) loanable-funds frontier under a 30% term-deposit shortfall (bank credit $17.9T):
+      hold rate  -> sovereign offset 30%, rate premium 0.0pp, credit $17.9T
+      let clear  -> sovereign offset 0%, rate premium 6.4pp, credit $13.3T
+      saving's near-zero rate elasticity makes the price route a crunch; the citizen-channel
+      offset (TLF/KT/KI_T) and the countercyclical 3:1/5:1 leverage rule are the design's answer.
 
-########################################################################
-# RUNNING verify_B4.py
-########################################################################
-====================================================================
-PART 1 — implied minimum capital ratio k >= E/D_ctrl  [B4]
-====================================================================
-  D_ctrl=1.500  k_min=E/D_ctrl=0.067 (Basel-range)
-====================================================================
-PART 2 — k_min increasing in E and under lock relaxation  [B4]
-====================================================================
-  E=0.06,0.10,0.14 -> k_min=[0.04, 0.067, 0.093] (increasing)
-  monotone in E: True | relaxing lock raises binding cap -> requires higher k: True
-====================================================================
-All B4 claims reproduced: True
-====================================================================
+[R4] PAYMENT-CREDIT SEPARATION AND RUN-PROOFNESS
+  max systemic money contraction: 1930-33 ~all deposits runnable; CS bounded by term share ~60% of launch M2
+  transaction accounts (~40%) are 100% reserved -> cannot be run;
+  term deposits are explicit at-risk term claims -> not demandable, no Diamond-Dybvig run;
+  the dominant asset (locked floor) is equity, not a deposit -> outside the run technology.
 
-########################################################################
-# RUNNING verify_B5.py
-########################################################################
-====================================================================
-PART 1 — run-proof share = locked share 1-phi_liq  [B5]
-====================================================================
-  run-proof=0.85  runnable=0.15
-====================================================================
-PART 2 — LOLR need scales with liquid share  [B5]
-====================================================================
-  LOLR need: locked=0.150  no-lock=1.000  ratio=6.7x
-====================================================================
-All B5 claims reproduced: True
-====================================================================
+[R5] NEAR-MONEY / BOUNDARY PROBLEM
+  if 5% of term deposits circulate as near-money ($0.7T): 7% of transaction money -- throttle offsets it IF observable
+  if 10% of term deposits circulate as near-money ($1.3T): 13% of transaction money -- throttle offsets it IF observable
+  if 20% of term deposits circulate as near-money ($2.7T): 23% of transaction money -- throttle offsets it IF observable
+  honest claim (Paper 1 sec.17.3): full reserve raises cost+visibility of near-money,
+  does not abolish it; observability is the falsifiable condition, not a guarantee.
 
-########################################################################
-# RUNNING make_figures.py
-########################################################################
-wrote 4 figure files (B1,B2,B3-4,B5)
+==========================================================================
+All figures are illustrative calibrations on verified anchors, not forecasts.
+==========================================================================
+
+[figures saved: paper6_figures.png]
