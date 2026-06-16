@@ -9,7 +9,7 @@ dividend rule) from:
     Appendix A.2 (Proposition 3).
 
 PROPOSITION 3 (restated).
-Let x_t = ln[desired_CPI(t) / CPI(t)] be the log price-path gap. The KI
+Let x_t = ln[target_price_level(t) / CPI(t)] be the log price-path gap. The KI
 path-targeting rule injects g_KI(t) = lambda * x_{t-1}. With psi > 0 the
 within-period pass-through from path-closure issuance to realized inflation,
 the gap evolves as:
