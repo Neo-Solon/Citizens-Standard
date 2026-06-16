@@ -1,43 +1,44 @@
 # The Citizens Standard — Interactive Engine
 
-An interactive model of **The Citizens Standard**, a constitutional monetary architecture that replaces central-bank discretion with three rules-based money-issuance channels and distributes every newly created dollar equally to all citizens.
+An interactive model of **The Citizens Standard**, a constitutional monetary architecture that replaces central-bank discretion with four rules-based money-issuance channels and distributes every newly created dollar equally to all citizens.
 
 Open `Citizens_Standard_Engine.html` in any browser, or go to https://neo-solon.github.io/Citizens-Standard/Citizens_Standard_Engine.html. No build step, no dependencies, no server — everything runs client-side.
 
 ## What it does
 
-The engine projects one citizen's lifetime outcome under the framework and compares it to what people actually retire with today. You set the three issuance channels and the macro assumptions; it shows:
+The engine projects one citizen's lifetime outcome under the framework and compares it to what people actually retire with today. You set the four issuance channels and the macro assumptions; it shows:
 
 - the **Stable Floor** — the locked, equity-invested capital account every citizen accrues — at the end of the horizon;
 - the **implied inflation** the configuration produces (derived from the channels, not assumed);
 - a side-by-side **comparison** against median and average US retirement outcomes and seven alternative monetary/transfer systems;
 - **stress tests** against historical bad sequences (Great Depression, 1970s stagflation, 2000s lost decade).
 
-## The three issuance channels
+## The four issuance channels
 
-Three rules, no discretion. Each is a slider.
+Four rules, no discretion. Each is a slider.
 
 - **K1 — Citizenship dividend.** A one-time deposit at birth equal to 2.5% of GDP per capita, paid into the citizen's Stable Floor.
 - **K2 — Growth channel.** New money matched to real economic growth: `capture% × real growth × M2` (on prior-year M2). At 100% capture, the money supply grows at exactly the real output rate — the definition of price stability. Below 100%, money grows slower than output and the price level falls.
-- **K3 — Citizen dividend.** A flat percentage of M2 issued each year and paid out as a monthly cash dividend. This is the only channel that pushes total issuance *above* real growth, so it is the only source of inflation.
+- **K3 — Citizen dividend (κ_d split).** A price-neutral *reallocation* of the K2 growth budget: the κ_d split sets how much of that budget locks into Stable Floors versus pays out as a monthly cash dividend. It moves money between locked and spendable without changing the total, so it does not move the price level.
+- **KI — Inflation-gap channel.** A flat percentage of M2 issued *above* the growth line. This is the only channel that pushes total issuance above real growth, so it is the only source of inflation — and the channel that funds the Mode C monthly dividend.
 
 ## The three modes
 
-The mode buttons are presets over those channels. Defaults: 2% real growth, 0.5% population growth, 6.5% real equity return (Shiller long-run), 65-year horizon, and $22.7T M2 / $30.7T GDP / 342M population at launch.
+The mode buttons are presets over those channels. Defaults: 2% real growth, 0.5% population growth, 6.5% real equity return (Shiller long-run), 65-year horizon, and $22.4T M2 / $30.8T GDP / 342M population at launch.
 
-| Mode | K2 | K3 | Implied inflation | Stable Floor at 65 | Character |
-|------|-----|-----|-------------------|--------------------|-----------|
-| **A — Rising real wages** | 12.5% | 0 | ≈ −1.7% (deflation) | ≈ $360K | Smallest floor, but every dollar of cash and wages gains ~+217% real purchasing power over a lifetime |
-| **B — Stable prices** | 100% | 0 | ≈ 0% | ≈ $1.87M | Full-rate issuance; largest locked floor; price-neutral |
-| **C — Monthly dividend** | 12.5% | 4% | ≈ +2.3% (inflation) | ≈ $358K | Same floor as A, plus a ~$230/month citizen dividend; mild inflation erodes cash |
+| Mode | K2 | KI | Implied inflation | Character |
+|------|-----|-----|-------------------|-----------|
+| **A — Rising real wages** | 12.5% | off | ≈ −1.6% (deflation) | Smallest floor, but every dollar of cash and wages gains real purchasing power over a lifetime |
+| **B — Stable prices** | 100% | off | ≈ 0% | Full-rate issuance; largest locked floor; price-neutral |
+| **C — Modest inflation** | 100% | 2% | ≈ +2.0% (inflation) | Same floor as B, plus a KI-funded monthly dividend; mild inflation erodes cash held outside the floor |
 
-Move any slider and the mode switches to **Custom**.
+Each mode's **Stable Floor at 65** is computed live by the engine from the macro assumptions above — open it for the current figure under each mode rather than relying on a cached number here. Move any slider and the mode switches to **Custom**. (The κ_d split between K2 and K3 is available in every mode and is price-neutral.)
 
 Two properties the engine is built to make obvious:
 
-**1. Inflation is derived, not dialed.** It equals total new money (issuance ÷ M2) minus real growth. K1 and K2 can at most match real growth (Mode B → price stability) or fall short of it (Mode A → deflation). Only K3 lifts issuance above real growth, so only K3 creates inflation. Raise the K3 slider and watch the implied-inflation readout climb; set K2 to 100% with K3 at zero and it sits at zero.
+**1. Inflation is derived, not dialed.** It equals total new money (issuance ÷ M2) minus real growth. K1 and K2 can at most match real growth (Mode B → price stability) or fall short of it (Mode A → deflation), and the κ_d split (K3) only reallocates — so none of them move the price level. Only **KI** lifts issuance above real growth, so only KI creates inflation. Raise the KI slider and watch the implied-inflation readout climb; set K2 to 100% with KI off and it sits at zero.
 
-**2. The Stable Floor is inflation-neutral.** It is invested in equities — a real asset earning a real return — so its real value does not move with the price level. That is why raising K3 (which only changes inflation and funds the dividend) leaves the K1+K2-funded floor unchanged. Modes A and C therefore share the same floor; what differs is whether the "extra" arrives as deflationary purchasing-power gains (A) or as a monthly dividend (C). Mode A's payoff is not a bigger floor — it is that money held *outside* the floor gains value.
+**2. The Stable Floor is inflation-neutral.** It is invested in equities — a real asset earning a real return — so its real value does not move with the price level. That is why turning on **KI** (which changes inflation and funds the dividend) leaves the K1+K2-funded floor unchanged. Modes B and C therefore share the same floor; what differs is that Mode C runs a positive inflation gap whose issuance arrives as a monthly dividend, while Mode B holds the price level flat. Mode A's payoff is not a bigger floor — it is that money held *outside* the floor gains value as prices fall.
 
 ## The comparison
 
@@ -53,7 +54,7 @@ Three fair-comparison rules are built in:
 
 - **Stable Floor growth** — the account balance over the horizon.
 - **M2 trajectory** — the money-supply path.
-- **K1 / K2 / K3 over time** — issuance by channel.
+- **K1 / K2 / K3 / KI over time** — issuance by channel.
 - **vs real outcomes** — the comparison above.
 - **Inflation paths** — the derived Citizens Standard rate vs each system's price-level behavior.
 - **Stress test** — outcomes if a historical bad sequence strikes during the working life.
@@ -62,21 +63,23 @@ Three fair-comparison rules are built in:
 
 The engine is for building intuition, not for policy calibration. Specifically:
 
-- It is a **forward projection** of one hypothetical cohort under constant macro assumptions — not the empirical historical reconstruction in Paper 2, which produces the ≈$1.32M Mode B figure from the actual earliest cohort.
-- Inflation is a **quantity-theory approximation** (issuance minus real growth), not the full price-level-targeting formula in the papers; K3 is modeled as a flat percentage of M2.
+- It is a **forward projection** of one hypothetical cohort under constant macro assumptions — not the empirical historical reconstruction in Paper 2, whose deterministic Mode B anchor (~$1.3M) comes from the actual earliest cohort.
+- Inflation is a **quantity-theory approximation** (issuance minus real growth), not the full price-level-targeting formula in the papers; KI is modeled as a flat percentage of M2 issued above the growth line.
 - It models the three **base** modes only. The full framework also defines **Mode Ω** (an adaptive mode that shifts targets with conditions) and **Mode T** (the transition mode with the KT debt-retirement channel), which are covered in the papers.
 - Equity returns use a single base-case real rate except on the Stress tab; the main projection does not model sequence-of-returns risk, mode transitions, or emergency tools.
 
 ## The papers
 
-This engine accompanies the four-paper Citizens Standard series by **Neo-Solon**:
+This engine accompanies the eight-paper Citizens Standard series by **Neo-Solon** (replication archives in this repository under `Citizens-Standard-replication/`). The papers are the figures of record; where the engine's illustrative defaults differ from the calibrated values in the papers, the papers govern.
 
-1. **Architecture** — the constitutional framework and the K1/K2/K3 and mode system.
-2. **Empirical / Counterfactual** — the historical reconstruction and Stable Floor results.
-3. **Transition** — moving from the current system, including debt retirement.
-4. **Statutory** — model legislative text.
-
-*Available on SSRN — add links here.*
+1. **Architecture** — the constitutional framework and the K1/K2/K3/KI and mode system. *(SSRN 6702518)*
+2. **Counterfactual / Empirical** — the historical reconstruction and Stable Floor results. *(SSRN 6735078)*
+3. **Transition** — moving from the current system, including debt retirement. *(SSRN 6810741)*
+4. **Statutory** — model legislative text. *(SSRN 6873798)*
+5. **Macroeconomic Model** — the dynamic model and determinacy results. *(SSRN 6939418)*
+6. **Full-Reserve Banking** — inside money, intermediation, and the banking architecture. *(SSRN 6939498)*
+7. **External Interoperability** — the EQUA-class settlement layer and common anchor. *(SSRN 6939600)*
+8. **Structural Buyer** — the structural-buyer mechanism. *(SSRN 6945320)*
 
 ## License
 
