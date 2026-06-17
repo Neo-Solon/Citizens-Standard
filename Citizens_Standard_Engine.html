@@ -72,18 +72,20 @@
   .meta a { color: var(--accent); text-decoration: none; }
   .meta a:hover { text-decoration: underline; }
 
-  .modes { display: flex; gap: 8px; margin: 24px 0; flex-wrap: wrap; }
+  .modes { display: flex; gap: 8px; margin: 24px 0; flex-wrap: nowrap; }
   .mode-btn {
-    padding: 10px 16px;
+    flex: 1; text-align: center; white-space: nowrap;
+    padding: 10px 8px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text);
     font-family: var(--font);
     transition: all 0.15s ease;
   }
+  @media (max-width: 640px) { .modes { flex-wrap: wrap; } .mode-btn { flex: 1 1 40%; } }
   .mode-btn:hover { border-color: var(--border-strong); }
   .mode-btn.active {
     border-color: var(--accent);
@@ -163,7 +165,7 @@
 
   .stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(136px, 1fr));
     gap: 12px;
     margin: 24px 0;
   }
@@ -171,10 +173,10 @@
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 14px 16px;
+    padding: 12px 12px;
   }
   .stat-label { font-size: 12px; color: var(--text-muted); margin: 0 0 4px; }
-  .stat-val { font-size: 22px; font-weight: 600; margin: 0; font-variant-numeric: tabular-nums; }
+  .stat-val { font-size: 19px; font-weight: 600; margin: 0; font-variant-numeric: tabular-nums; }
   .stat-sub { font-size: 11px; color: var(--text-dim); margin: 2px 0 0; }
 
   .tabs {
@@ -185,7 +187,7 @@
     flex-wrap: wrap;
   }
   .tab {
-    padding: 10px 16px;
+    padding: 10px 12px;
     cursor: pointer;
     font-size: 14px;
     color: var(--text-muted);
@@ -275,6 +277,17 @@
   }
 
   .scenario-pills { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .mode-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(225px, 1fr)); gap: 14px; margin: 4px 0 18px; }
+  .mode-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 16px 14px; display: flex; flex-direction: column; }
+  .mode-card.sel { border-color: var(--teal); box-shadow: 0 0 0 1px var(--teal); }
+  .mc-head { font-size: 11.5px; font-weight: 600; color: var(--text-dim); letter-spacing: 0.01em; }
+  .mc-benefit { font-size: 16.5px; font-weight: 700; color: var(--text); margin: 3px 0 3px; letter-spacing: -0.01em; line-height: 1.2; }
+  .mc-tag { font-size: 12px; color: var(--text-muted); line-height: 1.45; }
+  .mc-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 12px; margin: 13px 0 11px; }
+  .mc-stats > div { display: flex; flex-direction: column; gap: 1px; }
+  .mc-stats span { font-size: 10.5px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.03em; }
+  .mc-stats b { font-size: 16px; font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums; }
+  .mc-vs { margin-top: auto; font-size: 12px; font-weight: 600; color: var(--teal-text); background: var(--teal-bg); border-radius: 6px; padding: 6px 10px; text-align: center; }
   .pill {
     padding: 6px 12px;
     border-radius: 16px;
@@ -357,11 +370,21 @@
   </p>
 </div>
 
+<div class="card">
+  <p class="card-title">Launch parameters</p>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px 24px;">
+    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">M2 ($T)</span><input type="range" id="m2" min="5" max="60" step="0.5" value="22.4"><span class="readout" id="m2r">$22.4T</span></div>
+    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">GDP ($T)</span><input type="range" id="gdp" min="5" max="80" step="0.5" value="30.8"><span class="readout" id="gdpr">$30.8T</span></div>
+    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">Pop. (M)</span><input type="range" id="pop" min="50" max="800" step="5" value="342"><span class="readout" id="popr">342M</span></div>
+    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">Horizon</span><input type="range" id="hz" min="20" max="80" step="1" value="65"><span class="readout" id="hzr">65y</span></div>
+  </div>
+</div>
+
 <div class="modes" role="tablist">
-  <button class="mode-btn" data-mode="A" title="Mild deflation: every dollar a citizen holds gains purchasing power. No monthly dividend.">Mode A · Rising real wages (deflation)</button>
-  <button class="mode-btn active" data-mode="B" title="Price stability. Highest Stable Floor without dividend.">Mode B · Stable prices (neutral)</button>
-  <button class="mode-btn" data-mode="C" title="Modest ~2% inflation. K1/K2 stay at a low floor-building rate; the KI inflation-gap channel funds a meaningful monthly dividend (~$210/citizen). Trades a smaller locked floor for visible income now.">Mode C · Modest inflation + dividend</button>
-  <button class="mode-btn" data-mode="D" title="Price stability AND a standing dividend. K2/K3 split the full growth budget — half builds your locked floor, half pays out as spendable income — with zero inflation (KI off). A dividend without the inflation tax.">Mode D · Dividend, no inflation</button>
+  <button class="mode-btn" data-mode="A" title="Mild deflation: every dollar a citizen holds gains purchasing power. No monthly dividend.">Mode A · Deflation</button>
+  <button class="mode-btn active" data-mode="B" title="Price stability. Highest Stable Floor without dividend.">Mode B · Stable</button>
+  <button class="mode-btn" data-mode="C" title="Modest ~2% inflation. K1/K2 stay at a low floor-building rate; the KI inflation-gap channel funds a meaningful monthly dividend (~$210/citizen). Trades a smaller locked floor for visible income now.">Mode C · Inflation</button>
+  <button class="mode-btn" data-mode="D" title="Price stability AND a standing dividend. K2/K3 split the full growth budget — half builds your locked floor, half pays out as spendable income — with zero inflation (KI off). A dividend without the inflation tax.">Mode D · Stable dividend</button>
   <button class="mode-btn" data-mode="X">Custom</button>
 </div>
 
@@ -372,7 +395,7 @@
     <div class="row"><span class="label">K2 — Growth rate</span><input type="range" id="k2" min="0" max="100" step="0.5" value="100"><span class="readout" id="k2r">100%</span></div>
     <div class="row"><span class="label">K2 / K3 split — dividend share (κ_d)</span><input type="range" id="k3" min="0" max="100" step="1" value="0"><span class="readout" id="k3r">0%</span></div>
     <p class="card-note" id="splitNote" style="margin:2px 0 0;color:var(--teal-text)">Growth budget → <strong id="splitFloor">100%</strong> locked floor (K2) · <strong id="splitDiv">0%</strong> spendable dividend (K3). Always sums to 100% — moving the dividend up lowers the floor by the same dollars; total money issued is unchanged.</p>
-    <div class="row" style="margin-top:8px"><span class="label">KI — Inflation-gap</span><input type="range" id="ki" min="0" max="6" step="0.1" value="0"><span class="readout" id="kir">0.0%</span></div>
+    <div class="row" style="margin-top:8px"><span class="label">KI — Inflation-gap</span><input type="range" id="ki" min="0" max="6" step="0.05" value="0"><span class="readout" id="kir">0.0%</span></div>
     <p class="card-note">K1: % of GDP per capita per new citizen. <strong>K2 — Growth rate:</strong> the share of the real-growth-matched budget that is issued — 100% holds prices stable (Mode B), ~12.5% gives mild deflation (Mode A). This sets <em>how much</em> new money is created. <strong>K2/K3 split (κ_d):</strong> of that one budget, how much locks into Stable Floors (K2) versus pays out as a monthly dividend (K3) — the two shares sum to 100% and the split is price-neutral (it moves money between locked and spendable, not the total). <strong>KI — Inflation-gap:</strong> % of M2 issued <em>above</em> the growth line; the only channel that creates inflation (Mode C).</p>
   </div>
 
@@ -391,19 +414,9 @@
   </div>
 </div>
 
-<div class="card">
-  <p class="card-title">Launch parameters</p>
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px 24px;">
-    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">M2 ($T)</span><input type="range" id="m2" min="5" max="60" step="0.5" value="22.4"><span class="readout" id="m2r">$22.4T</span></div>
-    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">GDP ($T)</span><input type="range" id="gdp" min="5" max="80" step="0.5" value="30.8"><span class="readout" id="gdpr">$30.8T</span></div>
-    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">Pop. (M)</span><input type="range" id="pop" min="50" max="800" step="5" value="342"><span class="readout" id="popr">342M</span></div>
-    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">Horizon</span><input type="range" id="hz" min="20" max="80" step="1" value="65"><span class="readout" id="hzr">65y</span></div>
-  </div>
-</div>
-
 <div class="stats">
   <div class="stat"><p class="stat-label">Stable Floor at horizon</p><p class="stat-val" id="sf">—</p><p class="stat-sub">launch-year purchasing power</p></div>
-  <div class="stat"><p class="stat-label">Annual real income</p><p class="stat-val" id="ari">—</p><p class="stat-sub">at 4% withdrawal</p></div>
+  <div class="stat"><p class="stat-label">Annual real income</p><p class="stat-val" id="ari">—</p><p class="stat-sub">at 5% withdrawal</p></div>
   <div class="stat"><p class="stat-label">Monthly dividend / citizen</p><p class="stat-val" id="k3d">—</p><p class="stat-sub">year 1 &middot; &kappa;_d + KI</p></div>
   <div class="stat"><p class="stat-label">Issuance / M2</p><p class="stat-val" id="iss">—</p><p class="stat-sub">total annual, year 1</p></div>
   <div class="stat"><p class="stat-label">Cost / GDP</p><p class="stat-val" id="cgdp">—</p><p class="stat-sub">total annual, year 1</p></div>
@@ -413,24 +426,25 @@
 <p class="card-note" id="erSens" style="margin:10px 2px 0;color:var(--text-muted)">—</p>
 
 <div class="tabs" role="tablist">
-  <div class="tab active" data-tab="floor">Stable Floor growth</div>
-  <div class="tab" data-tab="m2">M2 trajectory</div>
-  <div class="tab" data-tab="income">Channels over time</div>
-  <div class="tab" data-tab="frontier">Split frontier</div>
-  <div class="tab" data-tab="compare">vs. real outcomes</div>
-  <div class="tab" data-tab="inflation">Inflation paths</div>
+  <div class="tab active" data-tab="floor">Stable Floor</div>
+  <div class="tab" data-tab="m2">M2</div>
+  <div class="tab" data-tab="income">Channels</div>
+  <div class="tab" data-tab="compare">What you get</div>
+  <div class="tab" data-tab="inflation">Inflation</div>
   <div class="tab" data-tab="stress">Stress test</div>
-  <div class="tab" data-tab="modet">Debt transition (Mode T)</div>
+  <div class="tab" data-tab="modet">Mode T</div>
+  <div class="tab" data-tab="omega">Mode Ω</div>
 </div>
 
 <div id="chart-view">
   <div class="legend" id="legend"></div>
   <div class="chart-wrap"><canvas id="chart" role="img" aria-label="Projection chart"></canvas></div>
+  <p class="card-note" id="chartCaption" style="margin:10px 2px 0;color:var(--text-muted)"></p>
 </div>
 
 <div id="compare-view" style="display:none;">
   <div class="info-banner">
-    <strong>This comparison uses verified real-world data, not theoretical maximums.</strong>
+    <strong>What you’d actually retire with — verified real-world data, not theoretical maximums.</strong>
     <span style="display: block; margin-top: 6px; font-size: 12px; opacity: 0.9;">
       Median 401(k) balance from Vanguard's 2025 <em>How America Saves</em> report ($95,642 at age 55-64). Average Social Security benefit from SSA's March 2026 Statistical Snapshot ($24,953/year). The "after SS trust depletion" scenario applies the 23% benefit cut projected by the 2025 SSA Trustees Report. Half of Americans actually retire with less than the median values shown.
     </span>
@@ -447,26 +461,14 @@
     <button class="pill" data-scenario="ss-cut">After SS trust depletion (-23%)</button>
   </div>
 
-  <div class="comp-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>System</th>
-          <th class="right">Wealth at 65</th>
-          <th class="right">Lifetime cash</th>
-          <th class="right">Annual income at 65</th>
-          <th class="right">Total real value</th>
-          <th>Funded by</th>
-        </tr>
-      </thead>
-      <tbody id="compare-body"></tbody>
-    </table>
-  </div>
+  <div id="compare-hero" style="display:flex; gap:14px; flex-wrap:wrap; margin-bottom:16px;"></div>
+  <p id="sq-anchor" style="font-size:13px; color:var(--text-muted); margin:2px 0 14px; line-height:1.55;"></p>
+  <div id="mode-cards" class="mode-cards"></div>
 
-  <p style="font-size: 12px; color: var(--text-dim); margin: 16px 0 0; line-height: 1.6;">
-    <strong>Reading the comparison:</strong> "Wealth at 65" is locked savings/equity. "Lifetime cash" is total dividends/transfers received during working life and retirement. "Total real value" sums both — this is the fairest single number for cross-system comparison since Modes B and C make different tradeoffs between locked wealth and ongoing dividends.
-    Mode B is the cleanest apples-to-apples comparison with the Fed status quo since both target price stability, and under identical return assumptions it produces the largest locked Stable Floor (it issues at the full real-growth-matched rate). Mode A optimizes for rising real wages and purchasing-power preservation — every dollar a citizen holds gains value — at the cost of a smaller locked floor and no income stream; Mode C optimizes for a monthly dividend funded by modest inflation (gives up locked wealth); Mode D pays a standing dividend with zero inflation by splitting the growth budget, trading part of the floor for current income.
-    Citizens Standard delivers equity to every citizen automatically — no savings discipline required. Real-world systems require individual savings effort that most Americans never achieve.
+  <p style="font-size: 12px; color: var(--text-dim); margin: 4px 0 0; line-height: 1.6;">
+    <strong>How this differs from other monetary proposals:</strong> a UBI pays a monthly cheque, but it is funded by taxes the same people pay — for a median earner it nets to roughly a wash. MMT’s jobs guarantee provides a paycheck for work, not wealth. Bitcoin, the Chicago Plan, and Friedman’s k-rule change <em>who controls</em> money creation but route none of it to citizens. The Citizens Standard is the only one that hands newly-created money to every citizen as locked, equal, rules-based wealth — on top of the same private savings (median 401(k) ~$95,642) and Social Security (~$24,953/yr) everyone already has.
+    <br><br>
+    <strong>Reading the modes:</strong> Mode B builds the largest locked floor and pays no dividend; Mode A is smaller because it issues less <em>into</em> the floor, not because deflation erodes it (deflation slightly helps); Modes C and D trade locked wealth for a spendable monthly dividend, so their floor is lower — dollars paid out as income don’t compound for decades the way the floor does. All figures are in constant launch-year dollars; they don’t capture each mode’s separate effect on the purchasing power of wages and cash (deflation helps, inflation taxes), so Mode A is worth a little more than its numbers and the inflationary modes a little less.
   </p>
 </div>
 
@@ -503,7 +505,7 @@
 
   <div class="stats" style="margin-top: 16px;">
     <div class="stat"><p class="stat-label">Stable Floor under stress</p><p class="stat-val" id="stress-sf">—</p><p class="stat-sub" id="stress-sf-vs">vs. smooth baseline</p></div>
-    <div class="stat"><p class="stat-label">Real income at retirement</p><p class="stat-val" id="stress-income">—</p><p class="stat-sub">at 4% withdrawal</p></div>
+    <div class="stat"><p class="stat-label">Real income at retirement</p><p class="stat-val" id="stress-income">—</p><p class="stat-sub">at 5% withdrawal</p></div>
     <div class="stat"><p class="stat-label">vs. median American</p><p class="stat-val" id="stress-vs-median">—</p><p class="stat-sub">$95,642 Vanguard 2025</p></div>
   </div>
 
@@ -521,10 +523,19 @@
     <strong>What this answers:</strong> "How does the framework retire the national debt — and tighten when needed?" Under <strong>Mode T</strong>, citizen K1/K2 keep running at full Mode-B price stability, while <strong>KT</strong> retires the legacy debt down to a small <strong>operational floor</strong> — not to zero. The floor is kept on purpose: it's the financial system's safe-asset benchmark and the standing base for monetary operations. KT runs <strong>symmetrically</strong>: it retires excess debt in normal times, and in <strong>reverse</strong> — issuing short-term bills to drain transactional money — when inflation runs hot. Retiring debt as a fiscal <em>burden</em> (interest, rollover risk) is the goal; the small remaining stock is debt held by choice, as a tool.
   </div>
 
-  <div style="display:flex; flex-wrap:wrap; gap:18px; align-items:center; margin-top:14px;">
-    <div class="row" style="flex:1; min-width:200px; margin:0;"><span class="label">KT rate (% of M2)</span><input type="range" id="ktr" min="0" max="3" step="0.1" value="1.5"><span class="readout" id="ktrr">1.5%</span></div>
-    <div class="row" style="flex:1; min-width:200px; margin:0;"><span class="label">Primary surplus (% GDP)</span><input type="range" id="psr" min="0" max="3" step="0.1" value="1.5"><span class="readout" id="psrr">1.5%</span></div>
-    <div class="row" style="flex:1; min-width:200px; margin:0;"><span class="label">Operational floor (% GDP)</span><input type="range" id="flr" min="0" max="30" step="1" value="15"><span class="readout" id="flrr">15%</span></div>
+  <div style="display:flex; flex-wrap:wrap; gap:18px 20px; align-items:flex-start; margin-top:14px;">
+    <div style="flex:1; min-width:200px;">
+      <div class="label" style="margin-bottom:5px;">KT rate (% of M2)</div>
+      <div style="display:flex; align-items:center; gap:10px;"><input type="range" id="ktr" min="0" max="3" step="0.1" value="1.5" style="flex:1; min-width:0;"><span class="readout" id="ktrr" style="min-width:auto;">1.5%</span></div>
+    </div>
+    <div style="flex:1; min-width:200px;">
+      <div class="label" style="margin-bottom:5px;">Primary surplus (% GDP)</div>
+      <div style="display:flex; align-items:center; gap:10px;"><input type="range" id="psr" min="0" max="3" step="0.1" value="1.5" style="flex:1; min-width:0;"><span class="readout" id="psrr" style="min-width:auto;">1.5%</span></div>
+    </div>
+    <div style="flex:1; min-width:200px;">
+      <div class="label" style="margin-bottom:5px;">Operational floor (% GDP)</div>
+      <div style="display:flex; align-items:center; gap:10px;"><input type="range" id="flr" min="0" max="30" step="1" value="15" style="flex:1; min-width:0;"><span class="readout" id="flrr" style="min-width:auto;">15%</span></div>
+    </div>
   </div>
   <div class="scenario-pills" id="modet-pills" style="margin-top:12px;">
     <button class="pill active" data-shock="none">No shock</button>
@@ -543,6 +554,29 @@
 
   <p style="font-size: 12px; color: var(--text-dim); margin: 16px 0 0; line-height: 1.6;">
     <strong>Mode T calibration (Transition paper, 2026c §4, extended):</strong> public debt ≈ $31.4T at enactment (~102% of GDP); KT at 1.5% of M2; primary surplus 0 → 1.5% of GDP over 25 years; coupon repricing ~4.5% → ~1.5% by Year 6. KT retires the legacy debt down to a small <strong>operational floor</strong> (default ~15% of GDP) rather than to zero — eliminating debt as a fiscal burden while keeping a safe-asset benchmark and a standing base for the <strong>reverse-KT drain</strong> (the contractionary / QT-equivalent tool). The inflation-shock scenario shows reverse-KT issuing bills to soak up money — the stock lifts above the floor, then normalizes. Reduced-form sketch, illustrative; separate from the cohort-floor projection on the other tabs.
+  </p>
+</div>
+
+<div id="omega-view" style="display:none;">
+  <div class="info-banner">
+    <strong>What this answers:</strong> "What if conditions change — aging, depopulation, an AI productivity boom?" <strong>Mode Ω</strong> is the adaptive configuration: instead of fixed channel settings, its K1, K2, and KI respond automatically to demographic and productivity conditions by published formula — no committee, no discretion. In calm conditions it runs conservatively (≈60% K2 capture, mild deflationary bias, no KI); its governors engage only when conditions warrant and revert at 25%/year once conditions normalize. Pick a scenario to watch the governors respond; the lifetime figures are Paper 1 §8.6's simulation results.
+  </div>
+  <div class="scenario-pills" id="omega-pills" style="margin-top:12px;">
+    <button class="pill active" data-omega="normal">Normal (+0.3% pop, 4.5%)</button>
+    <button class="pill" data-omega="negpop">Aging / negative pop (−0.5%)</button>
+    <button class="pill" data-omega="negpop_opt">Negative pop + strong returns (6.5%)</button>
+    <button class="pill" data-omega="negpop_pess">Negative pop + weak returns (3.0%)</button>
+    <button class="pill" data-omega="prodboom">Productivity boom + negative pop</button>
+  </div>
+  <div class="stats" style="margin-top:16px;">
+    <div class="stat"><p class="stat-label">Stable Floor at 65 (real)</p><p class="stat-val" id="omega-floor">—</p><p class="stat-sub">Paper 1 §8.6 simulation</p></div>
+    <div class="stat"><p class="stat-label">Annual real income</p><p class="stat-val" id="omega-income">—</p><p class="stat-sub">at 5% withdrawal</p></div>
+    <div class="stat"><p class="stat-label">Governors</p><p class="stat-val" id="omega-gov" style="font-size:16px">—</p><p class="stat-sub" id="omega-note">—</p></div>
+  </div>
+  <div class="legend" id="omega-legend"></div>
+  <div class="chart-wrap"><canvas id="omega-chart" role="img" aria-label="Mode Omega governor response chart"></canvas></div>
+  <p style="font-size:12px; color:var(--text-dim); margin:16px 0 0; line-height:1.6;">
+    <strong>Mode Ω guardrails (Architecture §8):</strong> every multiplier, threshold, and reversion rate is formula-specified and publicly auditable — adaptive means the formula responds to observable data, not that anyone exercises judgment. K1 is capped at 2.0× base; combined issuance is capped at 3.5% of M2; the conditional KI issues 0–0.6% of M2 (split 60% to Stable Floors / 40% spendable), activates only on sustained deflation (&gt;1.2%) or demographic stress with weak wage growth, and carries a 36-month sunset with mandatory reaffirmation. Governors above baseline revert at 25%/year once the trigger resolves. Floor figures are the paper's §8.6 results; the three negative-pop scenarios share the same governor path and differ only by equity return. Governor paths shown are illustrative of that response (cf. Figure 5).
   </p>
 </div>
 
@@ -611,11 +645,13 @@
   let activeScenario = 'median';
   let activeStress = 'smooth';
   let modetShock = 'none';
+  let omegaScenario = 'normal';
   let activeMode = 'B';   // tracks the last Mode button clicked (A/B/C/X)
   let chart = null;
   let inflationChart = null;
   let stressChart = null;
   let modetChart = null;
+  let omegaChart = null;
 
   function readInputs(){
     const k1 = parseFloat($('k1').value)/100;
@@ -647,7 +683,7 @@
       er: parseFloat($('er').value)/100,
       cpi,
       hz: parseInt($('hz').value),
-      wr: 0.04,
+      wr: 0.05,
       _m2growth: m2growth, _k1Share: k1Share, _k2Share: growthIssued, _kiShare: kiShare
     };
   }
@@ -658,7 +694,7 @@
     $('k3r').textContent = (p.k3*100).toFixed(0) + '%';
     if ($('splitFloor')) $('splitFloor').textContent = Math.round((1-p.k3)*100) + '%';
     if ($('splitDiv'))   $('splitDiv').textContent   = Math.round(p.k3*100) + '%';
-    if ($('kir')) $('kir').textContent = (p.ki*100).toFixed(1) + '%';
+    if ($('kir')) $('kir').textContent = (p.ki*100).toFixed(2).replace(/\.?0+$/,'') + '%';
     $('rgr').textContent = (p.rg*100).toFixed(1) + '%';
     $('pgr').textContent = (p.pg*100).toFixed(1) + '%';
     $('err').textContent = (p.er*100).toFixed(1) + '%';
@@ -736,7 +772,7 @@
     depression: {
       label: 'Great Depression at age 25-40 (1929-1944)',
       startAge: 25,
-      // 16-year sequence of (real return, CPI) pairs
+      // 16-year sequence of (nominal return, CPI) pairs; converted to real at runtime
       seq: [
         [-0.13, 0.00], [-0.30, -0.024], [-0.45, -0.090], [-0.10, -0.099],
         [0.55, 0.008], [-0.02, 0.014], [0.46, 0.029], [0.32, 0.012],
@@ -795,8 +831,10 @@
       for (const ev of stressEvents){
         const offset = t - ev.startAge;
         if (offset >= 0 && offset < ev.seq.length){
-          er = ev.seq[offset][0];
+          // seq stores (nominal return, CPI); the Stable Floor compounds in REAL terms,
+          // so convert to the real return for this year. (Fixes stagflation reading as a gain.)
           cpi = ev.seq[offset][1];
+          er = (1 + ev.seq[offset][0]) / (1 + cpi) - 1;
           break; // earlier events take precedence
         }
       }
@@ -840,11 +878,11 @@
   function computeComparison(p, sim, scenario){
     const last = sim[sim.length - 1];
 
-    // Citizens Standard outputs
+    // Citizens Standard outputs. Dividend transfers include BOTH the kappa_d stream
+    // and the KI stream (Mode C), in real launch-year dollars.
     const csFloor = last.floorReal;
-    const csK3Cum = sim.reduce((s, y) => s + y.k3pc / y.cpiIdx, 0);
-    const csOngoingK3 = last.k3Monthly * 12 / last.cpiIdx;
-    const csIncome = csFloor * p.wr + csOngoingK3;
+    const csTransfers = sim.reduce((s, y) => s + ((y.k3pc || 0) + (y.pop > 0 ? y.kiTotal / y.pop : 0)) / y.cpiIdx, 0);
+    const csOngoingDiv = ((last.k3Monthly * 12) + (last.pop > 0 ? last.kiTotal / last.pop : 0)) / last.cpiIdx;
 
     // Real-world data, scaled by scenario
     let baseSavings, ssBenefit;
@@ -859,70 +897,74 @@
       ssBenefit = REAL_DATA.avgSS_annual * (1 - REAL_DATA.ssCutAfterDepletion);
     }
 
+    // ONE consistent rule for every row: count only what the monetary system itself
+    // transfers to a citizen (never earned wages); 401(k) + SS are a shared baseline
+    // applied identically to all, including CS; transfers are NET of the recipient's own funding.
+    const base = baseSavings;
     return [
       {
         name: 'Citizens Standard',
-        wealth: csFloor,
-        cash: csK3Cum,
-        income: csIncome,
-        fund: 'Seigniorage',
+        wealth: base + csFloor,
+        cash: csTransfers,
+        income: (base + csFloor) * p.wr + ssBenefit + csOngoingDiv,
+        fund: 'Seigniorage (new money) — no new tax',
         rules: '✓',
         highlight: true
       },
       {
-        name: 'Fed status quo + SS',
-        wealth: baseSavings,
+        name: 'Fed status quo',
+        wealth: base,
         cash: 0,
-        income: baseSavings * p.wr + ssBenefit,
-        fund: 'Mixed (Fed + payroll tax)',
+        income: base * p.wr + ssBenefit,
+        fund: 'Seigniorage kept by Treasury / banks',
         rules: '✗'
       },
       {
         name: 'Chicago Plan',
-        wealth: baseSavings,
+        wealth: base,
         cash: 0,
-        income: baseSavings * p.wr,
-        fund: 'Govt seigniorage',
+        income: base * p.wr + ssBenefit,
+        fund: 'Govt seigniorage → budget',
         rules: '✓'
       },
       {
         name: 'Friedman k-rule',
-        wealth: baseSavings,
+        wealth: base,
         cash: 0,
-        income: baseSavings * p.wr,
-        fund: 'Fed seigniorage',
+        income: base * p.wr + ssBenefit,
+        fund: 'Fed seigniorage → budget',
         rules: '✓'
       },
       {
         name: 'Bitcoin / fixed supply',
-        wealth: baseSavings,
+        wealth: base,
         cash: 0,
-        income: baseSavings * p.wr,
-        fund: 'Mining rewards',
+        income: base * p.wr + ssBenefit,
+        fund: 'No issuance routed to citizens',
         rules: '✓'
       },
       {
         name: 'Alaska PFD-style',
-        wealth: baseSavings,
+        wealth: base,
         cash: REAL_DATA.alaskaPFD * p.hz,
-        income: baseSavings * p.wr + REAL_DATA.alaskaPFD,
-        fund: 'Resource royalty',
+        income: base * p.wr + ssBenefit + REAL_DATA.alaskaPFD,
+        fund: 'Resource royalty (net to citizen)',
         rules: 'partial'
       },
       {
         name: 'UBI (tax-funded)',
-        wealth: baseSavings,
-        cash: REAL_DATA.ubiMonthly * 12 * p.hz,
-        income: baseSavings * p.wr + REAL_DATA.ubiMonthly * 12,
-        fund: 'Taxation',
+        wealth: base,
+        cash: 0,
+        income: base * p.wr + ssBenefit,
+        fund: 'Taxation — $12k/yr gross, net ≈ wash for median earner',
         rules: '✗'
       },
       {
         name: 'MMT + jobs guarantee',
-        wealth: baseSavings,
-        cash: REAL_DATA.mmtJobsWage * 43,  // 43 working years
-        income: baseSavings * p.wr,
-        fund: 'Treasury seigniorage',
+        wealth: base,
+        cash: 0,
+        income: base * p.wr + ssBenefit,
+        fund: 'Deficit — jobs guarantee pays earned wages, not a transfer',
         rules: '✗'
       }
     ];
@@ -953,16 +995,17 @@
       erR.map((r, i) => '<strong>' + (r * 100).toFixed(1) + '%</strong> ' + fmt(erF[i])).join(' &middot; ') +
       ' <span style="opacity:.65">(model default ' + (p.er * 100).toFixed(1) + '%)</span>';
 
+    if ($('chartCaption')) $('chartCaption').textContent = '';
     if (activeTab === 'compare') {
       drawCompareTable(p, sim);
     } else if (activeTab === 'inflation') {
       drawInflationChart(p, sim);
     } else if (activeTab === 'stress') {
       drawStressChart(p, sim);
-    } else if (activeTab === 'frontier') {
-      drawFrontier(p);
     } else if (activeTab === 'modet') {
       drawModeT(p);
+    } else if (activeTab === 'omega') {
+      drawOmega();
     } else {
       drawChart(sim, p);
     }
@@ -973,20 +1016,65 @@
     updateConfigBanner(p);
 
     const cmp = computeComparison(p, sim, activeScenario);
-    const tbody = $('compare-body');
-    tbody.innerHTML = '';
-    cmp.forEach(row => {
-      const tr = document.createElement('tr');
-      if (row.highlight) tr.className = 'highlight';
-      const totalValue = (row.wealth || 0) + (row.cash || 0);
-      tr.innerHTML = `<td class="system-name">${row.name}</td>
-                      <td class="right">${fmt(row.wealth)}</td>
-                      <td class="right">${fmt(row.cash)}</td>
-                      <td class="right">${fmt(row.income)}</td>
-                      <td class="right"><strong>${fmt(totalValue)}</strong></td>
-                      <td>${row.fund}</td>`;
-      tbody.appendChild(tr);
-    });
+
+    // Lead visual: hero stats + bar chart so the real difference is unmissable.
+    const csRow = cmp.find(r => r.highlight) || cmp[0];
+    const fedRow = cmp.find(r => r.name === 'Fed status quo') || cmp[1];
+    const csTotal = (csRow.wealth || 0) + (csRow.cash || 0);
+    const fedTotal = (fedRow.wealth || 0) + (fedRow.cash || 0);
+    const wealthGap = csTotal - fedTotal;
+    const incomeMult = fedRow.income > 0 ? csRow.income / fedRow.income : 0;
+    if ($('compare-hero')) $('compare-hero').innerHTML =
+      `<div style="flex:1; min-width:210px; background:var(--teal-bg); border:1px solid var(--teal); border-radius:var(--radius); padding:16px 18px;">
+         <div style="font-size:34px; font-weight:700; color:var(--teal-text); letter-spacing:-0.02em; line-height:1;">+${fmt(wealthGap)}</div>
+         <div style="font-size:12.5px; color:var(--teal-text); margin-top:7px; opacity:0.85; line-height:1.45;">more locked wealth per citizen than the status quo — equity no other monetary system hands out</div>
+       </div>
+       <div style="flex:1; min-width:210px; background:var(--accent-bg); border:1px solid var(--accent); border-radius:var(--radius); padding:16px 18px;">
+         <div style="font-size:34px; font-weight:700; color:var(--accent-text); letter-spacing:-0.02em; line-height:1;">${incomeMult.toFixed(1)}×</div>
+         <div style="font-size:12.5px; color:var(--accent-text); margin-top:7px; opacity:0.85; line-height:1.45;">the annual retirement income of today’s system (${fmt(csRow.income)}/yr vs ${fmt(fedRow.income)}/yr) — funded by new money, not your taxes</div>
+       </div>`;
+    // Status-quo anchor (this scenario's real-world baseline)
+    const baseSavings = fedRow.wealth;
+    const fedIncome = fedRow.income;
+    const ssBenefit = fedIncome - baseSavings * p.wr;
+    if ($('sq-anchor')) $('sq-anchor').innerHTML =
+      `Today, the median American retires with about <strong>${fmt(baseSavings)}</strong> in savings plus Social Security \u2014 roughly <strong>${fmt(fedIncome)}/yr</strong> to live on. Here is what each Citizens Standard configuration delivers <em>on top of</em> that same baseline:`;
+
+    // Four mode benefit cards (each simulated at the current macro settings)
+    const order = ['A','B','C','D'];
+    const NAMES = { A:'Mode A \u00b7 Deflation', B:'Mode B \u00b7 Stable', C:'Mode C \u00b7 Inflation', D:'Mode D \u00b7 Stable dividend' };
+    const COPY = {
+      A:{ h:'Your money grows itself',            t:'Mild deflation \u2014 every dollar you earn and hold buys a little more each year. Rising real wages, no dividend.' },
+      B:{ h:'The biggest nest egg',               t:'Issues at the full growth rate into one locked floor: maximum wealth, stable prices, no payout.' },
+      C:{ h:'Cash in your pocket now',            t:'A meaningful monthly dividend funded by modest (~2%) inflation, in exchange for a smaller locked floor.' },
+      D:{ h:'A dividend that never inflates away', t:'Splits the growth budget into a mid-size floor plus a standing monthly payout, at zero inflation.' }
+    };
+    if ($('mode-cards')) $('mode-cards').innerHTML = order.map(m => {
+      const pr = presets[m];
+      const k1=pr.k1/100, k2=pr.k2/100, k3=pr.k3/100, ki=pr.ki/100;
+      const cpi = Math.max(k1*(p.gdp/p.m2)*p.pg, k2*p.rg) + ki - p.rg;
+      const sm = simulate({ ...p, k1, k2, k3, ki, cpi });
+      const last = sm[sm.length-1];
+      const floor = last.floorReal;
+      const divMo = ((sm[0].k3pc||0) + (sm[0].pop>0 ? sm[0].kiTotal/sm[0].pop : 0)) / 12;
+      const ongoingAnnual = ((last.k3Monthly*12) + (last.pop>0 ? last.kiTotal/last.pop : 0)) / last.cpiIdx;
+      const income = (baseSavings + floor) * p.wr + ssBenefit + ongoingAnnual;
+      const mult = fedIncome > 0 ? income / fedIncome : 0;
+      const sel = (typeof activeMode !== 'undefined' && activeMode === m);
+      const inflStr = Math.abs(cpi) < 0.0005 ? '0.0%' : (cpi > 0 ? '+' : '\u2212') + Math.abs(cpi*100).toFixed(1) + '%';
+      return `<div class="mode-card${sel?' sel':''}">
+                <div class="mc-head">${NAMES[m]}</div>
+                <div class="mc-benefit">${COPY[m].h}</div>
+                <div class="mc-tag">${COPY[m].t}</div>
+                <div class="mc-stats">
+                  <div><span>Stable Floor</span><b>${fmt(floor)}</b></div>
+                  <div><span>Dividend / mo</span><b>${divMo > 1 ? fmt(divMo) : '\u2014'}</b></div>
+                  <div><span>Inflation</span><b>${inflStr}</b></div>
+                  <div><span>Income / yr @ ${p.hz}</span><b>${fmt(income)}</b></div>
+                </div>
+                <div class="mc-vs">${mult.toFixed(1)}\u00d7 today\u2019s ${fmt(fedIncome)}/yr</div>
+              </div>`;
+    }).join('');
   }
 
   function updateConfigBanner(p) {
@@ -1114,6 +1202,65 @@
         interaction: { mode: 'index', intersect: false }
       }
     });
+  }
+
+  // ===== Mode Ω (adaptive) — reproduces Paper 1 §8.6 simulation outcomes =====
+  const OMEGA_SCENARIOS = {
+    normal:      { floor:438000,  demo:false, prod:false, gov:'inactive',                note:'Base — ≈60% K2 capture, mild deflationary bias, no KI' },
+    negpop:      { floor:687000,  demo:true,  prod:false, gov:'demographic active',      note:'+55% vs the normal-conditions floor from the demographic governor' },
+    negpop_opt:  { floor:1597000, demo:true,  prod:false, gov:'demographic active',      note:'Same governors as the −0.5% case; historical-high 6.5% returns' },
+    negpop_pess: { floor:390000,  demo:true,  prod:false, gov:'demographic active',      note:'Same governors; pessimistic 3.0% returns — still respectable' },
+    prodboom:    { floor:820000,  demo:true,  prod:true,  gov:'demographic + productivity', note:'Both governors engaged; productivity windfall routed to floors' },
+  };
+  function omegaGovernors(sc){
+    // Illustrative 65-year governor response (faithful to §8.2–8.5), driven by the scenario's conditions.
+    const HZ=65, k1=[], k2=[], ki=[];
+    for(let t=0;t<=HZ;t++){
+      let m=1.0, cap=0.60, k=0;
+      if(sc.demo){                                   // demographic governor engages as net pop growth crosses below +0.2% (~yr18) and persists
+        const r=Math.min(1,Math.max(0,(t-18)/20));
+        m   = 1.0 + 0.55*r;                          // K1 endowment multiplier toward ~1.55× (cap 2.0×)
+        cap = 0.60 + 0.25*r;                          // K2 capture 60% -> ~85% (demographic +up to 40% of base)
+        if(t>=28) k = 0.40*Math.min(1,(t-28)/4);     // conditional KI under sustained stress, ~0.4% of M2 (band 0–0.6%)
+      }
+      if(sc.prod){                                   // temporary productivity boom (yrs 30–45) then reverts at 25%/yr
+        let b = (t>=30 && t<=45) ? 0.13*Math.min(1,(t-30)/3) : (t>45 ? 0.13*Math.pow(0.75,t-45) : 0);
+        cap = Math.min(1.0, cap + b);
+      }
+      k1.push(m); k2.push(cap); ki.push(k);
+    }
+    return {k1,k2,ki};
+  }
+  function drawOmega(){
+    const sc = OMEGA_SCENARIOS[omegaScenario];
+    $('omega-floor').textContent = fmt(sc.floor);
+    $('omega-income').textContent = fmt(sc.floor*0.05) + '/yr';
+    $('omega-gov').textContent = sc.gov;
+    $('omega-note').textContent = sc.note;
+    const g = omegaGovernors(sc), labels = g.k1.map((_,t)=>t);
+    const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const tickColor = '#888780';
+    const gridColor = isDark ? 'rgba(180,178,169,0.15)' : 'rgba(136,135,128,0.15)';
+    const ctx = $('omega-chart').getContext('2d');
+    if(omegaChart) omegaChart.destroy();
+    omegaChart = new Chart(ctx, {
+      type:'line',
+      data:{ labels, datasets:[
+        { label:'K1 endowment multiplier (×)', data:g.k1, borderColor:'#185fa5', backgroundColor:'transparent', borderWidth:2.4, pointRadius:0, yAxisID:'yL', tension:0.25 },
+        { label:'K2 capture (fraction)', data:g.k2, borderColor:'#534ab7', backgroundColor:'transparent', borderWidth:2.4, pointRadius:0, yAxisID:'yL', tension:0.25 },
+        { label:'Conditional KI (% of M2)', data:g.ki, borderColor:'#ba7517', backgroundColor:'transparent', borderWidth:2.2, borderDash:[5,4], pointRadius:0, yAxisID:'yR', tension:0.25 },
+      ]},
+      options:{ responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=> c.dataset.label.indexOf('KI')>=0 ? c.dataset.label+': '+c.parsed.y.toFixed(2)+'%' : (c.dataset.label.indexOf('multiplier')>=0 ? c.dataset.label+': '+c.parsed.y.toFixed(2)+'×' : 'K2 capture: '+(c.parsed.y*100).toFixed(0)+'%') } } },
+        scales:{
+          x:{ title:{display:true,text:'Years from launch (citizen age)',color:tickColor,font:{size:12}}, grid:{display:false}, ticks:{color:tickColor,font:{size:11},maxTicksLimit:8} },
+          yL:{ position:'left', min:0, max:2.0, title:{display:true,text:'Multiplier (×) / K2 capture',color:tickColor,font:{size:12}}, ticks:{color:tickColor,font:{size:11}}, grid:{color:gridColor} },
+          yR:{ position:'right', min:0, max:0.7, title:{display:true,text:'KI (% of M2)',color:tickColor,font:{size:12}}, ticks:{color:tickColor,font:{size:11},callback:v=>v+'%'}, grid:{display:false} }
+        },
+        interaction:{mode:'index',intersect:false}
+      }
+    });
+    $('omega-legend').innerHTML = '<span style="color:#185fa5">\u25a0</span> K1 multiplier (×) &nbsp; <span style="color:#534ab7">\u25a0</span> K2 capture (fraction) &nbsp; <span style="color:#ba7517">\u25a0</span> conditional KI (% of M2, right axis)';
   }
 
   function drawStressChart(p, smoothSim){
@@ -1259,43 +1406,50 @@
   // how the Stable Floor at horizon trades off against cumulative lifetime dividends.
   // Total value declines as κ_d rises because locked floors compound while dividends
   // are spent — this is why κ_d = 0 is the wealth-maximizing choice (paper, Result/Prop 8).
-  function drawFrontier(p){
+  function drawModeCompare(p){
     const ctx = $('chart').getContext('2d');
     if (chart) chart.destroy();
-    const pts = 21, kappas = [], floors = [], divs = [], totals = [];
-    for (let i = 0; i < pts; i++){
-      const kd = i / (pts - 1);                 // 0 .. 1
-      const s = simulate({ ...p, k3: kd });      // cpi is independent of κ_d, so reuse p
-      const last = s[s.length - 1];
-      const lifeDiv = s.reduce((acc, y) => acc + (y.k3pc || 0) / y.cpiIdx, 0);
-      kappas.push(Math.round(kd * 100));
+    const order = ['A','B','C','D'];
+    const names = { A:'Mode A \u00b7 Deflation', B:'Mode B \u00b7 Stable', C:'Mode C \u00b7 Inflation', D:'Mode D \u00b7 Stable dividend' };
+    const floors = [], divs = [], totals = [], cpis = [];
+    for (const m of order){
+      const pr = presets[m];
+      const k1 = pr.k1/100, k2 = pr.k2/100, k3 = pr.k3/100, ki = pr.ki/100;
+      // derive THIS mode's inflation from its own channels (same rule as the macro panel),
+      // so every bar uses its correct CPI rather than the currently-selected mode's.
+      const k1Share = k1 * (p.gdp / p.m2) * p.pg;
+      const k2Share = k2 * p.rg;
+      const cpi = Math.max(k1Share, k2Share) + ki - p.rg;
+      const sim = simulate({ ...p, k1, k2, k3, ki, cpi });
+      const last = sim[sim.length - 1];
+      const lifeDiv = sim.reduce((s, y) => s + ((y.k3pc || 0) + (y.pop > 0 ? y.kiTotal / y.pop : 0)) / y.cpiIdx, 0);
       floors.push(last.floorReal);
       divs.push(lifeDiv);
       totals.push(last.floorReal + lifeDiv);
+      cpis.push(cpi);
     }
     const datasets = [
-      { label: 'Stable Floor at horizon (K2)', data: floors, borderColor: '#185fa5', backgroundColor: 'rgba(24,95,165,0.08)', fill: true,  tension: 0.2, pointRadius: 0 },
-      { label: 'Lifetime dividend (K3)',        data: divs,   borderColor: '#ba7517', backgroundColor: 'transparent',        fill: false, tension: 0.2, pointRadius: 0 },
-      { label: 'Total lifetime value',          data: totals, borderColor: '#0f6e56', backgroundColor: 'transparent', borderDash: [5,4], fill: false, tension: 0.2, pointRadius: 0 }
+      { label: 'Stable Floor at horizon', data: floors, backgroundColor: '#185fa5', borderRadius: 3 },
+      { label: 'Lifetime dividend',       data: divs,   backgroundColor: '#ba7517', borderRadius: 3 },
+      { label: 'Total lifetime value',    data: totals, backgroundColor: '#0f6e56', borderRadius: 3 }
     ];
-    $('legend').innerHTML = '<span><span class="swatch" style="background:#185fa5"></span>Stable Floor (K2)</span><span><span class="swatch" style="background:#ba7517"></span>Lifetime dividend (K3)</span><span><span class="swatch" style="background:#0f6e56"></span>Total value</span>';
+    $('legend').innerHTML = '<span><span class="swatch" style="background:#185fa5"></span>Stable Floor at horizon</span><span><span class="swatch" style="background:#ba7517"></span>Lifetime dividend (\u03ba_d + KI)</span><span><span class="swatch" style="background:#0f6e56"></span>Total lifetime value</span>';
     const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const tickColor = '#888780';
     const gridColor = isDark ? 'rgba(180,178,169,0.15)' : 'rgba(136,135,128,0.15)';
     chart = new Chart(ctx, {
-      type: 'line',
-      data: { labels: kappas, datasets },
+      type: 'bar',
+      data: { labels: order.map((m, i) => [names[m], (Math.abs(cpis[i]) < 0.0005 ? '0.0% inflation' : (cpis[i] > 0 ? '+' : '\u2212') + Math.abs(cpis[i] * 100).toFixed(1) + '% inflation')]), datasets },
       options: {
         responsive: true, maintainAspectRatio: false,
         plugins: {
           legend: { display: false },
-          tooltip: { callbacks: { title: items => 'Dividend share κ_d = ' + items[0].label + '%  (floor share ' + (100 - items[0].label) + '%)', label: c => c.dataset.label + ': ' + fmt(c.parsed.y) } }
+          tooltip: { callbacks: { label: c => c.dataset.label + ': ' + fmt(c.parsed.y) } }
         },
         scales: {
-          x: { title: { display: true, text: 'Dividend share κ_d (%)  —  floor share is the remainder', color: tickColor, font: { size: 12 } }, grid: { display: false }, ticks: { color: tickColor, font: { size: 11 }, maxTicksLimit: 11 } },
-          y: { ticks: { color: tickColor, font: { size: 11 }, callback: v => fmt(v) }, grid: { color: gridColor } }
-        },
-        interaction: { mode: 'index', intersect: false }
+          x: { grid: { display: false }, ticks: { color: tickColor, font: { size: 11 } } },
+          y: { beginAtZero: true, title: { display: true, text: 'Constant launch-year dollars \u2014 inflation removed, so bars are directly comparable', color: tickColor, font: { size: 12 } }, ticks: { color: tickColor, font: { size: 11 }, callback: v => fmt(v) }, grid: { color: gridColor } }
+        }
       }
     });
   }
@@ -1393,11 +1547,12 @@
   function showTab(name){
     activeTab = name;
     document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
-    $('chart-view').style.display = (name === 'compare' || name === 'inflation' || name === 'stress' || name === 'modet') ? 'none' : 'block';
+    $('chart-view').style.display = (name === 'compare' || name === 'inflation' || name === 'stress' || name === 'modet' || name === 'omega') ? 'none' : 'block';
     $('compare-view').style.display = name === 'compare' ? 'block' : 'none';
     $('inflation-view').style.display = name === 'inflation' ? 'block' : 'none';
     $('stress-view').style.display = name === 'stress' ? 'block' : 'none';
     $('modet-view').style.display = name === 'modet' ? 'block' : 'none';
+    $('omega-view').style.display = name === 'omega' ? 'block' : 'none';
 
     // Destroy any existing chart instances so they rebuild fresh against the
     // newly-visible canvas with correct dimensions.
@@ -1426,6 +1581,11 @@
   document.querySelectorAll('#modet-pills .pill').forEach(p => p.addEventListener('click', () => {
     modetShock = p.dataset.shock;
     document.querySelectorAll('#modet-pills .pill').forEach(x => x.classList.toggle('active', x === p));
+    update();
+  }));
+  document.querySelectorAll('#omega-pills .pill').forEach(p => p.addEventListener('click', () => {
+    omegaScenario = p.dataset.omega;
+    document.querySelectorAll('#omega-pills .pill').forEach(x => x.classList.toggle('active', x === p));
     update();
   }));
   [['ktr',1],['psr',1],['flr',0]].forEach(([id,dec]) => $(id).addEventListener('input', () => {
