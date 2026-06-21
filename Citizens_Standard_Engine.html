@@ -480,14 +480,14 @@
   </div>
   <div class="legend" id="inflation-legend"></div>
   <div class="chart-wrap"><canvas id="inflation-chart" role="img" aria-label="Inflation comparison chart"></canvas></div>
-  <p style="font-size: 12px; color: var(--text-dim); margin: 16px 0 0; line-height: 1.6;">
-    The Citizens Standard line (thick green) is computed from your channel settings (issuance minus real growth) — raise KI and watch it climb into inflation; set K2 to 100% with KI off and it sits at zero. Raising K3 (κ_d) pays a dividend without moving this line — it reallocates within the budget.
-    Fed status quo shows historical reality with stylized shock periods (recession episode and inflation spike).
-    Bitcoin's deflation tracks your real growth rate (fixed supply meets growing economy).
-    UBI and MMT show drift risk — fiscal pressure compounding over decades.
-    Friedman k-rule's inflation = monetary growth rate minus your real growth rate.
-    Chicago Plan shows constrained 2% targeting without fractional-banking amplification.
-  </p>
+  <div style="font-size:12px; color:var(--text-dim); margin:16px 0 0; line-height:1.65; display:grid; gap:6px;">
+    <div><strong style="color:var(--accent)">Citizens Standard</strong> &mdash; computed from your channels (issuance &minus; real growth): raise KI and it climbs into inflation; K2 at 100% with KI off sits at zero. Raising K3 (&kappa;_d) pays a dividend without moving the line &mdash; it reallocates within the budget.</div>
+    <div><strong>Fed status quo</strong> &mdash; historical reality with stylized shock periods (a recession dip and an inflation spike).</div>
+    <div><strong>Bitcoin</strong> &mdash; structural deflation tracking your real-growth rate (fixed supply meets a growing economy).</div>
+    <div><strong>UBI &middot; MMT</strong> &mdash; drift risk: fiscal pressure compounding over decades.</div>
+    <div><strong>Friedman k-rule</strong> &mdash; inflation = money-growth rate &minus; your real-growth rate.</div>
+    <div><strong>Chicago Plan</strong> &mdash; constrained 2% targeting, without fractional-banking amplification.</div>
+  </div>
 </div>
 
 <div id="stress-view" style="display:none;">
@@ -1226,9 +1226,9 @@
     // Skipped to avoid clutter — visually identical to Fed.
 
     const datasets = [
-      { label: 'Citizens Standard (derived)', data: csPath, borderColor: '#5FBE93', borderWidth: 4, tension: 0, pointRadius: 0 },
+      { label: 'Citizens Standard (derived)', data: csPath, borderColor: '#E6A93E', borderWidth: 4, tension: 0, pointRadius: 0 },
       { label: 'Fed status quo (historical)', data: fedPath, borderColor: '#5BA6E6', borderWidth: 2, tension: 0.1, pointRadius: 0, borderDash: [4,4] },
-      { label: 'Bitcoin (structural deflation)', data: btcPath, borderColor: '#E6A93E', borderWidth: 2, tension: 0, pointRadius: 0 },
+      { label: 'Bitcoin (structural deflation)', data: btcPath, borderColor: '#34BAC8', borderWidth: 2, tension: 0, pointRadius: 0 },
       { label: 'UBI (partial monetization)', data: ubiPath, borderColor: '#E08A5A', borderWidth: 2, tension: 0, pointRadius: 0 },
       { label: 'MMT (drift risk)', data: mmtPath, borderColor: '#9B95EC', borderWidth: 2, tension: 0, pointRadius: 0 },
       { label: 'Friedman k-rule', data: friedmanPath, borderColor: '#9AA3AE', borderWidth: 2, tension: 0, pointRadius: 0, borderDash: [2,2] },
