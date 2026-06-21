@@ -526,7 +526,7 @@
 
 <div id="modet-view" style="display:none;">
   <div class="info-banner">
-    <strong>What this answers:</strong> "How does the framework retire the national debt — and tighten when needed?" Under <strong>Mode T</strong>, citizen K1/K2 keep running at full Mode-B price stability, while <strong>KT</strong> retires the legacy debt down to a small <strong>operational floor</strong> — not to zero. The floor is kept on purpose: it's the financial system's safe-asset benchmark and the standing base for monetary operations. KT runs <strong>symmetrically</strong>: it retires excess debt in normal times, and in <strong>reverse</strong> — issuing short-term bills to drain transactional money — when inflation runs hot. Retiring debt as a fiscal <em>burden</em> (interest, rollover risk) is the goal; the small remaining stock is debt held by choice, as a tool.
+    <strong>What this answers:</strong> "How does the framework retire the national debt?" Under <strong>Mode T</strong>, citizen K1/K2 keep running at full Mode-B price stability, while <strong>KT</strong> retires the legacy debt down to a small <strong>operational floor</strong> — not to zero. The floor is kept on purpose: it's the financial system's safe-asset benchmark and the standing base for monetary operations. Tightening against inflation is a <strong>separate</strong> job — handled on the Inflation tab by the <strong>Tool 14 surcharge</strong>, which retires circulating money directly and issues no sterilization bonds, so the debt path is left untouched. The inflation-shock scenario below makes that contrast visible: the framework's debt line holds its course, while a conventional bond-issuance QT would have pushed the stock back up. Retiring debt as a fiscal <em>burden</em> (interest, rollover risk) is the goal; the small remaining stock is debt held by choice, as a tool.
   </div>
 
   <div style="display:flex; flex-wrap:wrap; gap:18px 20px; align-items:flex-start; margin-top:14px;">
@@ -545,7 +545,7 @@
   </div>
   <div class="scenario-pills" id="modet-pills" style="margin-top:12px;">
     <button class="pill active" data-shock="none">No shock</button>
-    <button class="pill" data-shock="infl">Inflation shock, Years 45–50 (watch reverse-KT drain money)</button>
+    <button class="pill" data-shock="infl">Inflation shock, Years 45–50 (Tool 14 vs conventional QT)</button>
   </div>
 
   <div class="stats" style="margin-top: 16px;">
@@ -559,7 +559,7 @@
   <div class="chart-wrap"><canvas id="modet-chart" role="img" aria-label="Debt-to-GDP transition chart"></canvas></div>
 
   <p style="font-size: 12px; color: var(--text-dim); margin: 16px 0 0; line-height: 1.6;">
-    <strong>Mode T calibration (Transition paper, 2026c §4, extended):</strong> public debt ≈ $31.4T at enactment (~102% of GDP); KT at 1.5% of M2; primary surplus 0 → 1.5% of GDP over 25 years; coupon repricing ~4.5% → ~1.5% by Year 6. KT retires the legacy debt down to a small <strong>operational floor</strong> (default ~15% of GDP) rather than to zero — eliminating debt as a fiscal burden while keeping a safe-asset benchmark and a standing base for the <strong>reverse-KT drain</strong> (the contractionary / QT-equivalent tool). The inflation-shock scenario shows reverse-KT issuing bills to soak up money — the stock lifts above the floor, then normalizes. Reduced-form sketch, illustrative; separate from the cohort-floor projection on the other tabs.
+    <strong>Mode T calibration (Transition paper, 2026c §4, extended):</strong> public debt ≈ $31.4T at enactment (~102% of GDP); KT at 1.5% of M2; primary surplus 0 → 1.5% of GDP over 25 years; coupon repricing ~4.5% → ~1.5% by Year 6. KT retires the legacy debt down to a small <strong>operational floor</strong> (default ~15% of GDP) rather than to zero — eliminating debt as a fiscal burden while keeping a safe-asset benchmark and a standing base for monetary operations. Tightening against inflation is <strong>not</strong> done here: it is the <strong>Tool 14 surcharge</strong> (Inflation tab), which retires circulating money directly and issues no sterilization bonds, so the debt path is unaffected. The inflation-shock scenario makes the contrast explicit — the framework's debt line holds while a conventional bond-issuance QT (grey dashed) would push the stock back up. Reduced-form sketch, illustrative; separate from the cohort-floor projection on the other tabs.
   </p>
 </div>
 
@@ -1559,7 +1559,7 @@
         const r = Math.max(rFin, r0 - (r0 - rFin) * Math.min(t / rYears, 1));
         const ps = psMax * Math.min(t / psYears, 1) * GDP;
         if (withShock && t >= shockA && t < shockB){
-          D = D + r * D + ktRate * M2;                          // reverse-KT: issue bills to DRAIN money
+          D = D + r * D + ktRate * M2;                          // conventional QT counterfactual: issue bills (debt) to drain money
         } else if (D > floorAmt){
           D = Math.max(floorAmt, D + r * D - ps - ktRate * M2); // retire excess down to the floor
         } else {
@@ -1568,19 +1568,19 @@
       }
       return { series, reach, y30 };
     }
-    const main = trajectory(shock);
-    const ref0 = trajectory(false);
+    const main = trajectory(false);                 // framework debt path: Tool 14 tightens money, not debt, so the path is unaffected by the shock
+    const qt   = shock ? trajectory(true) : null;   // conventional QT counterfactual: bills (debt) issued to drain money push the stock up
     const years = Array.from({ length: hz + 1 }, (_, t) => t);
     const cbo   = years.map(t => 102 + 1.8 * t);            // CBO: 102% -> 156% by Y30 -> rising
     $('modet-y0').textContent = (D0 / GDP0 * 100).toFixed(0) + '%';
-    $('modet-y30').textContent = (ref0.y30 != null ? ref0.y30.toFixed(0) : '—') + '%';
-    $('modet-retire').textContent = ref0.reach != null ? '~Year ' + ref0.reach : '> ' + hz + ' yrs';
+    $('modet-y30').textContent = (main.y30 != null ? main.y30.toFixed(0) : '—') + '%';
+    $('modet-retire').textContent = main.reach != null ? '~Year ' + main.reach : '> ' + hz + ' yrs';
     $('modet-kt').textContent = (floorPct * 100).toFixed(0) + '% of GDP';
     const datasets = [{ label: 'Citizens Standard (Mode T)', data: main.series, borderColor: '#5FBE93', backgroundColor: 'rgba(15,110,86,0.10)', fill: true, tension: 0.2, pointRadius: 0 }];
     let legend = '<span><span class="swatch" style="background:#5FBE93"></span>Citizens Standard (Mode T)</span>';
     if (shock){
-      datasets.push({ label: 'Mode T (no shock)', data: ref0.series, borderColor: '#5FBE93', backgroundColor: 'transparent', borderDash: [2,3], fill: false, tension: 0.2, pointRadius: 0 });
-      legend += '<span><span class="swatch" style="background:#5FBE93;opacity:0.55"></span>No-shock path</span>';
+      datasets.push({ label: 'Conventional QT (bond sterilization)', data: qt.series, borderColor: '#9AA3AE', backgroundColor: 'transparent', borderDash: [6,4], fill: false, tension: 0.2, pointRadius: 0 });
+      legend += '<span><span class="swatch" style="background:#9AA3AE"></span>Conventional QT (bonds issued to drain money)</span>';
     }
     datasets.push({ label: 'CBO baseline (no reform)', data: cbo, borderColor: '#E08A5A', backgroundColor: 'transparent', borderDash: [5,4], fill: false, tension: 0.2, pointRadius: 0 });
     legend += '<span><span class="swatch" style="background:#E08A5A"></span>CBO baseline (no reform)</span>';
@@ -1588,7 +1588,7 @@
     const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const tickColor = '#9AA3AE';
     const gridColor = isDark ? 'rgba(180,178,169,0.15)' : 'rgba(136,135,128,0.15)';
-    const xtitle = shock ? 'Years from enactment  —  reverse-KT issues bills to drain money during the Y45–50 shock, then normalizes' : 'Years from enactment';
+    const xtitle = shock ? 'Years from enactment  —  during the Y45–50 shock, Tool 14 tightens on the money side, so the debt path holds; grey dashed = conventional QT (bonds) for contrast' : 'Years from enactment';
     modetChart = new Chart(ctx, {
       type: 'line',
       data: { labels: years, datasets },
