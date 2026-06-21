@@ -325,11 +325,16 @@
   body{font-size:17px;}
   .mode-btn.active{background:var(--accent);border-color:var(--accent);color:var(--amber-ink);}
   .pill.active{color:var(--amber-ink);}
+  .row .readout{flex:0 0 auto;white-space:nowrap;padding-left:6px;}
   .info-banner{color:var(--accent-text);}
-  input[type=range]{height:6px;}
-  input[type=range]::-webkit-slider-thumb{width:22px;height:22px;box-shadow:0 2px 8px rgba(0,0,0,.45);}
-  input[type=range]::-moz-range-thumb{width:22px;height:22px;}
+  input[type=range]{height:6px;min-width:0;}
+  input[type=range]::-webkit-slider-thumb{width:18px;height:18px;box-shadow:0 2px 8px rgba(0,0,0,.4);}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;}
   a{color:var(--amber);}
+  .stats{grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;}
+  @media (min-width:900px){.stats{grid-template-columns:repeat(7,1fr);}}
+  .stat{padding:12px 10px;}
+  .stat-val{font-size:18px;}
 </style>
 </head>
 <body>
@@ -340,7 +345,7 @@
 <header>
   <h1>The Citizens Standard — Interactive Model Builder</h1>
   <p class="subtitle">Tune the monetary issuance dials. Project a representative cohort 65 years. Compare against real-world median outcomes under seven alternative systems.</p>
-  <p class="meta"><a href="front_door.html">&larr; The front door</a> &nbsp;&middot;&nbsp; Companion tool to the SSRN paper by Neo-Solon. <a href="#methodology">Data sources &amp; methodology below</a>.</p>
+  <p class="meta"><a href="front_door.html">&larr; The front door</a> &nbsp;&middot;&nbsp; <a href="questions_and_answers.html">Questions &amp; answers</a> &nbsp;&middot;&nbsp; Companion tool to the SSRN paper by Neo-Solon. <a href="#methodology">Data sources &amp; methodology below</a>.</p>
 </header>
 
 <div class="card" style="background: var(--accent-bg); border-color: var(--accent); margin-bottom: 24px;">
@@ -378,8 +383,8 @@
     <p class="card-title">Issuance channels</p>
     <div class="row"><span class="label">K1 — Citizenship</span><input type="range" id="k1" min="0" max="10" step="0.1" value="2.5"><span class="readout" id="k1r">2.5%</span></div>
     <div class="row"><span class="label">K2 — Growth rate</span><input type="range" id="k2" min="0" max="100" step="0.5" value="100"><span class="readout" id="k2r">100%</span></div>
-    <div class="row"><span class="label">K2 / K3 split — dividend share (κ_d)</span><input type="range" id="k3" min="0" max="100" step="1" value="0"><span class="readout" id="k3r">0%</span></div>
-    <p class="card-note" id="splitNote" style="margin:2px 0 0;color:var(--teal-text)">Growth budget → <strong id="splitFloor">100%</strong> locked floor (K2) · <strong id="splitDiv">0%</strong> spendable dividend (K3). Always sums to 100% — moving the dividend up lowers the floor by the same dollars; total money issued is unchanged.</p>
+    <div class="row"><span class="label">K2/K3 split (κ_d)</span><input type="range" id="k3" min="0" max="100" step="1" value="0"><span class="readout" id="k3r">0%</span></div>
+    <p class="card-note" id="splitNote" style="margin:2px 0 0;color:var(--accent)">Growth budget → <strong id="splitFloor">100%</strong> locked floor (K2) · <strong id="splitDiv">0%</strong> spendable dividend (K3). Always sums to 100% — moving the dividend up lowers the floor by the same dollars; total money issued is unchanged.</p>
     <div class="row" style="margin-top:8px"><span class="label">KI — Inflation-gap</span><input type="range" id="ki" min="0" max="6" step="0.05" value="0"><span class="readout" id="kir">0.0%</span></div>
     <p class="card-note">K1: % of GDP per capita per new citizen. <strong>K2 — Growth rate:</strong> the share of the real-growth-matched budget that is issued — 100% holds prices stable (Mode B), ~17.5% gives mild deflation (Mode A). This sets <em>how much</em> new money is created. <strong>K2/K3 split (κ_d):</strong> of that one budget, how much locks into Stable Floors (K2) versus pays out as a monthly dividend (K3) — the two shares sum to 100% and the split is price-neutral (it moves money between locked and spendable, not the total). <strong>KI — Inflation-gap:</strong> % of M2 issued <em>above</em> the growth line; the only channel that creates inflation (Mode C).</p>
   </div>
@@ -394,6 +399,7 @@
       <button class="er-preset active" data-er="4.3" title="Mode B central realizable return: attenuated MPK of the deepened stock at the 60/40 split (the macroeconomic model §6.7).">Central 4.3%</button>
       <button class="er-preset" data-er="5.0" title="High end of the Mode B realizable band (the macroeconomic model §6.7).">High band 5.0%</button>
       <button class="er-preset" data-er="5.4" title="Low-capture realizable return for Modes A and C: the lighter deposit barely deepens the stock, so the MPK stays high.">Low-capture 5.4%</button>
+      <button class="er-preset" data-er="6.67" title="Mode D builds no floor and buys no index (κ_d=100%, A*=0), so capital is not deepened and the equity return stays unattenuated — a little higher than the indexing modes (the macroeconomic model §6.7).">No-index 6.7%</button>
     </div>
     <div class="row"><span class="label">Implied inflation</span><span class="readout" id="cpir" style="font-weight:700; font-size:15px; flex:0 0 auto;">0.0%</span><span id="cpiChar" style="font-size:11px; margin-left:10px;"></span></div>
     <p class="card-note" id="cpiBreakdown" style="margin-top:2px;">Derived from the channels above — not set by hand.</p>
@@ -1026,22 +1032,30 @@
       'A* = $' + (_aStar/1e9).toFixed(0) + 'B/yr = ' + (_c*100).toFixed(2) + '% of the $' + (p.mkt/1e12).toFixed(0) + 'T market. ' +
       'The zero-growth stock-flow value is c·dur ≈ <strong>' + (_cdur*100).toFixed(0) + '%</strong>; under ' + (p.rg*100).toFixed(1) + '% real growth the realized share is ψ* = c·annuity(g,dur) ≈ <strong>' + (_psi*100).toFixed(0) + '%</strong> (decumulation models bracket ' + (Math.min(_psiHaz,_psiAnn)*100).toFixed(0) + '–' + (Math.max(_psiHaz,_psiAnn)*100).toFixed(0) + '%), leaving ~' + ((1-_psi)*100).toFixed(0) + '% tradable float' + (isFinite(_ceil) ? ', bounded above by c/g ≈ <strong>' + (Math.min(_ceil,0.999)*100).toFixed(0) + '%</strong> at any duration' : '') + ' — the structural-buyer paper §6.2.';
 
-    // --- Price-stability locus (the macroeconomic model §3.2): growth-budget transactional injection vs g_r*M^T ---
+    // --- Price-stability locus (the macroeconomic model §3.2): TOTAL transactional injection (dividend + KI + spillover) vs g_r*M^T ---
     const MU = 0.5135;                          // M^T/M2, back-solved from the $229.7B locus (the macroeconomic model line 236)
     const MT = MU * p.m2;
     const locus = p.rg * MT;
     const k3div = p.k3 * Math.max(0, p.k2*p.m2*p.rg - p.k1*p.gdp*NC);
+    const _kiDol = p.ki * p.m2;                 // the KI inflation-gap also lands in M^T
     const spill = 0.20 * _aStar;
-    const inject = k3div + spill;
-    const gInfl = Math.max(0, inject - locus) / MT;
-    const stable = gInfl < 0.0005;
+    const inject = k3div + _kiDol + spill;      // everything reaching the goods circuit
+    const gInfl = (inject - locus) / MT;        // signed: <0 deflation, ~0 stable, >0 inflation
+    let _parts = 'dividend $' + (k3div/1e9).toFixed(0) + 'B';
+    if (_kiDol > 0) _parts += ' + KI inflation-gap $' + (_kiDol/1e9).toFixed(0) + 'B';
+    _parts += ' + spillover $' + (spill/1e9).toFixed(0) + 'B';
+    let _status;
+    if (Math.abs(gInfl) < 0.0005)
+      _status = '<span style="color:var(--accent)">&#10003; At the locus &mdash; goods prices flat.</span>';
+    else if (gInfl < 0)
+      _status = '<span style="color:var(--teal)">&#10003; $' + ((locus-inject)/1e9).toFixed(0) + 'B below the locus &rarr; ' + (gInfl*100).toFixed(1) + '% (mild deflation — a saved dollar gains value).</span>';
+    else
+      _status = '<span style="color:#E0685A">&#9888; $' + ((inject-locus)/1e9).toFixed(0) + 'B above the locus &rarr; +' + (gInfl*100).toFixed(1) + '% goods inflation' + (_kiDol > 0 ? ' — the KI inflation-gap is the source' : '') + '.</span>';
     if ($('leashPanel')) $('leashPanel').innerHTML =
-      '<strong>Price-stability locus (P = M&#8348;&middot;V/Y).</strong> Growth-budget injection into the goods circuit &mdash; '
-      + 'dividend $' + (k3div/1e9).toFixed(0) + 'B + spillover $' + (spill/1e9).toFixed(0) + 'B = <strong>$' + (inject/1e9).toFixed(0) + 'B</strong> '
+      '<strong>Price-stability locus (P = M&#8348;&middot;V/Y).</strong> Money reaching the goods circuit &mdash; '
+      + _parts + ' = <strong>$' + (inject/1e9).toFixed(0) + 'B</strong> '
       + 'vs the locus g&#8323;&middot;M&#8348; = $' + (locus/1e9).toFixed(0) + 'B (M&#8348; &#8776; $' + (MT/1e12).toFixed(1) + 'T). '
-      + (stable
-          ? '<span style="color:var(--accent)">&#10003; Within the locus &mdash; the dividend is goods-price-neutral.</span>'
-          : '<span style="color:#E0685A">&#9888; Over the locus by $' + ((inject-locus)/1e9).toFixed(0) + 'B &rarr; +' + (gInfl*100).toFixed(1) + '% goods inflation, which the M2-basis figure does not capture.</span>');
+      + _status;
 
     const erR = [0.03, 0.045, 0.065];
     const erF = erR.map(r => { const s = simulate(Object.assign({}, p, { er: r })); return s[s.length - 1].floorReal; });

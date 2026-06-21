@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The questions people ask — the Citizens Standard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#10161C;--ink-soft:#18212B;--line:#27313C;--text:#ECE7DB;--dim:#9AA3AE;
+    --kept:#5FBE93;--kept-soft:rgba(95,190,147,.10);--lost:#3C4855;--amber:#E6A93E;--amber-ink:#1a1206;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--text);font-family:"Newsreader",Georgia,serif;
+    font-size:clamp(18px,1.05rem + 0.3vw,21px);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:680px;margin:0 auto;padding:0 24px}
+  .display{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;letter-spacing:-0.02em;line-height:1.05}
+  .label{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;font-size:.72rem}
+  header{padding:60px 0 10px}
+  .kicker{color:var(--dim);margin-bottom:30px}.kicker b{color:var(--text);font-weight:700}
+  h1.display{font-size:clamp(2.2rem,6vw,3.3rem);margin-bottom:24px}
+  .lede{font-size:clamp(1.12rem,1rem + 0.5vw,1.36rem);color:#D9D3C6;max-width:42ch;font-style:italic}
+  main{padding:14px 0 0}
+  h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;letter-spacing:-0.015em;
+    font-size:clamp(1.45rem,1.1rem + 1.6vw,1.95rem);line-height:1.12;color:#fff;
+    margin:54px 0 18px;padding-top:26px;border-top:1px solid var(--line)}
+  p{margin:0 0 20px}
+  strong{font-weight:700;color:#fff}
+  em{font-style:italic;color:#EFEFE6}
+  ul,ol{margin:0 0 22px;padding-left:0;list-style:none}
+  ul li,ol li{position:relative;padding-left:30px;margin-bottom:13px}
+  ul li::before{content:"";position:absolute;left:6px;top:.72em;width:7px;height:7px;border-radius:50%;background:var(--kept)}
+  ol{counter-reset:n}
+  ol li{counter-increment:n}
+  ol li::before{content:counter(n);position:absolute;left:0;top:.05em;font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:800;font-size:.9em;color:var(--amber)}
+  code{font-family:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;font-size:.86em;
+    background:var(--ink-soft);color:var(--amber);padding:.08em .38em;border-radius:5px;border:1px solid var(--line)}
+  .formula{font-family:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;font-size:.95rem;line-height:1.6;
+    background:var(--ink-soft);border:1px solid var(--line);border-left:3px solid var(--kept);border-radius:9px;
+    color:#E7E2D6;padding:18px 20px;margin:6px 0 24px;overflow-x:auto;white-space:pre}
+  .formula code{background:none;border:none;padding:0;color:inherit}
+  .aside{font-style:italic;color:var(--dim);font-size:.98em;border-left:2px solid var(--line);padding-left:18px;margin:8px 0 22px}
+  .tablewrap{overflow-x:auto;margin:6px 0 26px;border:1px solid var(--line);border-radius:10px}
+  table{border-collapse:collapse;width:100%;font-family:"Bricolage Grotesque",sans-serif;font-size:.82rem}
+  th{background:var(--ink-soft);color:var(--dim);font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+    font-size:.68rem;text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+  td{padding:11px 12px;border-bottom:1px solid var(--line);color:#D9D3C6;white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  td strong{color:var(--kept)}
+  .door{margin:64px 0 96px;padding:42px 0 0;border-top:1px solid var(--line)}
+  .door .q{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(1.3rem,1.05rem + 1.8vw,1.85rem);
+    line-height:1.3;color:#fff;margin-bottom:24px;max-width:30ch}
+  .cta{display:inline-flex;align-items:center;gap:.6em;background:var(--amber);color:var(--amber-ink);
+    font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.05rem;text-decoration:none;
+    padding:16px 26px;border-radius:9px;transition:transform .15s ease,box-shadow .15s ease}
+  .cta:hover{transform:translateY(-2px);box-shadow:0 10px 28px -10px rgba(230,169,62,.55)}
+  .cta .arrow{transition:transform .18s ease}.cta:hover .arrow{transform:translateX(4px)}
+  .door .note{margin-top:20px;color:var(--dim);font-size:.95rem;max-width:44ch}
+  .backlink{display:inline-block;margin:0 0 0;color:var(--dim);text-decoration:none;font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:500;font-size:.95rem}
+  .backlink:hover{color:var(--text)}
+  @media (max-width:520px){header{padding:42px 0 6px}}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+
+  .q-block{margin:30px 0;padding-top:26px;border-top:1px solid var(--line);}
+  .q-block:first-of-type{border-top:none;padding-top:6px;}
+  .q-q{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(1.25rem,1.05rem + 1vw,1.55rem);line-height:1.3;color:#fff;margin:0 0 16px;}
+  .pointer{font-family:"Bricolage Grotesque",sans-serif;font-weight:500;font-size:.88rem;color:var(--dim);border-left:2px solid var(--line);padding-left:16px;margin:14px 0 0;}
+  .pointer b{color:var(--text);font-weight:700;}
+  .sec-intro{color:var(--dim);font-style:italic;margin:0 0 8px;}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <p class="kicker label">The Citizens Standard &nbsp;&middot;&nbsp; <b>questions</b></p>
+  <h1 class="display">The questions people ask</h1>
+  <p class="lede">The honest answers to what comes up first &mdash; whether it&rsquo;s just printing money, who controls it, whether it&rsquo;s been tried, and whether it would even work. Plain language, no jargon.</p>
+</header>
+<main class="wrap">
+<h2>The money questions</h2>
+<p class="sec-intro">These are the ones that come first, and they're the ones that matter most. If the money answers are weak, nothing else gets a hearing.</p>
+<div class="q-block"><p class="q-q">"Isn't this just printing money? Won't it cause inflation?"</p>
+<p>New money is <em>already</em> being made, constantly — every time a bank writes a loan, every time the central bank acts. The question was never whether new money gets created. It's <em>by what rule, and to whose benefit.</em> Today the rule is discretion and the benefit flows to whoever is closest to the money: banks, borrowers, asset holders. The Citizens Standard ties new money to one thing — the real growth of the economy — and sends it to citizens instead. It can create <em>less</em> new money than the system does now, not more, and it's bound by a rule that printing-money schemes never have. The thing people fear about "printing money" is the absence of a rule. This is almost entirely rule.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the price-stability rule and the issuance cap (the architecture paper, "The Mechanical Design"); why it stays determinate (the macroeconomic model).</p>
+</div>
+<div class="q-block"><p class="q-q">"If everyone gets a dividend, won't prices just rise to eat it?"</p>
+<p>That worry is right about <em>extra</em> money — money dumped on top of an economy chases the same goods and prices climb. But the citizen dividend isn't extra. It's the money the economy already generates as it grows, redirected. Right now that growth-money exists too; it just accrues quietly to the financial system. Moving it to citizens instead doesn't add a dollar to the total, so there's nothing extra to push prices up. The model shows price stability holding precisely because the dividend is paid <em>within</em> the money the economy creates, not on top of it.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> why the dividend is price-stable (the macroeconomic model, the welfare-optimal dividend share and the return results).</p>
+</div>
+<div class="q-block"><p class="q-q">"Isn't some inflation actually good? That's why the target is 2%."</p>
+<p>This is the fairest hard question, and the honest answer is: <em>that's a choice, and it should be made on purpose.</em> The case for mild inflation is real — it greases wage adjustments and keeps a little distance from deflation. The Citizens Standard doesn't outlaw that. It lets a society <em>choose</em> its monetary regime out in the open — mild deflation, dead-flat stability, or mild inflation — instead of having 2% handed down as if it were physics. The objection to today's system isn't that 2% is wrong. It's that you never got a vote, and the people who pay for it most aren't the ones who picked it.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the modes and how a regime gets chosen (the architecture paper, the Cross-Mode Comparison and Mode Selection).</p>
+</div>
+<h2>The control questions</h2>
+<div class="q-block"><p class="q-q">"Who decides the rules? Isn't this just handing money to politicians?"</p>
+<p>The opposite, actually. Today's money is run by discretion — a committee can change course quarter to quarter. The Citizens Standard's whole design is to take that discretion <em>away</em> and replace it with rules written into law, hard to change on a whim and changeable only through a slow, public, constitutional process. A politician can't quietly turn the dial. The point isn't to give someone new the keys; it's to bolt the keys to a rule so no one — including the people running it — can use money as a private lever.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the statutory and constitutional design (the statutory paper); the updatability safeguards (the architecture paper, Governance).</p>
+</div>
+<div class="q-block"><p class="q-q">"Won't the rich and powerful just capture this too, like everything else?"</p>
+<p>It's the right instinct — capture is the default, and any honest proposal has to plan for it rather than wish it away. This one is built around that assumption: the rules are constitutional, the parameters move only through a tiered, transparent process, and the design deliberately removes the discretionary levers that get captured in the first place. We don't claim it's capture-proof — nothing is. We claim it's <em>harder</em> to capture than a system run on discretion behind closed doors, because there's far less to quietly take.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the governance and anti-capture design (the architecture paper, Governance; the statutory paper).</p>
+</div>
+<div class="q-block"><p class="q-q">"Is this a left-wing or a right-wing idea?"</p>
+<p>Neither, and that's not a dodge. The diagnosis — that money quietly loses value and the loss falls hardest on ordinary savers — isn't partisan; it's arithmetic. A version of the fix appeals to the right (hard rules, sound money, an end to discretionary debasement) and a version appeals to the left (a floor, a shared dividend, breaking the finance system's grip). It's a monetary <em>architecture</em>, not a party platform. You can want a dollar to hold its value without signing up for anyone's politics.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the framing throughout, and where it sits in the literature (the architecture paper, Situating the Citizens Standard).</p>
+</div>
+<h2>The "hasn't this been tried" questions</h2>
+<div class="q-block"><p class="q-q">"Hasn't this been tried before? It sounds like [communism / MMT / social credit / UBI]."</p>
+<p>Pieces of it are old; the combination is what's new, and the honest version names both. It isn't MMT — MMT loosens the rule on money creation, this one tightens it. It isn't UBI bolted onto today's system — the dividend comes from <em>how money is made</em>, not from taxes. It isn't a command economy — prices, markets, and private business all stay. What's genuinely new is using the economy's own money growth, on a fixed rule, as the thing that funds a floor and a dividend while keeping prices stable. If that specific mechanism had been tried and worked, we wouldn't need to write it down so carefully.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> how it differs from existing proposals (the macroeconomic model; the architecture paper, Situating the Citizens Standard).</p>
+</div>
+<div class="q-block"><p class="q-q">"Why not just use gold, or Bitcoin? Fixed supply, no inflation."</p>
+<p>Fixed-supply money fixes the erosion problem by creating a worse one: an economy grows, but the money can't, so each year the same money has to stretch over more goods and the money gains value just by sitting there. That sounds great until you realize it rewards hoarding over building, punishes borrowers, and tends to seize up in a crisis. The Citizens Standard keeps the discipline people want from gold — a hard rule, no discretionary debasement — without freezing the money supply against a growing economy. It grows the money <em>with</em> the economy, by rule, and not a dollar faster.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> why a growth-tied rule beats a fixed quantity (the architecture paper, The Mechanical Design and the modes).</p>
+</div>
+<h2>The practical questions</h2>
+<div class="q-block"><p class="q-q">"Why would anyone work if they get a floor and a dividend?"</p>
+<p>Because the floor is a <em>floor</em> — enough to stand on, not enough to stop. It's deliberately set so that work always pays clearly more, and the savings floor is locked rather than handed out as spendable cash, which changes the incentive entirely. When the economics is worked through, the floor doesn't pull people out of the workforce; the security at the bottom actually makes it easier to take the risk of a better job, a move, or a business. "People will stop working" is the oldest objection to any floor, and it keeps not happening.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the labor-supply analysis (the macroeconomic model, the labor results).</p>
+</div>
+<div class="q-block"><p class="q-q">"What happens to banks? Who lends money?"</p>
+<p>Banks still lend — they just lend money that already exists, the way most people already assume they do. What changes is that banks stop <em>creating</em> new transactional money when they make a loan, which is the part most people are surprised to learn they do today. Credit, mortgages, and business lending all continue; they're funded by real savings rather than conjured. It makes the payment system run-proof and separates "keeping money safe" from "betting it" — two jobs today's banks do at once, which is why they need rescuing when the bets go bad.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> full-reserve banking and credit (the full-reserve banking paper; the architecture paper, Banking Architecture).</p>
+</div>
+<div class="q-block"><p class="q-q">"This is a huge change. Is it even possible to get there from here?"</p>
+<p>Honestly, it's the hardest part — bigger than the design itself. A monetary system can't be swapped overnight without breaking things, so the work isn't just "what should money be" but "how do you move a live economy onto it without a shock." There's a staged transition mapped out for exactly that: a path with phases, off-ramps, and stress tests, not a flip of a switch. We'd rather show the whole route, including the difficult stretches, than pretend it's easy.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the transition design, phase by phase (the transition paper).</p>
+</div>
+<div class="door">
+  <p class="q">Every answer here has a deeper version &mdash; the model, the rules, the stress tests &mdash; one step up.</p>
+  <a class="cta" href="how_the_engine_works.html">See how it works <span class="arrow">&rarr;</span></a>
+  <p class="note">Or go back to <a class="backlink" href="front_door.html">the front door &rarr;</a></p>
+</div>
+</main>
+</body>
+</html>
