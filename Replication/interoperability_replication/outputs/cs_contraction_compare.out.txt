@@ -1,0 +1,3 @@
+bond stock at yr40: r<g 56%  r=g 80%  r>g 119%
+surcharge liability at yr40: 0% (money retired); annual drag constant at 2% GDP
+saved cs_contraction_compare.png

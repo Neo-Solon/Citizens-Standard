@@ -1,0 +1,26 @@
+=== (A) Does the real engine reproduce the PAPERS' OWN launch figures? ===
+  K1 per new citizen : $2,250      (paper: ~$2,250)
+  K1 aggregate       : $9.0B          (paper: ~$9B)
+  growth-matched line: $447.3B        (paper: ~$447B)
+  K2 (Mode B)        : $438.3B        (paper: ~$438B)
+  KI (Mode C launch) : $816B         (paper: ~$816B)
+
+=== (B) Y.4 on the real engine: does holding ZERO cost the citizen dividend? ===
+  Citizen dividend K3 = kappa_d * (g_r*M2 - K1_agg), drawn from the GROWTH budget,
+  so it does not depend on the inflation setting. Compare CS vs a bundled system,
+  where the only way to pay a dividend is inflationary issuance.
+
+  CS (kappa_d=0.5) citizen dividend by inflation regime:
+    Mode A  (-1.6% defl): K3 = $219B   (K2 to floors = $219B)  total on growth line $447B
+    Mode B  ( 0.0% stable): K3 = $219B   (K2 to floors = $219B)  total on growth line $447B
+    Mode C  (+2.0% infl): K3 = $219B   (K2 to floors = $219B)  total on growth line $447B
+  -> CS dividend is $219B at EVERY inflation setting: flat. Funded by growth, not inflation.
+
+  Bundled system (dividend can ONLY come from issuance above the growth line):
+    price stability 0%: dividend = $0B
+    mild infl +2%: dividend = $447B
+    infl +3%: dividend = $671B
+  -> Bundled dividend collapses to $0 at price stability. To pay citizens it must inflate.
+
+  Y.4 holds on the real engine: in CS, choosing zero inflation costs the dividend NOTHING
+  (it is growth-funded); in a bundled architecture, zero inflation means zero dividend.
