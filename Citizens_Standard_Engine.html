@@ -722,7 +722,7 @@
     const ci = p.cpi*100;
     $('cpir').textContent = (ci>=0?'+':'') + ci.toFixed(1) + '%';
     const character = ci > 0.25 ? 'inflationary' : (ci < -0.25 ? 'deflationary' : 'price-stable');
-    const col = ci > 0.25 ? 'var(--coral)' : (ci < -0.25 ? '#5BA6E6' : 'var(--teal-text)');
+    const col = ci > 0.25 ? '#E0685A' : (ci < -0.25 ? '#5BA6E6' : 'var(--teal-text)');
     $('cpir').style.color = col;
     if ($('cpiChar')) { $('cpiChar').textContent = character; $('cpiChar').style.color = col; }
     if ($('cpiBreakdown')) {
@@ -1046,9 +1046,9 @@
     _parts += ' + spillover $' + (spill/1e9).toFixed(0) + 'B';
     let _status;
     if (Math.abs(gInfl) < 0.0005)
-      _status = '<span style="color:var(--accent)">&#10003; At the locus &mdash; goods prices flat.</span>';
+      _status = '<span style="color:var(--teal-text)">&#10003; At the locus &mdash; goods prices flat.</span>';
     else if (gInfl < 0)
-      _status = '<span style="color:var(--teal)">&#10003; $' + ((locus-inject)/1e9).toFixed(0) + 'B below the locus &rarr; ' + (gInfl*100).toFixed(1) + '% (mild deflation — a saved dollar gains value).</span>';
+      _status = '<span style="color:#5BA6E6">&#10003; $' + ((locus-inject)/1e9).toFixed(0) + 'B below the locus &rarr; ' + (gInfl*100).toFixed(1) + '% (mild deflation — a saved dollar gains value).</span>';
     else
       _status = '<span style="color:#E0685A">&#9888; $' + ((inject-locus)/1e9).toFixed(0) + 'B above the locus &rarr; +' + (gInfl*100).toFixed(1) + '% goods inflation' + (_kiDol > 0 ? ' — the KI inflation-gap is the source' : '') + '.</span>';
     if ($('leashPanel')) $('leashPanel').innerHTML =
