@@ -391,7 +391,7 @@
 
   <div class="card">
     <p class="card-title">Macro environment</p>
-    <div class="row"><span class="label">Real growth</span><input type="range" id="rg" min="-1" max="5" step="0.1" value="2.0"><span class="readout" id="rgr">2.0%</span></div>
+    <div class="row"><span class="label">Real growth</span><input type="range" id="rg" min="-3" max="5" step="0.1" value="2.0"><span class="readout" id="rgr">2.0%</span></div>
     <div class="row"><span class="label">Pop. growth</span><input type="range" id="pg" min="-0.5" max="2" step="0.1" value="0.5"><span class="readout" id="pgr">0.5%</span></div>
     <div class="row"><span class="label">Realizable equity return</span><input type="range" id="er" min="2" max="10" step="0.1" value="4.3"><span class="readout" id="err">4.3%</span></div>
     <div style="display: flex; gap: 6px; margin: -4px 0 8px; padding-left: 142px; flex-wrap: wrap;">
@@ -478,6 +478,12 @@
     The Citizens Standard's four Modes are deliberate constitutional targets.
     Other systems' inflation paths reflect their actual or theoretical behavior.
   </div>
+  <div class="scenario-pills" id="recession-pills" style="margin-top:12px;">
+    <button class="pill active" data-rec="none">No recession</button>
+    <button class="pill" data-rec="mild">Recession &middot; &minus;2% (yrs 20&ndash;21)</button>
+    <button class="pill" data-rec="severe">Severe &middot; &minus;5% (yrs 20&ndash;22)</button>
+  </div>
+  <p style="font-size:12px;color:var(--text-dim);margin:8px 0 2px;">Drop real growth negative for a span and watch the growth-driven lines respond. The Citizens Standard line spikes to mild, <em>bounded</em> inflation &mdash; issuance floors at zero, nothing is clawed back &mdash; then settles back to its target once growth recovers, while a fixed-supply system flips to the same inflation and the k-rule overshoots. Applied to the growth-driven systems (Citizens Standard, Bitcoin, Friedman); the stylized baselines are unchanged.</p>
   <div class="legend" id="inflation-legend"></div>
   <div class="chart-wrap"><canvas id="inflation-chart" role="img" aria-label="Inflation comparison chart"></canvas></div>
   <div style="font-size:12px; color:var(--text-dim); margin:16px 0 0; line-height:1.65; display:grid; gap:6px;">
@@ -668,6 +674,7 @@
   let activeScenario = 'median';
   let activeStress = 'smooth';
   let modetShock = 'none';
+  let recessionScenario = 'none';
   let omegaScenario = 'normal';
   let activeMode = 'B';   // tracks the last Mode button clicked (A/B/C/X)
   let chart = null;
@@ -733,7 +740,8 @@
         'spillover <strong>$' + (p._mtSpill/1e9).toFixed(0) + 'B</strong> = <strong>' +
         (p._MT>0 ? (p._mtInject/p._MT*100).toFixed(2) : '0.00') + '%</strong> ' +
         '&minus; real growth ' + (p.rg*100).toFixed(2) + '% = ' +
-        '<strong style="color:' + col + '">' + (ci>=0?'+':'') + ci.toFixed(2) + '%</strong>';
+        '<strong style="color:' + col + '">' + (ci>=0?'+':'') + ci.toFixed(2) + '%</strong>' +
+        (p.rg < 0 ? '<br><span style="color:var(--text-dim)">Contraction: the growth-matched budget floors at zero \u2014 nothing extra is issued and nothing is clawed back (K1 keeps flowing, counter-cyclically), so the same money over fewer goods lifts prices ~' + (Math.abs(p.rg)*100).toFixed(1) + '%. That mild inflation absorbs the shock instead of forcing debt-deflation.</span>' : '');
     }
     $('m2r').textContent = '$' + (p.m2/1e12).toFixed(1) + 'T';
     $('gdpr').textContent = '$' + (p.gdp/1e12).toFixed(1) + 'T';
@@ -1184,7 +1192,11 @@
     const labels = Array.from({length: p.hz + 1}, (_, t) => t);
 
     // Citizens Standard: user's CPI input, constant — this is the constitutional target
-    const csPath = labels.map(() => p.cpi * 100);
+    // Optional recession: drop real growth negative for a span; growth-driven lines respond per year.
+    const REC = ({ mild:{s:20,e:21,g:-2}, severe:{s:20,e:22,g:-5} })[recessionScenario] || null;
+    const gPath = labels.map(t => (REC && t>=REC.s && t<=REC.e) ? REC.g/100 : p.rg);
+    const inRec = t => !!(REC && t>=REC.s && t<=REC.e);
+    const csPath = labels.map(t => mtCPI(p.k1, p.k2, p.k3, p.ki, p.m2, p.gdp, gPath[t]).cpi * 100);
 
     // Fed status quo: realistic historical pattern. Long-run average ~2.5%, but with
     // occasional shocks. We model a baseline 2.3% with two stylized shock periods
@@ -1199,7 +1211,7 @@
 
     // Bitcoin: fixed supply meets growing economy → structural deflation as economy
     // grows but money doesn't. Magnitude depends on real growth rate.
-    const btcPath = labels.map(() => -Math.max(p.rg * 100 * 0.5, 0.5));
+    const btcPath = labels.map(t => inRec(t) ? -gPath[t] * 100 : -Math.max(p.rg * 100 * 0.5, 0.5));
 
     // UBI: tax-funded, theoretically inflation-neutral if fully tax-financed,
     // but in practice partially monetized. Show ~3% baseline rising slightly over time
@@ -1214,7 +1226,7 @@
     // Friedman k-rule: by design, inflation matches real-growth-money-growth gap.
     // If money grows at k% and real grows at rg%, inflation ≈ k - rg. Friedman
     // proposed k=3-4%, so with rg=2%, inflation ≈ 1-2%.
-    const friedmanPath = labels.map(() => Math.max(3.5 - p.rg * 100, 0));
+    const friedmanPath = labels.map(t => Math.max(3.5 - gPath[t] * 100, 0));
 
     // Chicago Plan: 100% reserves + government issuance. Inflation depends on issuance
     // rule — typically targeted at 2% or stable prices. Show as constrained Fed-like
@@ -1653,6 +1665,11 @@
   document.querySelectorAll('#modet-pills .pill').forEach(p => p.addEventListener('click', () => {
     modetShock = p.dataset.shock;
     document.querySelectorAll('#modet-pills .pill').forEach(x => x.classList.toggle('active', x === p));
+    update();
+  }));
+  document.querySelectorAll('#recession-pills .pill').forEach(p => p.addEventListener('click', () => {
+    recessionScenario = p.dataset.rec;
+    document.querySelectorAll('#recession-pills .pill').forEach(x => x.classList.toggle('active', x === p));
     update();
   }));
   document.querySelectorAll('#omega-pills .pill').forEach(p => p.addEventListener('click', () => {
