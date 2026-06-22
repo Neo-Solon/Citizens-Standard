@@ -26,10 +26,11 @@ Issue money in proportion to real growth, route it through four transparent chan
 
 The simple pages sit on top of a full body of work: **fourteen papers, 366 pages** — the architecture, a macroeconomic model with formal results, a statutory draft, full-reserve banking and external interoperability, crisis behaviour, distribution and inequality, and a comparative analysis against UBI, Social Security, sovereign wealth funds, and Georgism. Every empirical claim ships with a **replication package** built on real data — BLS, SSA, the Survey of Consumer Finances, the Alaska Permanent Fund — so the numbers can be reproduced, not just asserted.
 
-Representative papers on SSRN:
+The papers are being published on SSRN as the series rolls out — **[Neo-Solon's author page](https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=11425448)** lists every one that's live. The best place to start is the architecture paper:
 
-- Empirical counterfactual (cohort wealth outcomes) — <https://ssrn.com/abstract=6735078>
-- A macroeconomic model of a two-circuit monetary system — <https://ssrn.com/abstract=6939418>
+- **[One Model, Many Systems — A Constitutional Monetary Architecture](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6702518)** (99 pp) — the full framework.
+- [A Historical Counterfactual, 1960–2055](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6735078) (27 pp) — the empirical backtest.
+- [Transition Architecture and Migration Mechanics](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6810741) (30 pp) — how you'd actually get there.
 
 ## A related project
 
