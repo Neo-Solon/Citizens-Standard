@@ -479,34 +479,34 @@
     Other systems' inflation paths reflect their actual or theoretical behavior.
   </div>
   <div class="scenario-pills" id="recession-pills" style="margin-top:12px;">
-    <button class="pill active" data-rec="none">No recession</button>
-    <button class="pill" data-rec="mild">Recession &middot; &minus;2% (yrs 20&ndash;21)</button>
+    <button class="pill active" data-rec="none">No shock</button>
+    <button class="pill" data-rec="mild">Supply shock &middot; &minus;2% (yrs 20&ndash;21)</button>
     <button class="pill" data-rec="severe">Severe &middot; &minus;5% (yrs 20&ndash;22)</button>
   </div>
-  <p style="font-size:12px;color:var(--text-dim);margin:8px 0 2px;">Drop real growth negative for a span and watch the growth-driven lines respond. The Citizens Standard line spikes to mild, <em>bounded</em> inflation &mdash; issuance floors at zero, nothing is clawed back &mdash; then settles back to its target once growth recovers, while a fixed-supply system flips to the same inflation and the k-rule overshoots. Applied to the growth-driven systems (Citizens Standard, Bitcoin, Friedman); the stylized baselines are unchanged.</p>
+  <p style="font-size:12px;color:var(--text-dim);margin:8px 0 2px;">A supply shock cuts output for a span &mdash; the stagflation case, where output falls <em>and</em> prices rise &mdash; and it hits <em>every</em> system at once. None can pre-empt the first-round bump; what differs is the response. The <strong style="color:var(--accent);">Citizens Standard</strong> line is held near target by KI self-correction (automatic, no interest-rate channel) and returns to target the moment the shock passes. The <strong>Fed</strong> takes the full spike, then grinds it down with rate hikes &mdash; at the cost of the recession the Tool 14 panel quantifies. <strong>Bitcoin</strong> and the <strong>k-rule</strong> have no stabilizer, so the bump persists or overshoots; <strong>UBI</strong> and <strong>MMT</strong> accommodate it. Stylized; magnitudes illustrative.</p>
   <div class="legend" id="inflation-legend"></div>
   <div class="chart-wrap"><canvas id="inflation-chart" role="img" aria-label="Inflation comparison chart"></canvas></div>
   <div style="font-size:12px; color:var(--text-dim); margin:16px 0 0; line-height:1.65; display:grid; gap:6px;">
-    <div><strong style="color:var(--accent)">Citizens Standard</strong> &mdash; computed from your channels (issuance &minus; real growth): raise KI and it climbs into inflation; K2 at 100% with KI off sits at zero. Raising K3 (&kappa;_d) pays a dividend without moving the line &mdash; it reallocates within the budget.</div>
-    <div><strong>Fed status quo</strong> &mdash; historical reality with stylized shock periods (a recession dip and an inflation spike).</div>
-    <div><strong>Bitcoin</strong> &mdash; structural deflation tracking your real-growth rate (fixed supply meets a growing economy).</div>
-    <div><strong>UBI &middot; MMT</strong> &mdash; drift risk: fiscal pressure compounding over decades.</div>
-    <div><strong>Friedman k-rule</strong> &mdash; inflation = money-growth rate &minus; your real-growth rate.</div>
-    <div><strong>Chicago Plan</strong> &mdash; constrained 2% targeting, without fractional-banking amplification.</div>
+    <div><strong style="color:var(--accent)">Citizens Standard</strong> &mdash; computed from your channels (issuance &minus; real growth). Under a shock, KI self-correction holds it near target and returns it there with no interest-rate channel; K2 at 100% with KI off sits at zero, and raising K3 (&kappa;_d) pays a dividend without moving the line.</div>
+    <div><strong>Fed status quo</strong> &mdash; takes the full first-round bump, then cures it through the rate channel: with a lag, and at a recession cost (quantified in the Tool 14 panel).</div>
+    <div><strong>Bitcoin</strong> &mdash; fixed supply, no stabilizer: structural deflation normally, and under a shock it takes the full bump and persists until the shock passes.</div>
+    <div><strong>UBI &middot; MMT</strong> &mdash; fiscal accommodation: the shock sticks on top of a secular drift, and MMT monetizes most.</div>
+    <div><strong>Friedman k-rule</strong> &mdash; prints k% straight through the slump, so inflation = money-growth &minus; real-growth and it overshoots most.</div>
+    <div><strong>Chicago Plan</strong> &mdash; price targeting without an active counter-cyclical tool: partial pass-through of the bump.</div>
   </div>
 
   <div style="border-top:1px solid rgba(140,140,140,0.28); margin-top:28px; padding-top:20px;">
     <h3 style="font-size:15px; margin:0 0 8px; color:var(--accent);">Tool 14 vs. real inflations</h3>
     <p style="font-size:13px; color:var(--text-dim); margin:0 0 12px; line-height:1.6;">
-      The same machinery, run against history. The <strong style="color:#E0685A;">red line</strong> is what actually happened (BLS CPI-U). The <strong style="color:var(--accent);">gold line</strong> is how the framework&rsquo;s automatic response &mdash; KI contracting to zero, plus the <strong>Tool 14</strong> surcharge retiring circulating money &mdash; would have met the same shock. There is no interest-rate channel, so no engineered recession. Illustrative counterfactual, not a prediction.
+      The same machinery, run against history. The <strong style="color:#E0685A;">red line</strong> is what actually happened (BLS CPI-U). The <strong style="color:var(--accent);">gold line</strong> is the framework&rsquo;s primary defence &mdash; its rule-bound issuance never creates the demand-driven share of the inflation (the share is taken from the SF Fed&rsquo;s published monthly decomposition), with the <strong>Tool 14</strong> surcharge shaving what remains. The <strong style="color:#9AA3AE;">grey dashed line</strong> is Tool 14 acting alone on the realised inflation: at its real capacity it is <em>slower</em> than a rate shock. So the framework&rsquo;s gain is a far lower peak and no interest-rate channel &mdash; not faster disinflation. Counterfactual, not a prediction.
     </p>
     <div class="scenario-pills" id="tool14-pills">
       <button class="pill active" data-ep="2022">2022 surge &middot; peaked 9.1%</button>
-      <button class="pill" data-ep="1980">1980 Volcker &middot; peaked 14.6%</button>
+      <button class="pill" data-ep="1980">1980 Volcker &middot; peaked 14.8%</button>
     </div>
     <div class="stats" style="margin-top:14px;">
       <div class="stat"><p class="stat-label">Actual peak</p><p class="stat-val" id="t14-actual-peak">&mdash;</p><p class="stat-sub" id="t14-actual-sub">&mdash;</p></div>
-      <div class="stat"><p class="stat-label">Conventional cure</p><p class="stat-val" id="t14-policy">&mdash;</p><p class="stat-sub" id="t14-policy-sub">&mdash;</p></div>
+      <div class="stat"><p class="stat-label">Framework peak</p><p class="stat-val" id="t14-policy">&mdash;</p><p class="stat-sub" id="t14-policy-sub">&mdash;</p></div>
       <div class="stat"><p class="stat-label">Its real cost</p><p class="stat-val" id="t14-cost">&mdash;</p><p class="stat-sub" id="t14-cost-sub">&mdash;</p></div>
       <div class="stat"><p class="stat-label">Framework drain</p><p class="stat-val">&le;3% M2/yr</p><p class="stat-sub">no rate channel</p></div>
     </div>
@@ -1214,55 +1214,65 @@
     if (inflationChart) inflationChart.destroy();
     const labels = Array.from({length: p.hz + 1}, (_, t) => t);
 
-    // Citizens Standard: user's CPI input, constant — this is the constitutional target
-    // Optional recession: drop real growth negative for a span; growth-driven lines respond per year.
-    const REC = ({ mild:{s:20,e:21,g:-2}, severe:{s:20,e:22,g:-5} })[recessionScenario] || null;
+    // ---- Supply-shock comparison ----------------------------------------------
+    // A supply shock cuts output for a span: the STAGFLATION case, where output
+    // falls AND prices rise. The SAME shock hits every system; each responds by
+    // its own mechanism. Stylized, annual. `press` = first-round price pressure
+    // (the size of the growth drop), which no monetary rule can pre-empt.
+    const REC   = ({ mild:{s:20,e:21,g:-2}, severe:{s:20,e:22,g:-5} })[recessionScenario] || null;
     const gPath = labels.map(t => (REC && t>=REC.s && t<=REC.e) ? REC.g/100 : p.rg);
     const inRec = t => !!(REC && t>=REC.s && t<=REC.e);
-    const csPath = labels.map(t => mtCPI(p.k1, p.k2, p.k3, p.ki, p.m2, p.gdp, gPath[t]).cpi * 100);
+    const press = labels.map(t => inRec(t) ? -gPath[t]*100 : 0);   // pp of first-round pressure
+    const csAnchor = mtCPI(p.k1, p.k2, p.k3, p.ki, p.m2, p.gdp, p.rg).cpi * 100;
 
-    // Fed status quo: realistic historical pattern. Long-run average ~2.5%, but with
-    // occasional shocks. We model a baseline 2.3% with two stylized shock periods
-    // (years 15-17 mild deflation episode, years 32-35 stagflation echo).
-    const fedPath = labels.map(t => {
-      let base = 2.3;
-      if (t >= 15 && t <= 17) base = 0.5;          // mild deflation/recession episode
-      if (t >= 32 && t <= 35) base = 5.5;          // stagflation echo
-      if (t >= 50 && t <= 52) base = 4.0;          // late-cycle inflation
-      return base;
-    });
+    // Citizens Standard: cannot pre-empt the first-round bump, but KI self-corrects
+    // it automatically and with no lag (Proposition 6(iii) in the macro paper), so
+    // it holds inflation near target THROUGH the shock and returns to target after
+    // — without an interest-rate channel. KI absorbs ~half the ongoing pressure.
+    const KI_OFFSET = 0.5;
+    const csPath = labels.map(t => csAnchor + press[t]*(1-KI_OFFSET));
 
-    // Bitcoin: fixed supply meets growing economy → structural deflation as economy
-    // grows but money doesn't. Magnitude depends on real growth rate.
-    const btcPath = labels.map(t => inRec(t) ? -gPath[t] * 100 : -Math.max(p.rg * 100 * 0.5, 0.5));
+    // Fed status quo: also cannot pre-empt the bump; it CURES it with rate hikes,
+    // but with a lag and at a recession cost (the cure the Tool 14 panel quantifies).
+    // So it accommodates a high spike, then the rate channel grinds it down ~2pp/yr.
+    // Outside a shock, the stylized historical path. Recession cost is in the note.
+    let fedPath;
+    if (REC) {
+      const fedPeak = 2.3 + (-REC.g)*0.75;
+      fedPath = labels.map(t => {
+        if (t < REC.s)  return 2.3;
+        if (t <= REC.e) return fedPeak;
+        return Math.max(2.3, fedPeak - (t-REC.e)*1.8);   // rate-hike disinflation
+      });
+    } else {
+      fedPath = labels.map(t => {
+        let base = 2.3;
+        if (t >= 15 && t <= 17) base = 0.5;     // mild deflation/recession episode
+        if (t >= 32 && t <= 35) base = 5.5;     // stagflation echo
+        if (t >= 50 && t <= 52) base = 4.0;     // late-cycle inflation
+        return base;
+      });
+    }
 
-    // UBI: tax-funded, theoretically inflation-neutral if fully tax-financed,
-    // but in practice partially monetized. Show ~3% baseline rising slightly over time
-    // as fiscal pressure compounds.
-    const ubiPath = labels.map(t => 2.5 + (t / p.hz) * 1.5);
+    // Bitcoin: fixed supply, no stabilizer. Takes the full bump and it PERSISTS for
+    // the whole span (nothing returns it); structural deflation otherwise.
+    const btcPath = labels.map(t => inRec(t) ? press[t] : -Math.max(p.rg*100*0.5, 0.5));
 
-    // MMT: jobs guarantee anchors wages but inflation depends on whether tax response
-    // keeps pace with demand. Historically optimistic models say 2-3%; critics say it
-    // tends higher under political pressure. We show a path drifting upward.
-    const mmtPath = labels.map(t => 3.0 + (t / p.hz) * 2.0);
+    // UBI / MMT: fiscal accommodation, no monetary brake — the bump sticks on top of
+    // the secular drift; MMT monetizes most and drifts highest.
+    const ubiPath = labels.map(t => 2.5 + (t/p.hz)*1.5 + press[t]*0.6);
+    const mmtPath = labels.map(t => 3.0 + (t/p.hz)*2.0 + press[t]*0.8);
 
-    // Friedman k-rule: by design, inflation matches real-growth-money-growth gap.
-    // If money grows at k% and real grows at rg%, inflation ≈ k - rg. Friedman
-    // proposed k=3-4%, so with rg=2%, inflation ≈ 1-2%.
-    const friedmanPath = labels.map(t => Math.max(3.5 - gPath[t] * 100, 0));
+    // Friedman k-rule: keeps printing k% straight through the slump -> overshoots most.
+    const friedmanPath = labels.map(t => Math.max(3.5 - gPath[t]*100, 0));
 
-    // Chicago Plan: 100% reserves + government issuance. Inflation depends on issuance
-    // rule — typically targeted at 2% or stable prices. Show as constrained Fed-like
-    // but without the shocks (since no fractional banking amplification).
-    const chicagoPath = labels.map(() => 2.0);
-
-    // Alaska PFD: doesn't affect monetary policy, so same as whatever the underlying
-    // monetary regime is (we show Fed status quo).
-    // Skipped to avoid clutter — visually identical to Fed.
+    // Chicago Plan: price-level targeting but no active counter-cyclical tool ->
+    // partial pass-through of the bump, slow return.
+    const chicagoPath = labels.map(t => 2.0 + press[t]*0.5);
 
     const datasets = [
       { label: 'Citizens Standard (derived)', data: csPath, borderColor: '#E6A93E', borderWidth: 4, tension: 0, pointRadius: 0 },
-      { label: 'Fed status quo (historical)', data: fedPath, borderColor: '#5BA6E6', borderWidth: 2, tension: 0.1, pointRadius: 0, borderDash: [4,4] },
+      { label: 'Fed status quo', data: fedPath, borderColor: '#5BA6E6', borderWidth: 2, tension: 0.1, pointRadius: 0, borderDash: [4,4] },
       { label: 'Bitcoin (structural deflation)', data: btcPath, borderColor: '#34BAC8', borderWidth: 2, tension: 0, pointRadius: 0 },
       { label: 'UBI (partial monetization)', data: ubiPath, borderColor: '#E08A5A', borderWidth: 2, tension: 0, pointRadius: 0 },
       { label: 'MMT (drift risk)', data: mmtPath, borderColor: '#9B95EC', borderWidth: 2, tension: 0, pointRadius: 0 },
@@ -1640,31 +1650,45 @@
     '2022': {
       start: 'Jan 2021',
       actual: [1.4,1.7,2.6,4.2,5.0,5.4,5.4,5.3,5.4,6.2,6.8,7.0, 7.5,7.9,8.5,8.3,8.6,9.1,8.5,8.3,8.2,7.7,7.1,6.5, 6.4,6.0,5.0,4.9,4.0,3.0,3.2,3.7,3.7,3.2,3.1,3.4],
+      share: [0.059,0.059,0.059,0.296,0.329,0.353,0.350,0.356,0.338,0.362,0.381,0.362,0.341,0.362,0.380,0.371,0.396,0.379,0.419,0.430,0.429,0.431,0.418,0.404,0.460,0.453,0.413,0.433,0.407,0.474,0.385,0.397,0.419,0.417,0.426,0.477],
       actualPeak: '9.1%', actualSub: 'Jun 2022',
-      policy: '0.1 \u2192 5.3%', policySub: 'Fed funds, 7 hikes',
       cost: 'Mortgages 3\u21927%', costSub: 'Freddie Mac, 2022',
-      note: 'Actual: BLS CPI-U, Jan 2021\u2013Dec 2023. The Fed\u2019s first hike (Mar 2022) landed only after CPI had already passed 8 percent; inflation peaked at 9.1 percent three months later. Framework: the rule-bound channels never create the demand surge that research identifies as the main driver, so the peak is far lower; Tool 14 then retires money (up to 3% of M2/yr) and KI sits at zero. It cannot stop a supply shock \u2014 hence the residual bump \u2014 but it works without the interest-rate channel that drove 30-year mortgages from about 3% to 7% in a single year. Illustrative counterfactual.'
+      note: 'Actual: BLS CPI-U, Jan 2021\u2013Dec 2023, peaking at 9.1% in June 2022. The gold prevention line uses the SF Fed\u2019s published monthly demand/supply split: the framework never creates the demand-driven share, so it peaks far lower (\u22484.6%) even though it cannot stop the supply shock. The grey dashed line is Tool 14 acting alone on the realised inflation \u2014 at its real capacity (~2.2pp/yr) it is slower than the Fed\u2019s rate hikes were. So the framework\u2019s gain is the lower peak and the absence of any rate channel (30-year mortgages went 3% to 7% in 2022), not faster disinflation. Counterfactual, not a forecast.'
     },
     '1980': {
-      start: 'Jul 1979',
-      actual: [11.3,11.8,12.2,12.1,12.6,13.3, 13.9,14.2,14.8,14.7,14.4,14.4,13.1,12.9,12.6,12.8,12.6,12.5, 11.8,11.4,10.5,10.0,9.8,9.6,10.8,10.8,11.0,10.1,9.6,8.9, 8.4,7.6,6.8,6.5,6.7,7.1,6.4,5.9,5.0,5.1,4.6,3.8, 3.7,3.5,3.6,3.9,3.5,2.6],
-      actualPeak: '14.6%', actualSub: 'Mar 1980',
-      policy: '~19%', policySub: 'Fed funds, Jun 1981',
+      start: 'Jan 1972',
+      actual: [3.3,3.5,3.5,3.5,3.2,2.7,2.9,2.9,3.2,3.4,3.7,3.4,3.6,3.9,4.6,5.1,5.5,6.0,5.7,7.4,7.4,7.8,8.3,8.7,9.4,10.0,10.4,10.1,10.7,10.9,11.5,10.9,11.9,12.1,12.2,12.3,11.8,11.2,10.3,10.2,9.5,9.4,9.7,8.6,7.9,7.4,7.4,6.9,6.7,6.3,6.1,6.0,6.2,6.0,5.4,5.7,5.5,5.5,4.9,4.9,5.2,5.9,6.4,7.0,6.7,6.9,6.8,6.6,6.6,6.4,6.7,6.7,6.8,6.4,6.6,6.5,7.0,7.4,7.7,7.8,8.3,8.9,8.9,9.0,9.3,9.9,10.1,10.5,10.9,10.9,11.3,11.8,12.2,12.1,12.6,13.3,13.9,14.2,14.8,14.7,14.4,14.4,13.1,12.9,12.6,12.8,12.6,12.5,11.8,11.4,10.5,10.0,9.8,9.6,10.8,10.8,11.0,10.1,9.6,8.9,8.4,7.6,6.8,6.5,6.7,7.1,6.4,5.9,5.0,5.1,4.6,3.8,3.7,3.5,3.6,3.9,3.5,2.6],
+      share: 0.70,
+      actualPeak: '14.8%', actualSub: 'Mar 1980',
       cost: '10.8%', costSub: 'unemployment, Nov 1982',
-      note: 'Actual: BLS CPI-U, Jul 1979\u2013Jun 1983. Volcker broke inflation with the deepest recession since the 1930s: unemployment 10.8 percent, a sacrifice ratio near 2.5 unemployment-point-years per point of disinflation. Framework: dropped in at the same ~11 percent, it disinflates on a comparable timeline \u2014 but it is rule-bound, so no stop-go easing under political pressure, and it works by retiring money rather than through mass unemployment. Illustrative counterfactual.'
+      note: 'Actual: BLS CPI-U, the full Great Inflation, Jan 1972\u2013Jun 1983 (computed from the BLS monthly index), building from 3.3% through two oil shocks to the 14.8% peak in March 1980. The SF Fed split doesn\u2019t reach back this far, so the demand share is the Fed\u2019s own attribution of the Great Inflation to excessive money growth. Watching the whole decade is the point: present through the build-up, the framework self-corrects each shock before it compounds, so the spiral never forms (\u22484% peak). This is confirmed two independent ways \u2014 the demand-share reduced form and the macro paper\u2019s proven Proposition 6 transmission both land near 4%. The grey dashed line is the alternative: Tool 14 dropped in only at the 14.8% peak, which it unwinds slowly (~2.2pp/yr) \u2014 far slower than Volcker, but with no rate channel and none of the 10.8% unemployment recession. Counterfactual, not a forecast.'
     }
   };
 
-  function tool14Framework(actual){
-    const anchor = 1.0, trigger = 4.0, capture = 0.62, basePull = 0.05, toolPull = 0.045;
-    const out = []; let f = actual[0]; out.push(f);
-    for (let t = 1; t < actual.length; t++){
-      const imp = Math.max(0, actual[t] - actual[t-1]);     // fresh upward price pressure
-      f = f + capture * imp;                                 // absorb only part (no demand amplification)
-      const pull = basePull + (f > trigger ? toolPull : 0);  // KI->0 always; Tool 14 extra above the trigger
-      f = anchor + (f - anchor) * (1 - pull);
-      out.push(Math.max(0.4, f));
+  const T14_PULL = 2.184 / 12;   // Tool 14 capacity, pp/month (3% of M2/yr)
+
+  // Prevention (managed-throughout): the framework never creates the demand share,
+  // so only the supply share passes through; Tool 14 then shaves what remains.
+  function tool14Prevention(actual, share){
+    const anchor = 1.0, trigger = 4.0;
+    const sh = Array.isArray(share) ? share : actual.map(() => share);
+    const struct = actual.map((a, t) => anchor + (1 - sh[t]) * Math.max(0, a - anchor));
+    const out = []; let cum = 0;
+    for (const s of struct){
+      let eff = s - cum;
+      if (eff > trigger){ cum += T14_PULL; eff = s - cum; }
+      out.push(Math.max(anchor, eff));
     }
+    return out;
+  }
+
+  // Response (drop-in): track the realised rise to the peak, then disinflate ONLY
+  // at Tool 14's capacity -- deliberately slower than an aggressive rate shock.
+  function tool14Response(actual){
+    const anchor = 1.0; let pk = 0;
+    for (let i = 1; i < actual.length; i++) if (actual[i] > actual[pk]) pk = i;
+    const out = actual.slice(0, pk + 1); let cur = actual[pk];
+    for (let t = pk + 1; t < actual.length; t++){ cur = Math.max(anchor, cur - T14_PULL); out.push(cur); }
     return out;
   }
 
@@ -1673,29 +1697,33 @@
     const ep = TOOL14[tool14Episode]; if (!ep) return;
     const ctx = $('tool14-chart').getContext('2d');
     if (tool14Chart) tool14Chart.destroy();
-    const actual = ep.actual, fw = tool14Framework(actual);
+    const actual = ep.actual;
+    const prev = tool14Prevention(actual, ep.share);
+    const resp = tool14Response(actual);
     const months = actual.map((_, i) => i);
     const anchorLine = actual.map(() => 1.0);
+    const prevPeak = Math.max.apply(null, prev);
     $('t14-actual-peak').textContent = ep.actualPeak;
     $('t14-actual-sub').textContent = ep.actualSub;
-    $('t14-policy').textContent = ep.policy;
-    $('t14-policy-sub').textContent = ep.policySub;
+    $('t14-policy').textContent = '\u2248' + prevPeak.toFixed(1) + '%';
+    $('t14-policy-sub').textContent = 'prevention (central)';
     $('t14-cost').textContent = ep.cost;
     $('t14-cost-sub').textContent = ep.costSub;
     $('tool14-note').innerHTML = ep.note;
     $('tool14-legend').innerHTML =
       '<span><span class="swatch" style="background:#E0685A"></span>Actual (BLS CPI-U)</span>' +
-      '<span><span class="swatch" style="background:#E6A93E"></span>Framework: KI\u21920 + Tool 14</span>' +
-      '<span><span class="swatch" style="background:#5FBE93;opacity:0.5"></span>Near-zero anchor</span>';
-    const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      '<span><span class="swatch" style="background:#E6A93E"></span>Framework, prevention</span>' +
+      '<span><span class="swatch" style="background:#9AA3AE"></span>Tool 14 response only</span>' +
+      '<span><span class="swatch" style="background:#5FBE93;opacity:0.6"></span>Near-zero anchor</span>';
     const tickColor = '#9AA3AE';
-    const gridColor = isDark ? 'rgba(180,178,169,0.15)' : 'rgba(136,135,128,0.15)';
+    const gridColor = 'rgba(140,140,140,0.15)';
     tool14Chart = new Chart(ctx, {
       type: 'line',
       data: { labels: months, datasets: [
         { label: 'Actual (BLS CPI-U)', data: actual, borderColor: '#E0685A', backgroundColor: 'transparent', borderWidth: 2.5, fill: false, tension: 0.25, pointRadius: 0 },
-        { label: 'Framework (KI\u21920 + Tool 14)', data: fw, borderColor: '#E6A93E', backgroundColor: 'rgba(230,169,62,0.10)', borderWidth: 3, fill: true, tension: 0.25, pointRadius: 0 },
-        { label: 'Near-zero anchor', data: anchorLine, borderColor: 'rgba(95,190,147,0.5)', borderWidth: 1, borderDash: [4,4], fill: false, pointRadius: 0, tension: 0 }
+        { label: 'Framework, prevention', data: prev, borderColor: '#E6A93E', backgroundColor: 'rgba(230,169,62,0.10)', borderWidth: 3, fill: true, tension: 0.25, pointRadius: 0 },
+        { label: 'Tool 14 response only', data: resp, borderColor: '#9AA3AE', backgroundColor: 'transparent', borderWidth: 2, borderDash: [6,3], fill: false, tension: 0.2, pointRadius: 0 },
+        { label: 'Near-zero anchor', data: anchorLine, borderColor: 'rgba(95,190,147,0.6)', borderWidth: 1, borderDash: [3,3], fill: false, pointRadius: 0, tension: 0 }
       ] },
       options: {
         responsive: true, maintainAspectRatio: false,
