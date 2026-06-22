@@ -483,7 +483,7 @@
     <button class="pill" data-rec="mild">Supply shock &middot; &minus;2% (yrs 20&ndash;21)</button>
     <button class="pill" data-rec="severe">Severe &middot; &minus;5% (yrs 20&ndash;22)</button>
   </div>
-  <p style="font-size:12px;color:var(--text-dim);margin:8px 0 2px;">A supply shock cuts output for a span &mdash; the stagflation case, where output falls <em>and</em> prices rise &mdash; and it hits <em>every</em> system at once. None can pre-empt the first-round bump; what differs is the response. The <strong style="color:var(--accent);">Citizens Standard</strong> line is held near target by KI self-correction (automatic, no interest-rate channel) and returns to target the moment the shock passes. The <strong>Fed</strong> takes the full spike, then grinds it down with rate hikes &mdash; at the cost of the recession the Tool 14 panel quantifies. <strong>Bitcoin</strong> and the <strong>k-rule</strong> have no stabilizer, so the bump persists or overshoots; <strong>UBI</strong> and <strong>MMT</strong> accommodate it. Stylized; magnitudes illustrative.</p>
+  <p style="font-size:12px;color:var(--text-dim);margin:8px 0 2px;">A supply shock cuts output for a span &mdash; the stagflation case, where output falls <em>and</em> prices rise &mdash; and it hits <em>every</em> system at once. None can pre-empt the first-round bump; what differs is the response. The <strong style="color:var(--accent);">Citizens Standard</strong> line is bounded and self-corrected &mdash; the floor cushions the hit and KI returns the price gap to target with no lag and no interest-rate channel (the same Proposition 6 mechanism the Tool 14 panel runs against 1980 and 2022) &mdash; so it holds lowest through the shock and snaps back to target the moment it passes. The <strong>Fed</strong> takes the full spike, then grinds it down with rate hikes &mdash; at the cost of the recession the Tool 14 panel quantifies. <strong>Bitcoin</strong> and the <strong>k-rule</strong> have no stabilizer, so the bump persists or overshoots; <strong>UBI</strong> and <strong>MMT</strong> accommodate it. Stylized; magnitudes illustrative.</p>
   <div class="legend" id="inflation-legend"></div>
   <div class="chart-wrap"><canvas id="inflation-chart" role="img" aria-label="Inflation comparison chart"></canvas></div>
   <div style="font-size:12px; color:var(--text-dim); margin:16px 0 0; line-height:1.65; display:grid; gap:6px;">
@@ -1225,12 +1225,18 @@
     const press = labels.map(t => inRec(t) ? -gPath[t]*100 : 0);   // pp of first-round pressure
     const csAnchor = mtCPI(p.k1, p.k2, p.k3, p.ki, p.m2, p.gdp, p.rg).cpi * 100;
 
-    // Citizens Standard: cannot pre-empt the first-round bump, but KI self-corrects
-    // it automatically and with no lag (Proposition 6(iii) in the macro paper), so
-    // it holds inflation near target THROUGH the shock and returns to target after
-    // — without an interest-rate channel. KI absorbs ~half the ongoing pressure.
-    const KI_OFFSET = 0.5;
-    const csPath = labels.map(t => csAnchor + press[t]*(1-KI_OFFSET));
+    // Citizens Standard: cannot pre-empt the first-round bump, but two proven properties
+    // of the macro model damp it. The acyclical FLOOR cushions the output trough
+    // (Proposition 6(ii): effective pressure x (1 - omega_F)), and KI self-corrects the
+    // residual price gap to target with no lag and no rate channel (Proposition 6(iii):
+    // x_t = (1 - psi*lam) x_{t-1} + e). This is the SAME transmission the Tool 14 panel
+    // runs against 1980/2022 -- one mechanism across the engine; psi*lam, omega_F verbatim.
+    const PSI_LAM = 0.9, OMEGA_F = 0.30;
+    let csGap = 0;
+    const csPath = labels.map(t => {
+      csGap = (1 - PSI_LAM) * csGap + (inRec(t) ? (1 - OMEGA_F) * press[t] : 0);
+      return csAnchor + csGap;
+    });
 
     // Fed status quo: also cannot pre-empt the bump; it CURES it with rate hikes,
     // but with a lag and at a recession cost (the cure the Tool 14 panel quantifies).
