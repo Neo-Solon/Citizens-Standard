@@ -1,0 +1,183 @@
+{
+  "categorical_table": [
+    {
+      "system": "UBI",
+      "funding": "general taxation",
+      "builds": "income flow",
+      "coverage": "universal (proposed)",
+      "price_brake": "No",
+      "maturity": "pilots",
+      "sources": [
+        "WIKI-UBI",
+        "YANG-FD",
+        "structural"
+      ]
+    },
+    {
+      "system": "Social Security",
+      "funding": "payroll tax, pay-as-you-go",
+      "builds": "income flow, no property right",
+      "coverage": "contributory",
+      "price_brake": "No",
+      "maturity": "proven",
+      "sources": [
+        "FLEMMING-1960",
+        "SSA-TR-2024",
+        "structural"
+      ]
+    },
+    {
+      "system": "SWF / Alaska",
+      "funding": "resource rents (oil/mineral royalties)",
+      "builds": "wealth stock + annual dividend",
+      "coverage": "universal among residents",
+      "price_brake": "No",
+      "maturity": "proven",
+      "sources": [
+        "APFC-2024",
+        "DOR-PFD",
+        "WIKI-APF",
+        "structural"
+      ]
+    },
+    {
+      "system": "Georgism (LVT)",
+      "funding": "land rents",
+      "builds": "funding source only (no distribution)",
+      "coverage": "n/a",
+      "price_brake": "No",
+      "maturity": "partial",
+      "sources": [
+        "GEORGE-1879",
+        "WIKI-LVT",
+        "structural"
+      ]
+    },
+    {
+      "system": "Citizens Standard",
+      "funding": "growth-tied money issuance (self-financing)",
+      "builds": "wealth stock + dividend",
+      "coverage": "universal",
+      "price_brake": "Yes",
+      "maturity": "theoretical",
+      "sources": [
+        "CS-ARCH",
+        "CS-MACRO",
+        "structural"
+      ]
+    }
+  ],
+  "axis_annual_benefit_usd_yr": {
+    "UBI": {
+      "usd_yr": 12000.0,
+      "kind": "universal flow",
+      "src": "YANG-FD"
+    },
+    "Social Security": {
+      "usd_yr": 22800.0,
+      "kind": "contributory, retirement only (NOT universal working-age)",
+      "src": "SSA-2024"
+    },
+    "SWF / Alaska": {
+      "usd_yr": 1600.0,
+      "range": [
+        331.29,
+        3284.0
+      ],
+      "kind": "universal resident dividend",
+      "src": "WIKI-APF"
+    },
+    "Citizens Standard": {
+      "usd_yr_modeB": 516.0,
+      "usd_yr_modeC": 2388.0,
+      "kind": "universal dividend (theoretical)",
+      "src": "CS-ARCH"
+    },
+    "Georgism (LVT)": {
+      "usd_yr": null,
+      "kind": "DIFFERS IN KIND: funding source, pays no per-person benefit",
+      "src": "structural"
+    }
+  },
+  "axis_wealth_stock_per_person_usd": {
+    "SWF / Alaska": {
+      "usd_per_person": 132969,
+      "kind": "collective fund / per-resident share (proven)",
+      "src": "APFC-2025"
+    },
+    "Citizens Standard": {
+      "usd_per_person_modeA": 233000.0,
+      "usd_per_person_modeB": 413000.0,
+      "vs_median": "0.81x-0.94x median on locked floor alone",
+      "kind": "owned, locked, bequeathable floor (theoretical)",
+      "src": "CS-ARCH"
+    },
+    "Social Security": {
+      "usd_per_person": 0,
+      "kind": "DIFFERS IN KIND: no property right (Flemming v. Nestor)",
+      "src": "FLEMMING-1960"
+    },
+    "UBI": {
+      "usd_per_person": 0,
+      "kind": "DIFFERS IN KIND: income flow, builds no owned stock",
+      "src": "structural"
+    },
+    "Georgism (LVT)": {
+      "usd_per_person": null,
+      "kind": "DIFFERS IN KIND: funding source only",
+      "src": "structural"
+    }
+  },
+  "axis_funding_sustainability": {
+    "Social Security": {
+      "stress": 2033,
+      "detail": "PAYGO; OASI depletes 2033, ~77% payable (~23% cut); $22.6T unfunded",
+      "src": "SSA-TR-2024"
+    },
+    "SWF / Alaska": {
+      "stress": "capture",
+      "detail": "corpus constitutionally protected; statutory dividend formula abandoned since 2016",
+      "src": "WIKI-APF"
+    },
+    "UBI": {
+      "stress": "fiscal scale",
+      "detail": "gross cost ~$3.1T/yr at $1,000/mo x 258M adults; Ontario pilot cancelled on cost",
+      "src": "CENSUS"
+    },
+    "Georgism (LVT)": {
+      "stress": "unimplemented",
+      "detail": "$1.1-3.36T/yr potential, ~zero deadweight; never adopted as national single-tax",
+      "src": "LEP-2019"
+    },
+    "Citizens Standard": {
+      "stress": "growth-contingent",
+      "detail": "issuance base disappears in contraction; procyclical dividend halts in downturns",
+      "src": "CS-CRISIS"
+    }
+  },
+  "claim_checks": {
+    "claim1_distinctive_cell": {
+      "statement": "CS is the only universal system that is simultaneously self-financing, wealth-building, and equipped with a price-stability mechanism",
+      "systems_meeting_all_three": [
+        "Citizens Standard"
+      ],
+      "holds": true
+    },
+    "claim2_where_dominated": {
+      "statement": "UBI leads on simplicity; SS and the SWF lead on track record; Georgism leads on funding efficiency; CS leads none individually",
+      "proven_systems": [
+        "Social Security",
+        "SWF / Alaska"
+      ],
+      "cs_is_proven": false,
+      "georgism_zero_deadweight": true,
+      "holds": true
+    },
+    "claim4_binding_condition": {
+      "statement": "CS's advantage is contingent on sustained growth and a brake that holds under stress",
+      "cs_funding_growth_tied": true,
+      "cs_documented_vulnerability": "Neo-Solon 2026l: 50% zero-dividend years in a Depression-class slump",
+      "holds": true
+    }
+  }
+}
