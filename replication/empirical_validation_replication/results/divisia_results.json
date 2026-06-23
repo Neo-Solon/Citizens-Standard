@@ -1,0 +1,168 @@
+{
+  "C1_divisia_full": [
+    {
+      "model": "piF~g_divisia (1968-2026, incl 2020-22)",
+      "regime": "all",
+      "n": 687,
+      "R2": 0.007,
+      "b_g_divisia": 0.041,
+      "t_g_divisia": 1.09
+    },
+    {
+      "model": "piF~g_divisia (1968-2026, incl 2020-22)",
+      "regime": "high",
+      "n": 251,
+      "R2": 0.138,
+      "b_g_divisia": 0.327,
+      "t_g_divisia": 3.58
+    },
+    {
+      "model": "piF~g_divisia (1968-2026, incl 2020-22)",
+      "regime": "low",
+      "n": 436,
+      "R2": 0.046,
+      "b_g_divisia": 0.051,
+      "t_g_divisia": 1.46
+    }
+  ],
+  "C1_m2_full": [
+    {
+      "model": "piF~g_m2 (1968-2026)",
+      "regime": "all",
+      "n": 783,
+      "R2": 0.096,
+      "b_g_m2": 0.233,
+      "t_g_m2": 4.76
+    },
+    {
+      "model": "piF~g_m2 (1968-2026)",
+      "regime": "high",
+      "n": 251,
+      "R2": 0.08,
+      "b_g_m2": 0.274,
+      "t_g_m2": 3.47
+    },
+    {
+      "model": "piF~g_m2 (1968-2026)",
+      "regime": "low",
+      "n": 532,
+      "R2": 0.128,
+      "b_g_m2": 0.14,
+      "t_g_m2": 2.88
+    }
+  ],
+  "C2_divisia_pre2020": [
+    {
+      "model": "piF~g_divisia (pre-2020)",
+      "regime": "all",
+      "n": 624,
+      "R2": 0.014,
+      "b_g_divisia": -0.112,
+      "t_g_divisia": -1.49
+    },
+    {
+      "model": "piF~g_divisia (pre-2020)",
+      "regime": "high",
+      "n": 225,
+      "R2": 0.209,
+      "b_g_divisia": 0.758,
+      "t_g_divisia": 2.9
+    },
+    {
+      "model": "piF~g_divisia (pre-2020)",
+      "regime": "low",
+      "n": 399,
+      "R2": 0.024,
+      "b_g_divisia": -0.066,
+      "t_g_divisia": -1.46
+    }
+  ],
+  "C3_encompass_full": [
+    {
+      "model": "piF~g_divisia+g_m2 (full)",
+      "regime": "all",
+      "n": 687,
+      "R2": 0.143,
+      "b_g_divisia": -0.129,
+      "t_g_divisia": -2.59,
+      "b_g_m2": 0.364,
+      "t_g_m2": 4.77
+    },
+    {
+      "model": "piF~g_divisia+g_m2 (full)",
+      "regime": "high",
+      "n": 251,
+      "R2": 0.139,
+      "b_g_divisia": 0.315,
+      "t_g_divisia": 2.1,
+      "b_g_m2": 0.018,
+      "t_g_m2": 0.13
+    },
+    {
+      "model": "piF~g_divisia+g_m2 (full)",
+      "regime": "low",
+      "n": 436,
+      "R2": 0.17,
+      "b_g_divisia": -0.036,
+      "t_g_divisia": -0.78,
+      "b_g_m2": 0.187,
+      "t_g_m2": 2.35
+    }
+  ],
+  "C_pce_divisia_full": [
+    {
+      "model": "piF(PCE)~g_divisia (full)",
+      "regime": "all",
+      "n": 688,
+      "R2": 0.005,
+      "b_g_divisia": 0.03,
+      "t_g_divisia": 0.94
+    },
+    {
+      "model": "piF(PCE)~g_divisia (full)",
+      "regime": "high",
+      "n": 251,
+      "R2": 0.133,
+      "b_g_divisia": 0.264,
+      "t_g_divisia": 3.47
+    },
+    {
+      "model": "piF(PCE)~g_divisia (full)",
+      "regime": "low",
+      "n": 437,
+      "R2": 0.049,
+      "b_g_divisia": 0.046,
+      "t_g_divisia": 1.58
+    }
+  ],
+  "C4_oos_divisia": {
+    "high": {
+      "rmse_model": 2.804,
+      "rmse_baseline": 2.76,
+      "n": 188
+    },
+    "low": {
+      "rmse_model": 2.715,
+      "rmse_baseline": 1.5,
+      "n": 415
+    }
+  },
+  "C4_oos_m2": {
+    "high": {
+      "rmse_model": 3.202,
+      "rmse_baseline": 2.76,
+      "n": 188
+    },
+    "low": {
+      "rmse_model": 2.01,
+      "rmse_baseline": 1.5,
+      "n": 415
+    }
+  },
+  "convergence_pre2020": {
+    "corr_g_m1_g_divisia": 0.818,
+    "corr_level_M1_DM1": 0.991,
+    "n": 621,
+    "note": "12m-growth correlation of the composition (M1) and user-cost (Divisia) constructions, 1968-2019"
+  }
+}
