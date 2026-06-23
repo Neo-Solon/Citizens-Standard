@@ -33,7 +33,7 @@ All fourteen papers are in this repository and free to read. The **[papers and r
 - [A Historical Counterfactual, 1960–2055](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6735078) (27 pp) · [PDF](papers/02_Counterfactual.pdf)
 - [Transition Architecture and Migration Mechanics](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6810741) (30 pp) · [PDF](papers/03_Transition.pdf)
 
-The [replication suite](replication/Citizens-Standard-replication/) ([zip](Citizens-Standard-replication.zip)) carries one package per empirical paper, each runnable with `pip install -r requirements.txt && python run_all.py`.
+The [replication suite](replication/) carries one package per empirical paper, each runnable with `pip install -r requirements.txt && python run_all.py`.
 
 ## A related project
 
