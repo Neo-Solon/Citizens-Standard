@@ -15,6 +15,7 @@ You don't need any of it to see the problem. You already felt it.
 | **[How the engine works](https://neo-solon.github.io/Citizens-Standard/how_the_engine_works.html)** | The mechanism in plain language: the four channels, and why inflation is an output rather than a dial. |
 | **[The full engine](https://neo-solon.github.io/Citizens-Standard/Citizens_Standard_Engine.html)** | Every lever, every mode. Inflation is derived from your settings, never assumed. Includes a comparison against alternative monetary systems and embedded stress tests. |
 | **[Questions &amp; answers](https://neo-solon.github.io/Citizens-Standard/questions_and_answers.html)** | The questions a skeptic asks — the money-printing fear, who controls it, hasn't this been tried, would anyone still work — answered plainly. |
+| **[Papers &amp; data](https://neo-solon.github.io/Citizens-Standard/papers.html)** | All fourteen papers, free to read, the three on SSRN linked there, plus the full replication suite. |
 
 Every page is a single self-contained `.html` file that opens in any browser, and each links to the next — so the front door alone is enough to reach everything.
 
