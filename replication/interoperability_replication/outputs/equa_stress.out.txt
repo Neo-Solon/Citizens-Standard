@@ -1,0 +1,21 @@
+S1: ZERO target, heterogeneous stickiness (lag 1 vs 4), rising realized variance (common shocks):
+   sd=0.0%:  mean distortion -0.00%   (run-to-run sd 0.00%)
+   sd=0.5%:  mean distortion +0.01%   (run-to-run sd 0.86%)
+   sd=1.0%:  mean distortion +0.01%   (run-to-run sd 1.74%)
+   sd=2.0%:  mean distortion +0.05%   (run-to-run sd 3.51%)
+   -> zero MEAN keeps the systematic distortion ~0 even as variance grows; variance adds noise, not bias.
+
+S2: deflation buffer pushes the mean slightly positive (lag 1 vs 4, sd=1%): residual cost of not running exactly 0:
+   mean=0.00%: +0.02%
+   mean=0.25%: -0.70%
+   mean=0.50%: -1.46%
+   mean=1.00%: -2.91%
+   -> residual scales with the MEAN, not the variance. A 0.5% buffer costs ~1.5%; modest, bounded.
+
+S3: is zero-robustness model-specific? Repeat with a PARTIAL-ADJUSTMENT wage model (phi 0.5 vs 0.2):
+   lag model        : common 0% -> -0.00%   common 3% -> -8.49%
+   partial-adjust   : common 0% -> +0.97%   common 3% -> -7.60%
+   Calvo reset      : common 0% -> -0.00%   common 3% -> +5.42%
+   -> THREE wage models: common 0% ~0 in all; common 3% leaves a residual in all.
+   -> sign note: Calvo's +5.4% has HIGH-prod as the stickier member; flip the assignment -> -5.2%.
+      The residual's SIGN tracks which member is stickier, not the wage process per se.

@@ -1,0 +1,7 @@
+figures written:
+  ../figures/fig_A1_dividend.png
+  ../figures/fig_A2_anchor_level.png
+  ../figures/fig_A3_cost.png
+  ../figures/fig_A4_contraction.png
+
+key values: K3 dividend $219B (flat); growth budget $447B; +3% distortion -8.5%; corridor cost vs 0% +226%
