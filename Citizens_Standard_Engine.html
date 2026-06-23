@@ -350,8 +350,28 @@
   .stat{padding:12px 10px;}
   .stat-val{font-size:18px;}
 </style>
+<style>
+.sitenav{border-bottom:1px solid var(--line,#e6e4df);font-family:inherit;}
+.sitenav-inner{max-width:1100px;margin:0 auto;padding:13px 24px;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;}
+.sitenav a{color:var(--dim,#6b7280);text-decoration:none;font-size:13.5px;font-weight:500;}
+.sitenav a:hover{color:var(--ink,#10161c);}
+.sitenav a.brand{color:var(--ink,#10161c);font-weight:700;margin-right:auto;letter-spacing:.01em;}
+.sitenav a[aria-current="page"]{color:var(--amber-ink,#9a6b12);font-weight:700;}
+</style>
 </head>
 <body>
+<nav class="sitenav" aria-label="Site navigation">
+  <div class="sitenav-inner">
+    <a class="brand" href="front_door.html">The Citizens Standard</a>
+    <a href="front_door.html">Diagnosis</a>
+    <a href="simple_engine.html">See the difference</a>
+    <a href="Citizens_Standard_Engine.html" aria-current="page">Engine</a>
+    <a href="how_the_engine_works.html">How it works</a>
+    <a href="papers.html">Papers &amp; data</a>
+    <a href="questions_and_answers.html">Q&amp;A</a>
+  </div>
+</nav>
+
 
 <div class="container">
 <h2 class="sr-only">Interactive engine for tuning Citizens Standard monetary parameters and comparing against alternative systems.</h2>
@@ -359,7 +379,7 @@
 <header>
   <h1>The Citizens Standard — Interactive Model Builder</h1>
   <p class="subtitle">Tune the monetary issuance dials. Project a representative cohort 65 years. Compare against real-world median outcomes under seven alternative systems.</p>
-  <p class="meta"><a href="front_door.html">&larr; The front door</a> &nbsp;&middot;&nbsp; <a href="papers.html"><strong>Papers &amp; data</strong></a> &nbsp;&middot;&nbsp; <a href="questions_and_answers.html">Questions &amp; answers</a> &nbsp;&middot;&nbsp; Companion tool to the SSRN paper by Neo-Solon. <a href="#methodology">Data sources &amp; methodology below</a>.</p>
+  <p class="meta">Companion tool to the SSRN paper by Neo-Solon. &nbsp;&middot;&nbsp; <a href="#methodology">Data sources &amp; methodology below</a>.</p>
 </header>
 
 <div class="card" style="background: var(--accent-bg); border-color: var(--accent); margin-bottom: 24px;">

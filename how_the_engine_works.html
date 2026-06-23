@@ -79,8 +79,28 @@
   @media (max-width:520px){header{padding:42px 0 6px}}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
+<style>
+.sitenav{border-bottom:1px solid var(--line,#e6e4df);font-family:inherit;}
+.sitenav-inner{max-width:680px;margin:0 auto;padding:13px 24px;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;}
+.sitenav a{color:var(--dim,#6b7280);text-decoration:none;font-size:13.5px;font-weight:500;}
+.sitenav a:hover{color:var(--ink,#10161c);}
+.sitenav a.brand{color:var(--ink,#10161c);font-weight:700;margin-right:auto;letter-spacing:.01em;}
+.sitenav a[aria-current="page"]{color:var(--amber-ink,#9a6b12);font-weight:700;}
+</style>
 </head>
 <body>
+<nav class="sitenav" aria-label="Site navigation">
+  <div class="sitenav-inner">
+    <a class="brand" href="front_door.html">The Citizens Standard</a>
+    <a href="front_door.html">Diagnosis</a>
+    <a href="simple_engine.html">See the difference</a>
+    <a href="Citizens_Standard_Engine.html">Engine</a>
+    <a href="how_the_engine_works.html" aria-current="page">How it works</a>
+    <a href="papers.html">Papers &amp; data</a>
+    <a href="questions_and_answers.html">Q&amp;A</a>
+  </div>
+</nav>
+
 <header class="wrap">
   <p class="kicker label">The Citizens Standard &nbsp;·&nbsp; <b>how it works</b></p>
   <h1 class="display">How the engine works — the issuance channels</h1>
