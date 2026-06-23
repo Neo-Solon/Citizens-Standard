@@ -1,0 +1,44 @@
+==============================================================================
+PAPER 13 COMPARATIVE GROUNDING  -  sourced comparison
+==============================================================================
+
+[A] CATEGORICAL TABLE (every cell sourced; see AUDIT.md)
+System             Funding               Builds        Brake Maturity
+------------------------------------------------------------------------------
+UBI                general taxation      flow          No    pilots
+Social Security    payroll tax, pay-as-y flow          No    proven
+SWF / Alaska       resource rents (oil/m stock+flow    No    proven
+Georgism (LVT)     land rents            flow          No    partial
+Citizens Standard  growth-tied money iss stock+flow    Yes   theoretical
+
+[B] COMPARABLE AXIS 1 - annual per-person benefit (real USD/yr)
+  UBI                 12000.0                universal flow
+  Social Security     22800.0                contributory, retirement only (NOT universal working-age)
+  SWF / Alaska        1600.0                 universal resident dividend
+  Citizens Standard   B:$516.0/C:$2388.0     universal dividend (theoretical)
+  Georgism (LVT)      n/a                    DIFFERS IN KIND: funding source, pays no per-person benefit
+
+[C] COMPARABLE AXIS 2 - owned wealth stock per person (real USD)
+  SWF / Alaska        132969                     collective fund / per-resident share (proven)
+  Citizens Standard   A:$233,000.0/B:$413,000.0  owned, locked, bequeathable floor (theoretical)
+  Social Security     0                          DIFFERS IN KIND: no property right (Flemming v. Nestor)
+  UBI                 0                          DIFFERS IN KIND: income flow, builds no owned stock
+  Georgism (LVT)      None                       DIFFERS IN KIND: funding source only
+
+[D] COMPARABLE AXIS 3 - funding sustainability / capture
+  Social Security     PAYGO; OASI depletes 2033, ~77% payable (~23% cut); $22.6T unfunded
+  SWF / Alaska        corpus constitutionally protected; statutory dividend formula abandoned since 2016
+  UBI                 gross cost ~$3.1T/yr at $1,000/mo x 258M adults; Ontario pilot cancelled on cost
+  Georgism (LVT)      $1.1-3.36T/yr potential, ~zero deadweight; never adopted as national single-tax
+  Citizens Standard   issuance base disappears in contraction; procyclical dividend halts in downturns
+
+[E] CLAIM CHECKS
+  claim1_distinctive_cell: holds=True
+      only system meeting all three: ['Citizens Standard']
+  claim2_where_dominated: holds=True
+  claim4_binding_condition: holds=True
+Traceback (most recent call last):
+  File "/home/claude/work/bundle/replication/Citizens-Standard-replication/comparative_replication/src/compare.py", line 227, in <module>
+    with open("../results/comparison_results.json", "w") as fh:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '../results/comparison_results.json'
