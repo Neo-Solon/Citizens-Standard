@@ -58,3 +58,49 @@ The Paper 1–8 subfolders each carry their own README describing their entry po
 - `crisis_behaviour_replication` and `distribution_inequality_replication` share the same
   audited deterministic issuance engine used across the series, so their floor values are
   identical to the engine's rather than re-derived.
+
+## Supplementary grounded models (distribution_inequality_replication)
+
+Five further modules ground specific claims on the same verified SCF baseline (or the
+1960-2025 historical series), each a two-stage build with the calibrated parameters swept
+across cited literature ranges. All five run as step 4 of
+`distribution_inequality_replication/run_all.py`; each also has its own README and
+`code/` + `output/` folders.
+
+- `rent_capitalization` — what share of the dividend lane capitalises into rent. ~1.7%
+  central (0.5-4.6% swept over Saiz 2010 supply and Ihlanfeldt demand elasticities).
+- `mpc_demand_impulse` — the dividend's net demand impulse via the SCF MPC gradient
+  (hand-to-mouth share reproduces the Kaplan-Violante-Weidner one-third benchmark).
+  Small and sign-contested: -0.52% to +0.31% of consumption depending on what issuance
+  displaces.
+- `crowdout_split` — the floor's net-new-wealth vs crowd-out split by income decile,
+  crowd-out intensity swept over the pension-displacement literature. ~79% net-new
+  central (59-91% swept).
+- `procyclicality` — the procyclical-dividend magnitude on US history 1960-2025
+  (dividend zeroes in all 7 contractions; K1 offsets ~1%) plus a floor-stock survival
+  stress test (40% drawdown actual, ~91% adversarial).
+- `labor_supply` — the dividend's work-disincentive, calibrated to the Vivalt et al.
+  (NBER 32719) $1,000/mo RCT and scaled to the ~$56/mo dividend. ~0.05pp economy-wide
+  participation, ~0.23pp in the low-wage segment.
+- `asset_price_impact` — the floor lane's effect on equity valuations, combining
+  Paper 8's verified absorption flow with the Gabaix-Koijen (NBER 28967) price
+  multiplier. The 4.26% attenuated return is broadly consistent with the floor's
+  own price impact; the floor's flow is ~1/4 of the buyback flow the market already
+  absorbs.
+- `growth_measurement` — price drift from real-time GDP measurement error, anchored
+  to BEA revision data (advance-to-third avg 0.52pp). Revision noise washes out;
+  a persistent measurement bias is the real exposure, smaller in floor-weighted modes.
+- `fullreserve_credit_gap` — sizes the credit-creation flow full reserve removes
+  (~3.3% of GDP/yr bank-created; ~1.1% residual after CS issuance) and frames the
+  unresolved debate on whether intermediation fills it, with both sides cited. Sizes
+  the gap; does not claim to close it.
+- `capture_override_baserate` — the empirical override base rate of comparable
+  monetary/fiscal commitment rules (IMF Fiscal Rules Database; central-bank-
+  independence panels). Grounds the capture/fig-leaf objection and finds it real and
+  substantial: ~90% breached deficit rules in the 2020 crisis, 20-60% in normal
+  times, ~25% of independence reforms reversed. Supports the objection, not the
+  design; CS scores worst on the track-record mitigant because it has never run.
+
+These are first-round, partial-equilibrium bounds, not general-equilibrium results; the
+rent and demand-impulse mechanisms follow an approach developed in discussion with the
+independent researcher wilsoniumite and are reproduced here on US data.

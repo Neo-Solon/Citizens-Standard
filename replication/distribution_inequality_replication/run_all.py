@@ -34,6 +34,10 @@ _SUPPLEMENTARY = [
     ("crowdout_split",      ["stage1_crowdout.py", "stage2_crowdout_sweep.py"]),
     ("procyclicality",      ["stage1_procyclicality.py", "stage2_stock_survival.py"]),
     ("labor_supply",        ["stage1_labor_supply.py", "stage2_labor_sweep.py"]),
+    ("asset_price_impact",  ["stage1_valuation_premium.py", "stage2_return_consistency.py"]),
+    ("growth_measurement",  ["stage1_measurement_drift.py", "stage2_drift_accumulation.py"]),
+    ("fullreserve_credit_gap", ["stage1_gap_sizing.py", "stage2_residual_and_debate.py"]),
+    ("capture_override_baserate", ["stage1_override_baserate.py", "stage2_mitigants_and_cs.py"]),
 ]
 supp_ok = True
 for mod, scripts in _SUPPLEMENTARY:
