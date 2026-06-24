@@ -1,0 +1,19 @@
+====================================================================
+FLOOR NET-NEW vs CROWD-OUT -- swept over literature crowd-out range
+====================================================================
+         crowd-out intensity   net-new%  crowd-out%  %nn to bot-half
+0.15 (private pensions, low)      90.6%        9.4%              44%
+0.33 (Social Security, central)      79.3%       20.7%              47%
+  0.65 (structural LC, high)      59.2%       40.8%              55%
+--------------------------------------------------------------------
+BANDED HEADLINE:
+  Central (SS-analogue 0.33): floor is 79% net-new wealth, 21% crowd-out
+  Full range: net-new 59% (high crowd-out) to 91% (low)
+  Of the net-new wealth, ~47% accrues to the bottom half.
+
+READING: even at the literature's HIGH crowd-out estimate, the floor is
+  majority net-new wealth (59%); at the central Social-Security
+  analogue it's ~79% net-new. The crowd-out concentrates at the top
+  (already equity-holders); the new wealth concentrates at the bottom (who
+  hold no equity). This is the conceded 'crowds out savers / new wealth for
+  the bottom half' claim, quantified and signed.
