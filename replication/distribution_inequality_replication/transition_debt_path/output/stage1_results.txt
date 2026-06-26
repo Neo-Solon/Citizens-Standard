@@ -1,0 +1,21 @@
+========================================================================
+TRANSITION DEBT-RETIREMENT PATH (Paper 3 claim: 102% -> 39% Y30 -> 15% Y45)
+========================================================================
+Anchored at ~100% of GDP (FY2024 actual 98%; paper's 102% is near-term forward)
+
+Central case: real growth 2.0%, inflation 2.3%, avg rate 3.3%, KT share 0.6
+   Year  debt/GDP
+      1      98%
+      5      91%
+     10      82%
+     15      74%
+     20      66%
+     25      59%
+     30      52%
+     35      45%
+     40      38%
+     45      32%
+     50      26%
+
+Reaches 39% of GDP at Year 40 (paper claims ~Year 30)
+Reaches ~15% floor at Year None (paper claims ~Year 45)

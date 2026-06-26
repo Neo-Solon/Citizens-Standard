@@ -1,0 +1,46 @@
+============================================================================
+ZERO-ANCHOR DOMINANCE + THE HONEST BOUNDARY
+============================================================================
+Transient real divergences (both partners hold a common anchor, gaps revert):
+      2022 spike (6pp,2y): zero-anchor distortion -0.00%
+       Japan era (3pp,17y): zero-anchor distortion +0.00%
+            tail (12pp,2y): zero-anchor distortion +0.00%
+
+Common NONZERO anchor (+2%) under the same divergences: ~-5.77% (permanent wedge
+from the deflation-buffer asymmetry) -- zero strictly dominates.
+
+The honest boundary -- PERMANENT level split (a partner abandons the anchor):
+  +1pp permanent: distortion +1.00% (proportional, real)
+  +2pp permanent: distortion +2.00% (proportional, real)
+  +3pp permanent: distortion +3.00% (proportional, real)
+
+============================================================================
+VERDICT
+============================================================================
+
+ This VINDICATES Paper 7 against real shocks, with one honest boundary stated.
+
+ 1. The zero common anchor absorbs every TRANSIENT real divergence history produced
+    -- the 2022 ~6pp spike, the 2021 gap, even Japan's ~17-year deflation gap -- with
+    a terminal real-rate distortion of ~0%, because transient deviations around a
+    common zero re-converge. This is stronger than the original replication, which
+    only swept abstract shock variances <=2%; the real divergences are larger and
+    the anchor still absorbs them.
+
+ 2. A common POSITIVE anchor (+2%) leaves a structural ~-5.77% wedge regardless of
+    the divergence, confirming the paper's "only zero is fully robust" result against
+    real magnitudes (the deflation-buffer asymmetry).
+
+ 3. THE HONEST BOUNDARY: robustness is to transient divergence, not to a PERMANENT
+    level split. If a partner abandons the anchor and runs +k pp forever, the residual
+    is ~+k% -- proportional and real. So the anchor's robustness rests on the COMMITMENT
+    holding (a governance property), not on immunity to any divergence. Real history is
+    the transient kind; a permanent unilateral exit is the failure mode, and it is the
+    same capture/override risk catalogued for the domestic rule.
+
+ BOTTOM LINE: against the inflation divergences the world has actually delivered, the
+ zero common anchor holds -- the residuals wash out where the original test could only
+ show robustness to assumed shocks. The unchanged caveat is that this assumes the
+ common-anchor commitment is honored; a permanent unilateral split is a governance
+ failure, not a mechanism the anchor neutralizes.
+

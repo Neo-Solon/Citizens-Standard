@@ -1,0 +1,22 @@
+==============================================================================
+CREDIT DISPLACEMENT -- net new goods-circuit money vs displacement ratio delta
+==============================================================================
+CS issuance is money creation, not borrowing; delta = fraction that displaces
+bank credit creation. Net additive (inflationary) money = issuance x (1-delta),
+of which only the kappa_d dividend share reaches the goods circuit.
+
+Representative year 2024: CS issuance $584B (= 2.0% of GDP)
+  Bank-created flow that year ~3.0-3.9% of GDP (verified range)
+
+  delta (displacement)  net additive $B  to M^T (Mode D)  price impulse
+                  1.00               0               0         0.00%
+                  0.80             117             117         1.87%
+                  0.60             234             234         3.73%
+                  0.40             350             350         5.60%
+                  0.20             467             467         7.47%
+                  0.00             584             584         9.33%
+
+READING: at delta=1 (full displacement) there is no additive money and no
+impulse -- the neutrality claim holds exactly. As delta falls, the additive
+share grows and the price impulse rises. The question is what delta is
+empirically plausible (stage 2) and how much inflation the shortfall implies.

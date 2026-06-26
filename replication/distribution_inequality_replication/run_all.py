@@ -38,6 +38,12 @@ _SUPPLEMENTARY = [
     ("growth_measurement",  ["stage1_measurement_drift.py", "stage2_drift_accumulation.py"]),
     ("fullreserve_credit_gap", ["stage1_gap_sizing.py", "stage2_residual_and_debate.py"]),
     ("capture_override_baserate", ["stage1_override_baserate.py", "stage2_mitigants_and_cs.py"]),
+    ("credit_displacement", ["stage1_displacement_requirement.py", "stage2_breakeven_and_plausibility.py"]),
+    ("transition_debt_path", ["stage1_debt_path.py", "stage2_sweep_plausibility.py"]),
+    ("structural_buyer_endgame", ["stage1_ownership_plateau.py", "stage2_float_and_verdict.py"]),
+    ("anchor_real_shocks", ["stage1_observed_divergence.py", "stage2_zero_dominance.py"]),
+    ("dsge_twocircuit", ["stage1_determinacy.py", "stage2_price_response.py"]),
+    ("mode_choice_welfare", ["stage1_no_welfare_optimum.py"]),
 ]
 supp_ok = True
 for mod, scripts in _SUPPLEMENTARY:

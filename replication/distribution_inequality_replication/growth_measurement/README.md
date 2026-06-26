@@ -41,8 +41,9 @@ since less mis-issued money reaches the goods market.
   sets sigma ~0.65pp.
 - Routing (kappa_d to M^T, floor share to asset circuit) matches the issuance
   engine's two-circuit structure.
-- An earlier version routed *all* mis-issuance to the goods circuit (overstating the
-  typical drift ~2.5x); corrected to route by kappa_d.
+- Mis-issuance is routed by kappa_d (dividend share to the goods circuit, floor share
+  to the asset circuit), matching the issuance engine's two-circuit structure, so the
+  drift reflects only the goods-circuit portion.
 
 ## Caveats
 - One-year passthrough to prices assumed 100% (conservative; overstates).

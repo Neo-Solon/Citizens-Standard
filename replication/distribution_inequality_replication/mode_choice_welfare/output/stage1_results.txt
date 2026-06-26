@@ -1,0 +1,38 @@
+============================================================================
+MODE-CHOICE WELFARE -- is there a welfare-optimal Mode (optimal kappa_d)?
+============================================================================
+Paper 1 Sec 13.3: Mode choice is a values question, not a technical optimization.
+
+Optimum vs cap: 0.6 -> 0.8 -> 1.0 as the cap is raised.
+=> the 'optimum' tracks the cap: welfare is MONOTONIC in kappa_d, no interior peak.
+
+Sensitivity (optimal kappa_d is always a corner -- 0 or the cap -- never interior):
+                           parameter | kappa_d*
+  ----------------------------------------------
+       central (q=0.37,omega=3,T=33) |     0.60
+            constrained share q=0.30 |     0.00
+            constrained share q=0.45 |     0.60
+       welfare weight omega=1 (none) |     0.00
+              welfare weight omega=6 |     0.60
+                        horizon T=25 |     0.60
+                        horizon T=40 |     0.00
+               constrained rho_h=15% |     0.60
+               constrained rho_h=25% |     0.60
+
+============================================================================
+FINDING
+============================================================================
+- There is NO interior welfare optimum. The social-welfare function is monotonic in
+  kappa_d; the formal optimum is bang-bang (a corner or the inflation ceiling). There
+  is no welfare-optimal Mode to compute.
+- What the dial trades is IMMEDIATE LIQUIDITY (a larger spendable dividend) against
+  COMPOUNDING OWNERSHIP (a larger locked stake earning a higher return), bounded above
+  by the inflation ceiling. Neither side dominates on welfare grounds.
+- This is the formal basis for Paper 1 Sec 13.3: because no Mode is welfare-optimal,
+  the choice is a constitutional VALUES decision, properly assigned to a supermajority
+  vote, not to a technocratic calculation.
+- Decision support for that vote: a polity wanting the dividend to reach those who
+  cannot self-insure can set kappa_d near its liquidity-constrained share (~0.37
+  nationally; Mode B's 0.40 sits near it), and may favor a Mode whose kappa_d rises
+  countercyclically as that share grows in downturns. These are inputs to the vote,
+  not an optimum.

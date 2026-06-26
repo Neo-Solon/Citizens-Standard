@@ -1,0 +1,41 @@
+============================================================================
+PLATEAU CROSS-CHECK + FLOAT THRESHOLD + VERDICT
+============================================================================
+Simulation vs closed-form psi* = c * annuity(g, dur):
+  c=0.39% dur=40y: sim 10.9% vs closed 10.9%  (match)
+  c=0.39% dur=30y: sim 8.9% vs closed 8.9%  (match)
+  c=0.50% dur=40y: sim 14.0% vs closed 14.0%  (match)
+  c=0.30% dur=25y: sim 6.0% vs closed 6.0%  (match)
+
+Active float left at the plateau (price-discovery margin):
+  central 10.9%: active float = 89%  (discovery concerns bite ~40-50%+ passive)
+  high corner ~21%: active float = 79%  (discovery concerns bite ~40-50%+ passive)
+
+============================================================================
+HONEST VERDICT
+============================================================================
+
+ This one largely VINDICATES Paper 8, with one nuance.
+
+ 1. The plateau is REAL (Proposition 4 holds). Ownership converges and never runs
+    toward 1 in any swept case -- cohort decumulation structurally bounds the share.
+    The 'permanent buyer eventually owns everything' objection is genuinely defeated.
+
+ 2. The simulation reproduces the paper's psi* = c*annuity(g,dur) identity exactly,
+    and the central plateau (verified 0.39% flow, ~40y duration, 2% growth) is 10.9%
+    -- squarely in the paper's stated 0.09-0.11 bracket. The number is sound.
+
+ 3. NUANCE (the honest addition): the plateau LEVEL is duration- and flow-sensitive,
+    ranging ~6% (short duration / low flow) to ~21% (long duration / high floor-
+    weighting). The paper's ~10% is the central case of that range, not a fixed
+    point; at long holding durations it could reach the high-teens to ~20%. Still a
+    clear minority -- active float stays ~79-94% across the whole range, well above
+    the ~40-50% passive-ownership level where price-discovery concerns bite -- so the
+    float-threshold claim (price discovery survives) holds throughout.
+
+ BOTTOM LINE: the structural-buyer endgame is bounded as the paper argues. The
+ decumulation mechanism works, the ~10% plateau is a fair central estimate, and
+ price discovery is preserved. The one amendment is to present the plateau as a
+ ~6-21% range centered near 10%, duration-driven, rather than a single number --
+ which if anything makes the bound more credible by showing its sensitivity.
+

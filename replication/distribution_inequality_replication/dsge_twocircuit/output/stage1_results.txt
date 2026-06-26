@@ -1,0 +1,36 @@
+========================================================================
+C1 -- DETERMINACY of the Citizens Standard PRICE-LEVEL ANCHOR (Prop 7)
+========================================================================
+Rule: KI sets transactional money so P_t tracks the target path (NOT a Taylor
+interest-rate rule). Explosive root theta = 1 + (1+phi)/alpha.
+
+  alpha (money-demand semi-elasticity) = 4.0
+    phi (gap response)    theta  determinate
+                   0.0    1.250         True
+                   0.5    1.375         True
+                   1.0    1.500         True
+                   2.0    1.750         True
+
+  -> theta > 1 for EVERY phi >= 0, including passive (phi=0). The price level
+     is determinate WITHOUT a Taylor-principle-style aggressive response,
+     because the money-supply anchor pins the level each period. This is
+     Paper 5's 'determinacy without a Taylor principle' -- reproduced. An
+     interest-rate rule, by contrast, would need phi>1 (the Fisherian root).
+
+========================================================================
+Two-jump-variable system (price level + asset circuit): BK coupling threshold
+========================================================================
+    coupling  determinate            eigenvalues
+        0.01         True   |mu|=[1.25 1.01]
+        0.03         True   |mu|=[1.254 1.006]
+        0.08        False   |mu|=[1.274 0.986]
+        0.15        False   |mu|=[1.322 0.938]
+        0.30        False   |mu|=[1.453 0.807]
+
+READING: the QUALITATIVE Blanchard-Kahn property holds -- determinacy at low
+asset<->consumer coupling, lost as coupling grows. The paper derives the exact
+threshold at ~0.13 from its full two-block system (Appendix A.12); this stylized
+2x2 is illustrative of the direction only and is NOT tuned to that value. What
+this module rigorously establishes is the price-level-anchor determinacy result
+(theta = 1+(1+phi)/alpha > 1 for all phi>=0) -- Paper 5's 'determinacy without a
+Taylor principle' -- micro-founded on the framework's quantity/price-path rule.

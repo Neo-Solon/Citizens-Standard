@@ -44,10 +44,10 @@ magnitude -- though it is permanent and rule-bound.
 - Absorption flow verified against Paper 8 (0.39% at kappa_d=0.4, 0.65% at kappa_d=0).
 - GK multiplier and range taken from the NBER paper directly; microstructure
   dissent (Bouchaud 2021) included as the low end.
-- **A conflation was caught and removed mid-build**: an earlier version derived
-  phi = 1/M, fusing GK's demand multiplier with Paper 8's supply elasticity. These
-  are different objects; the derivation was dropped and replaced with the two-fact
-  framing above. The model does NOT claim GK implies a specific phi.
+- The model keeps GK's demand multiplier and Paper 8's supply elasticity as distinct
+  objects rather than fusing them; it does NOT claim GK implies a specific phi. The
+  price impact is reported as the two-fact framing above (verified flow x literature
+  multiplier range).
 
 ## Caveats
 - The short-run impulse (f x M) is the **level** impact of a year's flow; the

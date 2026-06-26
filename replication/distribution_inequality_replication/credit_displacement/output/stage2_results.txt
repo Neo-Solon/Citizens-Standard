@@ -1,0 +1,52 @@
+==============================================================================
+BREAK-EVEN DISPLACEMENT delta (routing-correct: delta applies to dividend lane)
+==============================================================================
+Tolerance: price impulse < 1%.  2024 issuance $584B, M^T ~$6258B
+
+            mode (kappa_d)  break-even delta                        meaning
+           floor-max (0.0)              0.00   no goods exposure -> neutral
+Mode B floor-weighted (0.4)              0.73         needs 73% displacement
+Mode D pure dividend (1.0)              0.89         needs 89% displacement
+
+Price impulse vs delta, by mode:
+    delta   Mode B (kd=.4)   Mode D (kd=1)
+     1.00           0.00%          0.00%
+     0.80           0.75%          1.87%
+     0.60           1.49%          3.73%
+     0.40           2.24%          5.60%
+     0.20           2.99%          7.47%
+     0.00           3.73%          9.33%
+
+==============================================================================
+HONEST VERDICT
+==============================================================================
+
+ - In Mode D (pure dividend), the framework needs delta >= 89% displacement
+   to keep inflation under 1%. The empirical literature says displacement is
+   PARTIAL and rarely that high -- and near-zero in slack -- so the pure-dividend
+   operating point CANNOT rely on displacement for neutrality. Mode D's neutrality
+   comes from issuance being growth-MATCHED (capped at realized growth), NOT from
+   displacing bank credit; the displacement question is a SECOND-ORDER inflation
+   risk on top, and it is real.
+
+ - In Mode B (floor-weighted), only 40% of issuance reaches the goods lane, so the
+   break-even displacement drops to 73%, and the price impulse is
+   correspondingly smaller across the whole delta range. Floor-weighting is the
+   structural mitigant -- the more the budget routes to the asset-buying floor, the
+   less the displacement question matters for goods inflation.
+
+ - The Chartalist bear case (delta ~ 0, injection fully additive) is the worst: it
+   makes the dividend net-new spending power and the impulse large. We cannot rule
+   it out from data; it is the honest downside and it argues for floor-weighting
+   and for keeping the dividend modest.
+
+ BOTTOM LINE: the double-claim concern is REAL and the neutrality of a large cash
+ dividend is NOT guaranteed by displacement -- displacement is partial, state-
+ dependent, and unmeasured for money creation. The framework's actual defense is
+ (a) growth-matched issuance caps the quantity, and (b) floor-weighting keeps most
+ issuance out of the goods circuit entirely. Relying on credit displacement to
+ neutralize a big dividend would be the weakest version of the argument; the data
+ does not support it. This strengthens the case for floor-weighting and a modest
+ dividend, and it concedes that a pure-dividend Mode D carries a genuine, bounded
+ inflation risk from the un-displaced share.
+
