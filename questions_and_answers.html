@@ -88,7 +88,7 @@
 </style>
 <style>
 .sitenav{border-bottom:1px solid var(--line,#27313c);font-family:inherit;}
-.sitenav-inner{max-width:680px;margin:0 auto;padding:13px 24px;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:baseline;}
+.sitenav-inner{max-width:680px;margin:0 auto;padding:13px 24px;display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:center;align-items:baseline;}
 .sitenav a{color:var(--dim,#9aa3ae);text-decoration:none;font-size:13.5px;font-weight:500;}
 .sitenav a:hover{color:#e6e8eb;}
 .sitenav a[aria-current="page"]{color:var(--amber,#e6a93e);font-weight:700;}
@@ -97,8 +97,6 @@
 <body>
 <nav class="sitenav" aria-label="Site navigation">
   <div class="sitenav-inner">
-    <a href="front_door.html">Diagnosis</a>
-    <a href="simple_engine.html">See the difference</a>
     <a href="how_the_engine_works.html">How it works</a>
     <a href="Citizens_Standard_Engine.html">Engine</a>
     <a href="papers.html">Papers &amp; data</a>
@@ -122,6 +120,14 @@
 <p>That worry is right about <em>extra</em> money — money dumped on top of an economy chases the same goods and prices climb. But the citizen dividend isn't extra. It's the money the economy already generates as it grows, redirected. Right now that growth-money exists too; it just accrues quietly to the financial system. Moving it to citizens instead doesn't add a dollar to the total, so there's nothing extra to push prices up. The model shows price stability holding precisely because the dividend is paid <em>within</em> the money the economy creates, not on top of it.</p>
 <p class="pointer"><b>Where it&rsquo;s worked out:</b> why the dividend is price-stable (the macroeconomic model, the welfare-optimal dividend share and the return results).</p>
 </div>
+<div class="q-block"><p class="q-q">"Won't the fund buying stocks just inflate the stock market?"</p>
+<p>Partly yes, and pretending otherwise would be dishonest — when you buy an asset, you push its price up. The honest questions are <em>how much</em> and <em>is it accounted for.</em> The floor buys about 0.39% of the total market a year, which is roughly a quarter of what corporate stock buybacks already pull from the market every year — a bid the market routinely absorbs, not a new force. And the model doesn't ignore the effect: it assumes a lower return precisely because the floor bids up what it buys, rather than pretending it can buy at yesterday's prices forever. The price pressure is real, it's bounded, and it's already built into the numbers.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the structural-buyer paper (the bounded valuation premium) and the asset-price replication module.</p>
+</div>
+<div class="q-block"><p class="q-q">"People who need help want money now, not a stake that compounds for decades."</p>
+<p>Completely fair, and it's the most important version of this objection. A locked stake that grows for thirty years does nothing for someone who needs rent this month. That's why the design has <em>two</em> lanes, not one: a cash dividend that pays out now, and a locked floor that builds ownership over time. The mode sets how much goes to each. It was never "wait decades instead of cash" — it's both, and a society that needs more cash now can weight the dividend higher. If anything, this objection is an argument for that weighting, not against the floor.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the issuance engine (how the dividend and floor split) and the architecture paper (mode selection).</p>
+</div>
 <div class="q-block"><p class="q-q">"Isn't some inflation actually good? That's why the target is 2%."</p>
 <p>This is the fairest hard question, and the honest answer is: <em>that's a choice, and it should be made on purpose.</em> The case for mild inflation is real — it greases wage adjustments and keeps a little distance from deflation. The Citizens Standard doesn't outlaw that. It lets a society <em>choose</em> its monetary regime out in the open — mild deflation, dead-flat stability, or mild inflation — instead of having 2% handed down as if it were physics. The objection to today's system isn't that 2% is wrong. It's that you never got a vote, and the people who pay for it most aren't the ones who picked it.</p>
 <p class="pointer"><b>Where it&rsquo;s worked out:</b> the modes and how a regime gets chosen (the architecture paper, the Cross-Mode Comparison and Mode Selection).</p>
@@ -131,9 +137,9 @@
 <p>The opposite, actually. Today's money is run by discretion — a committee can change course quarter to quarter. The Citizens Standard's whole design is to take that discretion <em>away</em> and replace it with rules written into law, hard to change on a whim and changeable only through a slow, public, constitutional process. A politician can't quietly turn the dial. The point isn't to give someone new the keys; it's to bolt the keys to a rule so no one — including the people running it — can use money as a private lever.</p>
 <p class="pointer"><b>Where it&rsquo;s worked out:</b> the statutory and constitutional design (the statutory paper); the updatability safeguards (the architecture paper, Governance).</p>
 </div>
-<div class="q-block"><p class="q-q">"Won't the rich and powerful just capture this too, like everything else?"</p>
-<p>It's the right instinct — capture is the default, and any honest proposal has to plan for it rather than wish it away. This one is built around that assumption: the rules are constitutional, the parameters move only through a tiered, transparent process, and the design deliberately removes the discretionary levers that get captured in the first place. We don't claim it's capture-proof — nothing is. We claim it's <em>harder</em> to capture than a system run on discretion behind closed doors, because there's far less to quietly take.</p>
-<p class="pointer"><b>Where it&rsquo;s worked out:</b> the governance and anti-capture design (the architecture paper, Governance; the statutory paper).</p>
+<div class="q-block"><p class="q-q">"Once you centralize the money rule, won't every crisis become an excuse to override it?"</p>
+<p>This is the objection we take most seriously, and the data backs the worry, not the design. We went and looked: comparable rules — government deficit limits, central-bank independence — get broken often, near-universally in a crisis and a fair amount even in calm years. So a written rule is no guarantee, and we won't pretend otherwise. What a formula-bound, auditable rule does is make breaking it <em>visible</em> — an on-the-record act, instead of the quiet discretion money creation runs on today. That raises the cost of override without eliminating it. We don't claim the rule can't be broken; we claim breaking it can't be hidden. Capture stays on the unsolved list, honestly.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the governance paper (the constitutional lock as a commitment device, not a guarantee) and the capture/override replication module.</p>
 </div>
 <div class="q-block"><p class="q-q">"Is this a left-wing or a right-wing idea?"</p>
 <p>Neither, and that's not a dodge. The diagnosis — that money quietly loses value and the loss falls hardest on ordinary savers — isn't partisan; it's arithmetic. A version of the fix appeals to the right (hard rules, sound money, an end to discretionary debasement) and a version appeals to the left (a floor, a shared dividend, breaking the finance system's grip). It's a monetary <em>architecture</em>, not a party platform. You can want a dollar to hold its value without signing up for anyone's politics.</p>
@@ -152,6 +158,10 @@
 <div class="q-block"><p class="q-q">"Why would anyone work if they get a floor and a dividend?"</p>
 <p>Because the floor is a <em>floor</em> — enough to stand on, not enough to stop. It's deliberately set so that work always pays clearly more, and the savings floor is locked rather than handed out as spendable cash, which changes the incentive entirely. When the economics is worked through, the floor doesn't pull people out of the workforce; the security at the bottom actually makes it easier to take the risk of a better job, a move, or a business. "People will stop working" is the oldest objection to any floor, and it keeps not happening.</p>
 <p class="pointer"><b>Where it&rsquo;s worked out:</b> the labor-supply analysis (the macroeconomic model, the labor results).</p>
+</div>
+<div class="q-block"><p class="q-q">"What happens in a recession, when the economy isn't growing?"</p>
+<p>This is the framework's hardest failure mode, and the honest answer concedes it. Because the dividend is paid out of real growth, when growth stops the dividend stops — it falls to zero in a downturn, exactly when people need it most. That's a genuine weakness, not one we hide. What survives is the floor: the ownership stake already built up doesn't vanish in a recession, it rides through (with a real drawdown) and keeps compounding after. So the cash lane is fragile in a slump and the ownership lane is the shock absorber — roughly the opposite of today's system, where the cash keeps coming and the assets crater. We'd rather name the failure mode than paper over it.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the crisis-behaviour paper (the procyclical-dividend failure mode) and the procyclicality replication module.</p>
 </div>
 <div class="q-block"><p class="q-q">"What happens to banks? Who lends money?"</p>
 <p>Banks still lend — they just lend money that already exists, the way most people already assume they do. What changes is that banks stop <em>creating</em> new transactional money when they make a loan, which is the part most people are surprised to learn they do today. Credit, mortgages, and business lending all continue; they're funded by real savings rather than conjured. It makes the payment system run-proof and separates "keeping money safe" from "betting it" — two jobs today's banks do at once, which is why they need rescuing when the bets go bad.</p>
