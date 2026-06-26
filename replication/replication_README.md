@@ -100,6 +100,54 @@ across cited literature ranges. All five run as step 4 of
   substantial: ~90% breached deficit rules in the 2020 crisis, 20-60% in normal
   times, ~25% of independence reforms reversed. Supports the objection, not the
   design; CS scores worst on the track-record mitigant because it has never run.
+- `credit_displacement` — the double-claim / issuance-neutrality test (the most
+  load-bearing claim). A cash dividend would need ~73-89% credit displacement to
+  stay near price-neutral; the crowding-out literature and the QE episodes show
+  displacement is partial and nowhere near that. So issuance neutrality cannot rest
+  on displacement: the defense is growth-matching (capping the quantity) plus
+  floor-weighting (keeping most issuance out of the goods circuit). Companion to
+  Paper 5 section 3.8.
+- `transition_debt_path` — tests Paper 3's debt-retirement timeline (102% -> 39% by
+  Year 30 -> 15% by Year 45) on current fiscal data. Finds it reachable but
+  optimistic-leaning (the milestones need near-maximal KT share or high-end growth;
+  central assumptions give ~Year 40 for 39%), and that the reduction is driven
+  mainly by nominal growth expanding the denominator rather than by KT retiring
+  principal — i.e. the system grows out of the debt, with KT an assist. Companion
+  to Paper 3.
+- `structural_buyer_endgame` — tests Paper 8's ownership-plateau claim (Proposition
+  4): that cohort decumulation bounds the floor's equity share rather than letting it
+  rise toward one. Largely confirms it — ownership plateaus in every case, the
+  central plateau is 10.9% (in the paper's 0.09-0.11 band), and active float stays
+  ~79-94% so price discovery survives. One nuance: the plateau level is
+  duration-sensitive (~6-21% range), so ~10% is the central case of a range, not a
+  fixed number. Companion to Paper 8.
+- `anchor_real_shocks` — tests Paper 7's common-anchor robustness against the
+  inflation divergences history actually produced (2022 ~6pp spike, Japan's ~17-year
+  deflation gap) using the paper's own distortion mechanism, rather than swept
+  abstract shocks. Vindicates the claim: the zero anchor absorbs every transient real
+  divergence (~0% terminal distortion) while a +2% anchor leaves a ~-5.8% wedge. Honest
+  boundary: robustness is to transient divergence around a held commitment; a permanent
+  unilateral split leaves a proportional residual (a governance question). Companion to
+  Paper 7.
+- `dsge_twocircuit` — a two-asset New Keynesian DSGE (textbook calibration) carrying
+  out the forward-looking determinacy analysis Paper 5 left to future work. On the
+  framework's actual price-level-anchor rule it reproduces "determinacy without a
+  Taylor principle" (theta = 1+(1+phi)/alpha > 1 for all phi>=0); the price-stability
+  side agrees with credit_displacement (floor-weighting small, large dividend ~3.3%,
+  leak load-bearing). Honest scope: the rigorous content is the determinacy result;
+  the price response is a validated long-run quantity-theoretic mapping, not a full
+  IRF; the stylized two-block system shows the coupling-determinacy direction but not
+  the exact ~0.13 threshold. A wrong-rule error (testing a Taylor interest-rate rule)
+  and a pass-through derivation error were both caught and documented. Companion to
+  Paper 5.
+- `mode_choice_welfare` — tests whether a welfare-optimal Mode (optimal dividend share
+  kappa_d) exists, backing Paper 1 Section 13.3 (Mode choice is a values question, not a
+  technical optimization). Using the architecture's own realizable returns (5.4% at the
+  floor-only split, 4.3% at Mode B's 60/40), the Model's MPC schedule, and the Federal
+  Reserve SHED liquidity-constrained share, the social-welfare function is monotonic in
+  kappa_d: there is no interior optimum. The dial trades immediate liquidity against
+  compounding ownership, bounded by the inflation ceiling; because no Mode is
+  welfare-optimal, the choice is properly a supermajority vote. Companion to Paper 1.
 
 These are first-round, partial-equilibrium bounds, not general-equilibrium results; the
 rent and demand-impulse mechanisms follow an approach developed in discussion with the
