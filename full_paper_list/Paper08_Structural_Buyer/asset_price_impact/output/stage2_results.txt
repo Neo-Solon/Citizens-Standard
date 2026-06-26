@@ -1,0 +1,31 @@
+========================================================================
+CONSISTENCY OF FLOOR PRICE-IMPACT WITH THE 4.26% ATTENUATED RETURN
+========================================================================
+  Historical real equity total return   ~ 6.5%
+  Paper 2 attenuated return (Mode B)      = 4.26%
+  Attenuation already taken               ~ 2.2pp
+
+  Floor's own valuation impulse (f x M) as an annual return headwind:
+                  multiplier M  impulse/yr   vs 2.2pp taken
+        order-unity (Bouchaud)        0.4%           within
+                    GK central        1.9%           within
+                       GK high        3.1%          EXCEEDS
+
+READING:
+  At order-unity (M=1) and GK-central (M=5), the floor's annual valuation
+  impulse (0.4-1.9%) is at or below the ~2.2pp
+  attenuation Paper 2 already took -- so the attenuated return is consistent
+  with, even conservative relative to, the floor's own price impact.
+  Only at the GK-HIGH multiplier (M=8, 3.1%) does the one-year
+  impulse exceed the attenuation -- but that is the impulse from a single
+  year's flow, not a permanent annual drag (the premium stabilises via
+  Paper 8's bounded fixed point), so it is an upper-corner caution, not a
+  standing contradiction.
+
+HONEST BOTTOM LINE: the 4.26% attenuation is broadly CONSISTENT with the
+floor's empirical price impact across most of the multiplier range. The
+inelastic-markets evidence (GK) pushes toward the conservative end of the
+return band (3.30-5.03) rather than refuting it; the high-M corner is a
+genuine caution worth stating, not a refutation. The buyback benchmark
+(floor flow ~1/4 of buyback flow the market already absorbs) is the main
+reason the impact is bounded in practice.
