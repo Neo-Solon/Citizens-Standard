@@ -116,16 +116,46 @@
 .sitenav a:hover{color:#e6e8eb;}
 .sitenav a[aria-current="page"]{color:var(--amber,#e6a93e);font-weight:700;}
 </style>
+<style>
+  /* ---- see-the-difference instrument (merged in) ---- */
+  .lead-q{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(1.5rem,1.1rem + 2.4vw,2.2rem);line-height:1.25;color:#fff;max-width:26ch;margin:10px 0 0;padding:46px 0 0;border-top:1px solid var(--line)}
+  .see-intro{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;color:var(--amber);margin:34px 0 14px}
+  .panel{margin:0 0 8px;background:var(--ink-soft);border:1px solid var(--line);border-radius:14px;padding:30px 28px}
+  .ctrl-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;gap:12px}
+  .ctrl-row .label{color:var(--dim)}
+  .ctrl-row .yrs{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.5rem;color:var(--text)}
+  .ctrl-row .yrs span{font-size:.95rem;color:var(--dim);font-weight:500}
+  .panel input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:6px;background:var(--lost);outline:none;margin:10px 0 4px}
+  .panel input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;border-radius:50%;background:var(--amber);cursor:pointer;border:3px solid transparent;box-shadow:0 2px 10px rgba(0,0,0,.4)}
+  .panel input[type=range]::-moz-range-thumb{width:26px;height:26px;border:none;border-radius:50%;background:var(--amber);cursor:pointer}
+  .panel input[type=range]:focus-visible{box-shadow:0 0 0 3px rgba(230,169,62,.4)}
+  .outcomes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0 6px}
+  .card{padding:20px 18px;border-radius:11px;border:1px solid var(--line)}
+  .card .label{margin-bottom:10px}
+  .card .val{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(2.2rem,1.4rem + 4vw,3.2rem);line-height:1}
+  .card .sub{font-family:"Bricolage Grotesque",sans-serif;font-weight:500;font-size:.86rem;color:var(--dim);margin-top:8px}
+  .card.today{background:rgba(60,72,85,.18)}
+  .card.today .label{color:var(--lost-text)} .card.today .val{color:var(--lost-text)}
+  .card.std{background:rgba(95,190,147,.14);border-color:rgba(95,190,147,.3)}
+  .card.std .label{color:var(--kept)} .card.std .val{color:var(--kept)}
+  .gap-note{font-family:"Bricolage Grotesque",sans-serif;font-weight:500;color:var(--dim);font-size:.98rem;text-align:center;margin-top:18px}
+  .gap-note b{color:var(--amber);font-weight:700}
+  .chart{margin-top:24px}
+  .chart svg{width:100%;height:auto;display:block;overflow:visible}
+  .axis{fill:var(--dim);font-family:"Bricolage Grotesque",sans-serif;font-weight:500;font-size:11px}
+  .rate{color:var(--dim);font-size:.9rem;font-family:"Bricolage Grotesque",sans-serif;font-weight:500;margin-top:18px;text-align:center}
+  @media (max-width:560px){.outcomes{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 <nav class="sitenav" aria-label="Site navigation">
   <div class="sitenav-inner">
     <a href="front_door.html" aria-current="page">Diagnosis</a>
-    <a href="simple_engine.html">See the difference</a>
     <a href="how_the_engine_works.html">How it works</a>
     <a href="Citizens_Standard_Engine.html">Engine</a>
     <a href="papers.html">Papers &amp; data</a>
     <a href="questions_and_answers.html">Q&amp;A</a>
+    <a href="methodology.html">Methodology</a>
   </div>
 </nav>
 
@@ -171,10 +201,59 @@
 </section>
 
 <div class="wrap">
+  <p class="lead-q">So there&rsquo;s really only one question worth asking: what if money were built so that a dollar saved stayed a dollar?</p>
+  <p class="see-intro">See the difference</p>
+  <div class="panel">
+    <div class="ctrl-row">
+      <span class="label">Years you hold it</span>
+      <span class="yrs"><span id="yrsVal">20</span> <span>years</span></span>
+    </div>
+    <input type="range" id="yrs" min="1" max="40" value="20" step="1" aria-label="Years you hold your dollar">
+
+    <div class="outcomes">
+      <div class="card today">
+        <div class="label">Today&rsquo;s money</div>
+        <div class="val" id="todayVal">55&cent;</div>
+        <div class="sub">what your dollar can still buy</div>
+      </div>
+      <div class="card std">
+        <div class="label">The Citizens Standard</div>
+        <div class="val">$1.00</div>
+        <div class="sub">a dollar stays a dollar</div>
+      </div>
+    </div>
+
+    <p class="gap-note">After <span id="gapYrs">20</span> years, inflation has quietly taken <b id="gapAmt">45&cent;</b> of every dollar you saved.</p>
+
+    <div class="chart">
+      <svg id="chart" viewBox="0 0 600 240" role="img" aria-label="A dollar's purchasing power over time: flat under the Citizens Standard, declining under today's money.">
+        <line x1="48" y1="200" x2="592" y2="200" stroke="#27313C" stroke-width="1"/>
+        <line x1="48" y1="40"  x2="48"  y2="200" stroke="#27313C" stroke-width="1"/>
+        <path id="gapArea" fill="rgba(230,169,62,.10)" stroke="none"/>
+        <path id="stdLine" fill="none" stroke="#5FBE93" stroke-width="3" stroke-linecap="round"/>
+        <path id="todayLine" fill="none" stroke="#8A95A1" stroke-width="3" stroke-linecap="round"/>
+        <circle id="todayDot" r="5" fill="#8A95A1"/>
+        <circle id="stdDot" r="5" fill="#5FBE93"/>
+        <text class="axis" x="44" y="44" text-anchor="end">$1</text>
+        <text class="axis" x="44" y="204" text-anchor="end">0</text>
+        <text class="axis" x="48" y="222" text-anchor="start">today</text>
+        <text class="axis" id="xEnd" x="592" y="222" text-anchor="end">20 yrs</text>
+      </svg>
+    </div>
+    <p class="rate">Figured at 3% inflation a year &mdash; close to the dollar&rsquo;s long-run average. You can change that, and everything else, in the full engine.</p>
+  </div>
+</div>
+
+<section class="wrap text">
+  <p>That gap isn&rsquo;t a forecast or an opinion. It&rsquo;s just arithmetic &mdash; what happens to money that loses a few percent of its value every year, for years on end. <strong>The longer you do the responsible thing and save, the more it takes.</strong></p>
+  <p>And holding its value is only the floor of what the Citizens Standard does. Under it, you&rsquo;d also receive a citizen dividend and a stable, built-in savings floor &mdash; money <em>on top</em> of what you put away yourself. That part is upstairs.</p>
+</section>
+
+<div class="wrap">
   <div class="door">
-    <p class="q">So there&rsquo;s really only one question worth asking: what if money were built so that a dollar saved stayed a dollar?</p>
-    <a class="cta" href="simple_engine.html">See how it can work <span class="arrow">&rarr;</span></a>
-    <p class="note">We&rsquo;ve worked out exactly how &mdash; the rules, the model, the stress tests, an engine you can run yourself. That part is for whenever you want to go deeper. You don&rsquo;t need any of it to see the problem. You already felt it.</p>
+    <p class="q">This is one dial out of many. Here&rsquo;s how the whole system actually works.</p>
+    <a class="cta" href="how_the_engine_works.html">How the engine works <span class="arrow">&rarr;</span></a>
+    <p class="note">A plain-language walk through all four channels &mdash; how each is calculated, why inflation falls out the back, and why every one can be set to zero. The full engine is one step further on.</p>
     <p class="note" style="margin-top:30px;padding-top:22px;border-top:1px solid var(--line);max-width:46ch;">This framework shares its diagnosis with another independent project, <a href="https://publiccashmoney.com" style="color:var(--amber);text-decoration:none;">Public Cash Money</a>. <span style="color:#D9D3C6;">Two architectures, one engine.</span></p>
   </div>
 </div>
@@ -195,6 +274,51 @@
   })();
 </script>
 
-<nav aria-label="Citizens Standard pages" style="max-width:980px;margin:56px auto 38px;padding:18px 24px 0;border-top:1px solid #27313C;display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;justify-content:center;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:.92rem;line-height:1.6;"> <a href="front_door.html" style="color:#9AA3AE;text-decoration:none;">Diagnosis</a> <a href="simple_engine.html" style="color:#9AA3AE;text-decoration:none;">See the difference</a> <a href="how_the_engine_works.html" style="color:#9AA3AE;text-decoration:none;">How it works</a> <a href="Citizens_Standard_Engine.html" style="color:#9AA3AE;text-decoration:none;">Engine</a> <a href="papers.html" style="color:#E6A93E;text-decoration:none;font-weight:600;">Papers &amp; data</a> <a href="questions_and_answers.html" style="color:#9AA3AE;text-decoration:none;">Q&amp;A</a> </nav>
+<script>
+  // See-the-difference slider: $1 held over N years, today's money vs the Standard.
+  (function(){
+    var RATE=0.03;
+    var L=48, Rr=592, T=40, Bm=200;
+    var slider=document.getElementById('yrs');
+    if(!slider) return;
+    var yrsVal=document.getElementById('yrsVal'), todayVal=document.getElementById('todayVal');
+    var gapYrs=document.getElementById('gapYrs'), gapAmt=document.getElementById('gapAmt'), xEnd=document.getElementById('xEnd');
+    var stdLine=document.getElementById('stdLine'), todayLine=document.getElementById('todayLine'), gapArea=document.getElementById('gapArea');
+    var todayDot=document.getElementById('todayDot'), stdDot=document.getElementById('stdDot');
+
+    function pp(y){ return 1/Math.pow(1+RATE,y); }
+    function cents(v){ return Math.round(v*100); }
+    function X(y,years){ return L + (Rr-L)*(y/years); }
+    function Y(v){ return Bm - (Bm-T)*v; }
+
+    function render(){
+      var years=+slider.value;
+      yrsVal.textContent=years;
+      var pv=pp(years);
+      todayVal.innerHTML = cents(pv)+'&cent;';
+      var lost=100-cents(pv);
+      gapYrs.textContent=years;
+      gapAmt.innerHTML=lost+'&cent;';
+      xEnd.textContent=years+' yrs';
+
+      var N=Math.max(2,years), todayPts=[], topPts=[];
+      for(var i=0;i<=N;i++){
+        var y=years*i/N, x=X(y,years);
+        todayPts.push(x+','+Y(pp(y)));
+        topPts.push(x+','+Y(1));
+      }
+      stdLine.setAttribute('d','M'+topPts.join(' L'));
+      todayLine.setAttribute('d','M'+todayPts.join(' L'));
+      gapArea.setAttribute('d','M'+topPts.join(' L')+' L'+todayPts.slice().reverse().join(' L')+' Z');
+      var ex=X(years,years);
+      todayDot.setAttribute('cx',ex); todayDot.setAttribute('cy',Y(pv));
+      stdDot.setAttribute('cx',ex);  stdDot.setAttribute('cy',Y(1));
+    }
+    slider.addEventListener('input',render);
+    render();
+  })();
+</script>
+
+<nav aria-label="Citizens Standard pages" style="max-width:980px;margin:56px auto 38px;padding:18px 24px 0;border-top:1px solid #27313C;display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;justify-content:center;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:.92rem;line-height:1.6;"> <a href="front_door.html" style="color:#9AA3AE;text-decoration:none;">Diagnosis</a> <a href="how_the_engine_works.html" style="color:#9AA3AE;text-decoration:none;">How it works</a> <a href="Citizens_Standard_Engine.html" style="color:#9AA3AE;text-decoration:none;">Engine</a> <a href="papers.html" style="color:#E6A93E;text-decoration:none;font-weight:600;">Papers &amp; data</a> <a href="questions_and_answers.html" style="color:#9AA3AE;text-decoration:none;">Q&amp;A</a> <a href="methodology.html" style="color:#9AA3AE;text-decoration:none;">Methodology</a> </nav>
 </body>
 </html>
