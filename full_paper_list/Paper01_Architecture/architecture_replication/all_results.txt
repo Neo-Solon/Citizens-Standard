@@ -1,0 +1,61 @@
+========================================================================
+THE CITIZENS STANDARD — PAPER 1 (ARCHITECTURE) REPRODUCTION
+========================================================================
+
+[1] CANONICAL LAUNCH INPUTS
+    Nominal GDP                 $30,762.1B   (~$30.8T)
+    M2 (FRED M2SL, Dec 2025)    $22,366.2B   ($22,366.2B)
+    Population                  341.8M
+    GDP per capita              $90,000
+    Real growth g_r             2.0%
+    Population growth g_p        0.5%
+    Horizon                     65 years
+    Realizable return (GE)      Mode A/C ~5.4%, Mode B ~4.3% central
+    Mode B return band          3.30% - 5.03%  (attenuated MPK, Paper 5 6.7)
+
+[2] LAUNCH-YEAR ISSUANCE CHANNELS
+    K1 per new citizen          $2,250   (2.5% x GDP/cap)
+    Mode B total issuance       $447.3B   (2.0% of M2)
+    Mode A envelope (17.5%xg_rxM2) $78.3B   (0.35% of M2)
+    Mode A K1 total / K2 residual $9.0B / $69.3B
+    Mode A total issuance        ~0.35% of M2  -> drift ~-1.7%
+    Mode C KI (3.65% of M2)     $816.4B   -> $199/citizen/mo
+    Mode B dividend (kappa_d=0.4)  $175.3B   -> $43/citizen/mo
+    Mode B structural-buyer flow into equity  $272.0B   = 0.39% of $69T market
+
+[3] STABLE FLOOR AT AGE 65, ON THE GE REALIZABLE RETURN  (real launch-year $)
+    Mode A (er 5.4%)            $235K
+    Mode B (er 4.3%, 60/40)     $421K   band $278K - $580K over 3.30%-5.03%
+    Mode C (er 5.4%)            $232K   (+ KI dividend -> lifetime in [4])
+
+[5] IMPLIED INFLATION BY MODE
+    Mode A ~ -1.65%  Mode B  0%   Mode C +2.0%
+
+========================================================================
+REGRESSION vs PAPER 1 PUBLISHED VALUES
+========================================================================
+    [PASS] K1 per new citizen = $2,250        got 2,250
+    [PASS] K1 total (gross citizens) ~ $9B    got 9,000,221,115
+    [PASS] Mode A envelope (17.5%) ~ $78B     got 78,281,700,000
+    [PASS] Mode A K2 residual ~ $69B          got 69,281,478,885
+    [PASS] Mode A total issuance ~ $78B       got 78,281,700,000
+    [PASS] Mode B total issuance = $447B      got 447,324,000,000
+    [PASS] Mode C KI = $816B                  got 816,366,300,000
+    [PASS] Mode A floor (GE 5.4%) ~ $233K     got 234,962
+    [PASS] Mode B floor (GE 4.3%, 60/40) ~ $413K got 421,215
+    [PASS] Mode C floor (GE 5.4%) ~ $230K     got 232,359
+    [PASS] Mode B band low (3.30%) ~ $277K    got 277,720
+    [PASS] Mode C cumulative KI ~ $262K       got 261,593
+    [PASS] Mode C lifetime ~ $492K            got 493,952
+    [PASS] Mode C dividend ~ $199/mo          got 199.0
+    [PASS] Mode B dividend ~ $43/mo (60/40)   got 42.7
+    [PASS] Mode B equity flow ~ $272B         got 271,994,488,446
+    [PASS] Mode B equity flow ~ 0.39% of mkt  got 0.4
+    [PASS] Mode Ω base-60 reference ~ $474K   got 473,467
+    [PASS] Mode Ω neg-pop reference ~ $736K   got 735,779
+    [PASS] Mode Ω prod-boom reference ~ $897K got 897,110
+    [PASS] Mode Ω normal drift ~ -0.80%       got -0.8
+    [PASS] Mode Ω neg-pop drift ~ -0.44%      got -0.4
+------------------------------------------------------------------------
+ALL CHECKS PASS
+========================================================================
