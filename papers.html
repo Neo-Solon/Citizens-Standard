@@ -81,7 +81,7 @@
 
   <h2>The series</h2>
   <p class="sub">Where a paper is on SSRN, the title links there and the PDF sits beside it; the rest open as PDFs here until they post. Each paper also has a <b>Data</b> link: a one-click download of the full package — the paper plus exactly the code and data behind it. Hover a row to see what it tests.</p>
-  <p class="actions"><a class="btn" href="papers.zip">Download all 14 papers (zip)</a> <a class="btn-ghost" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=11425448" target="_blank" rel="noopener">Browse on SSRN &#8599;</a></p>
+  <p class="actions"><a class="btn" href="papers.zip">Download all papers &amp; data (zip)</a> <a class="btn-ghost" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=11425448" target="_blank" rel="noopener">Browse on SSRN &#8599;</a></p>
   <ol class="papers">
     <li title="Reproduces the launch-year issuance channels, Mode A/B/C/D Stable Floors, implied inflation by mode, and the Mode C/D dividends."><span class="pt"><a class="ptitle" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6702518" target="_blank" rel="noopener">One Model, Many Systems: A Constitutional Monetary Architecture</a> <span class="pmeta">· 99 pp</span></span><span class="links"><a href="papers/01_Architecture.pdf">PDF</a> <a href="https://github.com/Neo-Solon/Citizens-Standard/raw/main/full_paper_list/Paper01_Architecture.zip">Data</a></span></li>
     <li title="The 1960–2055 historical counterfactual and the Tool 14 inflation episodes (2021–23 and the Great Inflation), on real BLS/FRED data."><span class="pt"><a class="ptitle" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6735078" target="_blank" rel="noopener">A Historical Counterfactual: Empirical Analysis, 1960&ndash;2055</a> <span class="pmeta">· 27 pp</span></span><span class="links"><a href="papers/02_Counterfactual.pdf">PDF</a> <a href="https://github.com/Neo-Solon/Citizens-Standard/raw/main/full_paper_list/Paper02_Counterfactual.zip">Data</a></span></li>
@@ -102,16 +102,19 @@
   <h2>Replication &amp; data</h2>
   <p class="sub">Built to be checked, not believed.</p>
   <div class="repbox">
-    <p style="margin-top:0;">Eleven self-contained packages, one per empirical paper, each on genuine data: BLS CPI, the SF Fed inflation decomposition, SSA Trustees data, the 2022 Survey of Consumer Finances microdata, the Alaska Permanent Fund, and FRED monetary series. Every figure and table in the papers can be regenerated from source.</p>
-    <p class="actions" style="margin-bottom:14px;"><a class="btn" href="replication.zip">Download the suite (zip)</a> <a class="btn-ghost" href="https://github.com/Neo-Solon/Citizens-Standard/tree/main/replication" target="_blank" rel="noopener">Browse each package on GitHub &#8599;</a></p>
+    <p style="margin-top:0;">Each empirical paper ships with a self-contained package on its <b>Data</b> link above, and the full set is in the download at the top. All run on genuine data: BLS CPI, the SF Fed inflation decomposition, SSA Trustees data, the 2022 Survey of Consumer Finances microdata, the Alaska Permanent Fund, and FRED monetary series. Every figure and table in the papers can be regenerated from source.</p>
+    <p class="actions" style="margin-bottom:14px;"><a class="btn-ghost" href="https://github.com/Neo-Solon/Citizens-Standard/tree/main/full_paper_list" target="_blank" rel="noopener">Browse each package on GitHub &#8599;</a></p>
     <p class="sub" style="margin:14px 0 6px;">Each package runs the same way:</p>
     <pre>pip install -r requirements.txt
 python run_all.py</pre>
   </div>
 
-  <p style="margin-top:40px;"><a href="front_door.html">&larr; Back to the front door</a></p>
+  <nav class="prevnext" aria-label="Previous and next page" style="display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:40px;padding-top:18px;border-top:1px solid #1b2530;font-size:.95rem;">
+    <a href="Citizens_Standard_Engine.html" style="color:var(--amber,#e6a93e);text-decoration:none;">&larr; Engine</a>
+    <a href="questions_and_answers.html" style="color:var(--amber,#e6a93e);text-decoration:none;">Q&amp;A &rarr;</a>
+  </nav>
 </main>
 
-<nav class="kit" aria-label="Citizens Standard pages"> <a href="front_door.html">Diagnosis</a> <a href="simple_engine.html">See the difference</a> <a href="how_the_engine_works.html">How it works</a> <a href="Citizens_Standard_Engine.html">Engine</a> <a href="questions_and_answers.html">Q&amp;A</a> <a class="ssrn" href="papers.html">Papers &amp; data</a> </nav>
+<nav class="kit" aria-label="Citizens Standard pages"> <a href="front_door.html">Diagnosis</a> <a href="simple_engine.html">See the difference</a> <a href="how_the_engine_works.html">How it works</a> <a href="Citizens_Standard_Engine.html">Engine</a> <a class="ssrn" href="papers.html">Papers &amp; data</a> <a href="questions_and_answers.html">Q&amp;A</a> </nav>
 </body>
 </html>
