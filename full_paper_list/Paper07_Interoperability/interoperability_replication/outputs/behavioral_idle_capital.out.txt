@@ -1,0 +1,18 @@
+ALLOCATIONS:
+  A baseline (pi=0)               : cash 0.139  spec 0.377  prod 0.484
+  B inflation 3% (hedged, real)   : cash 0.035  spec 0.423  prod 0.543
+  B0 inflation 3% (NO hedge)      : cash 0.052  spec 0.140  prod 0.808
+  C zero + targeted idle-cost     : cash 0.052  spec 0.140  prod 0.808
+
+PRODUCTIVE share:  baseline 0.484
+  inflation, hedges exist  -> 0.543  (+5.8 pts)  <- the realistic case
+  inflation, NO hedge      -> 0.808  (+32.4 pts)  <- Davide's mechanism works here
+  targeted carrying cost   -> 0.808  (+32.4 pts)  <- works regardless of hedges
+
+Where does capital fleeing cash go under inflation (hedged)? spec +4.6 pts vs prod +5.8 pts  -> much of it goes to the speculative hedge.
+
+INCIDENCE (share of own wealth taxed per year):
+  inflation:  saver 2.10%   rentier 0.30%   -> REGRESSIVE (saver pays 7.0x the rate)
+  targeted :  saver 0.60%   rentier 1.50%   -> PROGRESSIVE (rentier pays 2.5x the rate)
+
+saved behavioral_idle_capital.png
