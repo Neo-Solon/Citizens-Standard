@@ -1,0 +1,78 @@
+
+##############################################################################
+# TOOL 14 vs. REAL INFLATIONS -- structural counterfactual
+# Actual = BLS CPI-U. 2022 demand share = SF Fed (Shapiro) monthly data.
+# Counterfactual under mechanical triggers; not a forecast.
+##############################################################################
+
+==============================================================================
+EPISODE 2022  (Jan 2021 + 36 mo)   actual peak 9.1%  [Jun 2022]   share: SF Fed monthly decomposition
+==============================================================================
+
+PREVENTION (managed-throughout) -- central:
+  peak: structural 6.0%  ->  +Tool14 4.6%   (vs actual 9.1%)
+  months above 4%: framework 9  vs actual 25
+  months-above-threshold sweep (framework vs actual BLS CPI-U):
+      above 3.0%:  framework 19  vs actual 32   (+13 mo fewer under the framework)
+      above 3.5%:  framework 16  vs actual 28   (+12 mo fewer under the framework)
+      above 4.0%:  framework  9  vs actual 25   (+16 mo fewer under the framework)
+      above 4.5%:  framework  2  vs actual 24   (+22 mo fewer under the framework)
+      above 5.0%:  framework  0  vs actual 21   (+21 mo fewer under the framework)
+  Tool 14: active 9 mo, ~$504B retired (<=3% M2/yr, 2.2pp/yr cap)
+  prevention-peak band: 4.1% - 4.6%
+      demand-only  -> peak 4.6%
+      demand+½amb  -> peak 4.3%
+      demand+amb   -> peak 4.1%
+
+RESPONSE (drop-in; Tool 14 capacity only) -- the honest, slower path:
+  from the realized 9.1% peak, Tool 14 at ~2.2pp/yr
+  reaches 5.8% by the end of the window, vs actual 3.4%.
+  -> Tool 14 ALONE is SLOWER than the rate shock was. Its value is no
+     rate channel, not speed. (Conservative: ignores halting old-system
+     accommodation, which would help.)
+
+CONVENTIONAL CURE (what actually happened):
+  policy rate 0.1% -> 5.3% (7 hikes; first only after CPI passed 8%)
+  real cost   30-yr mortgage 3.2% -> 7.1% (Freddie Mac PMMS, 2022)
+
+==============================================================================
+EPISODE 1980  (Jan 1972 + 138 mo)   actual peak 14.8%  [Mar 1980]   share: Fed monetary attribution (no SF Fed series pre-1998)
+==============================================================================
+
+PREVENTION (managed-throughout) -- central:
+  peak: structural 5.1%  ->  +Tool14 4.0%   (vs actual 14.8%)
+  months above 4%: framework 0  vs actual 117
+  months-above-threshold sweep (framework vs actual BLS CPI-U):
+      above 3.0%:  framework 44  vs actual 134   (+90 mo fewer under the framework)
+      above 3.5%:  framework 26  vs actual 124   (+98 mo fewer under the framework)
+      above 4.0%:  framework  0  vs actual 117   (+117 mo fewer under the framework)
+      above 4.5%:  framework  0  vs actual 117   (+117 mo fewer under the framework)
+      above 5.0%:  framework  0  vs actual 112   (+112 mo fewer under the framework)
+  Tool 14: active 7 mo, ~$392B retired (<=3% M2/yr, 2.2pp/yr cap)
+  prevention-peak band: 3.8% - 4.1%
+      low          -> peak 4.1%
+      central      -> peak 4.0%
+      high         -> peak 3.8%
+
+RESPONSE (drop-in; Tool 14 capacity only) -- the honest, slower path:
+  from the realized 14.8% peak, Tool 14 at ~2.2pp/yr
+  reaches 7.7% by the end of the window, vs actual 2.6%.
+  -> Tool 14 ALONE is SLOWER than the rate shock was. Its value is no
+     rate channel, not speed. (Conservative: ignores halting old-system
+     accommodation, which would help.)
+
+CONVENTIONAL CURE (what actually happened):
+  policy rate ~19% (Fed funds peak, Jun 1981)
+  real cost   10.8% unemployment (BLS, Nov-Dec 1982)
+  sacrifice ratio ~2.5 unemployment-pt-yrs/pt
+
+==============================================================================
+WHAT THE FRAMEWORK ACTUALLY BUYS (honest, after data-grounding):
+  1. PREVENTION is primary -- a far lower peak, because rule-bound
+     issuance never creates the demand component (the structural
+     baseline does most of the work; Tool 14 is a secondary shave).
+  2. NO RATE CHANNEL -- disinflation without the mortgage shock (2022)
+     or the 10.8% unemployment recession (1980).
+  NOT a claim: faster disinflation. Tool 14 (~2.2pp/yr) is slower than
+  an aggressive rate shock; the trade is no collateral damage.
+==============================================================================
