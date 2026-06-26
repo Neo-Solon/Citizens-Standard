@@ -10,12 +10,12 @@ You don't need any of it to see the problem. You already felt it.
 
 | Page | What it is |
 |---|---|
-| **[Diagnosis](https://neo-solon.github.io/Citizens-Standard/front_door.html)** | The diagnosis on one page. No mechanism, no jargon. |
-| **[See the difference](https://neo-solon.github.io/Citizens-Standard/simple_engine.html)** | The fix made tangible: one slider, one outcome — a dollar that holds its value versus one that doesn't. |
+| **[Diagnosis](https://neo-solon.github.io/Citizens-Standard/front_door.html)** | The diagnosis on one page, with the fix made tangible right there: one slider, one outcome, a dollar that holds its value versus one that doesn't. No mechanism, no jargon. |
 | **[How it works](https://neo-solon.github.io/Citizens-Standard/how_the_engine_works.html)** | The mechanism in plain language: the four channels, and why inflation is an output rather than a dial. |
 | **[Engine](https://neo-solon.github.io/Citizens-Standard/Citizens_Standard_Engine.html)** | Every lever, every mode. Inflation is derived from your settings, never assumed. Includes a comparison against alternative monetary systems and embedded stress tests. |
 | **[Papers &amp; data](https://neo-solon.github.io/Citizens-Standard/papers.html)** | All fourteen papers, free to read, the three on SSRN linked there, plus the full replication suite. |
 | **[Q&amp;A](https://neo-solon.github.io/Citizens-Standard/questions_and_answers.html)** | The questions a skeptic asks — the money-printing fear, who controls it, hasn't this been tried, would anyone still work — answered plainly. |
+| **[Methodology](https://neo-solon.github.io/Citizens-Standard/methodology.html)** | How to check it: every load-bearing claim mapped to the script that backs it, what the stress tests confirmed, and the handful of places the data made us qualify a claim. |
 
 Every page is a single self-contained `.html` file that opens in any browser, and each links to the next — so the Diagnosis page alone is enough to reach everything.
 
