@@ -8,6 +8,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS = ["verify_proposition_3.py", "verify_proposition_3prime.py",
            "verify_proposition_4.py", "verify_proposition_5.py", "verify_proposition_6.py", "verify_proposition_7.py", "verify_proposition_8.py", "verify_proposition_9.py",
+           "verify_realizable_return.py",
            "recompute_illustrations.py", "make_figure.py",
            "make_determinacy_figure.py", "make_labor_figure.py", "make_delay_figure.py", "make_irf_figure.py", "make_forward_figure.py", "make_welfare_figure.py", "make_banking_figure.py"]
 
