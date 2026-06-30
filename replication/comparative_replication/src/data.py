@@ -183,7 +183,7 @@ CITIZENS_STANDARD = {
                              "ratio", "CS-EMPIRICAL", "Neo-Solon 2026b, Paper 2"),
     # annual dividend, per person, by mode
     "dividend_modeB_usd_yr": Figure(516.0, "USD/yr", "CS-ARCH", "$42.7/mo, Mode B 60/40"),
-    "dividend_modeC_usd_yr": Figure(2388.0, "USD/yr", "CS-ARCH", "$199/mo, Mode C"),
+    "dividend_modeC_usd_yr": Figure(1293.0, "USD/yr", "CS-ARCH", "$108/mo, Mode C (KI $443B/342M, 1.98% of M2)"),
     # the honest vulnerability (named in the paper's Claim 4)
     "capture": Figure("issuance base disappears in contraction; procyclical dividend halts in downturns",
                      "category", "CS-CRISIS",

@@ -10,6 +10,11 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
+import os
+# Write figures into this package's figures/ dir regardless of the working directory
+# the script is launched from (prevents stray copies leaking to the replication root).
+FIGDIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "figures")
+os.makedirs(FIGDIR, exist_ok=True)
 
 rcParams.update({
     "font.family": "DejaVu Sans",
@@ -63,7 +68,7 @@ ax[1].spines[["top", "right"]].set_visible(False)
 panel_label(ax[1], "(b)")
 
 fig.tight_layout()
-fig.savefig("figure1.png")
+fig.savefig(os.path.join(FIGDIR, "figure1.png"))
 plt.close(fig)
 
 # ============================ FIGURE 2 ============================
@@ -103,7 +108,7 @@ ax[1].spines[["top", "right"]].set_visible(False)
 panel_label(ax[1], "(b)")
 
 fig.tight_layout()
-fig.savefig("figure2.png")
+fig.savefig(os.path.join(FIGDIR, "figure2.png"))
 plt.close(fig)
 
 # ============================ FIGURE 3 ============================
@@ -119,12 +124,12 @@ ax.axhspan(0, TERM_SHARE, color=GREEN, alpha=0.06)
 ax.annotate("reserved transaction layer\ncannot be run", (1, 0.30), fontsize=7.6, ha="center", color="#1d5c39")
 ax.spines[["top", "right"]].set_visible(False)
 fig.tight_layout()
-fig.savefig("figure3.png")
+fig.savefig(os.path.join(FIGDIR, "figure3.png"))
 plt.close(fig)
 
 # report dimensions for embedding
 from PIL import Image
 for f in ("figure1.png", "figure2.png", "figure3.png"):
-    w, h = Image.open(f).size
+    w, h = Image.open(os.path.join(FIGDIR, f)).size
     print(f"{f}: {w}x{h}  aspect {w/h:.3f}")
 print("done")

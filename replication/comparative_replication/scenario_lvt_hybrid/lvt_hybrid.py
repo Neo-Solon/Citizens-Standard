@@ -23,7 +23,7 @@ Sources for inputs:
   - Land discount yield i ~5% (Baa-based, per Barker); current Baa ~6%; carried as a 4-6% assumption.
   - Real-estate sector ~2.5-3% of the broad US equity index (S&P DJI / GICS, 2026).
   - Real estate loans ~$5.76T of ~$12.5T total US bank loans = ~45% (FRED H.8, REALLN, Dec 2025).
-  - CS monetary dividend $516-$2,388/person/yr; locked wealth floor $233k-$413k/person (Paper 13, verified).
+  - CS monetary dividend $516-$1,293/person/yr; locked wealth floor $233k-$413k/person (Paper 13, verified).
   - CS buys a broad equity index in Modes A/B/C (build floors); Mode D (k_d=100%) buys NO index
     (engine presets; macro paper "buys no equity at all, A*=0"). Verified.
 """
@@ -38,7 +38,7 @@ INK="#10161C"; AMBER="#E6A93E"; TEAL="#3FAE92"; DIM="#9AA3AE"; LAND="#8C6E4A"; R
 # ---- shared anchors ----
 POP=335e6; GDP=29.0e12; PI=24.0e12
 i=0.05; LANDV0=48e12; R=i*LANDV0                 # internally-consistent fundamental rent ~ $2.4T (~8.3% GDP)
-CS_div_lo, CS_div_hi = 516, 2388
+CS_div_lo, CS_div_hi = 516, 1293
 CS_floor_lo, CS_floor_hi = 233000, 413000
 
 def banner(t): print("\n"+"="*72+"\n"+t+"\n"+"="*72)

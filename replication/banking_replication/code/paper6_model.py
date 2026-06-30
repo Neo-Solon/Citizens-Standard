@@ -28,6 +28,9 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import os
+_FIGDIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "figures")
+os.makedirs(_FIGDIR, exist_ok=True)
 
 # ----------------------------------------------------------------------------
 # ANCHORS
@@ -209,5 +212,5 @@ ax[3].text(0,1.02,"~100%",ha='center',fontsize=8); ax[3].text(1,max_contraction_
 
 fig.suptitle("Reworked Paper 6 -- Full-Reserve Banking in the Two-Circuit System (illustrative on verified anchors)", fontsize=11)
 fig.tight_layout(rect=[0,0,1,0.95])
-fig.savefig("paper6_figures.png", dpi=130)
-print("\n[figures saved: paper6_figures.png]")
+fig.savefig(os.path.join(_FIGDIR, "paper6_figures.png"), dpi=130)
+print("\n[figures saved: figures/paper6_figures.png]")
