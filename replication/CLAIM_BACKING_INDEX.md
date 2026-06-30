@@ -37,7 +37,7 @@ Paths are relative to `front_door_kit/replication/`.
 ## Paper 3 — Transition
 | Claim | Backing | Type |
 |---|---|---|
-| Debt-to-GDP 102% → 39% (Y30) → 15% (Y45) via Mode T | `transition_replication/code/appendix_A2_debt_trajectory.py` (paper's path) **and** `distribution_inequality_replication/transition_debt_path/` (tests it on current fiscal data) | Verification + stress-test |
+| Debt-to-GDP 102% → 58% (Y20) → stabilises in the 30-60% operational band (central ~45%, ~Y26) via Mode T | `transition_replication/code/appendix_A2_debt_trajectory.py` (paper's path) **and** `distribution_inequality_replication/transition_debt_path/` (tests it on current fiscal data); endpoint set by `transition_replication/cs_debt_band/` welfare analysis | Verification + stress-test |
 | — finding: timeline is optimistic-leaning; reduction is driven by nominal-GDP growth, KT an assist | `transition_debt_path/` (stages 1–2) | Stress-test (qualifies) |
 | Phase milestones / 5-phase architecture | `transition_replication/code/phase_milestones.py` | Verification |
 | Stable Floor ~95% from equity compounding | `empirical_replication/` (transition lifetime) | Verification |

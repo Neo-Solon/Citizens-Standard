@@ -24,9 +24,9 @@ replication/
 
 | Subfolder | Paper | Reproduces | Primary data |
 |---|---|---|---|
-| architecture_replication | 1 | channel mechanics, base modes, Stable Floors | FRED, BLS, BEA |
+| architecture_replication | 1 | channel mechanics, base modes, Stable Floors; **+ `demurrage/`: the Mode-A velocity backstop (Section 4.5)** | FRED, BLS, BEA |
 | empirical_replication | 2 | the 1960–2055 historical counterfactual; **+ `tool14_inflation/` appendix: Tool 14 vs the 2022 & 1972–1983 inflations** | FRED, Census, Damodaran; BLS CPI + SF Fed |
-| transition_replication | 3 | transition and debt trajectories | FRED, CBO |
+| transition_replication | 3 | transition and debt trajectories; **+ `cs_debt_band/`: the stochastic DSA behind the 30-60% band endpoint** | FRED, CBO |
 | macro_replication | 5 | the two-circuit macro model | FRED, BEA |
 | banking_replication | 6 | full-reserve banking figures | FRED |
 | interoperability_replication | 7 | external-anchor mechanics | FRED, IMF |
@@ -107,13 +107,12 @@ across cited literature ranges. All five run as step 4 of
   on displacement: the defense is growth-matching (capping the quantity) plus
   floor-weighting (keeping most issuance out of the goods circuit). Companion to
   Paper 5 section 3.8.
-- `transition_debt_path` — tests Paper 3's debt-retirement timeline (102% -> 39% by
-  Year 30 -> 15% by Year 45) on current fiscal data. Finds it reachable but
-  optimistic-leaning (the milestones need near-maximal KT share or high-end growth;
-  central assumptions give ~Year 40 for 39%), and that the reduction is driven
-  mainly by nominal growth expanding the denominator rather than by KT retiring
-  principal — i.e. the system grows out of the debt, with KT an assist. Companion
-  to Paper 3.
+- `transition_debt_path` — tests Paper 3's debt-retirement timeline (102% -> 84% by
+  Year 10 -> 58% by Year 20 -> stabilising in the 30-60% operational band, central
+  path ~45% by ~Year 26) on current fiscal data. The descent is driven mainly by
+  nominal growth expanding the denominator, with KT (~1.5% of M2) an assist that
+  guarantees no new borrowing; the endpoint is the welfare-optimal band of the
+  cs_debt_band analysis, not a low floor. Cumulative KT ~$12T. Companion to Paper 3.
 - `structural_buyer_endgame` — tests Paper 8's ownership-plateau claim (Proposition
   4): that cohort decumulation bounds the floor's equity share rather than letting it
   rise toward one. Largely confirms it — ownership plateaus in every case, the

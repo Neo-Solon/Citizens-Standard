@@ -1,0 +1,70 @@
+PART 1 -- velocity under Mode A deflation (relative to price-stable baseline=1.00)
+
+  semi-elasticity eta=0.5 (Lucas 2000 baseline; range 0.3-0.6)
+
+    deflation pi  velocity index  velocity drop
+          +0.0%           1.000          +0.0%
+          -1.0%           0.995          -0.5%
+          -1.9%           0.991          -0.9%
+          -3.0%           0.985          -1.5%
+
+  Reading: at Mode A's ~-1.9%, velocity sits ~1% below the price-stable baseline on
+  the central elasticity. That is SMALL and matches Atkeson-Kehoe: mild productivity
+  deflation does not, by itself, trigger a hoarding spiral. The case for demurrage is
+  NOT the steady mild-deflation state; it is the CONDITIONAL tail where deflation
+  expectations deepen or a confidence shock drops velocity further.
+
+PART 2 -- demurrage delta that neutralises the hoarding reward
+
+  Demurrage adds a carrying cost that offsets the -pi reward on idle cash.
+  Setting delta = -pi zeroes the net carry and restores velocity to baseline.
+
+    deflation pi  delta to neutralise  velocity restored to
+          -1.0%               1.0%               1.000
+          -1.9%               1.9%               1.000
+          -3.0%               3.0%               1.000
+
+  So the required demurrage is modest: ~1.9%/yr to exactly offset Mode A's deflation,
+  far below Worgl's 12% or Chiemgauer's 8%. Revenue recycled equally per-capita makes
+  it net-neutral on average (no money created/destroyed, price path preserved); only
+  the relative incentive bites -- above-average hoarders pay, fast-spenders gain.
+PART 3 -- leakage cap: how hard can delta be pushed before money flees?
+
+  Demurrage is evaded by switching to untaxed liquid stores (Keynes). The usable
+  rate is bounded by the liquidity value of staying in transactional money.
+  - Floors are LOCKED (can't dump money there), removing the easiest escape, but
+    assets/foreign/crypto remain. Worgl/Chiemgauer sustained 8-12% only because
+    the scrip was the ONLY local means of payment + tax-receivable (high captive
+    demand). A national CS would have more escape routes -> lower ceiling.
+  - Practical safe band: delta up to ~the transactional liquidity premium
+    (order a few %), comfortably above the ~1.9% needed to offset Mode A. The
+    offset rate sits INSIDE the leakage-safe zone; pushing far beyond it (Worgl-
+    scale) would drive flight, not circulation, at national scale.
+
+PART 4 -- conditional design (the honest recommendation)
+
+  Demurrage should ARM only when velocity falls below a threshold, not run by
+  default (Atkeson-Kehoe: the benign state needs no intervention; intervening
+  there would just impose a deadweight carrying cost).
+  Trigger: arm if velocity index < 0.95 (>5% below baseline).
+   pi=-1.9%: velocity 0.991 -> dormant (benign)
+   pi=-4.0%: velocity 0.980 -> dormant (benign)
+   pi=-6.0%: velocity 0.970 -> dormant (benign)
+
+  RECOMMENDATION:
+  - Mode A (and any mild-deflation config) carries demurrage as a DORMANT, conditional
+    tool, armed only if velocity drops materially (e.g. >5% below baseline) signalling
+    the benign deflation is tipping into hoarding.
+  - When armed, delta ~ -pi (a couple %), revenue recycled equally per-capita, applied
+    to the TRANSACTIONAL circuit ONLY (Floors exempt, as with reverse-KT).
+  - This is the ONE failure mode KI cannot address (KI would issue money and destroy
+    the intended deflation); demurrage decouples the price path from the hoarding
+    incentive, which no other CS lever does.
+  HONEST RESIDUALS:
+  - The velocity-elasticity (eta) and the leakage ceiling are the two soft numbers;
+    both are bounded by data (eta 0.3-0.6; Worgl/Chiemgauer show 8-12% is sustainable
+    only with captive demand) but neither is sharp at national scale.
+  - True Gesell demurrage (face-value decay) bites harder than a constant-face 'negative
+    interest' version, which holders can still hoard through; design must specify which.
+  - Demurrage's gain is velocity, NOT new purchasing power; it cannot substitute for
+    KI in a genuine demand collapse where you need more money, not just faster money.

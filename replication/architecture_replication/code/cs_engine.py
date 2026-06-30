@@ -9,7 +9,7 @@ NC = 0.011703
 PRESETS = {
  'A': dict(k1=.025, k2=.175, k3=0,  ki=0),
  'B': dict(k1=.025, k2=1.0,  k3=0,  ki=0),
- 'C': dict(k1=.025, k2=.175, k3=0,  ki=.0365),
+ 'C': dict(k1=.025, k2=.175, k3=0,  ki=.0198),
 }
 def derive_cpi(p):
     # Inflation is DERIVED, not rounded/dialed: it equals the total issuance rate minus
@@ -57,3 +57,16 @@ if __name__=="__main__":
     # cumulative KI real for Mode C
     c=simulate('C'); kiCum=sum(y['kiReal'] for y in c)
     print(f"Mode C cumulative KI real: ${kiCum/1e3:.0f}K ; C lifetime = ${(c[-1]['floorReal']+kiCum)/1e3:.0f}K")
+
+# --- Correct headline CPI targets via the two-circuit model (Macro Paper 3.2) ---
+# Reported separately from derive_cpi (which serves real-value compounding). Consumer
+# prices move with TRANSACTIONAL-circuit money growth vs real growth: K1/K2 reach M^T
+# only as a bounded ~0.14%-of-M^T spillover; KI issues directly into M^T (rate stated
+# as 3.85% of M^T = 1.98% of M2); K3 is growth-matched (neutral); full-rate K2 = 0 drift.
+def cpi_target(p, MT_over_M2=0.514, spillover_MT=0.0014):
+    if p['k2'] >= 1.0 and p['ki'] == 0:
+        return 0.0
+    ki_MT = p['ki']/MT_over_M2 if p['ki'] else 0.0
+    return spillover_MT + ki_MT - RG
+if __name__ == "__main__":
+    print("CPI targets (two-circuit):", {m: round(cpi_target(PRESETS[m])*100,2) for m in 'ABC'})

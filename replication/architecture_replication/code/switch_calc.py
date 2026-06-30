@@ -5,7 +5,7 @@ M2_0,GDP_0,POP_0,RG,PG,HZ,NC = E.M2_0,E.GDP_0,E.POP_0,E.RG,E.PG,E.HZ,E.NC
 GE = {
  'A': dict(k1=.025,k2=.175,k3=0,   ki=0,     er=0.054),
  'B': dict(k1=.025,k2=1.0, k3=0.40, ki=0,     er=0.043),
- 'C': dict(k1=.025,k2=.175,k3=0,   ki=.0365, er=0.054),
+ 'C': dict(k1=.025,k2=.175,k3=0,   ki=.0198, er=0.054),
 }
 def cpi_of(p): return max(p['k1']*(GDP_0/M2_0)*NC, p['k2']*RG)+p['ki']-RG
 def lifetime(schedule):

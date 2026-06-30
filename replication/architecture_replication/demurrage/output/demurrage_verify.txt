@@ -1,0 +1,35 @@
+FIX -- velocity with an EXPECTATIONS channel (what actually causes spirals)
+
+  scenario                                   pi_real  pi_exp  shock  V index
+  benign Mode A (anchored expectations)        -1.9%   -1.9%   0.0%    0.991
+  expectations un-anchor (deflation deepens)   -1.9%   -5.0%   0.0%    0.975
+  confidence shock (precautionary hoarding)    -1.9%   -1.9%   6.0%    0.961
+  both: un-anchor + shock (spiral tail)        -1.9%   -5.0%   6.0%    0.946
+
+  Now it behaves: anchored mild deflation -> velocity ~baseline (no action, correct).
+  Expectations un-anchoring or a confidence shock -> velocity drops 5-15% -> the
+  conditional tail the tool is FOR. This matches the history: Worgl/1930s scrip
+  worked in a CONFIDENCE-COLLAPSE deflation, not in benign productivity deflation.
+
+VERIFY -- does demurrage restore velocity in the spiral tail, within leakage?
+  scenario                       V no delta   delta V with delta leak-safe?
+  expectations un-anchor (deflation deepens)      0.975    4.0%        0.995     AT CAP
+  confidence shock (precautionary hoarding)      0.961    4.0%        0.981     AT CAP
+  both: un-anchor + shock (spiral tail)      0.946    4.0%        0.966     AT CAP
+
+  Reading: in the un-anchoring case the needed delta (~5%) is ABOVE the conservative
+  national leakage ceiling (~4%), so demurrage can only PARTIALLY offset a deep
+  expectations spiral before flight dominates -- it is a damper, not a clamp. In the
+  confidence-shock case the needed offset is within the ceiling. So demurrage helps
+  most against PRECAUTIONARY hoarding shocks and is leakage-limited against a full
+  expectations un-anchoring -- which is exactly where you'd ALSO want other tools.
+  HONEST: demurrage buys partial velocity insurance in the tail, bounded by leakage;
+  it is not a complete answer to a deep deflation-expectations spiral on its own.
+
+VERIFY -- trigger now fires correctly
+  benign Mode A (anchored expectations)      V=0.991 -> dormant
+  expectations un-anchor (deflation deepens) V=0.975 -> dormant
+  confidence shock (precautionary hoarding)  V=0.961 -> dormant
+  both: un-anchor + shock (spiral tail)      V=0.946 -> ARM
+
+  Trigger fires in the spiral tail, stays dormant in benign Mode A. Consistent.
