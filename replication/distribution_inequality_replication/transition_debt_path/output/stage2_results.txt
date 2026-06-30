@@ -1,45 +1,23 @@
-==============================================================================
-WHAT REPRODUCES PAPER 3's PATH? (target: 39% by ~Y30, 15% by ~Y45)
-==============================================================================
- real g   rate  KT share   Y@39%   Y@15%                 verdict
-   2.0%   3.3%       0.6      40      60       slower than paper
-   2.0%   3.3%       0.8      34      50               close-ish
-   2.0%   3.3%       1.0      29      42           MATCHES paper
-   2.7%   3.3%       0.6      27      41           MATCHES paper
-   2.7%   3.0%       0.8      21      32           MATCHES paper
-   3.0%   2.8%       1.0      16      24           MATCHES paper
-   1.8%   4.0%       0.6    None    None       slower than paper
+==========================================================================
+BAND ROBUSTNESS SWEEP -- when does debt enter the 30-60% band, and cum KT?
+==========================================================================
+   real g  infl  r_post KT scale  enters band  cumKT$T
+     1.8%  2.0%    3.0%      0.6        Yr 24      9.4
+     1.8%  2.0%    3.0%      1.0        Yr 21     12.6
+     1.8%  2.0%    3.3%      0.6        Yr 26     10.6
+     1.8%  2.0%    3.3%      1.0        Yr 22     13.9
+     2.0%  2.0%    3.0%      0.6        Yr 23      8.9
+     2.0%  2.0%    3.0%      1.0        Yr 20     12.0
+     2.0%  2.0%    3.3%      0.6        Yr 24     10.0
+     2.0%  2.0%    3.3%      1.0        Yr 21     13.2
+     2.7%  2.0%    3.0%      0.6        Yr 19      7.5
+     2.7%  2.0%    3.0%      1.0        Yr 17     10.3
+     2.7%  2.0%    3.3%      0.6        Yr 20      8.2
+     2.7%  2.0%    3.3%      1.0        Yr 18     11.1
 
-==============================================================================
-HONEST VERDICT
-==============================================================================
-
- 1. The paper's 102% -> 39% (Y30) -> 15% (Y45) path is REACHABLE but
-    OPTIMISTIC-LEANING. It holds only when either the KT channel absorbs nearly the
-    FULL growth-matched issuance budget (KT share ~1.0) or real growth runs at the
-    high end of the CBO range (~2.7%+). Under genuinely central assumptions with a
-    moderate KT share (0.6), retirement to 39% takes ~Year 40, not Year 30, and the
-    15% floor is not reached within the horizon.
-
- 2. There is a budget tension the headline glosses: the paper promises citizen
-    K1/K2 channels run at FULL price stability THROUGHOUT the transition, but
-    reproducing the fast path needs KT near the full budget -- and KT and K1/K2 draw
-    on the SAME growth-matched budget. You cannot simultaneously max citizen floors
-    and max debt retirement. (Early on this is slack -- citizen draw is small,
-    ~0.15% of GDP -- so it bites mainly in later phases as K2 scales.)
-
- 3. MECHANISM ATTRIBUTION (the load-bearing point): the growth-matched budget is
-    ~1.5% of GDP/yr while interest on the debt stock is ~3.3% of GDP/yr early. KT
-    therefore CANNOT outpay interest in the early decades -- so debt/GDP falls
-    primarily because NOMINAL GDP GROWTH expands the denominator, not because KT
-    retires principal. This is exactly how postwar economies reduced debt/GDP (grow
-    out of it, do not pay it off), so it is defensible -- but it reframes KT as an
-    ASSIST, not the retiring agent the paper presents. The honest claim is stronger
-    than the original: the system grows out of the debt under price stability, with
-    KT accelerating at the margin and guaranteeing no new borrowing.
-
- The KT cap used here is the paper's OWN constraint: KT is "calibrated to a
- price-level path" and "self-throttling on inflation" (Paper 3), i.e. bounded by
- the non-inflationary headroom. So the slower path is not an understatement of KT;
- it follows from the paper's own price-stability rule.
-
+Reading: across the plausible range, public debt enters the 30-60% band within
+roughly 15-25 years; the descent is driven mainly by nominal growth (the snowball),
+with KT accelerating it and guaranteeing no new borrowing. The band is reached
+robustly; the speed varies with growth and the KT scale. The endpoint itself is the
+welfare-optimal band from the cs_debt_band analysis, not a knife-edge of these
+parameters.

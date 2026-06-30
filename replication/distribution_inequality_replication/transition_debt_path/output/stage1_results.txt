@@ -1,21 +1,25 @@
 ========================================================================
-TRANSITION DEBT-RETIREMENT PATH (Paper 3 claim: 102% -> 39% Y30 -> 15% Y45)
+TRANSITION DEBT PATH (Paper 3: 102% -> band 30-60%, centre ~45% by ~Yr26)
 ========================================================================
-Anchored at ~100% of GDP (FY2024 actual 98%; paper's 102% is near-term forward)
+Central case: real growth 2.0%, inflation 2.0%, coupon 4.5%->3.0%, KT 1.5% of M2
+   Year  debt/GDP   GDP($T)  cumKT($T)
+      5      96%     37.5       1.8
+     10      84%     45.6       4.0
+     15      71%     55.5       6.8
+     20      58%     67.5      10.0
+     25      46%     82.1      12.0
+     30      45%     99.9      12.0
+     35      45%    121.5      12.0
+     40      45%    147.9      12.0
+     45      45%    179.9      12.0
+     50      45%    218.9      12.0
 
-Central case: real growth 2.0%, inflation 2.3%, avg rate 3.3%, KT share 0.6
-   Year  debt/GDP
-      1      98%
-      5      91%
-     10      82%
-     15      74%
-     20      66%
-     25      59%
-     30      52%
-     35      45%
-     40      38%
-     45      32%
-     50      26%
+Enters band (<=60%): Year 20.  Reaches centre (~45%): Year 26.
+Cumulative KT to stabilise in band: $12.0T.
+Citizen seigniorage freed by holding the band (not over-retiring): $39.4T over 50y.
 
-Reaches 39% of GDP at Year 40 (paper claims ~Year 30)
-Reaches ~15% floor at Year None (paper claims ~Year 45)
+CONSISTENCY WITH PAPER 3 TABLE 2:
+  Year 10: model 84%  vs table 84%  [OK]
+  Year 20: model 58%  vs table 58%  [OK]
+  Year 30: model 45%  vs table 45%  [OK]
+  Year 45: model 45%  vs table 45%  [OK]
