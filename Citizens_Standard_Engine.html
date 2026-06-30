@@ -411,6 +411,7 @@
   <button class="mode-btn" data-mode="C" title="Modest ~2% inflation. K1/K2 stay at a low floor-building rate; the KI inflation-gap channel funds a meaningful monthly dividend (~$108/citizen). Trades a smaller locked floor for visible income now.">Mode C · Inflation</button>
       <button class="mode-btn" data-mode="D" title="Pure dividend, zero index. K1=0 and the entire growth budget pays out as a standing dividend (κ_d=100%), so the state buys no equity at all (A*=0, ψ*=0) — yet issuance still grows at exactly real output, so prices stay stable. Trades the locked floor for a price-stable cash dividend at the M^T locus (~$56/citizen/mo). Pushing K2 to 100% overshoots the locus and inflates.">Mode D · Pure Dividend</button>
   <button class="mode-btn" data-mode="X">Custom</button>
+  <button class="mode-btn" data-mode="Z" title="The limiting case where every creation channel is off (K1=K2=KI=0): no new money is created at all. With real output still growing, the same money buys more each year, so prices fall at roughly the real-growth rate. This recovers the fixed-supply / hard-money (gold-standard) outcome as one admissible setting of the same engine — proof that the framework is a dial, not a printing press.">Zero-Issuance Limit</button>
 </div>
 
 <div class="grid">
@@ -420,6 +421,13 @@
     <div class="row"><span class="label">K2 — Growth rate</span><input type="range" id="k2" min="0" max="100" step="0.5" value="100"><span class="readout" id="k2r">100%</span></div>
     <div class="row"><span class="label">K2/K3 split (κ_d)</span><input type="range" id="k3" min="0" max="100" step="1" value="0"><span class="readout" id="k3r">0%</span></div>
     <p class="card-note" id="splitNote" style="margin:2px 0 0;color:var(--accent)">Growth budget → <strong id="splitFloor">100%</strong> locked floor (K2) · <strong id="splitDiv">0%</strong> spendable dividend (K3). Always sums to 100% — moving the dividend up lowers the floor by the same dollars; total money issued is unchanged.</p>
+    <div style="margin:8px 0 2px;">
+      <div style="display:flex;height:26px;width:100%;border-radius:6px;overflow:hidden;font-size:10px;font-weight:600;line-height:26px;text-align:center;border:1px solid var(--border-strong);" aria-label="Two-circuit split of the growth budget">
+        <div id="barFloor" style="width:100%;background:var(--accent);color:var(--amber-ink);white-space:nowrap;overflow:hidden;transition:width .15s ease;">Asset Circuit · price-protected</div>
+        <div id="barDiv" style="width:0%;background:var(--border-strong);color:var(--text);white-space:nowrap;overflow:hidden;transition:width .15s ease;">Transactional · spendable</div>
+      </div>
+      <p class="card-note" style="margin:3px 0 0;">The bar is one fixed budget. Sliding κ_d moves the boundary between locked (asset circuit, M<sup>a</sup> — does not chase goods) and spendable (transactional circuit, M<sup>T</sup> — the only part that touches prices). The total width never changes: that is why the split is price-neutral.</p>
+    </div>
     <div class="row" style="margin-top:8px"><span class="label">KI — Inflation-gap</span><input type="range" id="ki" min="0" max="6" step="0.05" value="0"><span class="readout" id="kir">0.0%</span></div>
     <p class="card-note">K1: % of GDP per capita per new citizen. <strong>K2 — Growth rate:</strong> the share of the real-growth-matched budget that is issued — 100% holds prices stable (Mode B), ~17.5% gives mild deflation (Mode A). This sets <em>how much</em> new money is created. <strong>K2/K3 split (κ_d):</strong> of that one budget, how much locks into Stable Floors (K2) versus pays out as a monthly dividend (K3) — the two shares sum to 100% and the split is price-neutral (it moves money between locked and spendable, not the total). <strong>KI — Inflation-gap:</strong> % of M2 issued <em>above</em> the growth line; the only channel that creates inflation (Mode C).</p>
   </div>
@@ -709,7 +717,8 @@
     A: { k1: 2.5, k2: 17.5, k3: 0,  ki: 0,    er: 5.4, cpi: -1.86 },
     B: { k1: 2.5, k2: 100,  k3: 40, ki: 0,    er: 4.3, cpi: 0.0  },
     C: { k1: 2.5, k2: 17.5, k3: 0,  ki: 1.98, er: 5.4, cpi: 2.0  },
-    D: { k1: 0,   k2: 51.35,k3: 100,ki: 0,    er: 6.67,cpi: 0.0  }  // D builds no floor (kd=100%, K1=0) => 0% capture => unattenuated no-program return 6.67% (P5 6.7)
+    D: { k1: 0,   k2: 51.35,k3: 100,ki: 0,    er: 6.67,cpi: 0.0  }, // D builds no floor (kd=100%, K1=0) => 0% capture => unattenuated no-program return 6.67% (P5 6.7)
+    Z: { k1: 0,   k2: 0,    k3: 0,  ki: 0,    er: 6.67,cpi: -2.0 }  // Zero-issuance limit: every creation channel off => no new money => prices fall at the real-growth rate (the fixed-supply / hard-money corner, recovered as a limiting case)
   };
 
   // REAL-WORLD DATA (verified from sources, see footer)
@@ -779,6 +788,13 @@
     $('k3r').textContent = (p.k3*100).toFixed(0) + '%';
     if ($('splitFloor')) $('splitFloor').textContent = Math.round((1-p.k3)*100) + '%';
     if ($('splitDiv'))   $('splitDiv').textContent   = Math.round(p.k3*100) + '%';
+    if ($('barFloor')){
+      const floorPct = Math.round((1-p.k3)*100), divPct = Math.round(p.k3*100);
+      $('barFloor').style.width = floorPct + '%';
+      $('barDiv').style.width   = divPct + '%';
+      $('barFloor').textContent = floorPct >= 22 ? 'Asset Circuit · price-protected' : (floorPct >= 8 ? 'Asset' : '');
+      $('barDiv').textContent   = divPct   >= 22 ? 'Transactional · spendable'      : (divPct   >= 8 ? 'Spend' : '');
+    }
     if ($('kir')) $('kir').textContent = (p.ki*100).toFixed(2).replace(/\.?0+$/,'') + '%';
     $('rgr').textContent = (p.rg*100).toFixed(1) + '%';
     $('pgr').textContent = (p.pg*100).toFixed(1) + '%';
@@ -1226,6 +1242,8 @@
     } else if (activeMode === 'X') {
       // User explicitly clicked Custom — always honor that.
       modeLabel = '<span style="color: var(--coral);">Custom (manually configured)</span>';
+    } else if (activeMode === 'Z') {
+      modeLabel = '<span style="color: var(--teal-text);">Zero-Issuance Limit — fixed-supply corner</span>';
     } else {
       // Unknown state — try value-detection as a fallback.
       const isModeA = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 0.175) < 0.005 && Math.abs(p.k3) < 0.005 && Math.abs(p.ki) < 0.005 && Math.abs(p.cpi - (-0.0186)) < 0.006;
