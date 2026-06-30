@@ -10,6 +10,8 @@ and sharpens is the ESCAPE: the wealthy hold ~2% of net worth in cash and ~98% i
 assets, so inflation structurally can't reach the rentier capital it's meant to discipline.
 """
 import numpy as np, matplotlib.pyplot as plt
+import os
+_FIGDIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "figures"); os.makedirs(_FIGDIR, exist_ok=True)
 
 # ---- REAL INPUTS ----
 JST = {'Equity':6.7,'Housing\n(incl. rent)':7.1,'Bonds':2.5,'Bills':0.9,'Gold\n(long-run)':0.6}  # % real, JST 1870-2015
@@ -70,5 +72,5 @@ a.plot(costs*100,[shares_targeted(c)[2]*100 for c in costs],color=PROD,lw=2.6,la
 a.set_title("Productive deployment per unit of holding cost"); a.set_xlabel("cost imposed (%)"); a.set_ylabel("productive share (%)"); a.legend(fontsize=8)
 a.text(.5,-.34,"A targeted cost on idle/speculative stores hits the target directly; inflation leaks into the hedge.",transform=a.transAxes,ha='center',fontsize=8,style='italic')
 
-fig.tight_layout(rect=[0,0.02,1,0.96]); fig.savefig("behavioral_calibrated.png",bbox_inches='tight',facecolor='white')
+fig.tight_layout(rect=[0,0.02,1,0.96]); fig.savefig(os.path.join(_FIGDIR,"behavioral_calibrated.png"),bbox_inches='tight',facecolor='white')
 print("\nsaved behavioral_calibrated.png")

@@ -10,6 +10,8 @@ Sterilization recurrence (holding pi*=0 against an inflationary drift delta, M t
 Dividend stays = kd*g*Y throughout (sterilization, not the dividend, does the withdrawing).
 """
 import numpy as np, matplotlib.pyplot as plt
+import os
+_FIGDIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "figures"); os.makedirs(_FIGDIR, exist_ok=True)
 g=0.03; kd=0.5; T=40; t=np.arange(T+1)
 def sterilize(delta_path, r):
     B=np.zeros(T+1)
@@ -84,5 +86,5 @@ a.text(0.04,0.86,("The fix works \u2014 with a boundary.\n\n"
  "PERSISTENT inflationary drift:\n  sustainable only if r < g (positive\n  carry). If r \u2265 g the bond stock\n  explodes; even with r<g a finite\n  ceiling gives a finite runway.\n\n"
  "DEEPER POINT:\n  a persistent inflationary drift is a\n  REAL imbalance. No monetary tool\n  neutralizes it forever \u2014 not a CS\n  flaw, a universal limit. CS just\n  enters this regime rarely (it is\n  deflationary by design) and keeps\n  the dividend safe until the runway\n  ends."),ha='left',va='top',fontsize=9,transform=a.transAxes,linespacing=1.2)
 
-fig.tight_layout(rect=[0,0.02,1,0.96]); fig.savefig("cs_sterilization_test.png",bbox_inches='tight',facecolor='white')
+fig.tight_layout(rect=[0,0.02,1,0.96]); fig.savefig(os.path.join(_FIGDIR,"cs_sterilization_test.png"),bbox_inches='tight',facecolor='white')
 print("\nsaved cs_sterilization_test.png")

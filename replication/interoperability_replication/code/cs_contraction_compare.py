@@ -4,6 +4,8 @@ Shows CS escapes the carry condition by RETIRING money via surcharge rather than
 into an interest-bearing stock. Converged independently with PCM Ch.7's graduated Inflationary Surcharge.
 """
 import numpy as np, matplotlib.pyplot as plt
+import os
+_FIGDIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "figures"); os.makedirs(_FIGDIR, exist_ok=True)
 g=0.03; delta=0.02; T=40; t=np.arange(T+1)
 def bond(r):
     b=np.zeros(T+1)
@@ -29,7 +31,7 @@ a2.plot(t,surch_drag,color='#2c6e9e',lw=2.2,ls=':',label='surcharge annual drag 
 a2.set_title("Graduated surcharge — money retired, no stock"); a2.set_xlabel("years of persistent 2%/yr drift"); a2.set_ylabel("% GDP"); a2.set_ylim(0,140); a2.legend(fontsize=8)
 a2.text(.5,-.32,"Retiring money leaves no interest-bearing stock, so nothing compounds and r<g never arises. The cost is a bounded annual drag.",transform=a2.transAxes,ha='center',fontsize=8,style='italic')
 
-fig.tight_layout(rect=[0,0.04,1,0.95]); fig.savefig("cs_contraction_compare.png",bbox_inches='tight',facecolor='white')
+fig.tight_layout(rect=[0,0.04,1,0.95]); fig.savefig(os.path.join(_FIGDIR,"cs_contraction_compare.png"),bbox_inches='tight',facecolor='white')
 print("bond stock at yr40: r<g %.0f%%  r=g %.0f%%  r>g %.0f%%"%(b_lo[-1],b_eq[-1],b_hi[-1]))
 print("surcharge liability at yr40: %.0f%% (money retired); annual drag constant at %.0f%% GDP"%(surch_stock[-1],surch_drag[-1]))
 print("saved cs_contraction_compare.png")

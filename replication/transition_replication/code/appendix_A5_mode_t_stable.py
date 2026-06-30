@@ -6,8 +6,9 @@ Replicates the Mode T-stable continuity demonstration in the transition paper
 credibility timing of Appendix A.5.
 
 CLAIMS:
-  - When KT deactivates (public debt retired), the system continues as
-    Mode T-stable: K1 + residual K1-funded K2 at true price stability, allocated as the
+  - When KT goes dormant (public debt stabilised within its ~30-60% operational
+    band), the system continues as Mode T-stable: K1 + residual K1-funded K2 at true
+    price stability, allocated as the
     Mode B 60/40 split (60%% of K2 to the locked floor, 40%% paid as the standing dividend).
     The transition is INVISIBLE to citizen Stable Floors because KT never deposited into them.
     The 60/40 allocation is what keeps the permanent equity inflow sustainable (~0.39%% of
@@ -29,7 +30,7 @@ K1_RESIDUAL_FRAC = 0.022   # K1_agg as share of the real-growth line (deposit-we
 
 
 def k2_per_citizen(year_offset):
-    """Residual K1-funded K2 per citizen; identical before and after KT deactivation."""
+    """Residual K1-funded K2 per citizen; identical before and after KT goes dormant."""
     m2 = M2_0 * (1 + G_REAL) ** year_offset
     pop = POP_0 * (1 + 0.004) ** year_offset
     return (G_REAL * m2) * (1 - K1_RESIDUAL_FRAC) / pop
@@ -47,9 +48,9 @@ def price_level_path(years=range(0, 51, 10)):
 
 
 def continuity_check():
-    """K2 per citizen is identical on both sides of the KT sunset."""
-    before = k2_per_citizen(40)   # just before sunset (~Year 40-45)
-    after = k2_per_citizen(40)    # just after; KT off changes nothing for citizens
+    """K2 per citizen is identical on both sides of the KT throttle-down."""
+    before = k2_per_citizen(26)   # just before KT goes dormant (~Year 26, band entry)
+    after = k2_per_citizen(26)    # just after; KT dormant changes nothing for citizens
     return before, after
 
 
@@ -58,11 +59,11 @@ if __name__ == "__main__":
     print("APPENDIX A.5 — MODE T-STABLE CONTINUITY")
     print("=" * 78)
     before, after = continuity_check()
-    print("Continuity of citizen accumulation across the KT sunset:")
-    print(f"  K2 per citizen BEFORE sunset (Mode T):        ${before:,.0f}/yr")
-    print(f"  K2 per citizen AFTER sunset (Mode T-stable):  ${after:,.0f}/yr")
+    print("Continuity of citizen accumulation across the KT throttle-down (band entry):")
+    print(f"  K2 per citizen BEFORE band entry (Mode T):       ${before:,.0f}/yr")
+    print(f"  K2 per citizen AFTER  band entry (Mode T-stable):${after:,.0f}/yr")
     print(f"  -> IDENTICAL. KT never deposited into citizen accounts, so its")
-    print(f"     deactivation is invisible to Stable Floor accumulation.")
+    print(f"     transition to dormancy is invisible to Stable Floor accumulation.")
     print()
     print("Price-level path under residual K1-funded K2 (money grows at real-output rate):")
     print(f"  {'Year':<6}{'M2 growth':<12}{'Real growth':<14}{'Price level'}")

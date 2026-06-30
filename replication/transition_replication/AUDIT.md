@@ -11,13 +11,13 @@ Each module is parameterized from verified primary-source figures (stated in its
 | Year | Paper D/GDP | Model D/GDP | Model KT ($B) | Match |
 |---|---|---|---|---|
 | 0 | 102% | 102% | 336 | ✓ |
-| 10 | 84% | 84% | 402 | ✓ |
-| 20 | 64% | 64% | 480 | ✓ |
-| 30 | 39% | 39% | 574 | ✓ |
-| 40 | 16% | 16% | 53 | ✓ |
-| 45 | 15% | 15% | 0 | ✓ |
+| 10 | 84% | 84% | 497 | ✓ |
+| 20 | 58% | 58% | 619 | ✓ |
+| 30 | 45% | 45% | 0 | ✓ |
+| 40 | 45% | 45% | 0 | ✓ |
+| 45 | 45% | 45% | 0 | ✓ |
 
-Reproduces Table 2 / A.2 across all six tabulated years (102 / 84 / 64 / 39 / 16 / 15% at Years 0 / 10 / 20 / 30 / 40 / 45); cumulative KT issuance ~$17.7T. Public debt stabilizes at the ~15% operational floor by ~Year 45, rather than continuing to zero — KT self-throttles as the debt approaches the floor and goes dormant at it. CBO baseline (156% by 2055) reproduced for comparison.
+Reproduces Table 2 / A.2 across all six tabulated years (102 / 84 / 58 / 45 / 45 / 45% at Years 0 / 10 / 20 / 30 / 40 / 45); cumulative KT issuance ~$12.0T. Public debt stabilises within the 30-60% operational band (central path ~45%, reached ~Year 26) rather than continuing toward zero — KT self-throttles as the debt enters the band and goes dormant within it, routing the freed seigniorage to citizen Stable Floors. CBO baseline (156% by 2055) reproduced for comparison.
 
 ---
 
@@ -69,7 +69,7 @@ The original 35% figure was an unsourced guess; the bottom-up decomposition by h
 | Canada 1990s: peak → end net D/GDP | ~68% → ~50% | 68% → 50% | ✓ |
 | Equity bubble attributable to debt reduction | none in either episode | none | ✓ |
 
-Two results close the "open empirical question" left in A.4. First, a formal sensitivity sweep shows the debt-retirement trajectory (102% → ~15% operational floor by ~Year 45) and KT's consumer-price neutrality are invariant to the rotation fraction across the full 15–35% range and well beyond it — the fraction governs only the magnitude of a transient, reverting equity-valuation effect. Second, two large-scale sovereign-debt reductions (UK 1946–1976, Canada 1995–2000) retired their stocks primarily through a negative growth-corrected interest rate plus primary surpluses, with capital reabsorbed across the full asset spectrum and no destabilising equity concentration in either case — placing the realistic rotation fraction at the low end and making the paper's central ~17% conservative. Historical figures are from public-finance sources (UK: OBR; Canada: OECD/IRPP).
+Two results close the "open empirical question" left in A.4. First, a formal sensitivity sweep shows the debt-retirement trajectory (102% → 30-60% operational band, central path ~45%) and KT's consumer-price neutrality are invariant to the rotation fraction across the full 15–35% range and well beyond it — the fraction governs only the magnitude of a transient, reverting equity-valuation effect. Second, two large-scale sovereign-debt reductions (UK 1946–1976, Canada 1995–2000) retired their stocks primarily through a negative growth-corrected interest rate plus primary surpluses, with capital reabsorbed across the full asset spectrum and no destabilising equity concentration in either case — placing the realistic rotation fraction at the low end and making the paper's central ~17% conservative. Historical figures are from public-finance sources (UK: OBR; Canada: OECD/IRPP).
 
 ---
 
@@ -87,7 +87,7 @@ The continuity result is the key structural claim: because KT never deposits int
 
 ## Consistency note: the KT lifecycle and the intragovernmental floor
 
-The paper narrative and the trajectory model are reconciled as follows. KT retires the **public** debt ($31.4T) down to a small **operational floor of ~15% of GDP** (reached ~Year 45), where it stabilizes rather than continuing to zero. The "~30% of GDP" figure sometimes cited marks where KT is no longer necessary for *solvency*; the 15% floor sits comfortably below it and is retained deliberately as the safe-asset benchmark and the base for symmetric reverse-KT operations, not as a residual burden. KT is self-throttling: issuance tapers as the debt approaches the floor and goes dormant at it (the standing stock thereafter grows with GDP at a constant ~15% share). What remains on the gross books is the intragovernmental ~$7.6T (~11% of GDP by Year 45), which the Legacy Debt Trust never held and which is addressed separately by Social Security consolidation (paper Section 8.1). `appendix_A2_debt_trajectory.py` implements this with the `FLOOR_PCT_GDP` operational floor and reproduces the paper's Table A.2 anchors.
+The paper narrative and the trajectory model are reconciled as follows. KT retires the **public** debt ($31.4T) into a moderate **operational band of ~30-60% of GDP** (central path ~45%, reached ~Year 26), where it stabilises rather than continuing toward zero. The band rather than a low floor is the welfare-optimal endpoint of the cs_debt_band analysis: standing debt is near self-financing at r<g, so retiring below the band forgoes citizen seigniorage for no sustainability gain, while debt-dependent crisis risk rises only well above the band. KT is self-throttling: issuance tapers as the debt enters the band and goes dormant within it, with the freed growth-matched seigniorage routed to citizen Stable Floors and the standing stock thereafter growing with GDP at the ~45% share. What remains on the gross books is the intragovernmental ~$7.6T (~8% of grown GDP), which the Legacy Debt Trust never held and which is addressed separately by Social Security consolidation (paper Section 8.1). `appendix_A2_debt_trajectory.py` implements the band throttle on the paper-exact ratio recursion and reproduces the paper's Table A.2 anchors.
 
 ---
 

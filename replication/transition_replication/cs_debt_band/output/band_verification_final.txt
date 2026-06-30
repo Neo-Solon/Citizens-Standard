@@ -1,0 +1,25 @@
+
+=== safe-haven damping = strong (Property-1 strong), verified at N=6000 x 2 seeds ===
+  band        net $T s1  net $T s2  P(crisis)  99th peak
+  15-30%         47.1       47.1       0.0%        22%
+  20-40%         47.4       47.4       0.0%        30%
+  25-50%         47.6       47.6       0.0%        38%
+  30-60%         47.8       47.8       0.0%        45%
+  40-80%         47.8       47.8       0.0%        61%
+  50-90%         47.8       47.8       0.0%        72%
+  -> optimal 40-80%; indistinguishable (<1%): 20-40, 25-50, 30-60, 40-80, 50-90
+
+=== safe-haven damping = moderate (Property-1 moderate), verified at N=6000 x 2 seeds ===
+  band        net $T s1  net $T s2  P(crisis)  99th peak
+  15-30%         46.9       46.9       0.0%        22%
+  20-40%         47.1       47.1       0.0%        30%
+  25-50%         47.2       47.2       0.0%        38%
+  30-60%         47.3       47.4       0.0%        46%
+  40-80%         47.2       47.2       0.0%        62%
+  50-90%         47.0       47.1       0.0%        73%
+  -> optimal 30-60%; indistinguishable (<1%): 20-40, 25-50, 30-60, 40-80, 50-90
+
+VERIFY: optimal band stable across seeds, and the indistinguishable set under the
+Property-1-grounded damping clusters in the moderate region (roughly 25-60%),
+excluding both the 15% corner and the high (>80%) region. If stable -> lock and
+package.

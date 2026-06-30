@@ -6,21 +6,22 @@
 APPENDIX A.2 — PUBLIC-DEBT-TO-GDP TRAJECTORY UNDER MODE T
 ==============================================================================
 Public debt: $31.4T (102% of GDP); gross $39T; intragov $7.6T (nets out)
-KT calibration: 1.5% of M2/yr; retires public debt to a
-~15%-of-GDP operational floor (~Year 45), where it stabilizes.
+KT calibration: 1.5% of M2/yr; retires public debt into a 30-60% operational band
+(central path ~45%, reached ~Year 26), where it stabilises.
 
 Year  Coupon   KT ($B)   Surplus($B)  Interest($B)  Debt ($T)   D/GDP   
 ------------------------------------------------------------------------------
 0      4.50%   $   336    $       0    $     1413     $   31.4       102%
-10     1.50%   $   402    $     184    $      466     $   31.0        84%
-20     1.50%   $   480    $     440    $      422     $   28.2        64%
-30     1.50%   $   574    $     788    $      311     $   20.7        39%
-40     1.50%   $    53    $     942    $      152     $   10.1        16%
-45     1.50%   $     0    $    1030    $      152     $   10.1        15%
+10     3.00%   $   497    $     274    $     1152     $   38.4        84%
+20     3.00%   $   619    $     810    $     1167     $   38.9        58%
+30     3.00%   $     0    $    1498    $     1349     $   45.0        45%
+40     3.00%   $     0    $    2218    $     1996     $   66.5        45%
+45     3.00%   $     0    $    2699    $     2429     $   81.0        45%
 
-Operational floor (~15% of GDP) reached by ~Year 45 (D/GDP 16% at Yr40, 15% at Yr45, stabilizes)
-Cumulative KT issuance:  $17.7T
-(remainder retired by primary surplus and nominal output growth)
+Operational band (30-60% of GDP) entered and held (D/GDP 58% at Yr20, 45% at Yr30, stabilises ~45%)
+Cumulative KT issuance:  $12.0T
+(remainder of the descent delivered by primary surplus and nominal output growth;
+ seigniorage freed by holding the band rather than over-retiring goes to citizen Stable Floors)
 
 vs CBO March 2025 projection: 156% of GDP by 2055 under current law.
 
@@ -151,7 +152,7 @@ Across the full 15-35% range:
     rotation 75%: combined 0.76% of mkt cap, compression +1.10pp
 
   INVARIANT QUANTITIES (independent of rotation fraction):
-    - Debt trajectory: 102% -> ~15% operational floor by ~Year 45 (solvency is an
+    - Debt trajectory: 102% -> 30-60% operational band (central path ~45%) (solvency is an
       asset-swap arithmetic; freed-capital allocation does not enter it)
     - KT consumer-price neutrality: redemption MPC analysis (A.2) is
       unaffected by the equity/bond split of reinvested proceeds
@@ -193,11 +194,11 @@ fraction at the low end, so the central estimate is conservative.
 ==============================================================================
 APPENDIX A.5 — MODE T-STABLE CONTINUITY
 ==============================================================================
-Continuity of citizen accumulation across the KT sunset:
-  K2 per citizen BEFORE sunset (Mode T):        $2,007/yr
-  K2 per citizen AFTER sunset (Mode T-stable):  $2,007/yr
+Continuity of citizen accumulation across the KT throttle-down (band entry):
+  K2 per citizen BEFORE band entry (Mode T):       $1,654/yr
+  K2 per citizen AFTER  band entry (Mode T-stable):$1,654/yr
   -> IDENTICAL. KT never deposited into citizen accounts, so its
-     deactivation is invisible to Stable Floor accumulation.
+     transition to dormancy is invisible to Stable Floor accumulation.
 
 Price-level path under residual K1-funded K2 (money grows at real-output rate):
   Year  M2 growth   Real growth   Price level

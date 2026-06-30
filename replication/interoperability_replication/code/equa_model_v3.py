@@ -10,6 +10,8 @@ Findings:
   (4) DIFFERENTIAL variance, not level, drives volatility; correlated shocks cancel in the differential.
 """
 import numpy as np, matplotlib.pyplot as plt
+import os
+_FIGDIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "figures"); os.makedirs(_FIGDIR, exist_ok=True)
 g={'H':0.030,'L':0.005}; T=40; t=np.arange(T+1)
 bench=lambda a,b:(1+g[a])**(-t)/(1+g[b])**(-t)
 def H(c,pi,k): return (1+g[c])**(-t)*(1+pi)**np.minimum(t,k)
@@ -77,5 +79,5 @@ a.set_title("Nominal-rate volatility (%/yr)"); a.set_ylabel("std of yearly rate 
 a.text(.5,-.32,"DIFFERENTIAL variance drives volatility, not level; correlated shocks cancel in the differential.",
        transform=a.transAxes,ha='center',fontsize=8.3,style='italic')
 
-fig.tight_layout(rect=[0,0.02,1,0.96]); fig.savefig("equa_v3.png",bbox_inches='tight',facecolor='white')
+fig.tight_layout(rect=[0,0.02,1,0.96]); fig.savefig(os.path.join(_FIGDIR,"equa_v3.png"),bbox_inches='tight',facecolor='white')
 print("saved equa_v3.png")

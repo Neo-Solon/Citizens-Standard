@@ -1,0 +1,47 @@
+==============================================================================
+central r<g (r=3.3% all years)
+==============================================================================
+  policy                     debt/GDP yr40  cum citizen $B cum bondholder $B
+  aggressive KT=0.6                    38%          18,304            27,456
+  stabilize-only                       68%          45,760                 0
+  -> stabilize gives citizens $27,456B more over 40y, debt ends at 68% vs 38%.
+
+==============================================================================
+cyclical (calm, r>g stress yr 11-18)
+==============================================================================
+  policy                     debt/GDP yr40  cum citizen $B cum bondholder $B
+  aggressive KT=0.6                    46%          18,304            27,456
+  stabilize-only                       73%          43,891             1,868
+  -> stabilize gives citizens $25,587B more over 40y, debt ends at 73% vs 46%.
+
+==============================================================================
+permanent moderate r>g (r=4.6%)
+==============================================================================
+  policy                     debt/GDP yr40  cum citizen $B cum bondholder $B
+  aggressive KT=0.6                    75%          18,304            27,456
+  stabilize-only                      100%          36,883             8,877
+  -> stabilize gives citizens $18,579B more over 40y, debt ends at 100% vs 75%.
+
+==============================================================================
+READING IT HONESTLY
+==============================================================================
+- In the r<g central path, 'stabilize-only' retires essentially NOTHING (the
+  snowball holds the ratio down on its own) and hands citizens the entire budget.
+  Debt/GDP still drifts down via growth. Aggressive retirement buys a lower debt
+  ratio that, at r<g, you did not need -- paid for with citizen floors.
+
+- The cost of stabilize-only is HONEST and real: debt/GDP stays HIGHER for longer
+  (near launch level), so (a) more of the economy's safe-asset stock is public
+  debt -- fine, even useful per ch8b -- but (b) you carry more rate-risk: a future
+  r>g shock hits a bigger stock. Stabilize-only trades a lower debt ratio for
+  higher citizen floors now, accepting more rate-exposure later.
+
+- Under PERMANENT r>g, stabilize-only must spend (r-g)*d each year just to hold
+  the line, which eats into citizen floors -- but only by the gap, not the whole
+  budget. It never lets debt run away, and it never starves citizens to zero.
+
+- This is the opposite of aggressive retirement and it is mostly BETTER on CS's
+  own objective (citizen floors), with one genuine cost (rate-risk on a larger
+  standing stock). The synthesis: stabilize by default, and pre-fund a small
+  retirement buffer ONLY against the tail r>g scenario, rather than retiring hard
+  in every calm year you did not need to.

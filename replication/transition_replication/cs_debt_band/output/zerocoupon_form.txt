@@ -1,0 +1,35 @@
+FORM OF THE STANDING STOCK at the ~45%-of-GDP band
+
+  Stock S = $13,050B (45% of $29,000B GDP)
+
+  A safe public liability earns a CONVENIENCE YIELD: holders accept a
+  financial return BELOW the otherwise-fair rate because they value its
+  safety, liquidity, and collateral function. The issuer can either PAY
+  that out (coupon -> transfer to holders) or CAPTURE it (low/zero coupon
+  -> seigniorage to the public).
+
+  instrument                  pays holders  public captures
+  conventional coupon bond          1.35%            0.27% of GDP
+  zero-coupon bill                  0.68%            0.95% of GDP
+  non-interest-bearing (limit)        0.00%            1.62% of GDP
+
+  Reading:
+  - The convenience value (collateral, repo, benchmark pricing, safe store) is a
+    function of the STOCK, ~0.27% of GDP/yr here, and the public earns it as
+    cheaper-than-fair funding whether or not a coupon is paid.
+  - The coupon is a PURE TRANSFER to holders: at 3% on a 45% stock it is
+    1.35% of GDP/yr handed to bondholders (who skew wealthy) for no
+    public benefit the convenience value does not already provide.
+  - Holding the stock at the non-interest-bearing limit captures the full value
+    as public seigniorage and removes the transfer. This is the same pool that
+    funds citizen Stable Floors.
+  WHAT THE ZERO LIMIT LOSES: a traded BENCHMARK YIELD CURVE. The financial system
+  prices other assets off a coupon sovereign curve; a fully non-interest-bearing
+  stock supplies safety and collateral but not that benchmark. So retain a THIN
+  coupon tranche for the benchmark function; hold the BULK non-interest-bearing.
+  CONDITIONAL (state it): convenience yield c SHRINKS as engineered-stable money
+  absorbs safe-asset demand. The more completely stable CS money becomes the safe
+  store, the smaller c, and the more the standing stock can shrink toward money
+  itself -- which is the point at which CS and a debt-free public-money system
+  (PCM) converge.
+

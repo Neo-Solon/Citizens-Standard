@@ -13,6 +13,8 @@ Load-bearing assumptions (stated honestly):
   (3) The targeted carrying cost can exempt working cash and fall on speculative/idle stores.
 """
 import numpy as np, matplotlib.pyplot as plt
+import os
+_FIGDIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "figures"); os.makedirs(_FIGDIR, exist_ok=True)
 r_p, r_s = 0.06, 0.01          # real returns: productive (illiquid/risky), speculative (low, "produces little")
 lam_c, lam_s, lam_p = 0.035, 0.045, 0.0   # liquidity/safety premia: cash, speculative store (preferred safe hedge), productive
 sig = 0.02                      # allocation sensitivity
@@ -88,5 +90,5 @@ a.bar(grp+w/2,targ,w,color=PROD,label='targeted on speculative')
 a.set_xticks(grp); a.set_xticklabels(["saver\n(cash-heavy)","rentier\n(hedge-heavy)"]); a.set_ylabel("% of own wealth taxed / yr"); a.set_title("Who bears the cost"); a.legend(fontsize=8)
 a.text(.5,-.30,"Inflation taxes the saver and spares the rentier (regressive). The targeted cost flips it (progressive).",transform=a.transAxes,ha='center',fontsize=8,style='italic')
 
-fig.tight_layout(rect=[0,0.02,1,0.96]); fig.savefig("behavioral_idle_capital.png",bbox_inches='tight',facecolor='white')
+fig.tight_layout(rect=[0,0.02,1,0.96]); fig.savefig(os.path.join(_FIGDIR,"behavioral_idle_capital.png"),bbox_inches='tight',facecolor='white')
 print("\nsaved behavioral_idle_capital.png")

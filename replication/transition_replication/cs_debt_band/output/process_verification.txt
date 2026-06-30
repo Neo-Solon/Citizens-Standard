@@ -1,0 +1,19 @@
+LOCKED COMPOUND-JUMP PROCESS -- verification at N=12,000, two seeds
+
+  moment                          seed1    seed2   target       source
+  sev90 5y @40%                   0.01%    0.01%     0.0%     Lian2020
+  sev90 5y @120%                  2.01%    1.97%    +2.0%     Lian2020
+  median @40%                    -1.05%   -1.05%    -1.2%        Bl/MZ
+  median rise 40->120%            0.93%    0.92%    +0.8%     Lian2020
+  reversal @45%                  23.89%   23.28%     ~25%     Lian2020
+  reversal @100%                 82.14%   82.41%    >=75%     Lian2020
+  neg-r-g share @60%             88.69%   88.91%     >50%    MauroZhou
+
+  HELD-OUT #2 (NOT fitted) -- 2-year severity shape:
+  sev90 2y @40%                   0.53%    0.36%  (0..+1)          oos
+  sev90 2y @120%                  2.59%    2.50% (+2..+3)          oos
+
+  2y severity should sit ABOVE the 5y (less averaging) and rise with debt; if so,
+  the process reproduces the horizon-shape of the data it was never fit to.
+
+  ALL SEVEN PASS (seed1): True

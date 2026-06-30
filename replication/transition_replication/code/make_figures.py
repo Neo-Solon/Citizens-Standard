@@ -9,7 +9,7 @@ FIG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "figure
 os.makedirs(FIG_DIR, exist_ok=True)
 
 # Figure 1: debt trajectory vs CBO baseline
-rows, floor_year = run_trajectory()
+rows, band_year = run_trajectory()
 years = [r["year"] for r in rows if r["year"] <= 50]
 dgdp = [r["d_gdp"]*100 for r in rows if r["year"] <= 50]
 
@@ -19,9 +19,10 @@ ax.plot(years, dgdp, lw=2.5, color="#4f81bd", label="Citizens Standard (Mode T +
 cbo_years = [0, 10, 20, 30]
 cbo_vals = [102, 118, 135, 156]
 ax.plot(cbo_years, cbo_vals, lw=2.5, color="#c0504d", ls="--", label="CBO current-law baseline")
-ax.axhline(15, color="#7f7f7f", lw=1.0, ls=":", label="Operational floor (~15% of GDP)")
-ax.annotate("Stabilizes at ~15% of GDP\n(operational floor)",
-            xy=(42, 15), xytext=(25, 40),
+ax.axhspan(30, 60, color="#4f81bd", alpha=0.10, label="Operational band (30-60% of GDP)")
+ax.axhline(45, color="#4f81bd", lw=0.8, ls=":", alpha=0.6)
+ax.annotate("Stabilises in the 30-60% band\n(central path ~45%, reached ~Yr 26)",
+            xy=(30, 47), xytext=(20, 78),
             arrowprops=dict(arrowstyle="->", color="#333"), fontsize=10)
 ax.set_xlabel("Years from enactment")
 ax.set_ylabel("Debt held by the public (% of GDP)")
@@ -44,7 +45,7 @@ ax2 = ax1.twinx()
 ax2.plot(yrs, debt, lw=2.5, color="#4f81bd", label="Public debt ($T, right)")
 ax2.set_ylabel("Public debt stock ($T)")
 ax1.set_title("KT issuance and the declining public debt stock\n"
-              "KT retires the public debt to the ~15% operational floor, then self-extinguishes",
+              "KT retires the public debt into the 30-60% band, then throttles to dormancy; cumulative KT ~$12T",
               fontsize=11, fontweight="bold")
 ax1.legend(loc="upper right"); ax2.legend(loc="center right")
 ax1.grid(alpha=0.3)

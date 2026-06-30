@@ -1,0 +1,24 @@
+WELFARE-OPTIMAL BAND under varying assumptions (validated jump process)
+
+  safe-haven  danger   kappa  opt band    indistinguishable set (<1% of best)     
+  strong      80       10     40-80%      20-40 25-50 30-60 40-80 50-90 60-100    
+  strong      80       15     40-80%      20-40 25-50 30-60 40-80 50-90           
+  strong      90       10     40-80%      20-40 25-50 30-60 40-80 50-90 60-100    
+  strong      90       15     40-80%      20-40 25-50 30-60 40-80 50-90 60-100    
+  moderate    80       10     30-60%      20-40 25-50 30-60 40-80 50-90           
+  moderate    80       15     30-60%      20-40 25-50 30-60 40-80 50-90           
+  moderate    90       10     30-60%      20-40 25-50 30-60 40-80 50-90           
+  moderate    90       15     30-60%      20-40 25-50 30-60 40-80 50-90           
+  none        80       10     20-40%      15-30 20-40 25-50 30-60                 
+  none        80       15     20-40%      15-30 20-40 25-50 30-60                 
+  none        90       10     20-40%      15-30 20-40 25-50 30-60                 
+  none        90       15     20-40%      15-30 20-40 25-50 30-60                 
+
+ROBUST READING:
+- The welfare-optimal POINT shifts with assumptions, but the INDISTINGUISHABLE
+  SET clusters in the moderate region across all of them. The recommendation that
+  survives every assumption set is: a MODERATE band, not the 15% corner and not
+  the high-80%+ region.
+- Safe-haven matters most: if CS is treated as a clean safe haven (strong
+  damping) the optimum runs higher; if NOT safe-haven (none) it pulls lower and
+  the high bands get penalized by crisis cost. The honest band spans this.

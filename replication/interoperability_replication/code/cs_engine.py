@@ -30,10 +30,13 @@ print(f"  K1 per new citizen : ${K1_per_citizen():,.0f}      (paper: ~$2,250)")
 print(f"  K1 aggregate       : ${K1_agg():.1f}B          (paper: ~$9B)")
 print(f"  growth-matched line: ${growth_budget():.1f}B        (paper: ~$447B)")
 print(f"  K2 (Mode B)        : ${K2_modeB():.1f}B        (paper: ~$438B)")
-# Mode C: clean launch -> gap=0, so KI is at its maintenance rate (pi*+g_r=4% of M2).
-# Mode C non-KI issuance (low-rate K2 with K1 netted) ~ 0.35% of M2 ~ $78B.
-KI = KI_pathtarget(0.0, 78.3)
-print(f"  KI (Mode C launch) : ${KI:.0f}B         (paper: ~$816B)")
+# Mode C: clean launch -> gap=0, so KI rests at its maintenance level. Per Paper 1 sec 6.1
+# and Paper 5 sec 4.4, that level is (pi*+g_r)*M^T NET of the K3 dividend and the floor
+# spillover L -- canonically 1.98% of M2 ~ $443B (NOT the 4%-of-M2 gross figure, which
+# double-counts the budget that K3 and the spillover already carry).
+KI_RATE_MODE_C = 0.0198          # net maintenance rate, 1.98% of M2 (Paper 1 sec 6.1)
+KI = KI_RATE_MODE_C * M2
+print(f"  KI (Mode C launch) : ${KI:.0f}B         (paper: ~$443B)")
 
 print("\n=== (B) Y.4 on the real engine: does holding ZERO cost the citizen dividend? ===")
 print("  Citizen dividend K3 = kappa_d * (g_r*M2 - K1_agg), drawn from the GROWTH budget,")

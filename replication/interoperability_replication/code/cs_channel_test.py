@@ -15,6 +15,8 @@ Stylization (faithful to the stated channel roles, NOT the papers' exact equatio
   - Basket labor-hours under sticky wages: H = (1+g)^-t * (1+pi*)^min(t, wage_lag).
 """
 import numpy as np, matplotlib.pyplot as plt
+import os
+_FIGDIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "figures"); os.makedirs(_FIGDIR, exist_ok=True)
 T=40; t=np.arange(T+1)
 def member(g,pi_star,kappa_d=0.5,wage_lag=2):
     Y=(1+g)**t; M=(1+g+pi_star)**t; P=M/Y
@@ -94,5 +96,5 @@ a2=a.twinx(); a2.plot(t,realK3_onboard,color=G,lw=2,label='real K3 dividend (rig
 a.legend(loc='upper right',fontsize=7.5); a2.legend(loc='center right',fontsize=7.5)
 a.text(.5,-.30,"20% \u2192 0 over 8 years via the transition channel; K3 real dividend never interrupted.",transform=a.transAxes,ha='center',fontsize=8.3,style='italic')
 
-fig.tight_layout(rect=[0,0.02,1,0.96]); fig.savefig("cs_channel_test.png",bbox_inches='tight',facecolor='white')
+fig.tight_layout(rect=[0,0.02,1,0.96]); fig.savefig(os.path.join(_FIGDIR,"cs_channel_test.png"),bbox_inches='tight',facecolor='white')
 print("\nsaved cs_channel_test.png")

@@ -4,6 +4,8 @@ Red-team the load-bearing assumption: are KI (inflation thermostat) and the grow
 the dividend, breaking 'holding zero is free.'
 """
 import numpy as np, matplotlib.pyplot as plt
+import os
+_FIGDIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "figures"); os.makedirs(_FIGDIR, exist_ok=True)
 g=0.03; kd=0.5; base=kd*g   # base real dividend per period (normalized reference)
 
 # ---------- BREAK A: the withdrawal asymmetry (the real threat) ----------
@@ -76,5 +78,5 @@ txt=("Independence is ASYMMETRIC.\n\n"
      "Breaks B & C bite the CORRIDOR,\nnot zero \u2014 they reinforce the anchor.")
 a.text(0.04,0.86,txt,ha='left',va='top',fontsize=9.5,transform=a.transAxes,linespacing=1.25)
 
-fig.tight_layout(rect=[0,0.02,1,0.96]); fig.savefig("cs_independence_redteam.png",bbox_inches='tight',facecolor='white')
+fig.tight_layout(rect=[0,0.02,1,0.96]); fig.savefig(os.path.join(_FIGDIR,"cs_independence_redteam.png"),bbox_inches='tight',facecolor='white')
 print("\nsaved cs_independence_redteam.png")

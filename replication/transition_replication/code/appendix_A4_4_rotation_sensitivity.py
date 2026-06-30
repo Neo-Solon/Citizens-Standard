@@ -34,7 +34,7 @@ KEY RESULT
 The 15-35% rotation range changes peak transition-era equity demand by less
 than ~0.15 percentage points of market capitalisation and changes forward
 return compression by roughly 0.27-0.64pp -- both transient and reverting
-once KT sunsets. The debt trajectory (102% -> ~15% operational floor by ~Year 45) does not
+once KT sunsets. The debt trajectory (102% -> 30-60% operational band, central path ~45%) does not
 depend on the rotation fraction at all, because KT redemption is an asset
 swap whose solvency arithmetic is independent of where the freed capital
 is subsequently allocated.
@@ -147,7 +147,7 @@ if __name__ == "__main__":
               f"compression +{comp:.2f}pp")
     print()
     print("  INVARIANT QUANTITIES (independent of rotation fraction):")
-    print("    - Debt trajectory: 102% -> ~15% operational floor by ~Year 45 (solvency is an")
+    print("    - Debt trajectory: 102% -> 30-60% operational band (central path ~45%) (solvency is an")
     print("      asset-swap arithmetic; freed-capital allocation does not enter it)")
     print("    - KT consumer-price neutrality: redemption MPC analysis (A.2) is")
     print("      unaffected by the equity/bond split of reinvested proceeds")
