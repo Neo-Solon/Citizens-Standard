@@ -394,7 +394,7 @@
 </div>
 
 <div class="card">
-  <p class="card-title">Launch parameters</p>
+  <p class="card-title" style="display:flex;align-items:center;justify-content:space-between;gap:8px;">Launch parameters <button id="resetParams" type="button" title="Restore the calibrated US baseline (M2, GDP, population, market cap, horizon, average holding period). Does not change the selected Mode or the channel sliders." style="font:inherit;font-size:11px;font-weight:600;color:var(--accent-text);background:transparent;border:1px solid var(--border-strong);border-radius:5px;padding:2px 9px;cursor:pointer;">Reset to US baseline</button></p>
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px 24px;">
     <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">M2 ($T)</span><input type="range" id="m2" min="5" max="60" step="0.5" value="22.4"><span class="readout" id="m2r">$22.4T</span></div>
     <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">GDP ($T)</span><input type="range" id="gdp" min="5" max="80" step="0.5" value="30.8"><span class="readout" id="gdpr">$30.8T</span></div>
@@ -410,8 +410,8 @@
   <button class="mode-btn active" data-mode="B" title="Price stability with a standing dividend: the 60/40 split puts 60% of the budget in the locked floor and pays out 40%. Highest Stable Floor of the base modes (~$413K on the realizable basis).">Mode B · Stable</button>
   <button class="mode-btn" data-mode="C" title="Modest ~2% inflation. K1/K2 stay at a low floor-building rate; the KI inflation-gap channel funds a meaningful monthly dividend (~$108/citizen). Trades a smaller locked floor for visible income now.">Mode C · Inflation</button>
       <button class="mode-btn" data-mode="D" title="Pure dividend, zero index. K1=0 and the entire growth budget pays out as a standing dividend (κ_d=100%), so the state buys no equity at all (A*=0, ψ*=0) — yet issuance still grows at exactly real output, so prices stay stable. Trades the locked floor for a price-stable cash dividend at the M^T locus (~$56/citizen/mo). Pushing K2 to 100% overshoots the locus and inflates.">Mode D · Pure Dividend</button>
-  <button class="mode-btn" data-mode="X">Custom</button>
   <button class="mode-btn" data-mode="Z" title="The limiting case where every creation channel is off (K1=K2=KI=0): no new money is created at all. With real output still growing, the same money buys more each year, so prices fall at roughly the real-growth rate. This recovers the fixed-supply / hard-money (gold-standard) outcome as one admissible setting of the same engine — proof that the framework is a dial, not a printing press.">Zero-Issuance Limit</button>
+  <button class="mode-btn" data-mode="X">Custom</button>
 </div>
 
 <div class="grid">
@@ -1904,8 +1904,15 @@
     });
   });
 
-  // Reset button on the comparison tab
-  const resetBtn = $('reset-mode-b');
+  // Reset launch parameters to the calibrated US baseline (does not touch Mode/channels)
+  const resetParamsBtn = $('resetParams');
+  if (resetParamsBtn) {
+    resetParamsBtn.addEventListener('click', () => {
+      const defaults = { m2: '22.4', gdp: '30.8', pop: '342', hz: '65', mkt: '69.1', dur: '40' };
+      Object.entries(defaults).forEach(([id, val]) => { if ($(id)) $(id).value = val; });
+      update();
+    });
+  }
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
       $('er').value = '4.5';
