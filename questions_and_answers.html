@@ -85,6 +85,12 @@
   .pointer{font-family:"Bricolage Grotesque",sans-serif;font-weight:500;font-size:.88rem;color:var(--dim);border-left:2px solid var(--line);padding-left:16px;margin:14px 0 0;}
   .pointer b{color:var(--text);font-weight:700;}
   .sec-intro{color:var(--dim);font-style:italic;margin:0 0 8px;}
+
+  .pagenav-btn{display:inline-flex;align-items:center;gap:.4em;color:#E6A93E;text-decoration:none;
+    border:1px solid rgba(230,169,62,.5);border-radius:8px;padding:8px 16px;font-weight:600;
+    transition:background .15s ease,border-color .15s ease,transform .15s ease;}
+  .pagenav-btn:hover{background:#E6A93E;color:#11161c;border-color:#E6A93E;transform:translateY(-1px);}
+  .pagenav-btn:focus-visible{outline:2px solid #E6A93E;outline-offset:2px;}
 </style>
 <style>
 .sitenav{border-bottom:1px solid var(--line,#27313c);font-family:inherit;}
@@ -175,7 +181,7 @@
 </div>
 </main>
 
-<nav aria-label="Previous and next page" style="max-width:980px;margin:48px auto 0;padding:18px 24px 0;border-top:1px solid #27313C;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:.95rem;"> <a href="papers.html" style="color:#E6A93E;text-decoration:none;">&larr; Papers &amp; data</a> <a href="methodology.html" style="color:#E6A93E;text-decoration:none;">Methodology &rarr;</a> </nav>
+<nav aria-label="Previous and next page" style="max-width:980px;margin:48px auto 0;padding:18px 24px 0;border-top:1px solid #27313C;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:.95rem;"> <a href="papers.html" class="pagenav-btn">&larr; Papers &amp; data</a> <a href="methodology.html" class="pagenav-btn">Methodology &rarr;</a> </nav>
 
 <nav aria-label="Citizens Standard pages" style="max-width:980px;margin:24px auto 38px;padding:18px 24px 0;border-top:1px solid #27313C;display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;justify-content:center;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:.92rem;line-height:1.6;"> <a href="front_door.html" style="color:#9AA3AE;text-decoration:none;">Diagnosis</a> <a href="how_the_engine_works.html" style="color:#9AA3AE;text-decoration:none;">How it works</a> <a href="Citizens_Standard_Engine.html" style="color:#9AA3AE;text-decoration:none;">Engine</a> <a href="papers.html" style="color:#9AA3AE;text-decoration:none;">Papers &amp; data</a> <a href="questions_and_answers.html" style="color:#E6A93E;text-decoration:none;font-weight:600;">Q&amp;A</a>  <a href="methodology.html" style="color:#9AA3AE;text-decoration:none;">Methodology</a> </nav>
 </body>

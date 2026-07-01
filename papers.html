@@ -60,6 +60,12 @@
   .btn:hover{ filter:brightness(1.08); text-decoration:none; }
   .btn-ghost{ display:inline-block; border:1px solid var(--amber); color:var(--amber); font-weight:600; font-size:.9rem; padding:7px 14px; border-radius:8px; text-decoration:none; }
   .btn-ghost:hover{ background:rgba(230,169,62,0.12); text-decoration:none; }
+
+  .pagenav-btn{display:inline-flex;align-items:center;gap:.4em;color:#E6A93E;text-decoration:none;
+    border:1px solid rgba(230,169,62,.5);border-radius:8px;padding:8px 16px;font-weight:600;
+    transition:background .15s ease,border-color .15s ease,transform .15s ease;}
+  .pagenav-btn:hover{background:#E6A93E;color:#11161c;border-color:#E6A93E;transform:translateY(-1px);}
+  .pagenav-btn:focus-visible{outline:2px solid #E6A93E;outline-offset:2px;}
 </style>
 <style>
 .sitenav{border-bottom:1px solid var(--line,#27313c);font-family:inherit;}
@@ -117,8 +123,8 @@ python run_all.py</pre>
   </div>
 
   <nav class="prevnext" aria-label="Previous and next page" style="display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:40px;padding-top:18px;border-top:1px solid #1b2530;font-size:.95rem;">
-    <a href="Citizens_Standard_Engine.html" style="color:var(--amber,#e6a93e);text-decoration:none;">&larr; Engine</a>
-    <a href="questions_and_answers.html" style="color:var(--amber,#e6a93e);text-decoration:none;">Q&amp;A &rarr;</a>
+    <a href="Citizens_Standard_Engine.html" class="pagenav-btn">&larr; Engine</a>
+    <a href="questions_and_answers.html" class="pagenav-btn">Q&amp;A &rarr;</a>
   </nav>
 </main>
 

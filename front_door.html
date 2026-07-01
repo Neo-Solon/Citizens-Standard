@@ -51,11 +51,14 @@
   header.wrap{padding:60px 24px 8px}
   .kicker{color:var(--amber);margin-bottom:42px}
   .kicker b{color:var(--text);font-weight:700}
-  h1.display{font-size:clamp(2.4rem,7vw,3.4rem);margin-bottom:28px}
+  h1.display{font-size:clamp(2.4rem,7vw,3.4rem);margin-bottom:28px;text-align:center}
   h1 .turn2{color:#AEB6C0}
-  .subhead{display:block;font-family:"Bricolage Grotesque",sans-serif;font-weight:700;color:#AEB6C0;font-size:clamp(1.55rem,1.2rem + 1.8vw,2.3rem);letter-spacing:-0.01em;line-height:1.12;margin-top:.34em}
-  .lede{font-size:clamp(1.15rem,1.05rem + 0.5vw,1.4rem);color:#D9D3C6;max-width:36ch}
+  .subhead{display:block;text-align:center;font-family:"Bricolage Grotesque",sans-serif;font-weight:700;color:#AEB6C0;font-size:clamp(1.55rem,1.2rem + 1.8vw,2.3rem);letter-spacing:-0.01em;line-height:1.12;margin-top:.34em}
+  .lede{font-size:clamp(1.15rem,1.05rem + 0.5vw,1.4rem);color:#D9D3C6;max-width:36ch;margin-left:auto;margin-right:auto;text-align:center}
   .lede em{font-style:italic;color:var(--text)}
+  .text{text-align:center}
+  .text p{margin-left:auto;margin-right:auto;max-width:54ch}
+  .big{text-align:center;margin-left:auto;margin-right:auto;max-width:50ch}
 
   /* ---- draining dollar signature ---- */
   .meter{margin:52px 0 14px}
@@ -88,8 +91,8 @@
   .ineq .gloss b{color:var(--amber);font-weight:700}
 
   /* ---- the door ---- */
-  .door{margin:18px 0 96px;padding:48px 0 0;border-top:1px solid var(--line);text-align:left}
-  .door .q{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(1.5rem,1.1rem + 2.4vw,2.2rem);line-height:1.25;color:#fff;margin-bottom:26px;max-width:24ch}
+  .door{margin:18px 0 96px;padding:48px 0 0;border-top:1px solid var(--line);text-align:center}
+  .door .q{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(1.5rem,1.1rem + 2.4vw,2.2rem);line-height:1.25;color:#fff;margin-bottom:26px;max-width:24ch;margin-left:auto;margin-right:auto}
   .cta{display:inline-flex;align-items:center;gap:.6em;background:var(--amber);color:var(--amber-ink);
     font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.05rem;text-decoration:none;
     padding:16px 26px;border-radius:9px;transition:transform .15s ease, box-shadow .15s ease;box-shadow:0 0 0 0 rgba(230,169,62,.0)}
@@ -97,7 +100,7 @@
   .cta:focus-visible{outline:3px solid #fff;outline-offset:3px}
   .cta .arrow{transition:transform .18s ease}
   .cta:hover .arrow{transform:translateX(4px)}
-  .door .note{margin-top:22px;color:var(--dim);font-size:.95rem;max-width:40ch}
+  .door .note{margin-top:22px;color:var(--dim);font-size:.95rem;max-width:40ch;margin-left:auto;margin-right:auto}
 
   @media (max-width:560px){
     header.wrap{padding:42px 24px 4px}
@@ -109,6 +112,12 @@
     .bar .kept{width:12%;transition:none}
     .bar .seam,.tag{opacity:1;transition:none}
   }
+
+  .pagenav-btn{display:inline-flex;align-items:center;gap:.4em;color:#E6A93E;text-decoration:none;
+    border:1px solid rgba(230,169,62,.5);border-radius:8px;padding:8px 16px;font-weight:600;
+    transition:background .15s ease,border-color .15s ease,transform .15s ease;}
+  .pagenav-btn:hover{background:#E6A93E;color:#11161c;border-color:#E6A93E;transform:translateY(-1px);}
+  .pagenav-btn:focus-visible{outline:2px solid #E6A93E;outline-offset:2px;}
 </style>
 <style>
 .sitenav{border-bottom:1px solid var(--line,#27313c);font-family:inherit;}
@@ -119,7 +128,8 @@
 </style>
 <style>
   /* ---- see-the-difference instrument (merged in) ---- */
-  .lead-q{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(1.5rem,1.1rem + 2.4vw,2.2rem);line-height:1.25;color:#fff;max-width:26ch;margin:10px 0 0;padding:46px 0 0;border-top:1px solid var(--line)}
+  .lead-q{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(1.5rem,1.1rem + 2.4vw,2.2rem);line-height:1.25;color:#fff;margin:10px 0 0;padding:46px 0 0;border-top:1px solid var(--line);text-align:center}
+  .lead-q span{display:block;max-width:26ch;margin:0 auto}
   .see-intro{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;color:var(--amber);margin:34px 0 14px}
   .panel{margin:0 0 8px;background:var(--ink-soft);border:1px solid var(--line);border-radius:14px;padding:30px 28px}
   .ctrl-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;gap:12px}
@@ -203,7 +213,7 @@
 </section>
 
 <div class="wrap">
-  <p class="lead-q">So the real question isn&rsquo;t how to stop inflation. It&rsquo;s who gets to decide, and where the difference goes. What if both answers were you?</p>
+  <p class="lead-q"><span>So the real question isn&rsquo;t how to stop inflation. It&rsquo;s who gets to decide, and where the difference goes. What if both answers were you?</span></p>
   <p class="see-intro">See the difference</p>
   <div class="panel">
     <div class="ctrl-row">
@@ -256,7 +266,7 @@
     <p class="q">This is one dial out of many. Here&rsquo;s how the whole system actually works.</p>
     <a class="cta" href="how_the_engine_works.html">How the engine works <span class="arrow">&rarr;</span></a>
     <p class="note">A plain-language walk through all four channels &mdash; how each is calculated, why inflation falls out the back, and why every one can be set to zero. The full engine is one step further on.</p>
-    <p class="note" style="margin-top:30px;padding-top:22px;border-top:1px solid var(--line);max-width:46ch;">This framework shares its diagnosis with another independent project, <a href="https://publiccashmoney.com" style="color:var(--amber);text-decoration:none;">Public Cash Money</a>. <span style="color:#D9D3C6;">Two architectures, one engine.</span></p>
+    <p class="note" style="margin-top:30px;padding-top:22px;border-top:1px solid var(--line);"><span style="display:block;max-width:46ch;margin:0 auto;">This framework shares its diagnosis with another independent project, <a href="https://publiccashmoney.com" style="color:var(--amber);text-decoration:none;">Public Cash Money</a>. <span style="color:#D9D3C6;">Two architectures, one engine.</span></span></p>
   </div>
 </div>
 
