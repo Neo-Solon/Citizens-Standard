@@ -389,7 +389,7 @@
   <p class="kicker">The Citizens Standard &nbsp;&middot;&nbsp; <b>the engine</b></p>
   <h1>Interactive Model Builder</h1>
   <p class="subtitle">Tune the monetary issuance dials. Project a representative cohort 65 years. Compare against real-world median outcomes under seven alternative systems.</p>
-  <p class="meta">Companion tool to the SSRN paper by Neo-Solon. &nbsp;&middot;&nbsp; <a href="#methodology">Data sources &amp; methodology below</a>. &nbsp;&middot;&nbsp; <span style="opacity:0.6;">build v3.86</span></p>
+  <p class="meta">Companion tool to the SSRN paper by Neo-Solon. &nbsp;&middot;&nbsp; <a href="#methodology">Data sources &amp; methodology below</a>. &nbsp;&middot;&nbsp; <span style="opacity:0.6;">build v3.87</span></p>
 </header>
 
 <div class="card" style="background: var(--accent-bg); border-color: var(--accent); margin-bottom: 24px;">
@@ -655,7 +655,7 @@
 
 <div id="omega-view" style="display:none;">
   <div class="info-banner">
-    <strong>What this answers:</strong> "What if conditions change — aging, depopulation, an AI productivity boom?" <strong>Mode Λ</strong> is the adaptive configuration: instead of fixed channel settings, its K1, K2, and KI respond automatically to demographic and productivity conditions by published formula — no committee, no discretion. In calm conditions it runs conservatively (≈60% K2 capture, mild deflationary bias, no KI); its governors engage only when conditions warrant and revert at 25%/year once conditions normalize. Pick a scenario to watch the governors respond; the lifetime figures are the architecture paper §8.6's simulation results.
+    <strong>What this answers:</strong> "What if conditions change — aging, depopulation, an AI productivity boom?" <strong>Mode Λ</strong> is the adaptive configuration: instead of fixed channel settings, its K1, K2, and KI respond automatically to demographic and productivity conditions by published formula — no committee, no discretion. In calm conditions it runs conservatively (≈60% K2 capture, mild deflationary bias, no KI); its governors engage only when conditions warrant and revert at 25%/year once conditions normalize. Pick a scenario to watch the governors respond; the lifetime figures are the architecture paper §9.6's simulation results.
   </div>
   <div class="scenario-pills" id="omega-pills" style="margin-top:12px;">
     <button class="pill active" data-omega="normal">Normal (+0.3% pop)</button>
@@ -665,14 +665,14 @@
     <button class="pill" data-omega="prodboom">Productivity boom + negative pop</button>
   </div>
   <div class="stats" style="margin-top:16px;">
-    <div class="stat"><p class="stat-label">Stable Floor at 65 (real)</p><p class="stat-val" id="omega-floor">—</p><p class="stat-sub">the architecture paper §8.6 simulation</p></div>
+    <div class="stat"><p class="stat-label">Stable Floor at 65 (real)</p><p class="stat-val" id="omega-floor">—</p><p class="stat-sub">the architecture paper §9.6 simulation</p></div>
     <div class="stat"><p class="stat-label">Annual real income</p><p class="stat-val" id="omega-income">—</p><p class="stat-sub">at 5% withdrawal</p></div>
     <div class="stat"><p class="stat-label">Governors</p><p class="stat-val" id="omega-gov" style="font-size:16px">—</p><p class="stat-sub" id="omega-note">—</p></div>
   </div>
   <div class="legend" id="omega-legend"></div>
   <div class="chart-wrap"><canvas id="omega-chart" role="img" aria-label="Mode Omega governor response chart"></canvas></div>
   <p style="font-size:12px; color:var(--text-dim); margin:16px 0 0; line-height:1.6;">
-    <strong>Mode Λ guardrails (Architecture §8):</strong> every multiplier, threshold, and reversion rate is formula-specified and publicly auditable — adaptive means the formula responds to observable data, not that anyone exercises judgment. K1 is capped at 2.0× base; combined issuance is capped at 3.5% of M2; the conditional KI issues 0–0.6% of M2 (split 60% to Stable Floors / 40% spendable), activates only on sustained deflation (&gt;1.2%) or demographic stress with weak wage growth, and carries a 36-month sunset with mandatory reaffirmation. Governors above baseline revert at 25%/year once the trigger resolves. Floor figures are the paper's §8.6 results; the three negative-pop scenarios share the same governor path and differ only by equity return. Governor paths shown are illustrative of that response (cf. Figure 5).
+    <strong>Mode Λ guardrails (Architecture §9):</strong> every multiplier, threshold, and reversion rate is formula-specified and publicly auditable — adaptive means the formula responds to observable data, not that anyone exercises judgment. K1 is capped at 2.0× base; combined issuance is capped at 3.5% of M2; the conditional KI issues 0–0.6% of M2 (split 60% to Stable Floors / 40% spendable), activates only on sustained deflation (&gt;1.2%) or demographic stress with weak wage growth, and carries a 36-month sunset with mandatory reaffirmation. Governors above baseline revert at 25%/year once the trigger resolves. Floor figures are the paper's §9.6 results; the three negative-pop scenarios share the same governor path and differ only by equity return. Governor paths shown are illustrative of that response (cf. Figure 5).
   </p>
 </div>
 
@@ -1358,20 +1358,24 @@
       ' <span style="opacity:.65">(model default ' + (p.er * 100).toFixed(1) + '%)</span>';
 
     if ($('chartCaption')) $('chartCaption').textContent = '';
-    if (activeTab === 'compare') {
-      drawCompareTable(p, sim);
-    } else if (activeTab === 'inflation') {
-      drawInflationChart(p, sim);
-      drawTool14(p);
-    } else if (activeTab === 'stress') {
-      drawStressChart(p, sim);
-    } else if (activeTab === 'modet') {
-      drawModeT(p);
-    } else if (activeTab === 'omega') {
-      drawOmega();
-    } else {
-      drawChart(sim, p);
-    }
+    // Chart rendering is wrapped so a missing/slow Chart.js never propagates an error up through
+    // update() — the numeric readouts above are already set by this point, so the panel stays populated.
+    try {
+      if (activeTab === 'compare') {
+        drawCompareTable(p, sim);
+      } else if (activeTab === 'inflation') {
+        drawInflationChart(p, sim);
+        drawTool14(p);
+      } else if (activeTab === 'stress') {
+        drawStressChart(p, sim);
+      } else if (activeTab === 'modet') {
+        drawModeT(p);
+      } else if (activeTab === 'omega') {
+        drawOmega();
+      } else {
+        drawChart(sim, p);
+      }
+    } catch (e) { /* chart unavailable (e.g. CDN not yet loaded) — readouts remain populated */ }
   }
 
   function drawCompareTable(p, sim) {
@@ -1588,7 +1592,7 @@
     });
   }
 
-  // ===== Mode Λ (adaptive) — reproduces the architecture paper §8.6 simulation outcomes =====
+  // ===== Mode Λ (adaptive) — reproduces the architecture paper §9.6 simulation outcomes =====
   const OMEGA_SCENARIOS = {
     normal:      { floor:403000,  demo:false, prod:false, gov:'inactive',                note:'Base case on the realizable basis (Table 8): ~60% K2 capture, mild deflationary bias, no KI' },
     negpop:      { floor:480000,  demo:true,  prod:false, gov:'demographic active',      note:'+19% vs the normal-conditions floor from the demographic governor (Table 8, realizable basis)' },
@@ -2342,8 +2346,24 @@
     });
   }
 
-  applyCountryDefaults();   // window the sliders to the initial country (US) on first load
-  applyMode('B');
+  // First render. Wrapped so a slow or blocked Chart.js CDN can never leave the numbers empty:
+  // the text readouts are populated even if the charts cannot draw yet.
+  function firstRender(){
+    try {
+      applyCountryDefaults();   // window the sliders to the initial country (US) on first load
+      applyMode('B');
+    } catch (e) {
+      // If anything in the chart path throws (e.g. Chart.js not yet available), still fill the
+      // numeric readouts directly so the panel is never blank on load.
+      try { update(); } catch (e2) {}
+    }
+  }
+  firstRender();
+  // Re-render once all resources (including the Chart.js CDN) have finished loading, so the charts
+  // appear and any first-paint race that left values stale is corrected. Harmless if already drawn.
+  if (typeof window !== 'undefined' && window.addEventListener) {
+    window.addEventListener('load', () => { try { update(); } catch (e) {} });
+  }
 })();
 </script>
 
