@@ -61,16 +61,19 @@
   .modes { display: flex; gap: 8px; margin: 24px 0; flex-wrap: nowrap; }
   .mode-btn {
     flex: 1; text-align: center; white-space: nowrap;
-    padding: 10px 8px;
+    padding: 9px 8px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
     cursor: pointer;
-    font-size: 13px;
     color: var(--text);
     font-family: var(--font);
     transition: all 0.15s ease;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    min-height: 46px; justify-content: center;
   }
+  .mode-btn .mb-name { font-size: 13px; font-weight: 600; line-height: 1.1; }
+  .mode-btn .mb-sub  { font-size: 11px; line-height: 1.1; color: var(--accent-text); opacity: 0.82; letter-spacing: 0.2px; }
   @media (max-width: 640px) { .modes { flex-wrap: wrap; } .mode-btn { flex: 1 1 40%; } }
   .mode-btn:hover { border-color: var(--border-strong); }
   .mode-btn.active {
@@ -78,7 +81,7 @@
     background: var(--accent-bg);
     color: var(--accent-text);
     border-width: 2px;
-    padding: 9px 15px;
+    padding: 8px 7px;
   }
 
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
@@ -339,7 +342,7 @@
   h1{font-weight:800;letter-spacing:-0.02em;}
   .container{max-width:980px;}
   body{font-size:17px;}
-  .mode-btn.active{background:var(--accent);border-color:var(--accent);color:var(--amber-ink);}
+  .mode-btn.active{background:var(--accent);border-color:var(--accent);color:var(--amber-ink);} .mode-btn.active .mb-sub{color:var(--amber-ink);opacity:0.72;} .mode-btn.active .mb-name{color:var(--amber-ink);}
   .pill.active{color:var(--amber-ink);}
   .row .readout{flex:0 0 auto;white-space:nowrap;padding-left:6px;}
   .info-banner{color:var(--accent-text);}
@@ -386,7 +389,7 @@
   <p class="kicker">The Citizens Standard &nbsp;&middot;&nbsp; <b>the engine</b></p>
   <h1>Interactive Model Builder</h1>
   <p class="subtitle">Tune the monetary issuance dials. Project a representative cohort 65 years. Compare against real-world median outcomes under seven alternative systems.</p>
-  <p class="meta">Companion tool to the SSRN paper by Neo-Solon. &nbsp;&middot;&nbsp; <a href="#methodology">Data sources &amp; methodology below</a>.</p>
+  <p class="meta">Companion tool to the SSRN paper by Neo-Solon. &nbsp;&middot;&nbsp; <a href="#methodology">Data sources &amp; methodology below</a>. &nbsp;&middot;&nbsp; <span style="opacity:0.6;">build v3.86</span></p>
 </header>
 
 <div class="card" style="background: var(--accent-bg); border-color: var(--accent); margin-bottom: 24px;">
@@ -400,24 +403,42 @@
 </div>
 
 <div class="card">
-  <p class="card-title" style="display:flex;align-items:center;justify-content:space-between;gap:8px;">Launch parameters <button id="resetParams" type="button" title="Restore the calibrated US baseline (M2, GDP, population, market cap, horizon, average holding period). Does not change the selected Mode or the channel sliders." style="font:inherit;font-size:11px;font-weight:600;color:var(--accent-text);background:transparent;border:1px solid var(--border-strong);border-radius:5px;padding:2px 9px;cursor:pointer;">Reset to US baseline</button></p>
+  <p class="card-title" style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+    <span style="display:flex;align-items:center;gap:8px;">Launch parameters
+      <select id="countrySel" title="Switch the calibration between countries. Each is built from primary-source national data (see the UK calibration note)." style="font:inherit;font-size:11px;font-weight:600;color:var(--accent-text);background:var(--surface,#18212B);border:1px solid var(--border-strong);border-radius:5px;padding:2px 6px;cursor:pointer;-webkit-appearance:none;appearance:none;">
+        <option value="US" style="background:#18212B;color:#F0D9A6;">United States ($)</option>
+        <option value="EZ" style="background:#18212B;color:#F0D9A6;">Eurozone (€)</option>
+        <option value="IN" style="background:#18212B;color:#F0D9A6;">India (₹)</option>
+        <option value="JP" style="background:#18212B;color:#F0D9A6;">Japan (¥)</option>
+        <option value="UK" style="background:#18212B;color:#F0D9A6;">United Kingdom (£)</option>
+        <option value="CA" style="background:#18212B;color:#F0D9A6;">Canada (C$)</option>
+        <option value="KR" style="background:#18212B;color:#F0D9A6;">South Korea (₩)</option>
+        <option value="AU" style="background:#18212B;color:#F0D9A6;">Australia (A$)</option>
+        <option value="CH" style="background:#18212B;color:#F0D9A6;">Switzerland (CHF)</option>
+        <option value="SE" style="background:#18212B;color:#F0D9A6;">Sweden (kr)</option>
+        <option value="NO" style="background:#18212B;color:#F0D9A6;">Norway (kr)</option>
+      </select>
+    </span>
+    <button id="resetParams" type="button" title="Restore the calibrated baseline for the selected country. Does not change the selected Mode or the channel sliders." style="font:inherit;font-size:11px;font-weight:600;color:var(--accent-text);background:transparent;border:1px solid var(--border-strong);border-radius:5px;padding:2px 9px;cursor:pointer;">Reset to baseline</button></p>
+    <div id="countryCaveat" style="display:none;margin:-2px 0 10px;padding:8px 11px;font-size:11.5px;line-height:1.5;color:var(--accent-text);background:rgba(240,217,166,0.07);border:1px solid var(--border-strong);border-left:3px solid var(--accent);border-radius:5px;"></div>
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px 24px;">
-    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">M2 ($T)</span><input type="range" id="m2" min="5" max="60" step="0.5" value="22.4"><span class="readout" id="m2r">$22.4T</span></div>
-    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">GDP ($T)</span><input type="range" id="gdp" min="5" max="80" step="0.5" value="30.8"><span class="readout" id="gdpr">$30.8T</span></div>
-    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">Pop. (M)</span><input type="range" id="pop" min="10" max="800" step="5" value="342"><span class="readout" id="popr">342M</span></div>
+    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">M2 ($T)</span><input type="range" id="m2" min="6.5" max="67.5" step="0.5" value="22.4"><span class="readout" id="m2r">$22.4T</span></div>
+    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">GDP ($T)</span><input type="range" id="gdp" min="9" max="92" step="0.5" value="30.8"><span class="readout" id="gdpr">$30.8T</span></div>
+    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">Pop. (M)</span><input type="range" id="pop" min="102" max="1026" step="1" value="342"><span class="readout" id="popr">342M</span></div>
     <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">Horizon</span><input type="range" id="hz" min="20" max="80" step="1" value="65"><span class="readout" id="hzr">65y</span></div>
-    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">Mkt cap ($T)</span><input type="range" id="mkt" min="10" max="120" step="1" value="69.1"><span class="readout" id="mktr">$69T</span></div>
-    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">Avg hold (y)</span><input type="range" id="dur" min="5" max="60" step="1" value="40"><span class="readout" id="durr">40y</span></div>
+    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">Mkt cap ($T)</span><input type="range" id="mkt" min="20" max="207" step="1" value="69.1"><span class="readout" id="mktr">$69T</span></div>
+    <div class="row" style="margin: 0;"><span class="label" style="flex: 0 0 90px;">Avg hold (y)</span><span style="flex:1;font-size:11px;color:var(--text-dim);padding-left:2px;">derived from horizon</span><span class="readout" id="durr">40y</span></div>
   </div>
 </div>
 
 <div class="modes" role="tablist">
-  <button class="mode-btn" data-mode="A" title="Mild deflation: every dollar a citizen holds gains purchasing power. No monthly dividend.">Mode A · Deflation</button>
-  <button class="mode-btn active" data-mode="B" title="Price stability with a standing dividend: the 60/40 split puts 60% of the budget in the locked floor and pays out 40%. Highest Stable Floor of the base modes (~$413K on the realizable basis).">Mode B · Stable</button>
-  <button class="mode-btn" data-mode="C" title="Modest ~2% inflation. K1/K2 stay at a low floor-building rate; the KI inflation-gap channel funds a meaningful monthly dividend (~$108/citizen). Trades a smaller locked floor for visible income now.">Mode C · Inflation</button>
-      <button class="mode-btn" data-mode="D" title="Pure dividend, zero index. K1=0 and the entire growth budget pays out as a standing dividend (κ_d=100%), so the state buys no equity at all (A*=0, ψ*=0) — yet issuance still grows at exactly real output, so prices stay stable. Trades the locked floor for a price-stable cash dividend at the M^T locus (~$56/citizen/mo). Pushing K2 to 100% overshoots the locus and inflates.">Mode D · Pure Dividend</button>
-  <button class="mode-btn" data-mode="Z" title="The limiting case where every creation channel is off (K1=K2=KI=0): no new money is created at all. With real output still growing, the same money buys more each year, so prices fall at roughly the real-growth rate. This recovers the fixed-supply / hard-money (gold-standard) outcome as one admissible setting of the same engine — proof that the framework is a dial, not a printing press.">Zero-Issuance Limit</button>
-  <button class="mode-btn" data-mode="X">Custom</button>
+  <button class="mode-btn" data-mode="A" title="Mild deflation: every dollar a citizen holds gains purchasing power. No monthly dividend."><span class="mb-name">Mode A</span><span class="mb-sub">Deflation</span></button>
+  <button class="mode-btn active" data-mode="B" title="The full-rate 60/40 split: issues at the full growth rate, putting 60% of the budget in the locked floor and paying out 40% as a standing dividend. Highest Stable Floor of the base modes (~$413K on the realizable basis). Holds prices stable near trend growth; for guaranteed price stability in any economy, use Mode Ω."><span class="mb-name">Mode B</span><span class="mb-sub">Split Dividend</span></button>
+  <button class="mode-btn" data-mode="C" title="Modest ~2% inflation. K1/K2 stay at a low floor-building rate; the KI inflation-gap channel funds a meaningful monthly dividend (~$108/citizen). Trades a smaller locked floor for visible income now."><span class="mb-name">Mode C</span><span class="mb-sub">Inflation</span></button>
+      <button class="mode-btn" data-mode="D" title="Pure dividend, zero index. K1=0 and the entire growth budget pays out as a standing dividend (κ_d=100%), so the state buys no equity at all (A*=0, ψ*=0) — yet issuance still grows at exactly real output, so prices stay stable. Trades the locked floor for a price-stable cash dividend at the M^T locus (~$56/citizen/mo). Pushing K2 to 100% overshoots the locus and inflates."><span class="mb-name">Mode D</span><span class="mb-sub">Pure Dividend</span></button>
+  <button class="mode-btn" data-mode="O" title="True price stability, per economy. Holds prices flat in both directions. Starting from the 60/40 split, it trims the dividend where the economy would otherwise inflate (routing the freed budget into the locked floor) and adds the inflation-gap channel where it would otherwise deflate (relocating that value into the spendable dividend). Prices hold at ~0% everywhere; total lifetime value is preserved or higher. Justified over tolerating mild deflation by the downward-nominal-wage-rigidity cost."><span class="mb-name">Mode Ω</span><span class="mb-sub">Price Stability</span></button>
+  <button class="mode-btn" data-mode="Z" title="The limiting case where every creation channel is off (K1=K2=KI=0): no new money is created at all. With real output still growing, the same money buys more each year, so prices fall at roughly the real-growth rate. This recovers the fixed-supply / hard-money (gold-standard) outcome as one admissible setting of the same engine — proof that the framework is a dial, not a printing press."><span class="mb-name">Mode Z</span><span class="mb-sub">Zero-Issuance</span></button>
+  <button class="mode-btn" data-mode="X"><span class="mb-name">Custom</span><span class="mb-sub">Manual</span></button>
 </div>
 
 <div class="grid">
@@ -435,15 +456,15 @@
       <p class="card-note" style="margin:3px 0 0;">The bar is one fixed budget. Sliding κ_d moves the boundary between locked (asset circuit, M<sup>a</sup> — does not chase goods) and spendable (transactional circuit, M<sup>T</sup> — the only part that touches prices). The total width never changes: that is why the split is price-neutral.</p>
     </div>
     <div class="row" style="margin-top:8px"><span class="label">KI — Inflation-gap</span><input type="range" id="ki" min="0" max="6" step="0.05" value="0"><span class="readout" id="kir">0.0%</span></div>
-    <p class="card-note">K1: % of GDP per capita per new citizen. <strong>K2 — Growth rate:</strong> the share of the real-growth-matched budget that is issued — 100% holds prices stable (Mode B), ~17.5% gives mild deflation (Mode A). This sets <em>how much</em> new money is created. <strong>K2/K3 split (κ_d):</strong> of that one budget, how much locks into Stable Floors (K2) versus pays out as a monthly dividend (K3) — the two shares sum to 100% and the split is price-neutral (it moves money between locked and spendable, not the total). <strong>KI — Inflation-gap:</strong> % of M2 issued <em>above</em> the growth line; the only channel that creates inflation (Mode C).</p>
+    <p class="card-note">K1: % of GDP per capita per new citizen. <strong>K2 — Growth rate:</strong> the share of the real-growth-matched budget that is issued — 100% is the full-rate 60/40 split (Mode B); ~17.5% gives mild deflation (Mode A). This sets <em>how much</em> new money is created. <strong>K2/K3 split (κ_d):</strong> of that one budget, how much locks into Stable Floors (K2) versus pays out as a monthly dividend (K3) — the two shares sum to 100% and the split is price-neutral (it moves money between locked and spendable, not the total). <strong>KI — Inflation-gap:</strong> % of M2 issued <em>above</em> the growth line; the only channel that creates inflation (Mode C).</p>
   </div>
 
   <div class="card">
     <p class="card-title">Macro environment</p>
-    <div class="row"><span class="label">Real growth</span><input type="range" id="rg" min="-3" max="5" step="0.1" value="2.0"><span class="readout" id="rgr">2.0%</span></div>
-    <div class="row"><span class="label">Pop. growth</span><input type="range" id="pg" min="-0.5" max="2" step="0.1" value="0.5"><span class="readout" id="pgr">0.5%</span></div>
+    <div class="row"><span class="label">Real growth</span><input type="range" id="rg" min="-3" max="10" step="0.1" value="2.0"><span class="readout" id="rgr">2.0%</span></div>
+    <div class="row"><span class="label">Pop. growth</span><input type="range" id="pg" min="-1" max="2" step="0.1" value="0.5"><span class="readout" id="pgr">0.5%</span></div>
     <div class="row"><span class="label">Realizable equity return</span><input type="range" id="er" min="2" max="10" step="0.1" value="4.3"><span class="readout" id="err">4.3%</span></div>
-    <div style="display: flex; gap: 6px; margin: -4px 0 8px; padding-left: 142px; flex-wrap: wrap;">
+    <div id="erBandRow" style="display: flex; gap: 6px; margin: 2px 0 8px; flex-wrap: wrap; justify-content: center;">
       <button class="er-preset" data-er="3.3" title="Low end of the Mode B realizable band (the macroeconomic model §6.7): high capital share / low MPK.">Low band 3.3%</button>
       <button class="er-preset active" data-er="4.3" title="Mode B central realizable return: attenuated MPK of the deepened stock at the 60/40 split (the macroeconomic model §6.7).">Central 4.3%</button>
       <button class="er-preset" data-er="5.0" title="High end of the Mode B realizable band (the macroeconomic model §6.7).">High band 5.0%</button>
@@ -482,7 +503,7 @@
   <div class="tab" data-tab="inflation">Inflation</div>
   <div class="tab" data-tab="stress">Stress test</div>
   <div class="tab" data-tab="modet">Mode T</div>
-  <div class="tab" data-tab="omega">Mode Ω</div>
+  <div class="tab" data-tab="omega">Mode Λ</div>
 </div>
 
 <div id="chart-view">
@@ -634,7 +655,7 @@
 
 <div id="omega-view" style="display:none;">
   <div class="info-banner">
-    <strong>What this answers:</strong> "What if conditions change — aging, depopulation, an AI productivity boom?" <strong>Mode Ω</strong> is the adaptive configuration: instead of fixed channel settings, its K1, K2, and KI respond automatically to demographic and productivity conditions by published formula — no committee, no discretion. In calm conditions it runs conservatively (≈60% K2 capture, mild deflationary bias, no KI); its governors engage only when conditions warrant and revert at 25%/year once conditions normalize. Pick a scenario to watch the governors respond; the lifetime figures are the architecture paper §8.6's simulation results.
+    <strong>What this answers:</strong> "What if conditions change — aging, depopulation, an AI productivity boom?" <strong>Mode Λ</strong> is the adaptive configuration: instead of fixed channel settings, its K1, K2, and KI respond automatically to demographic and productivity conditions by published formula — no committee, no discretion. In calm conditions it runs conservatively (≈60% K2 capture, mild deflationary bias, no KI); its governors engage only when conditions warrant and revert at 25%/year once conditions normalize. Pick a scenario to watch the governors respond; the lifetime figures are the architecture paper §8.6's simulation results.
   </div>
   <div class="scenario-pills" id="omega-pills" style="margin-top:12px;">
     <button class="pill active" data-omega="normal">Normal (+0.3% pop)</button>
@@ -651,7 +672,7 @@
   <div class="legend" id="omega-legend"></div>
   <div class="chart-wrap"><canvas id="omega-chart" role="img" aria-label="Mode Omega governor response chart"></canvas></div>
   <p style="font-size:12px; color:var(--text-dim); margin:16px 0 0; line-height:1.6;">
-    <strong>Mode Ω guardrails (Architecture §8):</strong> every multiplier, threshold, and reversion rate is formula-specified and publicly auditable — adaptive means the formula responds to observable data, not that anyone exercises judgment. K1 is capped at 2.0× base; combined issuance is capped at 3.5% of M2; the conditional KI issues 0–0.6% of M2 (split 60% to Stable Floors / 40% spendable), activates only on sustained deflation (&gt;1.2%) or demographic stress with weak wage growth, and carries a 36-month sunset with mandatory reaffirmation. Governors above baseline revert at 25%/year once the trigger resolves. Floor figures are the paper's §8.6 results; the three negative-pop scenarios share the same governor path and differ only by equity return. Governor paths shown are illustrative of that response (cf. Figure 5).
+    <strong>Mode Λ guardrails (Architecture §8):</strong> every multiplier, threshold, and reversion rate is formula-specified and publicly auditable — adaptive means the formula responds to observable data, not that anyone exercises judgment. K1 is capped at 2.0× base; combined issuance is capped at 3.5% of M2; the conditional KI issues 0–0.6% of M2 (split 60% to Stable Floors / 40% spendable), activates only on sustained deflation (&gt;1.2%) or demographic stress with weak wage growth, and carries a 36-month sunset with mandatory reaffirmation. Governors above baseline revert at 25%/year once the trigger resolves. Floor figures are the paper's §8.6 results; the three negative-pop scenarios share the same governor path and differ only by equity return. Governor paths shown are illustrative of that response (cf. Figure 5).
   </p>
 </div>
 
@@ -684,11 +705,174 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 (function(){
+  // ---- Country calibration configs (see country_calibrations/UK_Calibration_Note.md) ----
+  // Every UK figure is primary-sourced (BoE, ONS, LSE) or triangulated; the M^T share and
+  // realizable return are constructed with method shown in the calibration note.
+  const COUNTRIES = {
+    US: {
+      name: 'United States', cur: '$', broad: 'M2',
+      mu: 0.5135,                    // M^T/M2 (Paper 10)
+      defaults: { m2: 22.4, gdp: 30.8, pop: 342, mkt: 69.1 },
+      growth: { rg: 2.0, pg: 0.5 },   // real GDP growth %, population growth % (sourced macro environment)
+      er: { A: 5.4, B: 4.3, C: 5.4, D: 6.67, Z: 6.67 },   // realizable returns by mode
+      erBand: [                      // realizable-return preset buttons (band + per-mode)
+        { v: 3.3,  label: 'Low band 3.3%',    t: 'Low end of the Mode B realizable band: high capital share / low MPK.' },
+        { v: 4.3,  label: 'Central 4.3%',     t: 'Mode B central realizable return: attenuated MPK of the deepened stock at the 60/40 split.' },
+        { v: 5.0,  label: 'High band 5.0%',   t: 'High end of the Mode B realizable band.' },
+        { v: 5.4,  label: 'Low-capture 5.4%', t: 'Low-capture return for Modes A and C: the lighter deposit barely deepens the stock.' },
+        { v: 6.67, label: 'No-index 6.7%',    t: 'Mode D builds no floor and buys no index, so the equity return stays unattenuated.' }
+      ]
+    },
+    UK: {
+      name: 'United Kingdom', cur: '\u00A3', broad: 'M4',
+      mu: 0.697,                     // M^T/M4 = M1/M4 = 2280/3272 (BoE); genuinely higher than US
+      defaults: { m2: 3.27, gdp: 3.04, pop: 69.5, mkt: 2.96 },  // £T; £T; M; £T (BoE/ONS/LSE)
+      growth: { rg: 1.2, pg: 0.6 },   // real GDP growth %, population growth % (sourced macro environment)
+      er: { A: 5.9, B: 4.68, C: 5.9, D: 7.33, Z: 7.33 },  // UK realizable (triangulated); baseline 7.33%, Mode B 4.68%
+      erBand: [                      // UK band: central 4.68 triangulated, spread parallel to US
+        { v: 3.6,  label: 'Low band 3.6%',    t: 'Low end of the UK Mode B realizable band (calibration note §3).' },
+        { v: 4.68, label: 'Central 4.68%',    t: 'UK Mode B central realizable return: 7.33% baseline attenuated at the 60/40 split; triangulated against DMS UK equity 5.3% (calibration note §3).' },
+        { v: 5.4,  label: 'High band 5.4%',   t: 'High end of the UK Mode B realizable band.' },
+        { v: 5.9,  label: 'Low-capture 5.9%', t: 'UK low-capture return for Modes A and C.' },
+        { v: 7.33, label: 'No-index 7.3%',    t: 'UK Mode D: no floor, no index, unattenuated UK baseline return 7.33%.' }
+      ]
+    },
+    CA: {
+      name: 'Canada', cur: 'C$', broad: 'M2',
+      mu: 0.615,                     // M^T/M2 = M1+/M2 = 1734/2817 (BoC); between US and UK
+      defaults: { m2: 2.82, gdp: 3.2, pop: 41.5, mkt: 6.2 },  // C$T; C$T; M; C$T (BoC/StatCan/TMX)
+      growth: { rg: 1.7, pg: 0.8 },   // real GDP growth %, population growth % (sourced macro environment)
+      er: { A: 6.2, B: 4.9, C: 6.2, D: 7.67, Z: 7.67 },  // Canada realizable (two-path); baseline 7.67%, Mode B 4.90%
+      erBand: [                      // Canada band: central 4.90, spread parallel to US
+        { v: 3.8,  label: 'Low band 3.8%',    t: 'Low end of the Canada Mode B realizable band (calibration note §3).' },
+        { v: 4.9,  label: 'Central 4.9%',     t: 'Canada Mode B central realizable return: 7.67% baseline attenuated; cross-checked against DMS Canada equity ~5.6% (calibration note §3).' },
+        { v: 5.7,  label: 'High band 5.7%',   t: 'High end of the Canada Mode B realizable band.' },
+        { v: 6.2,  label: 'Low-capture 6.2%', t: 'Canada low-capture return for Modes A and C.' },
+        { v: 7.67, label: 'No-index 7.7%',    t: 'Canada Mode D: no floor, no index, unattenuated Canada baseline return 7.67%.' }
+      ]
+    },
+    EZ: {
+      name: 'Eurozone', cur: '\u20AC', broad: 'M3',
+      mu: 0.655,                     // M^T/M3 = M1/M3 = 11.27/17.2 (ECB); currency + overnight deposits
+      defaults: { m2: 17.2, gdp: 15.9, pop: 349, mkt: 10.8 },  // €T; €T; M; €T (ECB/Eurostat, euro area not EU-27)
+      growth: { rg: 1.4, pg: 0.2 },   // real GDP growth %, population growth % (sourced macro environment)
+      er: { A: 6.3, B: 5.0, C: 6.3, D: 7.83, Z: 7.83 },  // euro-area realizable (two-path); labour share 0.615 (ECB adjusted) -> alpha 0.385 -> baseline 7.83%, Mode B 5.00%
+      caveat: 'Boundary case: no single euro member can implement CS alone (the ECB, not any member, issues euros). The euro area can implement it only if members collectively agree to unified ECB citizen-issuance — then the bloc is the monetary sovereign. The barrier is political integration, not economics (Paper 3, De Grauwe). These figures model the bloc as if that agreement were in place.',
+      erBand: [                      // Eurozone band: central 5.00, spread parallel to US
+        { v: 3.8,  label: 'Low band 3.8%',    t: 'Low end of the euro-area Mode B realizable band (calibration note §3).' },
+        { v: 5.0,  label: 'Central 5.0%',     t: 'Euro-area Mode B central realizable return: 7.83% baseline (labour share 0.615, ECB-adjusted) attenuated; cross-checked against DMS Europe equity ~4.5-5% (calibration note §3).' },
+        { v: 5.8,  label: 'High band 5.8%',   t: 'High end of the euro-area Mode B realizable band.' },
+        { v: 6.3,  label: 'Low-capture 6.3%', t: 'Euro-area low-capture return for Modes A and C.' },
+        { v: 7.83, label: 'No-index 7.8%',    t: 'Euro-area Mode D: no floor, no index, unattenuated euro-area baseline return 7.83%.' }
+      ]
+    },
+    JP: {
+      name: 'Japan', cur: '\u00A5', broad: 'M3',
+      mu: 0.695,                     // M^T/M3 = M1/M3 = 1103/1586 (BoJ); currency + demand deposits
+      defaults: { m2: 1586, gdp: 600, pop: 123, mkt: 1200 },  // ¥T; ¥T; M; ¥T (BoJ/MoF/Statistics Bureau)
+      growth: { rg: 1.0, pg: -0.5 },   // real GDP growth %, population growth % (sourced macro environment)
+      er: { A: 5.3, B: 4.2, C: 5.3, D: 6.5, Z: 6.5 },  // Japan realizable: DMS-anchored (production-function overstates; Lost Decades)
+      erBand: [                      // Japan band: central 4.2 (DMS-anchored, NOT the 5.75% PF figure)
+        { v: 3.2,  label: 'Low band 3.2%',    t: 'Low end of the Japan Mode B realizable band (calibration note §3).' },
+        { v: 4.2,  label: 'Central 4.2%',     t: 'Japan Mode B central realizable return: anchored on DMS Japan historical equity ~4.0-4.5%, NOT the production-function 5.75% (which overstates, given the Lost Decades). Calibration note §3.' },
+        { v: 4.9,  label: 'High band 4.9%',   t: 'High end of the Japan Mode B realizable band; captures upside if TSE governance reform lifts ROE.' },
+        { v: 5.3,  label: 'Low-capture 5.3%', t: 'Japan low-capture return for Modes A and C.' },
+        { v: 6.5,  label: 'No-index 6.5%',    t: 'Japan Mode D: no floor, no index, unattenuated return.' }
+      ]
+    },
+    KR: {
+      name: 'South Korea', cur: '\u20A9', broad: 'M2',
+      mu: 0.303,                     // M^T/M2 = M1/M2 = 1357/4472 (BoK); LOW - Korea's broad M2 (incl. ETFs, IMF-flagged)
+      defaults: { m2: 4472, gdp: 2560, pop: 51.6, mkt: 3830 },  // ₩T; ₩T; M; ₩T (BoK/Korea Exchange/Statistics Korea)
+      growth: { rg: 1.8, pg: -0.1 },   // real GDP growth %, population growth % (sourced macro environment)
+      er: { A: 5.9, B: 4.7, C: 5.9, D: 7.3, Z: 7.3 },  // Korea realizable; PF 5.3% tempered by 'Korea discount', reform upside in band
+      erBand: [                      // South Korea band: central 4.7
+        { v: 3.6,  label: 'Low band 3.6%',    t: 'Low end of the Korea Mode B realizable band (calibration note §3).' },
+        { v: 4.7,  label: 'Central 4.7%',     t: 'Korea Mode B central realizable return: production-function 5.3% tempered by the "Korea discount" (low valuations/governance); value-up reforms give upside. Calibration note §3.' },
+        { v: 5.5,  label: 'High band 5.5%',   t: 'High end of the Korea Mode B realizable band; captures value-up reform upside.' },
+        { v: 5.9,  label: 'Low-capture 5.9%', t: 'Korea low-capture return for Modes A and C.' },
+        { v: 7.3,  label: 'No-index 7.3%',    t: 'Korea Mode D: no floor, no index, unattenuated return.' }
+      ]
+    },
+    AU: {
+      name: 'Australia', cur: 'A$', broad: 'M3',
+      mu: 0.577,                     // M^T/M3 = M1/M3 = 1990/3449 (RBA); currency + bank current deposits
+      defaults: { m2: 3.449, gdp: 2.7, pop: 27.4, mkt: 3.3 },  // A$T; A$T; M; A$T (RBA/ABS/ASX) - trillions, consistent with other countries
+      growth: { rg: 2.1, pg: 1.0 },   // real GDP growth %, population growth % (sourced macro environment)
+      er: { A: 6.8, B: 5.4, C: 6.8, D: 8.4, Z: 8.4 },  // Australia realizable: both paths agree HIGH (DMS ~6.4%, high capital share)
+      erBand: [                      // Australia band: central 5.4 (highest of set; both paths agree)
+        { v: 4.1,  label: 'Low band 4.1%',    t: 'Low end of the Australia Mode B realizable band (calibration note §3).' },
+        { v: 5.4,  label: 'Central 5.4%',     t: 'Australia Mode B central realizable return: production-function (~6.2%) and DMS Australia equity (~6.4%) agree on an above-average return; central set below levered equity. Calibration note §3.' },
+        { v: 6.3,  label: 'High band 6.3%',   t: 'High end of the Australia Mode B realizable band.' },
+        { v: 6.8,  label: 'Low-capture 6.8%', t: 'Australia low-capture return for Modes A and C.' },
+        { v: 8.4,  label: 'No-index 8.4%',    t: 'Australia Mode D: no floor, no index, unattenuated return.' }
+      ]
+    },
+    CH: {
+      name: 'Switzerland', cur: 'CHF', broad: 'M3',
+      mu: 0.633,                     // M^T/M3 = M1/M3 = 0.766/1.211 (SNB); currency + sight deposits
+      defaults: { m2: 1.211, gdp: 0.8, pop: 9.0, mkt: 1.61 },  // CHF T; CHF T; M; CHF T (SNB/SECO/SIX)
+      growth: { rg: 1.3, pg: 0.8 },   // real GDP growth %, population growth % (sourced macro environment)
+      er: { A: 5.8, B: 4.6, C: 5.8, D: 7.1, Z: 7.1 },  // Switzerland realizable; PF 4.9% & DMS 4.4% both moderate, agree
+      erBand: [                      // Switzerland band: central 4.6
+        { v: 3.5,  label: 'Low band 3.5%',    t: 'Low end of the Switzerland Mode B realizable band (calibration note §3).' },
+        { v: 4.6,  label: 'Central 4.6%',     t: 'Switzerland Mode B central realizable return: production-function (~4.9%) and DMS Swiss equity (~4.4%) agree in the mid-4s; defensive, low-volatility market. Calibration note §3.' },
+        { v: 5.3,  label: 'High band 5.3%',   t: 'High end of the Switzerland Mode B realizable band.' },
+        { v: 5.8,  label: 'Low-capture 5.8%', t: 'Switzerland low-capture return for Modes A and C.' },
+        { v: 7.1,  label: 'No-index 7.1%',    t: 'Switzerland Mode D: no floor, no index, unattenuated return.' }
+      ]
+    },
+    SE: {
+      name: 'Sweden', cur: 'kr', broad: 'M3',
+      mu: 0.795,                     // M^T/M3 = M1/M3 = 4.104/5.161 (Riksbank); HIGH end of set
+      defaults: { m2: 5.161, gdp: 6.65, pop: 10.6, mkt: 12.9 },  // SEK T; SEK T; M; SEK T (Riksbank/SCB/OECD)
+      growth: { rg: 1.9, pg: 0.3 },   // real GDP growth %, population growth % (sourced macro environment)
+      er: { A: 6.5, B: 5.2, C: 6.5, D: 8.1, Z: 8.1 },  // Sweden realizable: both paths high (DMS ~6.0%, strong market)
+      erBand: [                      // Sweden band: central 5.2 (high-return, like Australia)
+        { v: 4.0,  label: 'Low band 4.0%',    t: 'Low end of the Sweden Mode B realizable band (calibration note §3).' },
+        { v: 5.2,  label: 'Central 5.2%',     t: 'Sweden Mode B central realizable return: production-function (~5.75%) and DMS Sweden equity (~6.0%) both above-average; central set below levered equity. Calibration note §3.' },
+        { v: 6.0,  label: 'High band 6.0%',   t: 'High end of the Sweden Mode B realizable band.' },
+        { v: 6.5,  label: 'Low-capture 6.5%', t: 'Sweden low-capture return for Modes A and C.' },
+        { v: 8.1,  label: 'No-index 8.1%',    t: 'Sweden Mode D: no floor, no index, unattenuated return.' }
+      ]
+    },
+    NO: {
+      name: 'Norway', cur: 'kr', broad: 'M2',
+      mu: 0.62,                      // PROVISIONAL - Norway M1 not cleanly pinned (calibration note §2); Nordic-cluster value
+      defaults: { m2: 3.57, gdp: 5.3, pop: 5.65, mkt: 4.0 },  // NOK T; NOK T; M; NOK T (Norges Bank/SSB/Euronext Oslo)
+      growth: { rg: 1.8, pg: 0.8 },   // real GDP growth %, population growth % (sourced macro environment)
+      er: { A: 6.0, B: 4.8, C: 6.0, D: 7.4, Z: 7.4 },  // Norway realizable; PF ~5.75% but DMS Norway equity ~4.3%, leans historical
+      erBand: [                      // Norway band: central 4.8
+        { v: 3.7,  label: 'Low band 3.7%',    t: 'Low end of the Norway Mode B realizable band (calibration note §3).' },
+        { v: 4.8,  label: 'Central 4.8%',     t: 'Norway Mode B central realizable return: production-function (~5.75%) tempered toward DMS Norway equity (~4.3%); oil-cycle volatility. Calibration note §3.' },
+        { v: 5.6,  label: 'High band 5.6%',   t: 'High end of the Norway Mode B realizable band.' },
+        { v: 6.0,  label: 'Low-capture 6.0%', t: 'Norway low-capture return for Modes A and C.' },
+        { v: 7.4,  label: 'No-index 7.4%',    t: 'Norway Mode D: no floor, no index, unattenuated return.' }
+      ]
+    },
+    IN: {
+      name: 'India', cur: '\u20B9', broad: 'M3',
+      mu: 0.28,                      // M^T/M3 = M1/M3 ~ 80.6/281.4 (RBI); LOW - India's term-deposit-heavy savings (time dep 74.6% of M3)
+      growth: { rg: 6.5, pg: 0.9 },   // real GDP growth %, population growth % (sourced macro environment) - fastest in set
+      defaults: { m2: 281.4, gdp: 330.7, pop: 1476, mkt: 438.9 },  // ₹T; ₹T; M; ₹T (RBI/MoSPI/NSE)
+      er: { A: 6.9, B: 5.5, C: 6.9, D: 8.5, Z: 8.5 },  // India realizable: both paths high but EM volatility -> conservative central
+      erBand: [                      // India band: central 5.5 (EM-discounted from ~7% PF figure)
+        { v: 4.2,  label: 'Low band 4.2%',    t: 'Low end of the India Mode B realizable band (calibration note §3).' },
+        { v: 5.5,  label: 'Central 5.5%',     t: 'India Mode B central realizable return: production-function (~7%) and Indian equity (~6.5-7%) both high, but discounted for emerging-market volatility. Calibration note §3.' },
+        { v: 6.4,  label: 'High band 6.4%',   t: 'High end of the India Mode B realizable band.' },
+        { v: 6.9,  label: 'Low-capture 6.9%', t: 'India low-capture return for Modes A and C.' },
+        { v: 8.5,  label: 'No-index 8.5%',    t: 'India Mode D: no floor, no index, unattenuated return.' }
+      ]
+    }
+  };
+  let CTY = COUNTRIES.US;           // active country
+  let CUR = CTY.cur;                // currency symbol, routed through fmt()
+
   // K1 recipient base: GROSS new citizens per year (births + naturalizations)
   // as a share of population, ~1.17%. K1 is gated on new citizenship, NOT on net
   // population growth — so it does not collapse when pop growth slows.
   const NC = 0.011703;
-  const MU = 0.5135;   // M^T/M2, back-solved from the $229.7B price-stability locus (the macroeconomic model)
+  let MU = CTY.mu;   // M^T/broad-money share (country-specific; US 51.35%, UK 69.7%)
   // Goods inflation on the transactional circuit M^T (P = M^T*V/Y), not M2.
   // Only money reaching M^T moves goods prices: the dividend (K3 share of the
   // budget), the KI inflation-gap channel, and the floor spillover L = 0.20*A*.
@@ -707,12 +891,12 @@
   const fmt = n => {
     if (!isFinite(n) || n === null) return '—';
     const a = Math.abs(n);
-    if (a >= 1e12) return '$' + (n/1e12).toFixed(2) + 'T';
-    if (a >= 1e9) return '$' + (n/1e9).toFixed(1) + 'B';
-    if (a >= 1e6) return '$' + (n/1e6).toFixed(2) + 'M';
-    if (a >= 1e3) return '$' + Math.round(n/1e3).toLocaleString() + 'K';
-    if (a === 0) return '$0';
-    return '$' + Math.round(n).toLocaleString();
+    if (a >= 1e12) return CUR + (n/1e12).toFixed(2) + 'T';
+    if (a >= 1e9) return CUR + (n/1e9).toFixed(1) + 'B';
+    if (a >= 1e6) return CUR + (n/1e6).toFixed(2) + 'M';
+    if (a >= 1e3) return CUR + Math.round(n/1e3).toLocaleString() + 'K';
+    if (a === 0) return CUR + '0';
+    return CUR + Math.round(n).toLocaleString();
   };
 
   // er = realizable return (the macroeconomic model §6.7): the attenuated marginal product of the
@@ -758,15 +942,24 @@
   function readInputs(){
     const k1 = parseFloat($('k1').value)/100;
     const k2 = parseFloat($('k2').value)/100;
-    const kd = parseFloat($('k3').value)/100;   // K3 consumer-dividend share κ_d
-    const ki = parseFloat($('ki').value)/100;   // KI inflation-gap channel (additive % of M2)
+    let kd = parseFloat($('k3').value)/100;   // K3 consumer-dividend share κ_d
+    let ki = parseFloat($('ki').value)/100;   // KI inflation-gap channel (additive % of M2)
     const rg = parseFloat($('rg').value)/100;
     const pg = parseFloat($('pg').value)/100;
+    // Mode Ω solves its split/KI live from the macro inputs. Take the EXACT solved values here
+    // (not the stepped slider values), so prices land on zero and the slider's coarse step
+    // (k3 whole-percent, ki 0.05) never quantizes Ω away from its solution while dragging.
+    if (typeof activeMode !== 'undefined' && activeMode === 'O' && typeof omegaConfig === 'function') {
+      const o = omegaConfig();
+      kd = o.k3/100;
+      ki = o.ki/100;
+    }
     const m2 = parseFloat($('m2').value)*1e12;
     const gdp = parseFloat($('gdp').value)*1e12;
     const pop = parseFloat($('pop').value)*1e6;
     const mkt = parseFloat($('mkt').value)*1e12;   // domestic equity index capitalization M_index
-    const dur = parseInt($('dur').value);          // average holding duration of floor equity
+    const hz = parseInt($('hz').value);            // projection horizon = retirement-unlock age
+    const dur = Math.min(hz, Math.max(1, Math.round(hz * (40/65)))); // avg hold derives from horizon: working-life fraction of the retirement-unlock age (40y at the 65y default), capped at horizon
 
     // Inflation is DERIVED, not dialed, and on the transactional circuit M^T
     // (P = M^T*V/Y), not M2. Only money reaching M^T moves goods prices: the
@@ -782,7 +975,7 @@
       k1, k2, k3: kd, ki, rg, pg, m2, gdp, pop, mkt, dur,
       er: parseFloat($('er').value)/100,
       cpi,
-      hz: parseInt($('hz').value),
+      hz: hz,
       wr: 0.05,
       _MT: mt.MT, _mtInject: mt.inject, _mtK3div: mt.k3div, _mtKI: mt.kiDol, _mtSpill: mt.spill
     };
@@ -791,7 +984,9 @@
   function updateReadouts(p){
     $('k1r').textContent = (p.k1*100).toFixed(1) + '%';
     $('k2r').textContent = (p.k2*100).toFixed(1) + '%';
-    $('k3r').textContent = (p.k3*100).toFixed(0) + '%';
+    $('k3r').textContent = (typeof activeMode !== 'undefined' && activeMode === 'O')
+      ? (p.k3*100).toFixed(1) + '%'
+      : (p.k3*100).toFixed(0) + '%';
     if ($('splitFloor')) $('splitFloor').textContent = Math.round((1-p.k3)*100) + '%';
     if ($('splitDiv'))   $('splitDiv').textContent   = Math.round(p.k3*100) + '%';
     if ($('barFloor')){
@@ -801,7 +996,9 @@
       $('barFloor').textContent = floorPct >= 22 ? 'Asset Circuit · price-protected' : (floorPct >= 8 ? 'Asset' : '');
       $('barDiv').textContent   = divPct   >= 22 ? 'Transactional · spendable'      : (divPct   >= 8 ? 'Spend' : '');
     }
-    if ($('kir')) $('kir').textContent = (p.ki*100).toFixed(2).replace(/\.?0+$/,'') + '%';
+    if ($('kir')) $('kir').textContent = (typeof activeMode !== 'undefined' && activeMode === 'O')
+      ? (p.ki*100).toFixed(3) + '%'
+      : (p.ki*100).toFixed(2).replace(/\.?0+$/,'') + '%';
     $('rgr').textContent = (p.rg*100).toFixed(1) + '%';
     $('pgr').textContent = (p.pg*100).toFixed(1) + '%';
     $('err').textContent = (p.er*100).toFixed(1) + '%';
@@ -811,6 +1008,16 @@
     const col = ci > 0.25 ? '#E0685A' : (ci < -0.25 ? '#5BA6E6' : 'var(--teal-text)');
     $('cpir').style.color = col;
     if ($('cpiChar')) { $('cpiChar').textContent = character; $('cpiChar').style.color = col; }
+    // Mode Ω honest limit: at zero/negative real growth the growth budget vanishes, so Ω's
+    // dividend lever is exhausted and it cannot remove the residual contraction-driven inflation.
+    // Flag the handoff to the Surge Brake rather than implying Ω holds the line here.
+    if (typeof activeMode !== 'undefined' && activeMode === 'O' && typeof omegaConfig === 'function') {
+      const oc = omegaConfig();
+      if (oc.limited && $('cpiChar')) {
+        $('cpiChar').textContent = 'Ω lever exhausted at \u2264 0 growth \u2014 contraction is the Surge Brake\u2019s domain';
+        $('cpiChar').style.color = 'var(--accent-text)';
+      }
+    }
     if ($('cpiBreakdown')) {
       $('cpiBreakdown').innerHTML =
         'Into the transactional circuit M&#8348; ($' + (p._MT/1e12).toFixed(1) + 'T): ' +
@@ -822,11 +1029,11 @@
         '<strong style="color:' + col + '">' + (ci>=0?'+':'') + ci.toFixed(2) + '%</strong>' +
         (p.rg < 0 ? '<br><span style="color:var(--text-dim)">Contraction: the growth-matched budget floors at zero \u2014 nothing extra is issued and nothing is clawed back (K1 keeps flowing, counter-cyclically), so the same money over fewer goods lifts prices ~' + (Math.abs(p.rg)*100).toFixed(1) + '%. That mild inflation absorbs the shock instead of forcing debt-deflation.</span>' : '');
     }
-    $('m2r').textContent = '$' + (p.m2/1e12).toFixed(1) + 'T';
-    $('gdpr').textContent = '$' + (p.gdp/1e12).toFixed(1) + 'T';
+    $('m2r').textContent = CUR + (p.m2/1e12).toFixed(1) + 'T';
+    $('gdpr').textContent = CUR + (p.gdp/1e12).toFixed(1) + 'T';
     $('popr').textContent = (p.pop/1e6).toFixed(0) + 'M';
     $('hzr').textContent = p.hz + 'y';
-    if ($('mktr')) $('mktr').textContent = '$' + (p.mkt/1e12).toFixed(0) + 'T';
+    if ($('mktr')) { const mt = p.mkt/1e12; $('mktr').textContent = CUR + (mt < 10 ? mt.toFixed(1) : mt.toFixed(0)) + 'T'; }
     if ($('durr')) $('durr').textContent = p.dur + 'y';
   }
 
@@ -1120,7 +1327,6 @@
       'The zero-growth stock-flow value is c·dur ≈ <strong>' + (_cdur*100).toFixed(0) + '%</strong>; under ' + (p.rg*100).toFixed(1) + '% real growth the realized share is ψ* = c·annuity(g,dur) ≈ <strong>' + (_psi*100).toFixed(0) + '%</strong> (decumulation models bracket ' + (Math.min(_psiHaz,_psiAnn)*100).toFixed(0) + '–' + (Math.max(_psiHaz,_psiAnn)*100).toFixed(0) + '%), leaving ~' + ((1-_psi)*100).toFixed(0) + '% tradable float' + (isFinite(_ceil) ? ', bounded above by c/g ≈ <strong>' + (Math.min(_ceil,0.999)*100).toFixed(0) + '%</strong> at any duration' : '') + ' — the structural-buyer paper §6.2.';
 
     // --- Price-stability locus (the macroeconomic model §3.2): TOTAL transactional injection (dividend + KI + spillover) vs g_r*M^T ---
-    const MU = 0.5135;                          // M^T/M2, back-solved from the $229.7B locus (the macroeconomic model line 236)
     const MT = MU * p.m2;
     const locus = p.rg * MT;
     const k3div = p.k3 * Math.max(0, p.k2*p.m2*p.rg - p.k1*p.gdp*NC);
@@ -1198,15 +1404,17 @@
       `Today, the median American retires with about <strong>${fmt(baseSavings)}</strong> in savings plus Social Security \u2014 roughly <strong>${fmt(fedIncome)}/yr</strong> to live on. Here is what each Citizens Standard configuration delivers <em>on top of</em> that same baseline:`;
 
     // Three mode benefit cards (each simulated at the current macro settings)
-    const order = ['A','B','C','D'];
-    const NAMES = { A:'Mode A \u00b7 Deflation', B:'Mode B \u00b7 Stable', C:'Mode C \u00b7 Inflation', D:'Mode D \u00b7 Pure Dividend' };
+    const order = ['A','B','C','D','O'];
+    const NAMES = { A:'Mode A \u00b7 Deflation', B:'Mode B \u00b7 Split Dividend', C:'Mode C \u00b7 Inflation', D:'Mode D \u00b7 Pure Dividend', O:'Mode \u03A9 \u00b7 Price Stability' };
     const COPY = {
       A:{ h:'Your money grows itself',            t:'Mild deflation \u2014 every dollar you earn and hold buys a little more each year. Rising real wages, no dividend.' },
-      B:{ h:'The biggest nest egg, plus income',  t:'Issues at the full growth rate on a 60/40 split: 60% builds the largest locked floor of the base modes, 40% pays out as a standing dividend, at stable prices.' },
-      C:{ h:'Cash in your pocket now',            t:'A meaningful monthly dividend funded by modest (~2%) inflation, in exchange for a smaller locked floor.' }
+      B:{ h:'The biggest nest egg, plus income',  t:'Issues at the full growth rate on a 60/40 split: 60% builds the largest locked floor of the base modes, 40% pays out as a standing dividend. Prices hold stable near trend growth; for guaranteed price stability in any economy, see Mode \u03A9.' },
+      C:{ h:'Cash in your pocket now',            t:'A meaningful monthly dividend funded by modest (~2%) inflation, in exchange for a smaller locked floor.' },
+      D:{ h:'All dividend, no floor',             t:'Pays the entire budget out as a standing dividend and builds no locked floor (\\u03ba_d = 100%). The structural buyer absorbs nothing; the return stays unattenuated.' },
+      O:{ h:'Prices genuinely flat, in any economy', t:'Drives derived inflation to zero from both sides: trims the dividend where the split would inflate (growing the floor), adds the inflation-gap channel where it would deflate (relocating value into spendable dividend). Total lifetime value preserved or higher; prices hold at ~0% everywhere.' }
     };
     if ($('mode-cards')) $('mode-cards').innerHTML = order.map(m => {
-      const pr = presets[m];
+      const pr = (m === 'O') ? omegaConfig() : presets[m];
       const k1=pr.k1/100, k2=pr.k2/100, k3=pr.k3/100, ki=pr.ki/100;
       const cpi = mtCPI(k1, k2, k3, ki, p.m2, p.gdp, p.rg).cpi;
       const sm = simulate({ ...p, k1, k2, k3, ki, cpi });
@@ -1242,7 +1450,7 @@
     if (activeMode === 'A') {
       modeLabel = '<span style="color: var(--teal-text);">Mode A — Rising real wages</span>';
     } else if (activeMode === 'B') {
-      modeLabel = '<span style="color: var(--teal-text);">Mode B — Stable prices</span>';
+      modeLabel = '<span style="color: var(--teal-text);">Mode B — Split dividend (60/40)</span>';
     } else if (activeMode === 'C') {
       modeLabel = '<span style="color: var(--teal-text);">Mode C — Modest inflation + dividend</span>';
     } else if (activeMode === 'X') {
@@ -1257,9 +1465,9 @@
       const isModeC = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 0.175) < 0.005 && Math.abs(p.k3) < 0.005 && Math.abs(p.ki - 0.0198) < 0.006 && Math.abs(p.cpi - 0.02) < 0.006;
       const isModeD = Math.abs(p.k1) < 0.005 && Math.abs(p.k2 - 0.5135) < 0.005 && Math.abs(p.k3 - 1.0) < 0.005 && Math.abs(p.ki) < 0.005 && Math.abs(p.cpi) < 0.005;
       if (isModeA) modeLabel = '<span style="color: var(--teal-text);">Mode A — Rising real wages</span>';
-      else if (isModeB) modeLabel = '<span style="color: var(--teal-text);">Mode B — Stable prices</span>';
+      else if (isModeB) modeLabel = '<span style="color: var(--teal-text);">Mode B — Split dividend (60/40)</span>';
       else if (isModeC) modeLabel = '<span style="color: var(--teal-text);">Mode C — Modest inflation + dividend</span>';
-      else if (isModeD) modeLabel = '<span style="color: var(--teal-text);">Mode D — Stable + distributed</span>';
+      else if (isModeD) modeLabel = '<span style="color: var(--teal-text);">Mode D — Pure dividend</span>';
       else modeLabel = '<span style="color: var(--coral);">Custom configuration</span>';
     }
 
@@ -1380,7 +1588,7 @@
     });
   }
 
-  // ===== Mode Ω (adaptive) — reproduces the architecture paper §8.6 simulation outcomes =====
+  // ===== Mode Λ (adaptive) — reproduces the architecture paper §8.6 simulation outcomes =====
   const OMEGA_SCENARIOS = {
     normal:      { floor:403000,  demo:false, prod:false, gov:'inactive',                note:'Base case on the realizable basis (Table 8): ~60% K2 capture, mild deflationary bias, no KI' },
     negpop:      { floor:480000,  demo:true,  prod:false, gov:'demographic active',      note:'+19% vs the normal-conditions floor from the demographic governor (Table 8, realizable basis)' },
@@ -1585,11 +1793,11 @@
   function drawModeCompare(p){
     const ctx = $('chart').getContext('2d');
     if (chart) chart.destroy();
-    const order = ['A','B','C','D'];
-    const names = { A:'Mode A \u00b7 Deflation', B:'Mode B \u00b7 Stable', C:'Mode C \u00b7 Inflation', D:'Mode D \u00b7 Pure Dividend' };
+    const order = ['A','B','C','D','O'];
+    const names = { A:'Mode A \u00b7 Deflation', B:'Mode B \u00b7 Split Dividend', C:'Mode C \u00b7 Inflation', D:'Mode D \u00b7 Pure Dividend', O:'Mode \u03A9 \u00b7 Price Stability' };
     const floors = [], divs = [], totals = [], cpis = [];
     for (const m of order){
-      const pr = presets[m];
+      const pr = (m === 'O') ? omegaConfig() : presets[m];
       const k1 = pr.k1/100, k2 = pr.k2/100, k3 = pr.k3/100, ki = pr.ki/100;
       // derive THIS mode's inflation from its own channels (same rule as the macro panel),
       // so every bar uses its correct CPI rather than the currently-selected mode's.
@@ -1805,22 +2013,69 @@
     });
   }
 
+  // Mode Ω true price-stability solver (two-sided): hold prices flat in BOTH directions.
+  // Start from the 60/40 floor-building split, then drive derived inflation to zero:
+  //   - if the split would INFLATE, trim the standing dividend (k3) — freed budget grows the floor;
+  //   - if the split would DEFLATE, add the inflation-gap channel (KI) to inject the shortfall.
+  // KI reaches citizens as spendable dividend (it relocates value from the locked floor into the
+  // liquid dividend rather than destroying it; total lifetime value is preserved or higher), and the
+  // sticky-wage cost of persistent mild deflation is why Ω holds the line from below, not only above.
+  // Solved per country, so Ω's channels are computed from the active economy, not a fixed preset.
+  function omegaConfig(){
+    const k1 = 0.025, k2 = 1.00;
+    const m2  = parseFloat($('m2').value)*1e12;
+    const gdp = parseFloat($('gdp').value)*1e12;
+    const rg  = parseFloat($('rg').value)/100;
+    const baseCpi = mtCPI(k1, k2, 0.40, 0, m2, gdp, rg).cpi;   // derived inflation at the fixed 60/40 split
+    const MT    = MU * m2;
+    const k1Agg = k1 * gdp * NC;
+    const S     = Math.max(0, k2 * m2 * rg - k1Agg);   // growth-funded budget; collapses to 0 at g<=0
+    let k3 = 40, ki = 0;
+    // Continuous solve to EXACTLY zero (no deadband).
+    if (baseCpi > 0) {
+      // inflationary — trim the standing dividend to bring cpi to 0 (freed budget grows the floor).
+      // cpi=0: k3*S*0.80 + 0.20*(k1Agg + S) = rg*MT
+      let x = S > 0 ? (rg*MT - 0.20*(k1Agg + S)) / (0.80 * S) : 0;
+      x = Math.max(0, Math.min(0.40, x));            // dividend lever runs 0..40%; cut to the floor when exhausted
+      k3 = +(x*100).toFixed(2);
+    } else if (baseCpi < 0) {
+      // deflationary — hold the 60/40 split and add KI to inject the shortfall (relocates to dividend).
+      // cpi=0: (0.40*S + ki*m2 + 0.20*(k1Agg + 0.60*S)) / MT = rg
+      let x = (rg*MT - 0.40*S - 0.20*(k1Agg + 0.60*S)) / m2;
+      x = Math.max(0, x);
+      ki = +(x*100).toFixed(3);
+    }
+    // Ω's lever is exhausted on a STRUCTURAL condition, not an arbitrary magnitude: when the
+    // growth-funded budget has collapsed (S = 0, i.e. real growth at/below k1Agg/m2, the point
+    // where issuance ceases) AND a positive residual remains, the dividend is already at the floor
+    // and cannot be trimmed further, while KI would only add to the contraction-driven inflation.
+    // Removing that inflation requires active money retirement — the Surge Brake, not Ω. Surface
+    // this at its true boundary rather than at a magnitude cutoff.
+    const residual = mtCPI(k1, k2, k3/100, ki/100, m2, gdp, rg).cpi;
+    const budgetGone = (S <= 0);
+    const limited = budgetGone && residual > 0.00005;
+    return { k1: 2.5, k2: 100, k3: k3, ki: ki, limited: limited, residual: residual };
+  }
+
   function applyMode(mode){
     activeMode = mode;
     document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
-    if (presets[mode]){
-      const pr = presets[mode];
+    const pr = (mode === 'O') ? omegaConfig() : presets[mode];
+    if (pr){
       $('k1').value = pr.k1;
       $('k2').value = pr.k2;
       $('k3').value = pr.k3;
       $('ki').value = pr.ki;
       // each mode carries its own realizable return (the macroeconomic model §6.7); set it and sync
-      // the realizable-band preset highlight.
-      if (pr.er !== undefined) {
-        $('er').value = pr.er;
-        if ($('err')) $('err').textContent = pr.er.toFixed(1) + '%';
+      // the realizable-band preset highlight. Country-specific return from the active calibration.
+      // Mode Ω shares Mode B's realizable basis (same floor-building split, dividend only trimmed).
+      const erKey = (mode === 'O') ? 'B' : mode;
+      const erVal = (CTY.er && CTY.er[erKey] !== undefined) ? CTY.er[erKey] : pr.er;
+      if (erVal !== undefined) {
+        $('er').value = erVal;
+        if ($('err')) $('err').textContent = erVal.toFixed(1) + '%';
         document.querySelectorAll('.er-preset').forEach(x =>
-          x.classList.toggle('active', parseFloat(x.dataset.er) === pr.er));
+          x.classList.toggle('active', parseFloat(x.dataset.er) === erVal));
       }
     }
     update();
@@ -1885,15 +2140,41 @@
     $(id + 'r').textContent = parseFloat($(id).value).toFixed(dec) + '%';
     update();
   }));
-  document.querySelectorAll('.er-preset').forEach(b => b.addEventListener('click', () => {
-    $('er').value = b.dataset.er;
-    document.querySelectorAll('.er-preset').forEach(x => x.classList.toggle('active', x === b));
-    update();
-  }));
+  // Build the realizable-return preset buttons for the active country
+  function rebuildErBand(){
+    const row = $('erBandRow');
+    if (!row || !CTY.erBand) return;
+    const cur = ($('er') ? $('er').value : null);
+    row.innerHTML = CTY.erBand.map(b =>
+      '<button class="er-preset" data-er="' + b.v + '" title="' + b.t.replace(/"/g,'&quot;') + '">' + b.label + '</button>'
+    ).join('');
+    // restore active highlight to whichever matches the current er value
+    row.querySelectorAll('.er-preset').forEach(x =>
+      x.classList.toggle('active', parseFloat(x.dataset.er) === parseFloat(cur)));
+  }
+  rebuildErBand();
+
+  // Delegated click on the preset row (works for rebuilt buttons across country switches)
+  const erBandRow = $('erBandRow');
+  if (erBandRow) {
+    erBandRow.addEventListener('click', (e) => {
+      const b = e.target.closest('.er-preset');
+      if (!b) return;
+      $('er').value = b.dataset.er;
+      erBandRow.querySelectorAll('.er-preset').forEach(x => x.classList.toggle('active', x === b));
+      update();
+    });
+  }
   // Sliders that define the Mode itself — moving these breaks out of a preset Mode
   const modeDefiningSliders = ['k1', 'k2', 'k3', 'ki'];
-  ['k1','k2','k3','ki','rg','pg','er','m2','gdp','pop','hz','mkt','dur'].forEach(id => {
+  // Inputs the Mode Ω solver depends on: it computes its split/KI from real growth and the
+  // launch aggregates, so in Ω these are NOT inert display settings — moving them must re-solve.
+  const omegaInputs = ['rg', 'm2', 'gdp'];
+  ['k1','k2','k3','ki','rg','pg','er','m2','gdp','pop','hz','mkt'].forEach(id => {
     $(id).addEventListener('input', () => {
+      // Mode Ω re-solves its split/KI from the macro inputs inside readInputs(), so moving a
+      // macro slider (rg, m2, gdp) automatically re-tunes Ω on the next update() below — no
+      // slider-writing here (writing the stepped k3/ki sliders mid-drag caused quantized jumps).
       // Only mark as Custom if the user moved something that actually defines the Mode.
       // Horizon, launch params (M2/GDP/Pop), and macro inputs (real growth, equity return)
       // are display/projection settings, not Mode-defining choices.
@@ -1910,15 +2191,149 @@
     });
   });
 
-  // Reset launch parameters to the calibrated US baseline (does not touch Mode/channels)
+  // Make a currency/count readout click-to-edit: click swaps in a number box holding the raw
+  // slider value; Enter or blur commits it, clamping into the slider's range (and widening the
+  // max if the user types a bigger value), then fires the slider's input path so update() runs.
+  function makeReadoutEditable(readoutId, sliderId){
+    const ro = $(readoutId), sl = $(sliderId);
+    if (!ro || !sl) return;
+    ro.style.cursor = 'text';
+    ro.title = 'Click to type an exact value';
+    ro.addEventListener('click', () => {
+      if (ro.dataset.editing === '1') return;
+      ro.dataset.editing = '1';
+      const raw = parseFloat(sl.value);
+      const box = document.createElement('input');
+      box.type = 'text';
+      box.value = raw;
+      box.setAttribute('inputmode', 'decimal');
+      box.style.cssText = 'width:72px;font:inherit;font-size:12px;text-align:right;color:var(--accent-text);'
+        + 'background:var(--surface,#18212B);border:1px solid var(--accent);border-radius:4px;padding:1px 4px;';
+      const prevText = ro.textContent;
+      ro.textContent = '';
+      ro.appendChild(box);
+      box.focus(); box.select();
+      let done = false;
+      const commit = (save) => {
+        if (done) return; done = true;
+        ro.dataset.editing = '0';
+        if (save) {
+          let v = parseFloat(box.value);
+          if (!isNaN(v) && v > 0) {
+            const mn = parseFloat(sl.min), mx = parseFloat(sl.max);
+            if (v > mx) sl.max = (v * 1.2).toString();   // grow the range to fit a larger typed value
+            if (v < mn) sl.min = Math.max(0, v * 0.8).toString();
+            sl.value = v;
+            sl.dispatchEvent(new Event('input', { bubbles: true }));
+            return; // update() will refresh the readout text
+          }
+        }
+        ro.textContent = prevText; // cancelled or invalid: restore
+      };
+      box.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); commit(true); }
+        else if (e.key === 'Escape') { e.preventDefault(); commit(false); }
+      });
+      box.addEventListener('blur', () => commit(true));
+    });
+  }
+  makeReadoutEditable('m2r', 'm2');
+  makeReadoutEditable('gdpr', 'gdp');
+  makeReadoutEditable('popr', 'pop');
+  makeReadoutEditable('mktr', 'mkt');
+
+  // Apply a country's launch-parameter defaults to the sliders (hz/dur stay as display prefs)
+  // Pick a "nice" step for a slider given the magnitude of its default value,
+  // so dragging has usable resolution at any currency scale.
+  function niceStep(v){
+    if (v >= 1000) return 5;
+    if (v >= 100)  return 1;
+    if (v >= 10)   return 0.5;
+    if (v >= 1)    return 0.05;
+    return 0.01;
+  }
+  // Set a slider's range to a generous window around its default (~0.3x to ~3x),
+  // so the default sits usefully mid-range and values stay explorable without a giant global max.
+  function setSliderRange(id, def){
+    const el = $(id); if (!el) return;
+    const lo = Math.max(def * 0.3, def >= 100 ? 1 : (def >= 1 ? 0.1 : 0.01));
+    const hi = def * 3;
+    const st = niceStep(def);
+    const round = (x) => Math.round(x * 100) / 100;   // trim float noise to 2 decimals
+    el.min  = round(Math.floor(lo / st) * st).toString();
+    el.max  = round(Math.ceil(hi / st) * st).toString();
+    el.step = st.toString();
+  }
+  // Population uses its own sensible window (people, not currency).
+  function setPopRange(def){
+    const el = $('pop'); if (!el) return;
+    el.min = Math.max(1, Math.floor(def * 0.3)).toString();
+    el.max = Math.ceil(def * 3).toString();
+    el.step = def >= 50 ? '1' : '0.1';
+  }
+
+  function applyCountryDefaults(){
+    const d = CTY.defaults;
+    // Size each slider's range to this country BEFORE setting the value, so the value lands in-range.
+    setSliderRange('m2',  d.m2);
+    setSliderRange('gdp', d.gdp);
+    setSliderRange('mkt', d.mkt);
+    setPopRange(d.pop);
+    if ($('m2'))  $('m2').value  = d.m2;
+    if ($('gdp')) $('gdp').value = d.gdp;
+    if ($('pop')) $('pop').value = d.pop;
+    if ($('mkt')) $('mkt').value = d.mkt;
+    // Carry the country's macro environment (real growth, population growth) over on selection.
+    if (CTY.growth) {
+      if ($('rg')) $('rg').value = CTY.growth.rg;
+      if ($('pg')) $('pg').value = CTY.growth.pg;
+    }
+  }
+  // Relabel the launch-param rows + card labels for the active country ($ M2 vs £ M4, etc.)
+  function applyCountryLabels(){
+    const c = CTY.cur;
+    const m2lab = $('m2') && $('m2').closest('.row') && $('m2').closest('.row').querySelector('.label');
+    if (m2lab) m2lab.textContent = CTY.broad + ' (' + c + 'T)';
+    const gdplab = $('gdp') && $('gdp').closest('.row') && $('gdp').closest('.row').querySelector('.label');
+    if (gdplab) gdplab.textContent = 'GDP (' + c + 'T)';
+    const mktlab = $('mkt') && $('mkt').closest('.row') && $('mkt').closest('.row').querySelector('.label');
+    if (mktlab) mktlab.textContent = 'Mkt cap (' + c + 'T)';
+  }
+
+  // Reset launch parameters to the active country's calibrated baseline (does not touch Mode/channels)
   const resetParamsBtn = $('resetParams');
   if (resetParamsBtn) {
     resetParamsBtn.addEventListener('click', () => {
-      const defaults = { m2: '22.4', gdp: '30.8', pop: '342', hz: '65', mkt: '69.1', dur: '40' };
-      Object.entries(defaults).forEach(([id, val]) => { if ($(id)) $(id).value = val; });
+      applyCountryDefaults();
+      if ($('hz')) $('hz').value = '65';
       update();
     });
   }
+
+  // Show the political-prerequisite caveat if the active country has one (Eurozone)
+  function applyCountryCaveat(){
+    const el = $('countryCaveat');
+    if (!el) return;
+    if (CTY.caveat) { el.textContent = CTY.caveat; el.style.display = 'block'; }
+    else { el.textContent = ''; el.style.display = 'none'; }
+  }
+  applyCountryCaveat();
+
+  // Country selector: swap calibration (currency, M^T share, defaults, returns) and re-render
+  const countrySel = $('countrySel');
+  if (countrySel) {
+    countrySel.addEventListener('change', () => {
+      CTY = COUNTRIES[countrySel.value] || COUNTRIES.US;
+      CUR = CTY.cur;
+      MU  = CTY.mu;
+      applyCountryDefaults();
+      applyCountryLabels();
+      applyCountryCaveat();
+      rebuildErBand();
+      applyMode(activeMode === 'X' ? 'B' : activeMode);  // re-apply mode with country's return; Custom falls back to B
+    });
+  }
+  const resetBtn = $('reset-mode-b');
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
       $('er').value = '4.5';
@@ -1927,6 +2342,7 @@
     });
   }
 
+  applyCountryDefaults();   // window the sliders to the initial country (US) on first load
   applyMode('B');
 })();
 </script>
