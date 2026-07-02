@@ -389,7 +389,7 @@
   <p class="kicker">The Citizens Standard &nbsp;&middot;&nbsp; <b>the engine</b></p>
   <h1>Interactive Model Builder</h1>
   <p class="subtitle">Tune the monetary issuance dials. Project a representative cohort 65 years. Compare against real-world median outcomes under seven alternative systems.</p>
-  <p class="meta">Companion tool to the SSRN paper by Neo-Solon. &nbsp;&middot;&nbsp; <a href="#methodology">Data sources &amp; methodology below</a>. &nbsp;&middot;&nbsp; <span style="opacity:0.6;">build v3.88</span></p>
+  <p class="meta">Companion tool to the SSRN paper by Neo-Solon. &nbsp;&middot;&nbsp; <a href="#methodology">Data sources &amp; methodology below</a>. &nbsp;&middot;&nbsp; <span style="opacity:0.6;">build v3.89</span></p>
 </header>
 
 <div class="card" style="background: var(--accent-bg); border-color: var(--accent); margin-bottom: 24px;">
@@ -504,6 +504,7 @@
   <div class="tab" data-tab="stress">Stress test</div>
   <div class="tab" data-tab="modet">Mode T</div>
   <div class="tab" data-tab="omega">Mode Λ</div>
+  <div class="tab" data-tab="mu">μ &amp; Stability</div>
 </div>
 
 <div id="chart-view">
@@ -673,6 +674,21 @@
   <div class="chart-wrap"><canvas id="omega-chart" role="img" aria-label="Mode Omega governor response chart"></canvas></div>
   <p style="font-size:12px; color:var(--text-dim); margin:16px 0 0; line-height:1.6;">
     <strong>Mode Λ guardrails (Architecture §9):</strong> every multiplier, threshold, and reversion rate is formula-specified and publicly auditable — adaptive means the formula responds to observable data, not that anyone exercises judgment. K1 is capped at 2.0× base; combined issuance is capped at 3.5% of M2; the conditional KI issues 0–0.6% of M2 (split 60% to Stable Floors / 40% spendable), activates only on sustained deflation (&gt;1.2%) or demographic stress with weak wage growth, and carries a 36-month sunset with mandatory reaffirmation. Governors above baseline revert at 25%/year once the trigger resolves. Floor figures are the paper's §9.6 results; the three negative-pop scenarios share the same governor path and differ only by equity return. Governor paths shown are illustrative of that response (cf. Figure 5).
+  </p>
+</div>
+
+<div id="mu-view" style="display:none;">
+  <div class="info-banner">
+    <strong>What this answers:</strong> "Is a fixed split actually price-stable?" No — not universally. Under a fixed 60/40 split (Mode B), whether an economy holds prices flat depends on one structural number: <strong>&mu;</strong>, the share of broad money that sits in transaction accounts rather than time deposits. Economies below the balance point (&mu;* &#8776; 0.51) run <span style="color:#E0685A">inflation</span>; those above it run <span style="color:#5BA6E6">mild deflation</span>; only an economy sitting on the point is stable. The US lands there by coincidence of its monetary structure, not by design. <strong>Mode &#937;</strong> removes the coincidence: it solves the split per economy so every point below lands on zero.
+  </div>
+  <div class="mu-svg-wrap" id="mu-svg-wrap" style="margin-top:16px; width:100%; overflow-x:auto;"></div>
+  <div class="stats" style="margin-top:16px;">
+    <div class="stat"><p class="stat-label">This economy's &mu;</p><p class="stat-val" id="mu-current">—</p><p class="stat-sub" id="mu-current-sub">transaction-active share</p></div>
+    <div class="stat"><p class="stat-label">Fixed-split drift</p><p class="stat-val" id="mu-drift">—</p><p class="stat-sub">Mode B derived inflation</p></div>
+    <div class="stat"><p class="stat-label">Ω stabilizing split</p><p class="stat-val" id="mu-omega">—</p><p class="stat-sub">&#954;_d* &#8776; (&mu; &#8722; 0.20)/0.80</p></div>
+  </div>
+  <p style="font-size:12px; color:var(--text-dim); margin:16px 0 0; line-height:1.6;">
+    <strong>The closed form (Macro Model §5).</strong> Setting derived inflation to zero on a fixed split gives the stabilizing dividend share <strong>&#954;_d* &#8776; (&mu; &#8722; 0.20) / 0.80</strong> — a function of &mu; alone. The real-growth rate cancels: it enters both the money injected and the deflationary pull it must offset, so it drops out. Price stability under a fixed split is therefore a structural property of an economy's monetary plumbing, essentially independent of how fast it grows. What growth sets is the <em>size</em> of the dividend, not the split that keeps prices flat. Each dot is positioned by that economy's actual &mu;; the vertical line is the balance point where the fixed 60/40 split is itself stable (&mu;* &#8776; 0.51, where the US sits). Mode &#937; solves &#954;_d (and, above the balance point, adds KI) to bring every economy to the line.
   </p>
 </div>
 
@@ -1372,6 +1388,8 @@
         drawModeT(p);
       } else if (activeTab === 'omega') {
         drawOmega();
+      } else if (activeTab === 'mu') {
+        drawMuChart(p);
       } else {
         drawChart(sim, p);
       }
@@ -1619,6 +1637,82 @@
     }
     return {k1,k2,ki};
   }
+
+  // μ & Stability visualization: a number line of the transaction-active share μ, with every
+  // calibrated economy placed by its actual μ, coloured by the direction a fixed 60/40 split
+  // would drift (below the balance point → inflate, above → deflate), the balance point marked,
+  // and the active country highlighted. Static geometry (μ values are fixed calibrations), so it
+  // needs no charting library and cannot be affected by the Chart.js load path.
+  function drawMuChart(p){
+    const wrap = $('mu-svg-wrap');
+    if (!wrap) return;
+    // μ for every economy, drift computed from the fixed 60/40 split at its own calibration.
+    const ECON = Object.keys(COUNTRIES).map(code => {
+      const c = COUNTRIES[code];
+      const m2 = c.defaults.m2*1e12, gdp = c.defaults.gdp*1e12, rg = c.growth.rg/100;
+      const MT = c.mu*m2, k1Agg = 0.025*gdp*NC, S = Math.max(0, m2*rg - k1Agg);
+      const cpi = ((0.40*S) + 0.20*(k1Agg + 0.60*S))/MT - rg;   // Mode B derived inflation
+      return { code, name: c.name, mu: c.mu, cpi: cpi*100 };
+    }).sort((a,b)=>a.mu-b.mu);
+
+    const muStar = 0.51;               // balance point (κ_d*=0.40 ⇒ μ≈0.51)
+    const lo = 0.24, hi = 0.82;        // x-axis μ range
+    const W = 860, H = 300, padL = 40, padR = 40, axisY = 196;
+    const x = mu => padL + (mu - lo)/(hi - lo) * (W - padL - padR);
+    const activeCode = $('countrySel') ? $('countrySel').value : 'US';
+
+    const INFL = '#E0685A', DEFL = '#5BA6E6', BAL = 'var(--accent)';
+    const col = e => Math.abs(e.cpi) < 0.05 ? BAL : (e.cpi > 0 ? INFL : DEFL);
+
+    // stagger labels vertically to avoid overlap among the clustered high-μ economies
+    let up = true;
+    const dots = ECON.map((e,i) => {
+      const cx = x(e.mu), active = e.code === activeCode;
+      // alternate label above/below for the dense right cluster
+      const near = i>0 && (x(e.mu) - x(ECON[i-1].mu) < 46);
+      up = near ? !up : true;
+      const ly = up ? axisY - 20 : axisY + 34;
+      const anchor = 'middle';
+      const r = active ? 8 : 5;
+      const ring = active ? `<circle cx="${cx}" cy="${axisY}" r="12" fill="none" stroke="${col(e)}" stroke-width="1.5" opacity="0.5"/>` : '';
+      return `${ring}<circle cx="${cx}" cy="${axisY}" r="${r}" fill="${col(e)}" ${active?'stroke="#fff" stroke-width="1.5"':''}/>`
+        + `<text x="${cx}" y="${ly}" text-anchor="${anchor}" font-size="${active?12:11}" font-weight="${active?700:500}" fill="${active?'var(--text)':'var(--text-muted)'}">${e.name}</text>`
+        + `<text x="${cx}" y="${ly + (up?-13:13)}" text-anchor="${anchor}" font-size="9.5" fill="var(--text-dim)">μ ${e.mu.toFixed(2)}</text>`;
+    }).join('');
+
+    const bx = x(muStar);
+    const svg =
+      `<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:${W}px; display:block; margin:0 auto; font-family:var(--font,sans-serif);" role="img" aria-label="Transaction ratio and price stability across economies">`
+      + `<defs><linearGradient id="muGrad" x1="0" x2="1" y1="0" y2="0">`
+        + `<stop offset="0%" stop-color="${INFL}" stop-opacity="0.22"/>`
+        + `<stop offset="${((muStar-lo)/(hi-lo)*100).toFixed(0)}%" stop-color="var(--accent)" stop-opacity="0.10"/>`
+        + `<stop offset="100%" stop-color="${DEFL}" stop-opacity="0.22"/></linearGradient></defs>`
+      // shaded band
+      + `<rect x="${padL}" y="${axisY-46}" width="${W-padL-padR}" height="92" fill="url(#muGrad)" rx="6"/>`
+      // side labels
+      + `<text x="${padL+8}" y="${axisY-54}" font-size="12" font-weight="700" fill="${INFL}">◄ prices rise (inflate)</text>`
+      + `<text x="${W-padR-8}" y="${axisY-54}" text-anchor="end" font-size="12" font-weight="700" fill="${DEFL}">prices fall (deflate) ►</text>`
+      // axis line
+      + `<line x1="${padL}" y1="${axisY}" x2="${W-padR}" y2="${axisY}" stroke="var(--border-strong)" stroke-width="1.5"/>`
+      // balance-point marker
+      + `<line x1="${bx}" y1="${axisY-58}" x2="${bx}" y2="${axisY+58}" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 3"/>`
+      + `<text x="${bx}" y="${axisY+74}" text-anchor="middle" font-size="11" font-weight="700" fill="var(--accent)">balance point  μ* ≈ 0.51</text>`
+      + `<text x="${bx}" y="${axisY+88}" text-anchor="middle" font-size="9.5" fill="var(--text-dim)">fixed 60/40 split is stable here</text>`
+      // axis ticks
+      + [0.30,0.40,0.50,0.60,0.70,0.80].map(t=>`<text x="${x(t)}" y="${axisY+16}" text-anchor="middle" font-size="9" fill="var(--text-dim)">${t.toFixed(2)}</text>`).join('')
+      + dots
+      + `</svg>`;
+    wrap.innerHTML = svg;
+
+    // stat cards for the active economy
+    const me = ECON.find(e => e.code === activeCode) || ECON[0];
+    if ($('mu-current')) $('mu-current').textContent = me.mu.toFixed(3);
+    if ($('mu-current-sub')) $('mu-current-sub').textContent = me.name + ' — transaction-active share';
+    if ($('mu-drift')) $('mu-drift').textContent = (me.cpi>=0?'+':'') + me.cpi.toFixed(2) + '%';
+    const kd = Math.max(0, Math.min(40, (me.mu - 0.20)/0.80*100));
+    if ($('mu-omega')) $('mu-omega').textContent = kd.toFixed(1) + '%' + (me.mu > 0.52 ? ' + KI' : '');
+  }
+
   function drawOmega(){
     const sc = OMEGA_SCENARIOS[omegaScenario];
     $('omega-floor').textContent = fmt(sc.floor);
@@ -2088,12 +2182,13 @@
   function showTab(name){
     activeTab = name;
     document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
-    $('chart-view').style.display = (name === 'compare' || name === 'inflation' || name === 'stress' || name === 'modet' || name === 'omega') ? 'none' : 'block';
+    $('chart-view').style.display = (name === 'compare' || name === 'inflation' || name === 'stress' || name === 'modet' || name === 'omega' || name === 'mu') ? 'none' : 'block';
     $('compare-view').style.display = name === 'compare' ? 'block' : 'none';
     $('inflation-view').style.display = name === 'inflation' ? 'block' : 'none';
     $('stress-view').style.display = name === 'stress' ? 'block' : 'none';
     $('modet-view').style.display = name === 'modet' ? 'block' : 'none';
     $('omega-view').style.display = name === 'omega' ? 'block' : 'none';
+    if ($('mu-view')) $('mu-view').style.display = name === 'mu' ? 'block' : 'none';
 
     // Destroy any existing chart instances so they rebuild fresh against the
     // newly-visible canvas with correct dimensions.
