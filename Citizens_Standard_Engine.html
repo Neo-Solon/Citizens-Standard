@@ -389,7 +389,7 @@
   <p class="kicker">The Citizens Standard &nbsp;&middot;&nbsp; <b>the engine</b></p>
   <h1>Interactive Model Builder</h1>
   <p class="subtitle">Tune the monetary issuance dials. Project a representative cohort 65 years. Compare against real-world median outcomes under seven alternative systems.</p>
-  <p class="meta">Companion tool to the SSRN paper by Neo-Solon. &nbsp;&middot;&nbsp; <a href="#methodology">Data sources &amp; methodology below</a>. &nbsp;&middot;&nbsp; <span style="opacity:0.6;">build v3.88-diag</span></p>
+  <p class="meta">Companion tool to the SSRN paper by Neo-Solon. &nbsp;&middot;&nbsp; <a href="#methodology">Data sources &amp; methodology below</a>. &nbsp;&middot;&nbsp; <span style="opacity:0.6;">build v3.88</span></p>
 </header>
 
 <div class="card" style="background: var(--accent-bg); border-color: var(--accent); margin-bottom: 24px;">
@@ -702,17 +702,6 @@
 
 </div>
 
-<script>
-window.addEventListener('error', function(ev){
-  try{
-    var b = document.getElementById('__cs_err__');
-    if(!b){ b=document.createElement('div'); b.id='__cs_err__';
-      b.style.cssText='position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#3a0d0d;color:#ffd7d7;font:12px/1.4 monospace;padding:8px 12px;max-height:30vh;overflow:auto;border-top:2px solid #E0685A;';
-      document.body.appendChild(b); }
-    b.textContent = 'Engine load error: ' + (ev.message||ev.error) + '  @ ' + (ev.filename||'') + ':' + (ev.lineno||'') + ':' + (ev.colno||'');
-  }catch(_){}
-});
-</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 (function(){
@@ -1386,7 +1375,7 @@ window.addEventListener('error', function(ev){
       } else {
         drawChart(sim, p);
       }
-    } catch (e) { /* chart unavailable (e.g. CDN not yet loaded) — readouts remain populated */ }
+    } catch (e) { /* chart unavailable (e.g. Chart.js CDN not yet loaded) — numeric readouts remain populated */ }
   }
 
   function drawCompareTable(p, sim) {
@@ -2364,8 +2353,6 @@ window.addEventListener('error', function(ev){
       applyCountryDefaults();   // window the sliders to the initial country (US) on first load
       applyMode('B');
     } catch (e) {
-      // If anything in the chart path throws (e.g. Chart.js not yet available), still fill the
-      // numeric readouts directly so the panel is never blank on load.
       try { update(); } catch (e2) {}
     }
   }
