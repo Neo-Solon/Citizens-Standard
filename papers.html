@@ -75,9 +75,14 @@
 .sitenav a[aria-current="page"]{color:var(--amber,#e6a93e);font-weight:700;}
 
 /* --- centered header to match page 1 (sections stay left) --- */
-main.wrap > h1{text-align:center;}
+
 .lede{margin-left:auto;margin-right:auto;text-align:center;}
 
+
+/* --- align papers header metrics to the other pages --- */
+main.wrap > h1{text-align:center;font-size:clamp(2.3rem,7vw,3.6rem);line-height:1.04;margin-bottom:22px;}
+main.wrap > .kicker{margin-bottom:34px;}
+main.wrap > .lede{font-size:clamp(1.1rem,1rem + 0.5vw,1.34rem);color:#D9D3C6;max-width:46ch;margin-left:auto;margin-right:auto;text-align:center;}
 </style>
 </head>
 <body>
