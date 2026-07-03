@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How the engine works — the Citizens Standard</title>
+<title>How the engine works: the Citizens Standard</title>
 <!-- social share + discovery -->
 <meta name="description" content="The mechanism in plain language: four channels, and why inflation comes out as a result of your settings rather than a dial anyone turns.">
 <meta property="og:type" content="website">
@@ -123,77 +123,77 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
 </header>
 <main class="wrap">
 <h2>The one idea to hold onto</h2>
-<p>There is a single pot of new money each year, and its size is tied to one thing: how much the real economy grew. Everything else — the channels, the modes, the dividend, the floor — is just <strong>how you divide that pot, and where you send it.</strong> Inflation isn&rsquo;t one of the dials you set; it&rsquo;s what the dials produce, determined by where the money lands. (The one dial that raises it on purpose is the inflation-gap, KI &mdash; that&rsquo;s Mode C.)</p>
+<p>There is a single pot of new money each year, and its size is tied to one thing: how much the real economy grew. Everything else, the channels, the modes, the dividend, the floor, is just <strong>how you divide that pot, and where you send it.</strong> Inflation isn&rsquo;t one of the dials you set; it&rsquo;s what the dials produce, determined by where the money lands. (The one dial that raises it on purpose is the inflation-gap, KI, which is Mode C.)</p>
 <p>If you hold only that, the whole console reads cleanly: it's a control surface for sizing and routing one growth-tied budget, nothing more.</p>
 <p>The base numbers (US calibration, all adjustable in the engine):</p>
-<ul><li><strong>M2 ≈ $22.4T</strong> — broad money.</li><li><strong>Real growth g ≈ 2%</strong> — how fast real output expands.</li><li><strong>Mᵀ ≈ $11.5T</strong> — the <em>transactional</em> slice of M2 (the share that actually moves goods prices). It's 51.35% of M2. This is the number that matters for inflation, and almost nobody separates it out — that separation is the whole trick.</li></ul>
+<ul><li><strong>M2 ≈ $22.4T</strong>: broad money.</li><li><strong>Real growth g ≈ 2%</strong>: how fast real output expands.</li><li><strong>Mᵀ ≈ $11.5T</strong>: the <em>transactional</em> slice of M2 (the share that actually moves goods prices). It's 51.35% of M2. This is the number that matters for inflation, and almost nobody separates it out, and that separation is the whole trick.</li></ul>
 <p>Two derived anchors everything sits against:</p>
-<ul><li><strong>g × M2 ≈ $447B</strong> — the <em>full</em> growth budget (money growing in step with the whole stock).</li><li><strong>g × Mᵀ ≈ $230B</strong> — the <em>price-stability locus</em>: new money reaching the transactional circuit at exactly this rate holds goods prices flat. This is the leash.</li></ul>
+<ul><li><strong>g × M2 ≈ $447B</strong>: the <em>full</em> growth budget (money growing in step with the whole stock).</li><li><strong>g × Mᵀ ≈ $230B</strong>: the <em>price-stability locus</em>: new money reaching the transactional circuit at exactly this rate holds goods prices flat. This is the leash.</li></ul>
 <p>---</p>
 <h2>The two pools (this is the part that's easy to miss)</h2>
 <p>Money created by the system lands in one of two circuits, and they behave completely differently:</p>
-<ul><li><strong>The transactional circuit (Mᵀ)</strong> — money people spend. Anything that lands here pushes on goods prices.</li><li><strong>The asset circuit (Mᵃ)</strong> — money locked into the citizen savings floor (equity, held). It buys assets, not groceries, so it does <em>not</em> push goods prices — except for a small, modelled leakage (spillover ≈ 20% of what's locked).</li></ul>
+<ul><li><strong>The transactional circuit (Mᵀ)</strong>: money people spend. Anything that lands here pushes on goods prices.</li><li><strong>The asset circuit (Mᵃ)</strong>: money locked into the citizen savings floor (equity, held). It buys assets, not groceries, so it does <em>not</em> push goods prices, except for a small, modelled leakage (spillover ≈ 20% of what's locked).</li></ul>
 <p>So the same dollar of new money is inflationary or not <strong>depending only on which pool it lands in.</strong> A dollar paid out as a spendable dividend hits Mᵀ. A dollar locked into the floor sits in Mᵃ and is nearly inert on prices. Hold that, and the modes stop looking like magic.</p>
 <p>---</p>
 <h2>The four channels, and how each is calculated</h2>
 <p>Every year the engine computes these in order:</p>
-<p><strong>K1 — Citizenship.</strong> A one-time endowment into the floor for each <em>new</em> citizen.</p>
+<p><strong>K1: Citizenship.</strong> A one-time endowment into the floor for each <em>new</em> citizen.</p>
 <pre class="formula">K1 = k1  ×  (GDP / population)  ×  (new citizens that year)</pre>
 <p><code>k1</code> is a percentage of GDP-per-capita (default 2.5%). It's paid first, off the top of the budget. Set <code>k1 = 0</code> and no citizenship endowment is created.</p>
-<p><strong>K2 — Growth rate.</strong> The throttle on the size of the whole growth budget.</p>
+<p><strong>K2: Growth rate.</strong> The throttle on the size of the whole growth budget.</p>
 <pre class="formula">Growth budget  =  k2  ×  M2  ×  g</pre>
 <p><code>k2</code> is the share of the growth-matched budget you actually issue. At <code>k2 = 100%</code> the budget is the full $447B; at <code>k2 = 17.5%</code> it's about $78B; at <code>k2 = 0</code> there is no budget at all. <strong>This single dial sets how much new money exists.</strong> (K1 is then subtracted from it; whatever's left is the residual that gets split below.)</p>
-<p><strong>K3 — the dividend share (κ_d).</strong> This one is not a spigot — it's a <em>router</em>, and that's the most common point of confusion. It splits the residual budget between the two pools:</p>
+<p><strong>K3: the dividend share (κ_d).</strong> This one is not a spigot, it's a <em>router</em>, and that's the most common point of confusion. It splits the residual budget between the two pools:</p>
 <pre class="formula">Dividend (to Mᵀ, spendable)  =  κ_d        ×  residual budget
 Floor    (to Mᵃ, locked)     =  (1 − κ_d)  ×  residual budget</pre>
-<p>The two shares <strong>always sum to 100%.</strong> Moving the dividend up moves the floor down by the identical dollars — <em>the total money issued does not change.</em> So K3 is price-relevant (it decides how much lands in Mᵀ) but it is <strong>not</strong> a way to create more money. κ_d = 0 is all-floor; κ_d = 100% is all-dividend.</p>
-<p><strong>KI — the inflation gap.</strong> The only channel that issues money <em>above</em> the growth line.</p>
+<p>The two shares <strong>always sum to 100%.</strong> Moving the dividend up moves the floor down by the identical dollars, <em>the total money issued does not change.</em> So K3 is price-relevant (it decides how much lands in Mᵀ) but it is <strong>not</strong> a way to create more money. κ_d = 0 is all-floor; κ_d = 100% is all-dividend.</p>
+<p><strong>KI: the inflation gap.</strong> The only channel that issues money <em>above</em> the growth line.</p>
 <pre class="formula">KI  =  ki  ×  M2</pre>
-<p>This is additive — it's not carved out of the growth budget, it's piled on top, and it lands in Mᵀ. It is the <strong>only</strong> channel that deliberately creates inflation. Set <code>ki = 0</code> and there is no above-line issuance. (Mode C uses it to fund a visible monthly dividend at the cost of ~2% inflation.)</p>
+<p>This is additive, it's not carved out of the growth budget, it's piled on top, and it lands in Mᵀ. It is the <strong>only</strong> channel that deliberately creates inflation. Set <code>ki = 0</code> and there is no above-line issuance. (Mode C uses it to fund a visible monthly dividend at the cost of ~2% inflation.)</p>
 <p>---</p>
 <h2>Inflation is the output</h2>
-<p>Once the channels are set, the engine doesn't <em>ask</em> for an inflation rate — it computes one:</p>
+<p>Once the channels are set, the engine doesn't <em>ask</em> for an inflation rate, it computes one:</p>
 <pre class="formula">inflation  =  ( dividend  +  KI  +  floor spillover )  /  Mᵀ   −   g
                 └──────── money reaching Mᵀ ────────┘</pre>
 <p>In words: take everything that actually reaches the transactional circuit, express it as a rate against Mᵀ, and subtract real growth. If money reaches Mᵀ at exactly the growth rate, the two cancel and <strong>prices are flat.</strong> Below it, deflation. Above it, inflation. The floor (K2/Mᵃ) barely appears, because locked money isn't chasing goods.</p>
-<p>That's why the modes land where they do — and you can check each by hand:</p>
+<p>That's why the modes land where they do, and you can check each by hand:</p>
 <div class="tablewrap"><table><thead><tr><th>Mode</th><th>k1</th><th>k2</th><th>κ_d (K3)</th><th>KI</th><th>What reaches Mᵀ</th><th>Inflation</th></tr></thead><tbody><tr><td><strong>A</strong> deflation</td><td>2.5%</td><td>17.5%</td><td>0%</td><td>0</td><td>floor spillover only (~$16B)</td><td><strong>−1.86%</strong></td></tr><tr><td><strong>B</strong> stable</td><td>2.5%</td><td>100%</td><td>40%</td><td>0</td><td>$176B dividend + $54B spillover ≈ $230B</td><td><strong>0%</strong></td></tr><tr><td><strong>C</strong> inflation</td><td>2.5%</td><td>17.5%</td><td>0%</td><td>1.98%</td><td>KI $443B (~$108/cit·mo)</td><td><strong>+2.0%</strong></td></tr><tr><td><strong>D</strong> pure dividend</td><td>0</td><td>51.35%</td><td>100%</td><td>0</td><td>$230B dividend (on the locus)</td><td><strong>0%</strong></td></tr></tbody></table></div>
-<p>Mode B and Mode D reach price stability by completely different routes — B locks 60% and pays 40%, D locks nothing and pays it all — yet both put about $230B into Mᵀ, which is the locus. That's the design working: the leash is on the transactional circuit, and there's more than one way to sit on it.</p>
+<p>Mode B and Mode D reach price stability by completely different routes: B locks 60% and pays 40%, D locks nothing and pays it all, yet both put about $230B into Mᵀ, which is the locus. That's the design working: the leash is on the transactional circuit, and there's more than one way to sit on it.</p>
 <p>---</p>
 <h2>The point: every channel can be zero</h2>
 <p>Here is the thing worth showing anyone who hears "this is just printing money."</p>
-<p>Set <strong>k1 = 0, k2 = 0, KI = 0.</strong> (K3 is then moot — there's no budget to route.) Walk it through the formulas above and every term is zero: no citizenship endowment, no growth budget, no floor, no dividend, no inflation-gap issuance. <strong>The system creates exactly zero new money.</strong> It is not a printing press with the dial stuck on "more." Zero is one of its settings.</p>
+<p>Set <strong>k1 = 0, k2 = 0, KI = 0.</strong> (K3 is then moot, there's no budget to route.) Walk it through the formulas above and every term is zero: no citizenship endowment, no growth budget, no floor, no dividend, no inflation-gap issuance. <strong>The system creates exactly zero new money.</strong> It is not a printing press with the dial stuck on "more." Zero is one of its settings.</p>
 <p>And the consequence is the opposite of what the fear assumes. With no new money and a real economy still growing ~2%, the same money stretches over more goods, so the inflation formula gives:</p>
 <pre class="formula">inflation  =  0 / Mᵀ  −  g  =  −2%</pre>
-<p>A dollar <em>gains</em> about 2% a year. Zero issuance is the hard-money / fixed-supply corner — the gold-standard outcome — and the engine contains it as a limiting case. Mode A (mild deflation) is just a step in from there; Mode B/D (stability) a few steps further; Mode C (mild inflation) one step past stable. <strong>The framework isn't inflationary or deflationary by nature. It spans the whole range, and the dials decide — including all the way down to creating nothing at all.</strong></p>
-<p>That is what defuses the printing-money objection: the zero setting itself. And even at zero, the citizen comes out ahead of today, because it is today's dollar that quietly loses 2-3% a year — not this one.</p>
+<p>A dollar <em>gains</em> about 2% a year. Zero issuance is the hard-money / fixed-supply corner, the gold-standard outcome, and the engine contains it as a limiting case. Mode A (mild deflation) is just a step in from there; Mode B/D (stability) a few steps further; Mode C (mild inflation) one step past stable. <strong>The framework isn't inflationary or deflationary by nature. It spans the whole range, and the dials decide, including all the way down to creating nothing at all.</strong></p>
+<p>That is what defuses the printing-money objection: the zero setting itself. And even at zero, the citizen comes out ahead of today, because it is today's dollar that quietly loses 2-3% a year, not this one.</p>
 <p>---</p>
 <h2>Index versus dividend: ownership or income</h2>
-<p>The K3 router decides more than "locked or spendable." It decides whether a citizen's share of the new money becomes <strong>ownership</strong> or <strong>income</strong> — two different things with two different fates.</p>
-<ul><li><strong>The floor (the index side).</strong> The <code>(1 − κ_d)</code> share that stays locked isn't held as cash. It's used to <strong>buy equity in the domestic market index</strong>, and held. That makes each citizen a part-owner of the country's productive capital: it compounds with the market, it's <em>wealth</em>, and because it sits in the asset circuit it barely touches goods prices. This is the <strong>structural buyer</strong> — the system standing in the market every year, buying the index on citizens' behalf.</li></ul>
-<ul><li><strong>The dividend (the income side).</strong> The <code>κ_d</code> share is paid out as <strong>spendable cash</strong>. It's <em>income</em> — consumed, hitting the transactional circuit, gone once spent. It builds no stake.</li></ul>
-<p>So κ_d isn't just a price dial. It's the choice between handing people <em>a slice of the market</em> and handing them <em>a cheque</em>. Mode B leans to ownership (60% floor); Mode A is almost pure ownership; Mode D is pure cheque — 100% dividend, <strong>no index bought at all</strong> (A* = 0).</p>
-<h2>How the floor buys the index — measured against total market cap</h2>
+<p>The K3 router decides more than "locked or spendable." It decides whether a citizen's share of the new money becomes <strong>ownership</strong> or <strong>income</strong>, two different things with two different fates.</p>
+<ul><li><strong>The floor (the index side).</strong> The <code>(1 − κ_d)</code> share that stays locked isn't held as cash. It's used to <strong>buy equity in the domestic market index</strong>, and held. That makes each citizen a part-owner of the country's productive capital: it compounds with the market, it's <em>wealth</em>, and because it sits in the asset circuit it barely touches goods prices. This is the <strong>structural buyer</strong>, the system standing in the market every year, buying the index on citizens' behalf.</li></ul>
+<ul><li><strong>The dividend (the income side).</strong> The <code>κ_d</code> share is paid out as <strong>spendable cash</strong>. It's <em>income</em>, consumed, hitting the transactional circuit, gone once spent. It builds no stake.</li></ul>
+<p>So κ_d isn't just a price dial. It's the choice between handing people <em>a slice of the market</em> and handing them <em>a cheque</em>. Mode B leans to ownership (60% floor); Mode A is almost pure ownership; Mode D is pure cheque: 100% dividend, <strong>no index bought at all</strong> (A* = 0).</p>
+<h2>How the floor buys the index, measured against total market cap</h2>
 <p>The index purchases are sized and tracked directly against the whole market. Three numbers do it:</p>
-<p><strong>A* — the structural-buyer flow.</strong> The dollars going into the index each year:</p>
+<p><strong>A*: the structural-buyer flow.</strong> The dollars going into the index each year:</p>
 <pre class="formula">A*  =  K1 endowment  +  (1 − κ_d) × growth budget</pre>
-<p>This <em>is</em> the floor money — citizenship endowments plus the locked share of the budget.</p>
-<p><strong>c — the flow as a share of the market.</strong> A* measured against total index market cap:</p>
+<p>This <em>is</em> the floor money: citizenship endowments plus the locked share of the budget.</p>
+<p><strong>c: the flow as a share of the market.</strong> A* measured against total index market cap:</p>
 <pre class="formula">c  =  A*  /  market cap</pre>
-<p>At the default $69T market, Mode B's A* ≈ $272B is <strong>c ≈ 0.39% of the entire market, per year</strong> — the annual bite the structural buyer takes.</p>
-<p><strong>ψ* — realized citizen ownership.</strong> Buying c% a year and holding for <code>dur</code> years doesn't simply stack to c × dur, because the market is also growing <em>and</em> citizens eventually draw their floors down. The realized share is a growth-discounted accumulation:</p>
+<p>At the default $69T market, Mode B's A* ≈ $272B is <strong>c ≈ 0.39% of the entire market, per year</strong>: the annual bite the structural buyer takes.</p>
+<p><strong>ψ*: realized citizen ownership.</strong> Buying c% a year and holding for <code>dur</code> years doesn't simply stack to c × dur, because the market is also growing <em>and</em> citizens eventually draw their floors down. The realized share is a growth-discounted accumulation:</p>
 <pre class="formula">ψ*  =  c × annuity(g, dur),     annuity(g, dur) = (1 − (1+g)^−dur) / g</pre>
-<p>At the defaults (40-year hold, 2% growth), Mode B settles near <strong>ψ* ≈ 10%</strong> of the index owned by citizens collectively — leaving <strong>~90% as tradable private float</strong> (<code>1 − ψ*</code>). The engine brackets this between two decumulation models and shows the band.</p>
-<p>And the ceiling is the key line: no matter how long the hold, ψ* cannot run past <strong>c / g</strong> (here ≈ 20%). Ownership <em>asymptotes</em> — it does not compound without limit.</p>
-<h2>"If we didn't bound it" — why citizens don't end up owning everything</h2>
+<p>At the defaults (40-year hold, 2% growth), Mode B settles near <strong>ψ* ≈ 10%</strong> of the index owned by citizens collectively, leaving <strong>~90% as tradable private float</strong> (<code>1 − ψ*</code>). The engine brackets this between two decumulation models and shows the band.</p>
+<p>And the ceiling is the key line: no matter how long the hold, ψ* cannot run past <strong>c / g</strong> (here ≈ 20%). Ownership <em>asymptotes</em>, it does not compound without limit.</p>
+<h2>"If we didn't bound it": why citizens don't end up owning everything</h2>
 <p class="aside">(The question below is the one a sharp reader asks first: what happens if the structural buyer is not bounded.)</p>
 <p>This is the real tension in a permanent buyer, and it is worth being explicit about, because a sharp reader goes straight to it: <strong>if the system buys a slice of the index every year, forever, doesn't it eventually own the whole thing?</strong></p>
-<p>If nothing bounded it, yes. Naive accumulation — c × duration, with no growth-discounting and no draw-down — would climb past any level, and at the extreme a fully-captured floor would imply owning <em>more than 100%</em> of the market, which is impossible. That impossibility isn't waved away; it's the hinge of the feasibility argument (the structural-buyer paper's feasibility analysis, and the ownership-feasibility figure in the macroeconomic model, where naive full capture crosses 100% while the recalibrated design sits safely below).</p>
+<p>If nothing bounded it, yes. Naive accumulation, c × duration, with no growth-discounting and no draw-down, would climb past any level, and at the extreme a fully-captured floor would imply owning <em>more than 100%</em> of the market, which is impossible. That impossibility isn't waved away; it's the hinge of the feasibility argument (the structural-buyer paper's feasibility analysis, and the ownership-feasibility figure in the macroeconomic model, where naive full capture crosses 100% while the recalibrated design sits safely below).</p>
 <p>Three things bound it, and all three are in the engine:</p>
-<ol><li><strong>The c/g ceiling.</strong> Because the market grows at g while the buyer adds c, ownership asymptotes to c/g and stops — at the calibrated flow it never approaches 100%.</li><li><strong>Decumulation.</strong> Floors aren't held forever; citizens draw them down in retirement, recycling shares back into the tradable float. That's why realized ψ* (≈10%) sits well below even the no-draw-down upper bound, c × dur.</li><li><strong>Return attenuation.</strong> As citizens own more of the capital stock, the marginal return on it falls toward g. That feedback makes ever-larger ownership self-limiting instead of self-reinforcing.</li></ol>
-<p>The net: ψ* settles at a feasible share — meaningful ownership for citizens, with the large majority of the market still privately held and freely traded. The structural buyer is a <strong>bounded</strong> buyer by construction. If it weren't, the design wouldn't be feasible — which is exactly why the bound is load-bearing, not a footnote.</p>
+<ol><li><strong>The c/g ceiling.</strong> Because the market grows at g while the buyer adds c, ownership asymptotes to c/g and stops, at the calibrated flow it never approaches 100%.</li><li><strong>Decumulation.</strong> Floors aren't held forever; citizens draw them down in retirement, recycling shares back into the tradable float. That's why realized ψ* (≈10%) sits well below even the no-draw-down upper bound, c × dur.</li><li><strong>Return attenuation.</strong> As citizens own more of the capital stock, the marginal return on it falls toward g. That feedback makes ever-larger ownership self-limiting instead of self-reinforcing.</li></ol>
+<p>The net: ψ* settles at a feasible share: meaningful ownership for citizens, with the large majority of the market still privately held and freely traded. The structural buyer is a <strong>bounded</strong> buyer by construction. If it weren't, the design wouldn't be feasible, which is exactly why the bound is load-bearing, not a footnote.</p>
 <p>---</p>
-<p class="aside">Everything above is exactly what the engine computes, line for line. The rigor behind each number — the Mᵀ separation, the 20% spillover, the price-stability locus, the realizable returns, the bounded ownership share — is set out in the architecture paper (the mechanical design), the macroeconomic model, and the structural-buyer paper. But the mechanics themselves are just this: one growth-tied budget; four dials that size it and route it between a spendable dividend and a bounded, index-buying floor; with inflation and ownership both read off the back.</p>
+<p class="aside">Everything above is exactly what the engine computes, line for line. The rigor behind each number, the Mᵀ separation, the 20% spillover, the price-stability locus, the realizable returns, the bounded ownership share, is set out in the architecture paper (the mechanical design), the macroeconomic model, and the structural-buyer paper. But the mechanics themselves are just this: one growth-tied budget; four dials that size it and route it between a spendable dividend and a bounded, index-buying floor; with inflation and ownership both read off the back.</p>
 <div class="door">
   <p class="q">That is the whole mechanism. The rest is just choosing where the dials sit.</p>
 </div>
