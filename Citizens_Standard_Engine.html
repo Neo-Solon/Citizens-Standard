@@ -1505,6 +1505,8 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
       modeLabel = '<span style="color: var(--coral);">Custom (manually configured)</span>';
     } else if (activeMode === 'Z') {
       modeLabel = '<span style="color: var(--teal-text);">Zero-Issuance Limit — fixed-supply corner</span>';
+    } else if (activeMode === 'O') {
+      modeLabel = '<span style="color: var(--teal-text);">Mode Ω — Price stability solver</span>';
     } else {
       // Unknown state — try value-detection as a fallback.
       const isModeA = Math.abs(p.k1 - 0.025) < 0.005 && Math.abs(p.k2 - 0.175) < 0.005 && Math.abs(p.k3) < 0.005 && Math.abs(p.ki) < 0.005 && Math.abs(p.cpi - (-0.0186)) < 0.006;
