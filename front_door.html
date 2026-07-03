@@ -104,7 +104,9 @@
 
   @media (max-width:560px){
     header.wrap{padding:42px 24px 4px}
-    .meter-head{flex-direction:column;gap:2px}
+    .meter-head{flex-direction:row;flex-wrap:nowrap;align-items:baseline;gap:10px}
+    .from{flex:0 1 auto;min-width:0}
+    .now{flex:0 0 auto;font-size:clamp(1.3rem,1rem + 4vw,1.9rem)}
     .tag{display:none}
   }
   @media (prefers-reduced-motion:reduce){
