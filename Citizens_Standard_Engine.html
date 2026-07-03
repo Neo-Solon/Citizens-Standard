@@ -378,6 +378,19 @@ header .kicker{text-align:left;}
 header h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;letter-spacing:-0.02em;line-height:1.04;font-size:clamp(2.3rem,7vw,3.6rem);margin:0 0 20px;text-align:center;}
 header .subtitle{font-family:"Newsreader",Georgia,serif;font-size:clamp(1.1rem,1rem + 0.5vw,1.34rem);line-height:1.5;color:#D9D3C6;max-width:46ch;margin:0 auto;text-align:center;}
 header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
+
+/* editable Launch-parameter readouts: show a gold box so they read as typeable */
+.readout.editable-readout{
+  border:1px solid rgba(230,169,62,.55);
+  border-radius:4px;
+  padding:1px 6px;
+  background:rgba(230,169,62,.06);
+  transition:border-color .15s ease, background .15s ease;
+}
+.readout.editable-readout:hover{
+  border-color:var(--accent,#E6A93E);
+  background:rgba(230,169,62,.12);
+}
 </style>
 </head>
 <body>
@@ -401,7 +414,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   <p class="kicker">The Citizens Standard &nbsp;&middot;&nbsp; <b>the engine</b></p>
   <h1>Interactive Model Builder</h1>
   <p class="subtitle">Tune the monetary issuance dials. Project a representative cohort 65 years. Compare against real-world median outcomes under seven alternative systems.</p>
-  <p class="meta">Companion tool to the SSRN paper by Neo-Solon. &nbsp;&middot;&nbsp; <a href="#methodology">Data sources &amp; methodology below</a>. &nbsp;&middot;&nbsp; <span style="opacity:0.6;">build v3.89</span></p>
+  <p class="meta">Companion tool to the Citizens Standard papers, by Neo-Solon. &nbsp;&middot;&nbsp; <a href="#methodology">Data sources &amp; methodology below</a>.</p>
 </header>
 
 <div class="card" style="background: var(--accent-bg); border-color: var(--accent); margin-bottom: 24px;">
@@ -445,10 +458,10 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
 
 <div class="modes" role="tablist">
   <button class="mode-btn" data-mode="A" title="Mild deflation: every dollar a citizen holds gains purchasing power. No monthly dividend."><span class="mb-name">Mode A</span><span class="mb-sub">Deflation</span></button>
-  <button class="mode-btn active" data-mode="B" title="The full-rate 60/40 split: issues at the full growth rate, putting 60% of the budget in the locked floor and paying out 40% as a standing dividend. Highest Stable Floor of the base modes (~$413K on the realizable basis). Holds prices stable near trend growth; for guaranteed price stability in any economy, use Mode Ω."><span class="mb-name">Mode B</span><span class="mb-sub">Split Dividend</span></button>
+  <button class="mode-btn" data-mode="B" title="The full-rate 60/40 split: issues at the full growth rate, putting 60% of the budget in the locked floor and paying out 40% as a standing dividend. Highest Stable Floor of the base modes (~$413K on the realizable basis). Holds prices stable near trend growth; for guaranteed price stability in any economy, use Mode Ω."><span class="mb-name">Mode B</span><span class="mb-sub">Split Dividend</span></button>
   <button class="mode-btn" data-mode="C" title="Modest ~2% inflation. K1/K2 stay at a low floor-building rate; the KI inflation-gap channel funds a meaningful monthly dividend (~$108/citizen). Trades a smaller locked floor for visible income now."><span class="mb-name">Mode C</span><span class="mb-sub">Inflation</span></button>
       <button class="mode-btn" data-mode="D" title="Pure dividend, zero index. K1=0 and the entire growth budget pays out as a standing dividend (κ_d=100%), so the state buys no equity at all (A*=0, ψ*=0) — yet issuance still grows at exactly real output, so prices stay stable. Trades the locked floor for a price-stable cash dividend at the M^T locus (~$56/citizen/mo). Pushing K2 to 100% overshoots the locus and inflates."><span class="mb-name">Mode D</span><span class="mb-sub">Pure Dividend</span></button>
-  <button class="mode-btn" data-mode="O" title="True price stability, per economy. Holds prices flat in both directions. Starting from the 60/40 split, it trims the dividend where the economy would otherwise inflate (routing the freed budget into the locked floor) and adds the inflation-gap channel where it would otherwise deflate (relocating that value into the spendable dividend). Prices hold at ~0% everywhere; total lifetime value is preserved or higher. Justified over tolerating mild deflation by the downward-nominal-wage-rigidity cost."><span class="mb-name">Mode Ω</span><span class="mb-sub">Price Stability</span></button>
+  <button class="mode-btn active" data-mode="O" title="True price stability, per economy. Holds prices flat in both directions. Starting from the 60/40 split, it trims the dividend where the economy would otherwise inflate (routing the freed budget into the locked floor) and adds the inflation-gap channel where it would otherwise deflate (relocating that value into the spendable dividend). Prices hold at ~0% everywhere; total lifetime value is preserved or higher. Justified over tolerating mild deflation by the downward-nominal-wage-rigidity cost."><span class="mb-name">Mode Ω</span><span class="mb-sub">Price Stability</span></button>
   <button class="mode-btn" data-mode="Z" title="The limiting case where every creation channel is off (K1=K2=KI=0): no new money is created at all. With real output still growing, the same money buys more each year, so prices fall at roughly the real-growth rate. This recovers the fixed-supply / hard-money (gold-standard) outcome as one admissible setting of the same engine — proof that the framework is a dial, not a printing press."><span class="mb-name">Mode Z</span><span class="mb-sub">Zero-Issuance</span></button>
   <button class="mode-btn" data-mode="X"><span class="mb-name">Custom</span><span class="mb-sub">Manual</span></button>
 </div>
@@ -960,7 +973,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   let omegaScenario = 'normal';
   let tool14Episode = '2022';
   let tool14Chart = null;
-  let activeMode = 'B';   // tracks the last Mode button clicked (A/B/C/X)
+  let activeMode = 'O';   // tracks the last Mode button clicked (A/B/C/X)
   let chart = null;
   let inflationChart = null;
   let stressChart = null;
@@ -2309,6 +2322,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
     const ro = $(readoutId), sl = $(sliderId);
     if (!ro || !sl) return;
     ro.style.cursor = 'text';
+    ro.classList.add('editable-readout');
     ro.title = 'Click to type an exact value';
     ro.addEventListener('click', () => {
       if (ro.dataset.editing === '1') return;
@@ -2352,6 +2366,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   makeReadoutEditable('gdpr', 'gdp');
   makeReadoutEditable('popr', 'pop');
   makeReadoutEditable('mktr', 'mkt');
+  makeReadoutEditable('hzr', 'hz');
 
   // Apply a country's launch-parameter defaults to the sliders (hz/dur stay as display prefs)
   // Pick a "nice" step for a slider given the magnitude of its default value,
@@ -2458,7 +2473,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   function firstRender(){
     try {
       applyCountryDefaults();   // window the sliders to the initial country (US) on first load
-      applyMode('B');
+      applyMode('O');
     } catch (e) {
       try { update(); } catch (e2) {}
     }
