@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The right to remake money. The Citizens Standard.</title>
+<meta name="description" content="Changing the money system is not a radical act. The people hold the right to alter a governing power that stops serving them, and the Constitution already gives Congress the power to do it by ordinary law. No amendment required.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Citizens Standard, the Declaration">
+<meta property="og:description" content="The right to remake the money system, and the power that already exists to do it. No amendment required.">
+<meta property="og:url" content="https://neo-solon.github.io/Citizens-Standard/declaration.html">
+<meta property="og:image" content="https://neo-solon.github.io/Citizens-Standard/preview_card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Citizens Standard, the Declaration">
+<meta name="twitter:description" content="The right to remake the money system, and the power that already exists to do it. No amendment required.">
+<meta name="twitter:image" content="https://neo-solon.github.io/Citizens-Standard/preview_card.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2310161C'/%3E%3Ctext x='16' y='24' font-size='22' text-anchor='middle' fill='%23E6A93E' font-family='Georgia,serif'%3E%24%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10161C;--ink-soft:#18212B;--line:#27313C;
+    --text:#ECE7DB;--dim:#9AA3AE;
+    --kept:#5FBE93;--amber:#E6A93E;--amber-ink:#1a1206;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--text);font-family:"Newsreader",Georgia,serif;
+    font-size:clamp(18px,1.05rem + 0.3vw,21px);line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px}
+  .display{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;letter-spacing:-0.02em;line-height:1.04}
+  .label{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;font-size:.72rem}
+
+  header.wrap{padding:60px 24px 6px}
+  @media (max-width:640px){header.wrap{padding:42px 24px 6px}}
+  .kicker{color:var(--amber);margin-bottom:34px}
+  .kicker b{color:var(--text);font-weight:700}
+  h1.display{font-size:clamp(2.3rem,7vw,3.6rem);margin-bottom:22px}
+  .lede{font-size:clamp(1.1rem,1rem + 0.5vw,1.34rem);color:#D9D3C6;max-width:46ch}
+  .lede em{font-style:italic;color:var(--text)}
+
+  section{padding:26px 0}
+  h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(1.4rem,1.1rem + 1.4vw,1.85rem);letter-spacing:-0.01em;margin:18px 0 16px;line-height:1.15}
+  .eyebrow{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;color:var(--amber);margin-bottom:10px}
+  p{margin-bottom:18px}
+  .text strong{font-weight:500;color:#fff;background:linear-gradient(transparent 62%,rgba(230,169,62,.20) 0)}
+  a.inline{color:var(--amber);text-decoration:none;border-bottom:1px solid rgba(230,169,62,.35)}
+  a.inline:hover{border-bottom-color:var(--amber)}
+
+  /* the epigraph */
+  .epigraph{margin:14px 0 8px;padding:30px 30px 24px;border:1px solid var(--line);border-left:3px solid var(--amber);
+    border-radius:0 12px 12px 0;background:rgba(230,169,62,.045)}
+  .epigraph p{font-style:italic;font-size:clamp(1.02rem,.98rem + .4vw,1.16rem);color:#E7E2D6;margin:0 0 14px;line-height:1.56}
+  .epigraph .src{font-style:normal;font-family:"Bricolage Grotesque",sans-serif;font-weight:600;
+    text-transform:uppercase;letter-spacing:.12em;font-size:.7rem;color:var(--dim);margin:0;text-align:right}
+
+  /* the honest headline card (authority vs entrenchment) */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0 6px}
+  .cell{padding:22px 20px;border-radius:12px;background:var(--ink-soft);border:1px solid var(--line)}
+  .cell .tag{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.7rem;margin-bottom:10px}
+  .cell.settled .tag{color:var(--kept)} .cell.open .tag{color:var(--amber)}
+  .cell p{font-size:.98rem;color:#CFD3D8;margin:0}
+
+  /* the four-risk mini-ledger */
+  .risks{margin:10px 0 6px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .risk{display:grid;grid-template-columns:1fr auto;gap:4px 16px;padding:16px 18px;border-top:1px solid var(--line)}
+  .risk:first-child{border-top:none}
+  .risk .rname{color:var(--text);font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1rem}
+  .risk .rdesc{grid-column:1;color:var(--dim);font-size:.93rem;margin-top:3px}
+  .rbadge{align-self:start;font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;border-radius:999px;white-space:nowrap}
+  .rbadge.low{color:var(--kept);background:rgba(95,190,147,.12);border:1px solid rgba(95,190,147,.3)}
+  .rbadge.mod{color:var(--amber);background:rgba(230,169,62,.10);border:1px solid rgba(230,169,62,.3)}
+  .rbadge.hard{color:#E0857A;background:rgba(224,133,122,.10);border:1px solid rgba(224,133,122,.32)}
+  .risks-foot{padding:15px 18px;border-top:1px solid var(--line);background:rgba(255,255,255,.015);font-size:.93rem;color:var(--dim)}
+  .risks-foot a{color:var(--amber);text-decoration:none;border-bottom:1px solid rgba(230,169,62,.35)}
+
+  .rule{height:1px;background:var(--line);border:0;margin:8px 0}
+
+  .door{margin:14px 0 20px;padding:42px 0 0;border-top:1px solid var(--line);text-align:center}
+  .door .q{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(1.3rem,1.05rem + 1.8vw,1.85rem);line-height:1.3;color:#fff;margin-bottom:24px;max-width:34ch;margin-left:auto;margin-right:auto}
+  .cta{display:inline-flex;align-items:center;gap:.6em;background:var(--amber);color:var(--amber-ink);
+    font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.05rem;text-decoration:none;
+    padding:16px 26px;border-radius:9px;transition:transform .15s ease, box-shadow .15s ease}
+  .cta:hover{transform:translateY(-2px);box-shadow:0 10px 28px -10px rgba(230,169,62,.55)}
+  .cta:focus-visible{outline:3px solid #fff;outline-offset:3px}
+  .cta .arrow{transition:transform .18s ease}.cta:hover .arrow{transform:translateX(4px)}
+  .door .note{margin-top:20px;color:var(--dim);font-size:.95rem;max-width:52ch;margin-left:auto;margin-right:auto}
+  .door .note a{color:var(--amber);text-decoration:none}
+
+  @media (max-width:560px){.split{grid-template-columns:1fr}.risk{grid-template-columns:1fr}.rbadge{justify-self:start}}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+
+  .pagenav-btn{display:inline-flex;align-items:center;gap:.4em;color:#E6A93E;text-decoration:none;
+    border:1px solid rgba(230,169,62,.5);border-radius:8px;padding:8px 16px;font-weight:600;
+    transition:background .15s ease,border-color .15s ease,transform .15s ease;}
+  .pagenav-btn:hover{background:#E6A93E;color:#11161c;border-color:#E6A93E;transform:translateY(-1px);}
+  .pagenav-btn:focus-visible{outline:2px solid #E6A93E;outline-offset:2px;}
+</style>
+<style>
+.sitenav{border-bottom:1px solid var(--line,#27313c);font-family:inherit;}
+.sitenav-inner{max-width:760px;margin:0 auto;padding:13px 24px;display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:center;align-items:baseline;}
+.sitenav a{color:var(--dim,#9aa3ae);text-decoration:none;font-size:13.5px;font-weight:500;}
+.sitenav a:hover{color:#e6e8eb;}
+.sitenav a[aria-current="page"]{color:var(--amber,#e6a93e);font-weight:700;}
+
+/* --- centered header to match page 1 (sections stay left) --- */
+header.wrap h1.display{text-align:center;}
+header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
+
+</style>
+</head>
+<body>
+<nav class="sitenav" aria-label="Site navigation">
+  <div class="sitenav-inner">
+    <a href="front_door.html">Diagnosis</a>
+    <a href="declaration.html" aria-current="page">Declaration</a>
+    <a href="how_the_engine_works.html">How it works</a>
+    <a href="Citizens_Standard_Engine.html">Engine</a>
+    <a href="papers.html">Papers &amp; data</a>
+    <a href="questions_and_answers.html">Q&amp;A</a>
+    <a href="methodology.html">Methodology</a>
+  </div>
+</nav>
+
+<header class="wrap">
+  <p class="kicker label">The Citizens Standard &nbsp;&middot;&nbsp; <b>The Declaration</b></p>
+  <h1 class="display">The right to remake money</h1>
+  <p class="lede">You hold the <em>right</em> to remake a governing power that stops serving you. The Constitution already gives Congress the <em>power</em> to remake how money is issued, by ordinary law, no amendment required. What was missing was the design.</p>
+</header>
+
+<main class="wrap text">
+
+  <section>
+    <p class="eyebrow">The right</p>
+    <p>The reason changing the money system is not radical is already written into a document almost everyone accepts.</p>
+    <div class="epigraph">
+      <p>We hold these truths to be self-evident, that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty and the pursuit of Happiness. That to secure these rights, Governments are instituted among Men, deriving their just powers from the consent of the governed. That whenever any Form of Government becomes destructive of these ends, it is the Right of the People to alter or to abolish it, and to institute new Government, laying its foundation on such principles and organizing its powers in such form, as to them shall seem most likely to effect their Safety and Happiness.</p>
+      <p class="src">Declaration of Independence, 1776</p>
+    </div>
+    <p>The founders asserted a general right: the people may alter any governing power that stops serving their safety and happiness. Nothing in that principle exempts the machinery of money. And a monetary system is a governing power. Its design determines who receives newly created purchasing power first, whose holdings hold their value and whose erode as prices move, and what share of future output is pre-committed to debt service before that output exists. A power of that size is legitimate, by the founders' own logic, only so far as it serves the governed.</p>
+    <p>It is a governing power in the fullest sense. It was created by government: legislatures chartered the central banks, authorized the borrowing, and wrote the statutes. And it is run by government: the Federal Reserve's Board of Governors are presidential appointees, confirmed by the Senate, exercising delegated state power over the nation's money. That it was established lawfully is not a defense against changing it. It is exactly what places it under the principle the founders named. When a governing power stops serving the safety and happiness of the governed, the people keep the right to alter or abolish it, and to institute in its place one that does.</p>
+    <p>None of it is inevitable. The erosion of savings, the concentration of new money, and the servicing burden carried forward are outputs of a design, not facts of nature. A design can be examined and altered. This is not one people separating from another. It is the same people reclaiming a power they delegated and stopped watching: the authority to create money.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">The power</p>
+    <h2>The mechanism already exists</h2>
+    <p>The right is one thing; the legal means to exercise it is another. Here the news is better than most reformers assume. The authority to remake the monetary system is not in doubt, and it does not require a constitutional amendment. It requires an <strong>ordinary act of Congress</strong>, the same instrument that created the Federal Reserve in 1913 and amended it repeatedly since.</p>
+    <p>The core power sits in <a class="inline" href="https://www.archives.gov/founding-docs/constitution-transcript" target="_blank" rel="noopener">Article I, Section 8</a>: Congress may coin money and regulate its value. The Supreme Court has read that power broadly. In the <strong>Legal Tender Cases</strong> of 1871 (<em>Knox v. Lee</em>, <em>Parker v. Davis</em>) it upheld Congress issuing paper money as legal tender, and in <strong>Juilliard v. Greenman</strong> (1884) it confirmed that power in peacetime, not just wartime. That line of cases is the constitutional basis of the entire modern dollar. A Citizens Standard would issue money under the very same authority. Nothing new has to be granted.</p>
+    <p>The one genuinely novel piece is distribution: routing new issuance to citizens as locked floors and dividends. That sits at the meeting point of the money power and the spending power, and the design anchors each citizen's Stable Floor as <strong>individually owned private property</strong>, vested at the citizen event and protected under the Fifth Amendment, rather than as a revocable government benefit. That distinction is deliberate, and it is what keeps a future administration from quietly clawing it back.</p>
+
+    <div class="split">
+      <div class="cell settled">
+        <p class="tag">Settled</p>
+        <p>Whether Congress <em>can</em> restructure how money is created and distributed. The coinage power and the Legal Tender Cases put this beyond serious doubt. No amendment is needed.</p>
+      </div>
+      <div class="cell open">
+        <p class="tag">The real question</p>
+        <p>Whether the change can be made <em>durable</em>, structured to survive review and resist quiet repeal. This, not authority, is where the actual legal work lives.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">The honest map</p>
+    <h2>Four places it will be litigated</h2>
+    <p>A statutory Citizens Standard would be challenged, and the design is built with the challenges in mind rather than pretending they do not exist. The statutory paper maps four, rates each, and shows how the structure mitigates it without claiming to eliminate it.</p>
+
+    <div class="risks">
+      <div class="risk">
+        <div class="rname">Nondelegation</div>
+        <div class="rdesc">Does the agency get too much unbounded discretion? The formula runs automatically from objective inputs, so it delegates almost nothing. Recent doctrine (<em>Loper Bright</em>, 2024) protects powers written explicitly into the statute, which is exactly how this is drafted.</div>
+        <span class="rbadge low">Lowest risk</span>
+      </div>
+      <div class="risk">
+        <div class="rname">Separation of powers</div>
+        <div class="rdesc">Does the agency's structure or its certification role intrude on Congress? Handled by a multi-member board and by framing certification as a public report, not a legal veto.</div>
+        <span class="rbadge mod">Moderate</span>
+      </div>
+      <div class="risk">
+        <div class="rname">Takings Clause</div>
+        <div class="rdesc">Are the citizen floors protected property? Vested at the citizen event and framed as owned accounts, like a 401(k), not a Social Security entitlement, which is what keeps them out of the Flemming v. Nestor line.</div>
+        <span class="rbadge mod">Moderate</span>
+      </div>
+      <div class="risk">
+        <div class="rname">Binding future Congresses</div>
+        <div class="rdesc">One Congress cannot fully bind the next. The design concedes this openly and does not overclaim. What it can do is make repeal visible, affirmative, and politically costly rather than quiet, and build a constituency whose stake ties them to its survival.</div>
+        <span class="rbadge hard">Hardest, and conceded</span>
+      </div>
+      <div class="risks-foot">The full argument for each, with the governing cases, is in the statutory paper's Constitutional Vulnerability Map. <a href="papers.html">Read the statutory paper</a>.</div>
+    </div>
+  </section>
+
+  <div class="door">
+    <p class="q">The right exists. The power exists. What was missing was the thing to build.</p>
+    <a class="cta" href="Citizens_Standard_Engine.html">Run the architecture <span class="arrow">&rarr;</span></a>
+    <p class="note">The Citizens Standard is that architecture: a monetary system you can run yourself, with every claim backed by code on real data. Start with the <a href="front_door.html">diagnosis</a>, see <a href="how_the_engine_works.html">how it works</a>, or read the <a href="papers.html">papers and data</a>.</p>
+  </div>
+
+</main>
+
+<nav aria-label="Previous and next page" style="max-width:980px;margin:8px auto 0;padding:18px 24px 0;border-top:1px solid #27313C;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:.95rem;"> <a href="front_door.html" class="pagenav-btn">&larr; Diagnosis</a> <a href="how_the_engine_works.html" class="pagenav-btn">How it works &rarr;</a> </nav>
+
+<nav aria-label="Citizens Standard pages" style="max-width:980px;margin:56px auto 38px;padding:18px 24px 0;border-top:1px solid #27313C;display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;justify-content:center;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:.92rem;line-height:1.6;"> <a href="front_door.html" style="color:#9AA3AE;text-decoration:none;">Diagnosis</a> <a href="declaration.html" style="color:#E6A93E;text-decoration:none;font-weight:600;">Declaration</a> <a href="how_the_engine_works.html" style="color:#9AA3AE;text-decoration:none;">How it works</a> <a href="Citizens_Standard_Engine.html" style="color:#9AA3AE;text-decoration:none;">Engine</a> <a href="papers.html" style="color:#9AA3AE;text-decoration:none;">Papers &amp; data</a> <a href="questions_and_answers.html" style="color:#9AA3AE;text-decoration:none;">Q&amp;A</a> <a href="methodology.html" style="color:#9AA3AE;text-decoration:none;">Methodology</a> </nav>
+
+</body>
+</html>
