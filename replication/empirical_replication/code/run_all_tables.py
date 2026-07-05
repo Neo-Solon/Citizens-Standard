@@ -18,7 +18,9 @@ from deterministic_engine import (
     BENCHMARKS, COHORTS, build_dataset, compute_cohort,
     DEPRESSION_SP500_NOMINAL, DEPRESSION_CPI_DECDEC,
     STAGFLATION_SP500_NOMINAL, STAGFLATION_CPI_DECDEC,
+    K1_FRACTION, K2_FRACTION, FLOOR_SHARE,
 )
+from authoritative_newcitizens import k1_residual_deduction_per_capita
 from mc_engine import run_all, summarize
 
 
@@ -54,10 +56,16 @@ cpi_2025 = data[2025]["cpi_ann"]
 for y in [1960, 1990, 2025]:
     d = data[y]
     gdp_pc_nom = (d["GDP"] * 1e9) / (d["pop"] * 1e6)
-    k1 = gdp_pc_nom * 0.025
+    k1 = gdp_pc_nom * K1_FRACTION
     prev_m2_dollars = (data[y-1]["M2"] * 1e9)
     rgdp = max(0, d["rgdp"] / 100)
-    k2 = (rgdp * prev_m2_dollars * 0.5) / (d["pop"] * 1e6)
+    pop_persons = d["pop"] * 1e6
+    # Match the deterministic engine exactly: full-rate growth line, less the
+    # per-citizen K1 residual, then the 60 percent Mode B floor share.
+    k2_line = (rgdp * prev_m2_dollars * K2_FRACTION) / pop_persons
+    k2_line = max(0.0, k2_line - k1_residual_deduction_per_capita(
+        y, gdp_pc_nom, pop_persons, K1_FRACTION))
+    k2 = FLOOR_SHARE * k2_line
     ratio = cpi_2025 / d["cpi_ann"]
     out(f"{y:<6}${d['M2']:>9,.0f}${gdp_pc_nom:>12,.0f}"
         f"${k1:>12,.2f}${k2:>15,.2f}{ratio:>17.2f}x")

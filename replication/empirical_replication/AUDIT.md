@@ -129,3 +129,20 @@ Setting `K2_RESIDUAL=False` recovers the published v3 figures exactly, confirmin
 | Naturalizations (annual) | DHS OHSS / USCIS | FY2024 818,500; FY2023 878,460; FY2022 969,380; 2008 peak 1,046,539; 2020 trough 628,260; series 2010–2019 mean 729k vs official 730,100 |
 
 K1_agg with FY2024 flows ≈ $9.0B (deposit-weighted: births full, naturalizations pro-rated at mean age 34), leaving K2 ≈ $438B (~$1,282/citizen) of the $447B line.
+
+---
+
+## 6. Referee-directed audit (Paper 2 empirical replication)
+
+Three questions were put to the replication and run down against code, data, and paper.
+
+**Q1 — Does `authoritative_data.py` clean and transform the data correctly? YES.**
+Coverage is complete 1929–2025 with no interpolation. The real-return transform is the exact Fisher form `(1+nom)/(1+cpi)-1`, not the naive `nom-cpi` approximation. `joint_triples` resamples years as (return, CPI, growth) tuples, preserving the cross-correlations the Monte Carlo depends on. Values verify against primary sources, including the deliberate and correct use of total return (Damodaran) rather than price return for the equity series (2008 total real -36.6% vs price-only -38.5%; 2013 +30%). One code-comment mislabel was found and fixed: the M2 comment read "annual averages" but the loaded values are FRED M2SL end-of-period (December) figures (M2[2024] = $21,494.9B matches Dec-2024 $21,533.8B, not the ~$21,040B annual average). Data and paper were already correct; only the comment was wrong.
+
+**Q2 — Does `deterministic_engine.py` implement the cohort logic as the paper describes? YES.**
+Every stated methodological choice matches the code: deposit-then-compound (beginning-of-period) timing (`balance = (balance + k1 + k2) * (1 + real_ret)`), deflate-to-2025 then compound at the realizable real return, the 60/40 Mode B split (`FLOOR_SHARE = 0.60`), and separate after-tax compounding of the liquid K3 dividend. The Cohort A decomposition reproduces the paper's figures to the cent: K1 $816.05, K2 $39,910.60, total principal $40,726.65.
+
+**Q3 — Do the Monte Carlo simulations meaningfully affect the conclusions? YES, as a tail-risk analysis specifically.**
+The recentering is geometric, which pins the MC median to the deterministic central case *by construction*; so P50 agreement is mechanical, not independent corroboration, and should not be cited as such. The MC's real, non-derivable content is entirely in the spread: under adverse sequencing the P5 floor stays substantial ($47K–$94K across cohorts) and is stable across all 16 universe/method configurations. That tail result — a guaranteed floor that survives 5th-percentile luck — is the load-bearing contribution and cannot be obtained from the point estimate. The paper's "confirms" framing is defensible but slightly undersells the tail contribution while slightly overstating the median as independent validation.
+
+**Net:** no substantive errors in data, engine, or conclusions. One code comment corrected. One framing refinement noted for the Monte Carlo (tail-risk, not median-confirmation).
