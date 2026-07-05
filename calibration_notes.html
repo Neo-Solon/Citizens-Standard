@@ -29,18 +29,7 @@
   .kicker{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;font-size:.72rem;color:var(--amber);margin-bottom:30px}
   .kicker b{color:var(--text);font-weight:700}
   header.wrap{padding:58px 24px 6px}
-  @media (max-width:640px){
-  header.wrap{padding:40px 24px 6px}
-  /* wrap long formula/code lines instead of overflowing the page */
-  .md pre{white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere}
-  .md pre code{white-space:pre-wrap;word-break:break-word}
-  /* make tables fit the viewport: compress columns and wrap text instead of scrolling */
-  .md table{font-size:.72rem;display:table;width:100%;table-layout:fixed}
-  .md th{padding:6px 6px;white-space:normal;word-break:break-word;overflow-wrap:anywhere}
-  .md td{padding:6px 6px;white-space:normal;word-break:break-word;overflow-wrap:anywhere}
-  /* long uppercase headings: reduce spacing so they don't overflow narrow screens */
-  .md h2,.md h3{letter-spacing:.03em;overflow-wrap:break-word;word-break:break-word}
-}
+  
   h1.display{font-size:clamp(2.2rem,7vw,3.4rem);margin-bottom:20px;text-align:center}
   .lede{font-size:clamp(1.08rem,1rem + 0.5vw,1.3rem);color:#D9D3C6;max-width:56ch;margin:0 auto;text-align:center}
   .lede em{font-style:italic;color:var(--text)}
@@ -88,6 +77,19 @@
     transition:background .15s ease,border-color .15s ease,transform .15s ease;}
   .pagenav-btn:hover{background:#E6A93E;color:#11161c;border-color:#E6A93E;transform:translateY(-1px);}
   .pagenav-btn:focus-visible{outline:2px solid #E6A93E;outline-offset:2px;}
+
+@media (max-width:640px){
+  header.wrap{padding:40px 24px 6px}
+  /* wrap long formula/code lines instead of overflowing the page */
+  .md pre{white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere}
+  .md pre code{white-space:pre-wrap;word-break:break-word}
+  /* make tables fit the viewport: compress columns and wrap text instead of scrolling */
+  .md table{font-size:.72rem;display:table;width:100%;table-layout:fixed}
+  .md th{padding:6px 6px;white-space:normal;word-break:break-word;overflow-wrap:anywhere}
+  .md td{padding:6px 6px;white-space:normal;word-break:break-word;overflow-wrap:anywhere}
+  /* long uppercase headings: reduce spacing so they don't overflow narrow screens */
+  .md h2,.md h3{letter-spacing:.03em;overflow-wrap:break-word;word-break:break-word}
+}
 </style>
 </head>
 <body>
