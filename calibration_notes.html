@@ -34,10 +34,12 @@
   /* wrap long formula/code lines instead of overflowing the page */
   .md pre{white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere}
   .md pre code{white-space:pre-wrap;word-break:break-word}
-  /* tighten tables slightly so they need less horizontal room */
-  .md table{font-size:.78rem}
-  .md th{padding:7px 8px;white-space:normal}
-  .md td{padding:7px 8px}
+  /* make tables fit the viewport: compress columns and wrap text instead of scrolling */
+  .md table{font-size:.72rem;display:table;width:100%;table-layout:fixed}
+  .md th{padding:6px 6px;white-space:normal;word-break:break-word;overflow-wrap:anywhere}
+  .md td{padding:6px 6px;white-space:normal;word-break:break-word;overflow-wrap:anywhere}
+  /* long uppercase headings: reduce spacing so they don't overflow narrow screens */
+  .md h2,.md h3{letter-spacing:.03em;overflow-wrap:break-word;word-break:break-word}
 }
   h1.display{font-size:clamp(2.2rem,7vw,3.4rem);margin-bottom:20px;text-align:center}
   .lede{font-size:clamp(1.08rem,1rem + 0.5vw,1.3rem);color:#D9D3C6;max-width:56ch;margin:0 auto;text-align:center}
