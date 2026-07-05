@@ -762,9 +762,27 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 (function(){
-  // ---- Country calibration configs (see country_calibrations/UK_Calibration_Note.md) ----
-  // Every UK figure is primary-sourced (BoE, ONS, LSE) or triangulated; the M^T share and
-  // realizable return are constructed with method shown in the calibration note.
+  /* =====================================================================
+     CONFIGURATION MANIFEST  (reference implementation, single-file build)
+     Three layers are kept conceptually separate below. In a production
+     deployment each would be an independent, versioned, signed file; here
+     they are grouped, labeled, and version-stamped objects so that changing
+     calibration means editing one marked block, never the engine logic.
+
+       LAUNCH        empirical, observed-world inputs (revised with data)
+       CONSTITUTION  the democratically-set rules (amended by process only)
+       SIM           analysis / UI options (not part of the monetary system)
+
+     The three namespaces are assembled from the blocks further down and
+     exposed as CONFIG at the end of this section; the working code binds to
+     the same names it always used, so these labels add structure without
+     touching behavior.
+     ===================================================================== */
+
+  // ===== LAUNCH LAYER (empirical inputs) =====================================
+  // Provenance: primary-sourced national data (see country_calibrations/*.md).
+  // Revised when source agencies revise figures; NOT a constitutional change.
+  const LAUNCH_VERSION = '2026-07';
   const COUNTRIES = {
     US: {
       name: 'United States', cur: '$', broad: 'M2',
@@ -928,7 +946,12 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   // K1 recipient base: GROSS new citizens per year (births + naturalizations)
   // as a share of population, ~1.17%. K1 is gated on new citizenship, NOT on net
   // population growth — so it does not collapse when pop growth slows.
-  const NC = 0.011703;
+  // ===== CONSTITUTION LAYER (the rules) ======================================
+  // These are the democratically-set parameters of the monetary system. In a
+  // live deployment this block is the amendable law: changed only by process,
+  // never by editing code. Version-stamp any amendment.
+  const CONSTITUTION_VERSION = '1.0.0';
+  const NC = 0.011703;   // net citizen-accrual constant (gross new citizens / population)
   let MU = CTY.mu;   // M^T/broad-money share (country-specific; US 51.35%, UK 69.7%)
   // Goods inflation on the transactional circuit M^T (P = M^T*V/Y), not M2.
   // Only money reaching M^T moves goods prices: the dividend (K3 share of the
@@ -960,6 +983,8 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   // deepened capital stock at UNIVERSAL scale, not a free market return. It is
   // capture-dependent: low-capture Modes A/C earn ~5.4%; full-rate Mode B, holding
   // 60% of the budget in the floor (60/40 split), earns ~4.3% (band 3.30-5.03%).
+  // CONSTITUTION (cont.): the mode presets — issuance-channel calibrations (k1,k2,k3,ki)
+  // that define each Mode. Editing these is a constitutional change, not a code change.
   const presets = {
     A: { k1: 2.5, k2: 17.5, k3: 0,  ki: 0,    er: 5.4, cpi: -1.86 },
     B: { k1: 2.5, k2: 100,  k3: 40, ki: 0,    er: 4.3, cpi: 0.0  },
@@ -968,7 +993,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
     Z: { k1: 0,   k2: 0,    k3: 0,  ki: 0,    er: 6.67,cpi: -2.0 }  // Zero-issuance limit: every creation channel off => no new money => prices fall at the real-growth rate (the fixed-supply / hard-money corner, recovered as a limiting case)
   };
 
-  // REAL-WORLD DATA (verified from sources, see footer)
+  // LAUNCH LAYER (empirical, cont.): real-world comparison data (see footer).
   const REAL_DATA = {
     median401k_at_retirement: 95642,    // Vanguard 2025: median 55-64 401(k) balance
     avg401k_at_retirement: 271320,      // Vanguard 2025: average 55-64 401(k) balance
@@ -981,6 +1006,10 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
     mmtJobsWage: 31200                  // $15/hr × 2080 hrs
   };
 
+  // ===== SIM LAYER (analysis / UI options) ===================================
+  // Not part of the monetary system: horizon, default views, stress scenarios.
+  // Changing these affects what the tool shows, not what the system does.
+  const SIM_VERSION = '1.0.0';
   let activeTab = 'compare';
   let activeScenario = 'median';
   let activeStress = 'smooth';
@@ -1142,6 +1171,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   // Historical bad-period sequences. Each is a year-by-year array of (real_return, cpi)
   // pairs matching what an actual cohort lived through. Sources: Robert Shiller's annual
   // dataset (Yale), BLS CPI historical.
+  // SIM (cont.): historical stress sequences used only by the Stress-test tab.
   const STRESS_SEQUENCES = {
     // 1929-1944: Great Depression + WWII recovery. Real returns averaged ~1.5% annualized
     // but with massive year-to-year variation. CPI was deflationary then inflationary.
@@ -1179,6 +1209,16 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
       ]
     }
   };
+
+  // ===== CONFIG MANIFEST (assembled view of the three layers) ================
+  // A single place to read the structure and versions. The working code binds
+  // to the individual names above; this object is the human-facing summary.
+  const CONFIG = {
+    launch:       { version: LAUNCH_VERSION,       countries: COUNTRIES, realData: REAL_DATA },
+    constitution: { version: CONSTITUTION_VERSION, NC: NC, presets: presets },
+    sim:          { version: SIM_VERSION,          stressSequences: STRESS_SEQUENCES }
+  };
+
 
   function simulateStress(p, stressKey){
     // Run the same projection but override equity returns and CPI for years
