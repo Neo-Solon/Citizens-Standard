@@ -29,7 +29,16 @@
   .kicker{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;font-size:.72rem;color:var(--amber);margin-bottom:30px}
   .kicker b{color:var(--text);font-weight:700}
   header.wrap{padding:58px 24px 6px}
-  @media (max-width:640px){header.wrap{padding:40px 24px 6px}}
+  @media (max-width:640px){
+  header.wrap{padding:40px 24px 6px}
+  /* wrap long formula/code lines instead of overflowing the page */
+  .md pre{white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere}
+  .md pre code{white-space:pre-wrap;word-break:break-word}
+  /* tighten tables slightly so they need less horizontal room */
+  .md table{font-size:.78rem}
+  .md th{padding:7px 8px;white-space:normal}
+  .md td{padding:7px 8px}
+}
   h1.display{font-size:clamp(2.2rem,7vw,3.4rem);margin-bottom:20px;text-align:center}
   .lede{font-size:clamp(1.08rem,1rem + 0.5vw,1.3rem);color:#D9D3C6;max-width:56ch;margin:0 auto;text-align:center}
   .lede em{font-style:italic;color:var(--text)}
