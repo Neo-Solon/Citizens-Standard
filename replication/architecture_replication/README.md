@@ -8,10 +8,12 @@ The base-Mode floors are **derived**, not stored. `run_all.py` calls the same de
 
 ```bash
 cd code
-python3 run_all.py        # prints the derivation + a 15-check regression vs the paper
+python3 run_all.py        # prints the derivation + a 22-check regression vs the paper
 python3 paper1_figures.py  # regenerates the Paper 1 figures into ../figures/
 python3 paper1_extra_figures.py  # Appendix A.2/A.3 figures
 python3 paper1_figA3.py    # Appendix A.3 (mid-crisis) by its documented filename
+python3 growth_scenario.py # Paper 9 §7: dividend scaling table (comparative static)
+python3 growth_scenario.py --figure  # regenerates Paper 9 Figure 1 into ../figures/
 ```
 
 `run_all.py` needs only the Python standard library. `paper1_figures.py` needs `numpy` and `matplotlib`.

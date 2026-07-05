@@ -89,8 +89,8 @@ print(f"    Mode A envelope (17.5%xg_rxM2) {usd(envelopeA)}   ({envelopeA/M2:.2%
 print(f"    Mode A K1 total / K2 residual {usd(k1A_total)} / {usd(k2A_resid)}")
 print(f"    Mode A total issuance        ~{modeA_total/M2:.2%} of M2  -> drift ~{modeA_total/M2-RG:+.1%}")
 
-kiC = 0.0365 * M2                           # Mode C maintenance KI
-print(f"    Mode C KI (3.65% of M2)     {usd(kiC)}   -> {usd(kiC/POP/12)}/citizen/mo")
+kiC = 0.0198 * M2                           # Mode C KI (1.98% of M2 = 3.85% of M^T; Paper 1)
+print(f"    Mode C KI (1.98% of M2)     {usd(kiC)}   -> {usd(kiC/POP/12)}/citizen/mo")
 # Mode B 60/40: 40% of the K2 residual is paid as a standing consumer dividend (K3),
 # 60% builds the locked floor. The 40% is the portion that no longer bids for equity.
 splitB    = totalB - k1A_total              # Mode B K2 residual (after K1) ~ $438B
@@ -133,15 +133,15 @@ checks = [
     ("Mode A K2 residual ~ $69B",             k2A_resid,             69.3e9,  2e9),
     ("Mode A total issuance ~ $78B",          modeA_total,           78.3e9,  2e9),
     ("Mode B total issuance = $447B",         totalB,                447.3e9, 2e9),
-    ("Mode C KI = $816B",                     kiC,                   816e9,   5e9),
+    ("Mode C KI = $443B",                     kiC,                   443e9,   5e9),
     # --- GE realizable floors (Paper 1 Tables 5/6, Figure 3; Neo-Solon 2026e 6.7) ---
     ("Mode A floor (GE 5.4%) ~ $233K",        ce['A'],               233.0e3, 4e3),
     ("Mode B floor (GE 4.3%, 60/40) ~ $413K", ce['B'],               413.0e3, 12e3),
     ("Mode C floor (GE 5.4%) ~ $230K",        ce['C'],               230.0e3, 4e3),
     ("Mode B band low (3.30%) ~ $277K",       fB_lo,                 277.0e3, 20e3),
-    ("Mode C cumulative KI ~ $262K",          ki_cum,                262e3,   8e3),
-    ("Mode C lifetime ~ $492K",               c_total,               492e3,   8e3),
-    ("Mode C dividend ~ $199/mo",             kiC/POP/12,            199,     4),
+    ("Mode C cumulative KI ~ $81K",           ki_cum,                81e3,    6e3),
+    ("Mode C lifetime ~ $315K",               c_total,               315e3,   8e3),
+    ("Mode C dividend ~ $108/mo",             kiC/POP/12,            108,     4),
     ("Mode B dividend ~ $43/mo (60/40)",      b_div/POP/12,          42.7,    2),
     ("Mode B equity flow ~ $272B",            b_eqflow,              272e9,   4e9),
     ("Mode B equity flow ~ 0.39% of mkt",     b_eqflow/69e12*100,    0.39,    0.03),

@@ -21,8 +21,10 @@ def derive_cpi(p):
 def simulate(mode, er=0.045):
     p=PRESETS[mode]
     p=dict(p, cpi=derive_cpi(p))
+    ki_cpi=cpi_target(p)  # transaction-circuit inflation governing spent KI (grounded)
     m2,gdp,pop=M2_0,GDP_0,POP_0
     cpiIdx,floorReal,k3Cum=1.0,0.0,0.0
+    kiCpiIdx=1.0  # KI deflated at the M^T-based (transaction-circuit) rate; grounded fix
     newcit=pop*NC
     Y=[]
     for t in range(HZ+1):
@@ -42,13 +44,14 @@ def simulate(mode, er=0.045):
         floorReal=(floorReal+depositReal)*(1+er)
         k3Cum+=k3pc/cpiIdx
         Y.append(dict(t=t,floorReal=floorReal,cpiIdx=cpiIdx,m2=m2,
-                      kiReal=kipc/cpiIdx,k3Real=k3pc/cpiIdx,
+                      kiReal=kipc/kiCpiIdx,k3Real=k3pc/cpiIdx,
                       k1pc=k1pc,k2pc=k2pc))
         m2+=k1T+split+kiT
         gdp=gdp*(1+RG)*(1+p['cpi'])
         pop*=(1+PG)
         newcit=max(0,pop*NC)
         cpiIdx*=(1+p['cpi'])
+        kiCpiIdx*=(1+ki_cpi)
     return Y
 if __name__=="__main__":
     for er in (0.03,0.045,0.065):

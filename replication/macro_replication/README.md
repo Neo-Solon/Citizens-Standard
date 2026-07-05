@@ -51,7 +51,7 @@ claimed here.
 | `make_delay_figure.py` | `figure_P5_delay_feedback.png` — the three-panel delay-feedback figure (region collapse, vanishing damping, feedforward-vs-feedback impulse responses) for Section 3.6 / A.8. |
 | `verify_proposition_6.py` | **Proposition 6 (Section 7.6 / A.9):** the linearized two-circuit system s_t = A s_(t−1) + e_t. Stability (eigenvalues 0.12, 0.68, 0.90) and reduction to the Prop 3′ recursion when decoupled; the demand-shock output trough scaling with (1−ω_F) (the acyclical floor cushion, −15% at ω_F=0.15); cost-push return at rate ≈1−ψλ under KI versus a unit root with KI off; and asset-shock consumer-price containment bounded by λ_leak/(ψλ) ≈ 3%. |
 | `make_irf_figure.py` | `figure_P6_irf.png` — the three-panel impulse-response figure (demand cushion, cost-push self-correction, asset containment) for Section 7.6 / A.9. |
-| `verify_proposition_7.py` | **Proposition 7 (Section 3.7 / A.10):** forward-looking determinacy. The explosive root θ = 1 + (1+φ)/α > 1 for all α>0, φ≥0, so the money-quantity anchor is determinate even with a passive gap response (no Taylor principle); the interest-rate analog has root φ and needs φ>1; and the two-circuit (two-jump) system stays determinate until the asset↔consumer coupling reaches ≈0.13, inside which the calibrated leak (≈0.03) lies. |
+| `verify_proposition_7.py (confirms P7); stress_proposition_7.py (stress-tests P7)` | **Proposition 7 (Section 3.7 / A.10):** forward-looking determinacy. The explosive root θ = 1 + (1+φ)/α > 1 for all α>0, φ≥0, so the money-quantity anchor is determinate even with a passive gap response (no Taylor principle); the interest-rate analog has root φ and needs φ>1; and the two-circuit (two-jump) system stays determinate until the asset↔consumer coupling reaches ≈0.13, inside which the calibrated leak (≈0.03) lies. |
 | `make_forward_figure.py` | `figure_P7_forward_determinacy.png` — determinacy frontier (money vs interest-rate rule), unique-path-vs-sunspot-fan, and the two-circuit Blanchard–Kahn count vs coupling, for Section 3.7 / A.10. |
 | `verify_proposition_8.py` | **Proposition 8 (Section 5.6 / A.11):** the welfare-optimal dividend share. Wealth is maximized at κ_d=0; welfare at an interior κ_d* governed by the retention premium R = βΩ(1+r); κ_d* falls with patience, return, and the terminal-value weight Ω; the wealth-maximizing corner κ_d*=0 is reached only near R≈1.2 (effectively negative net discount); and the Prop 4 labor distortion is second-order at the private optimum (the envelope identities verify to machine precision). |
 | `make_welfare_figure.py` | `figure_P8_welfare_dividend.png` — κ_d* vs the retention premium, κ_d* vs the return for several patience levels, and welfare W(κ_d) showing wealth-max ≠ welfare-max, for Section 5.6 / A.11. |
@@ -176,3 +176,19 @@ All Proposition 9 claims reproduced: True
 ```
 
 Every printed value carries its paper reference in brackets for direct comparison.
+
+
+## Calibrated dynamic model (`dynamic_model.py`)
+
+Simulates the linearized system of Appendix A.9 (`s_t = A s_{t-1} + e_t`) as a
+*calibrated, not estimated* exercise. Estimation is deliberately avoided: the
+Citizens Standard has never operated, so fitting the system to fractional-reserve
+data and assuming the parameters carry over would be the Lucas critique. The module
+(1) reproduces the paper's stated baseline eigenvalues (0.12, 0.68, 0.90) as a
+validation check; (2) reports numeric impulse responses to price, demand, and asset
+shocks -- the asset shock reaches consumer prices only through the bounded leak
+(peak price-gap 0.030, at the theoretical bound leak/psi*lam = 0.033), showing
+circuit separation holds under dynamics; and (3) runs a randomized dynamic-robustness
+test over 10,000 admissible calibrations, with stability and separation holding in
+100% of draws (a deliberately unstable region is caught at under 100%, so the figure
+is meaningful). Run: `python3 code/dynamic_model.py`.

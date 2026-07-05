@@ -11,8 +11,8 @@ engine. Output PNGs match the embedded image dimensions (dpi=120).
 
 Grounded anchors used here:
   Mode A deflation  -1.65%/yr (cs_engine derived; appreciation 2.95x)
-  Mode A floor ~$233K   Mode C floor ~$230K   Mode C lifetime ~$492K (+$262K KI)  [GE realizable basis]
-  Mode C KI         $199/mo at launch
+  Mode A floor ~$233K   Mode C floor ~$230K   Mode C lifetime ~$315K (+$81K KI)  [GE realizable basis]
+  Mode C KI         $108/mo at launch
   Demographic governor: K1 x1.30, K2 capture 0.60 -> 0.78 (+30%)
   Productivity governor: K2 capture -> 0.96 (+30% more), 25%/yr reversion
   KI soft floor: conditional, triggers only if deflation would exceed -1.2%
@@ -167,13 +167,13 @@ def figA2_rotation(path):
 
 def figA3_midcrisis(path):
     """Mid-crisis A->C switch at yr27. Floor/CPI from the corrected engine;
-    grounded lifetime bars on the GE realizable basis ($233K stay; $230K + $262K KI = $492K switch)."""
+    grounded lifetime bars on the GE realizable basis ($233K stay; $233K + $81K KI = $315K switch)."""
     A = simulate("A", 0.054); ages = list(range(66))   # GE realizable return for Mode A
     floor = [y["floorReal"] / 1e3 for y in A]
     cpiA = [y["cpiIdx"] for y in A]
     sw = 27
     cpiSwitch = [cpiA[t] if t <= sw else cpiA[sw] * (1.02) ** (t - sw) for t in ages]
-    kiSwitch = [0 if t < sw else min(236, 199 + 199 * 0.015 * (t - sw)) for t in ages]
+    kiSwitch = [0 if t < sw else min(128, 108 + 108 * 0.015 * (t - sw)) for t in ages]
     fig, ax = plt.subplots(2, 2, figsize=(14.04, 9.98), dpi=120)
     fig.suptitle("Mid-Crisis Mode Transition \u2014 Recession at Years 25\u201326, Mode Change at Year 27",
                  fontsize=13, fontweight="bold")
@@ -196,7 +196,7 @@ def figA3_midcrisis(path):
                       (65, floor[-1]), xytext=(-10, -38), textcoords="offset points",
                       ha="right", fontsize=9.5, color="#444")
     labels = ["Stay\nMode A", "Switch A\u2192C\nat yr 27"]; x = np.arange(2); w = 0.36
-    lockfloor = [233, 230]; total = [233, 492]
+    lockfloor = [233, 233]; total = [233, 315]
     ax[1, 1].bar(x - w / 2, lockfloor, w, color="#9aa0a6", label="Locked floor only")
     ax[1, 1].bar(x + w / 2, total, w, color=CC, label="Total real value (+KI)")
     ax[1, 1].set_title("Total real captured value at age 65"); ax[1, 1].set_ylabel("$K (2025)")

@@ -1,0 +1,97 @@
+########################################################################
+# Paper 6 banking replication -- combined results
+########################################################################
+
+==========================================================================
+REWORKED PAPER 6 -- FULL-RESERVE BANKING: quantitative results
+==========================================================================
+
+[R1] COMPLETE MONETARY CONTROL
+  inside-money share of the money stock:  today ~0.80  |  CS full-reserve 0.00
+  -> M_T = M_o exactly; throttle sets M_o directly; no offset, no saturation.
+  determinacy root theta = 1+(1+phi)/alpha = 3.00 > 1 (applies to M_o directly)
+
+[R2] TRANSACTION AGGREGATE ENTIRELY SOVEREIGN
+  today: ~$18.0T of $22.4T money stock is a private bank liability (inside money)
+  CS:    transaction money is 100% sovereign reserves; term deposits are
+         investment claims (not money); the locked floor is equity (not a deposit).
+
+[R3] CREDIT SUPPLY UNDER FULL RESERVE
+  (a) term-deposit pool at launch ~ 60% x M2 = $13.4T
+      leverage cap 4:1 -> equity $4.5T, bank credit capacity $17.9T
+  (b) full-reserve conversion removes bank money creation (one-time contraction).
+      sovereign offset: TLF 12%-38% + KT 41%-59% = 53%-97% of credit-at-risk;
+      residual absorbed by the conditional KI_T damper -> coverage approaches full.
+  (c) loanable-funds frontier under a 30% term-deposit shortfall (bank credit $17.9T):
+      hold rate  -> sovereign offset 30%, rate premium 0.0pp, credit $17.9T
+      let clear  -> sovereign offset 0%, rate premium 6.4pp, credit $13.3T
+      saving's near-zero rate elasticity makes the price route a crunch; the citizen-channel
+      offset (TLF/KT/KI_T) and the countercyclical 3:1/5:1 leverage rule are the design's answer.
+
+[R4] PAYMENT-CREDIT SEPARATION AND RUN-PROOFNESS
+  max systemic money contraction: 1930-33 ~all deposits runnable; CS bounded by term share ~60% of launch M2
+  transaction accounts (~40%) are 100% reserved -> cannot be run;
+  term deposits are explicit at-risk term claims -> not demandable, no Diamond-Dybvig run;
+  the dominant asset (locked floor) is equity, not a deposit -> outside the run technology.
+
+[R5] NEAR-MONEY / BOUNDARY PROBLEM
+  if 5% of term deposits circulate as near-money ($0.7T): 7% of transaction money -- throttle offsets it IF observable
+  if 10% of term deposits circulate as near-money ($1.3T): 13% of transaction money -- throttle offsets it IF observable
+  if 20% of term deposits circulate as near-money ($2.7T): 23% of transaction money -- throttle offsets it IF observable
+  honest claim (Paper 1 sec.17.3): full reserve raises cost+visibility of near-money,
+  does not abolish it; observability is the falsifiable condition, not a guarantee.
+
+==========================================================================
+All figures are illustrative calibrations on verified anchors, not forecasts.
+==========================================================================
+
+
+########################################################################
+# Balance sheet (derived quantities; intentionally minimal scope)
+########################################################################
+INCUMBENT (fractional reserve):
+  inside-money share of money stock = 0.89
+  runnable share of money           = 0.89
+CITIZENS STANDARD (full reserve):
+  transaction money T   = $8.9T
+  term deposits D       = $13.4T
+  equity E              = $4.5T
+  inside money (derived) = $0.000T
+  credit capacity D*4/3 = $17.9T
+  runnable money        = $0.000T
+  max contraction share = 0.60
+  determinacy root theta = 3.00
+
+########################################################################
+# Automated proposition tests (derived; structural vs calibration)
+########################################################################
+======================================================================
+PAPER 6 -- FULL-RESERVE BANKING: automated proposition tests
+  claims derived from balance_sheet.py, not asserted.
+  Structural = identity, holds for any admissible parameters.
+  Calibration = PASS or magnitude depends on the calibrated values.
+======================================================================
+STRUCTURAL (unchanged if parameters change):
+  PASS  N1  (complete monetary control)
+          inside money derived = $0.000T (incumbent 0.89 of stock); M_T = M_o = $8.9T; theta = 3.00 > 1
+  PASS  N4  (run-proof payments)
+          runnable transaction money = $0.000T; max contraction 60% (term share) vs incumbent 89% of money stock
+
+CALIBRATION-DEPENDENT (contingent on the calibrated values):
+  PASS  N2  (separation survives bank credit)
+          coupling(kappa=0.075) = 0.052 < zeta* = 0.13; holds for kappa < ceiling = 0.333, fails above it
+  PASS  N3  (credit supply under full reserve)
+          D = $13.4T, E = $4.5T, capacity = D*4/3 = $17.9T (leverage 3:1 within 4:1)
+  PASS  N5  (near-money boundary is bounded and conditional)
+          near-money at [0.05, 0.1, 0.2] of term deposits adds [0.07, 0.15, 0.3] of M_T; enters the throttled aggregate when observable (conditional, not abolished)
+
+N2 sensitivity -- separation coupling vs credit intensity kappa:
+  threshold zeta* = 0.13;  ceiling kappa = 0.333
+    kappa = 0.05  ->  coupling = 0.045  PASS
+    kappa = 0.10  ->  coupling = 0.060  PASS
+    kappa = 0.15  ->  coupling = 0.075  PASS
+    kappa = 0.20  ->  coupling = 0.090  PASS
+    kappa = 0.30  ->  coupling = 0.120  PASS
+    kappa = 0.34  ->  coupling = 0.132  FAIL
+======================================================================
+ALL PROPOSITIONS PASS  (5/5)

@@ -49,3 +49,28 @@ GENERAL FORMULA — structural-buyer flow f = A*/M_index
 
 All illustrative magnitudes reproduce the figures printed in
 Sections 3.2a and 6.5 of Neo-Solon (2026e).
+
+########################################################################
+# Calibrated dynamic model (dynamic_model.py) -- IRFs + dynamic robustness
+########################################################################
+======================================================================
+CITIZENS STANDARD -- CALIBRATED DYNAMIC MODEL (Paper 5 A.9)
+  calibrated, not estimated (see module docstring for why).
+======================================================================
+1. VALIDATION (reproduce Paper 5 A.9 baseline eigenvalues)
+   computed |eigenvalues| = [0.12, 0.68, 0.9]
+   paper states           = [0.12, 0.68, 0.9]
+   -> MATCH; system stable (all < 1): True
+
+2. IMPULSE RESPONSES (unit shock; peak and half-life of the price gap x)
+   price shock e_pi   price-gap peak = +1.000, half-life = 1y, settles -> -0.0000
+   demand shock e_y   price-gap peak = +0.068, half-life = 4y, settles -> +0.0000
+   asset shock e_v    price-gap peak = +0.030, half-life = 9y, settles -> +0.0005
+   asset->price pass-through: peak |x| from a unit asset shock = 0.0300  (bound leak/psi*lam = 0.0333)
+
+3. DYNAMIC ROBUSTNESS (10,000 admissible calibrations, seed 20260705)
+   stable (determinate, all eig < 1):         10000/10000 (100.0%)
+   circuits separated (pass-through < zeta*):  10000/10000 (100.0%)
+   both simultaneously:                        10000/10000 (100.0%)
+======================================================================
+validation OK; baseline separation bounded; stability holds in 10000/10000 admissible draws.

@@ -143,7 +143,7 @@ def fig3_composite(path):
     ss=[22,22,22,22]
     cap=[round(0.05*f,1) for f in floors_k]                       # 5% withdrawal cap (paper convention)
     defl=[0,round(abs(DRIFT["A"])*SF_REAL["A"]/1e3,1),0,0]        # Mode A: ~1.65%/yr real money appreciation
-    ki=[0,0,0,2.4]                                                # Mode C: ongoing KI dividend ~$199/mo
+    ki=[0,0,0,1.3]                                                # Mode C: ongoing KI dividend ~$108/mo
     x=np.arange(4); ss_a,cap_a,defl_a=np.array(ss),np.array(cap),np.array(defl)
     ax.bar(x,ss,color="#9ca3af",label="Social Security (~$22K)")
     ax.bar(x,cap,bottom=ss,color=[C["current"],C["A"],C["B"],C["C"]],label="Capital stake income (5%)")
@@ -291,10 +291,10 @@ def fig8_transitions(path):
     ax.set_title("Price Level: C → Transition at Yr 30"); ax.set_xlabel("Years"); ax.set_ylabel("CPI (1.0 = launch)"); ax.legend(fontsize=8)
     # Panel 3: K3 activate/deactivate
     ax=axes[1,0]
-    # Mode C citizen dividend (KI), flat ~$199 at launch scaling toward ~$210; not the old 173->280 ramp.
-    k3_ac=np.where(t>=30,210,0.0)
-    ax.plot(t,k3_ac,color=C["C"],lw=2.5,label="A→C: KI dividend activates (~$199–210/mo)")
-    ax.plot(t,np.where(t<30,210,0.0),"--",color=C["A"],lw=2,label="C→A: dividend ends")
+    # Mode C citizen dividend (KI), flat ~$108/mo at launch (1.98% of M2; Paper 1).
+    k3_ac=np.where(t>=30,108,0.0)
+    ax.plot(t,k3_ac,color=C["C"],lw=2.5,label="A→C: KI dividend activates (~$108/mo)")
+    ax.plot(t,np.where(t<30,108,0.0),"--",color=C["A"],lw=2,label="C→A: dividend ends")
     ax.axvline(30,ls=":",color="gray",alpha=0.6)
     ax.set_title("K3 Channel Activates / Deactivates Cleanly"); ax.set_xlabel("Years"); ax.set_ylabel("$/month per citizen"); ax.legend(fontsize=9)
     # Panel 4: lifetime real value by scenario
@@ -303,7 +303,7 @@ def fig8_transitions(path):
     # Lifetime real captured value (locked floor + cumulative K3 dividend + cumulative KI),
     # general-equilibrium realizable basis (A/C er 5.4%, B er 4.3%, Mode B 60/40 floor share;
     # mode switch at age 30). Pure A floor $235K; Pure B floor $420K + K3 $57K = $477K;
-    # Pure C floor $232K + KI $262K = $494K. Computed by switch_calc.py on the GE engine.
+    # Pure C floor $233K + KI $81K = $315K. Computed by switch_calc.py on the GE engine.
     vals=[235,477,494,298,411,664,322,383]
     cols=[C["A"],C["B"],C["C"],C["A"],C["C"],C["C"],C["A"],C["B"]]
     ax.bar(range(8),vals,color=cols)
