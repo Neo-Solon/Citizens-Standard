@@ -79,7 +79,18 @@
   .backlink{display:inline-block;margin:0 0 0;color:var(--dim);text-decoration:none;font-family:"Bricolage Grotesque",sans-serif;
     font-weight:500;font-size:.95rem}
   .backlink:hover{color:var(--text)}
-  @media (max-width:520px){header.wrap{padding:42px 24px 6px}}
+  @media (max-width:520px){
+  header.wrap{padding:42px 24px 6px}
+  /* Responsive: stack the 7-col mode table into cards on narrow screens */
+  .tablewrap{overflow-x:visible;border:none;border-radius:0}
+  .tablewrap table{font-size:.9rem}
+  .tablewrap thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .tablewrap tr{display:block;border:1px solid var(--line);border-radius:10px;padding:6px 4px;margin:0 0 12px}
+  .tablewrap td{display:flex;justify-content:space-between;gap:14px;white-space:normal;padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.06);text-align:right}
+  .tablewrap tr td:last-child{border-bottom:none}
+  .tablewrap td::before{content:attr(data-label);font-weight:700;color:var(--dim);text-align:left;white-space:nowrap}
+  .tablewrap td:first-child{font-size:1.05em;background:rgba(255,255,255,.03);border-radius:6px}
+}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 
   .pagenav-btn{display:inline-flex;align-items:center;gap:.4em;color:#E6A93E;text-decoration:none;
@@ -157,7 +168,7 @@ Floor    (to Mᵃ, locked)     =  (1 − κ_d)  ×  residual budget</pre>
                 └──────── money reaching Mᵀ ────────┘</pre>
 <p>In words: take everything that actually reaches the transactional circuit, express it as a rate against Mᵀ, and subtract real growth. If money reaches Mᵀ at exactly the growth rate, the two cancel and <strong>prices are flat.</strong> Below it, deflation. Above it, inflation. The floor (K2/Mᵃ) barely appears, because locked money isn't chasing goods.</p>
 <p>That's why the modes land where they do, and you can check each by hand:</p>
-<div class="tablewrap"><table><thead><tr><th>Mode</th><th>k1</th><th>k2</th><th>κ_d (K3)</th><th>KI</th><th>What reaches Mᵀ</th><th>Inflation</th></tr></thead><tbody><tr><td><strong>A</strong> deflation</td><td>2.5%</td><td>17.5%</td><td>0%</td><td>0</td><td>floor spillover only (~$16B)</td><td><strong>−1.86%</strong></td></tr><tr><td><strong>B</strong> stable</td><td>2.5%</td><td>100%</td><td>40%</td><td>0</td><td>$176B dividend + $54B spillover ≈ $230B</td><td><strong>0%</strong></td></tr><tr><td><strong>C</strong> inflation</td><td>2.5%</td><td>17.5%</td><td>0%</td><td>1.98%</td><td>KI $443B (~$108/cit·mo)</td><td><strong>+2.0%</strong></td></tr><tr><td><strong>D</strong> pure dividend</td><td>0</td><td>51.35%</td><td>100%</td><td>0</td><td>$230B dividend (on the locus)</td><td><strong>0%</strong></td></tr></tbody></table></div>
+<div class="tablewrap"><table><thead><tr><th>Mode</th><th>k1</th><th>k2</th><th>κ_d (K3)</th><th>KI</th><th>What reaches Mᵀ</th><th>Inflation</th></tr></thead><tbody><tr><td data-label="Mode"><strong>A</strong> deflation</td><td data-label="k1">2.5%</td><td data-label="k2">17.5%</td><td data-label="κ_d (K3)">0%</td><td data-label="KI">0</td><td data-label="What reaches Mᵀ">floor spillover only (~$16B)</td><td data-label="Inflation"><strong>−1.86%</strong></td></tr><tr><td data-label="Mode"><strong>B</strong> stable</td><td data-label="k1">2.5%</td><td data-label="k2">100%</td><td data-label="κ_d (K3)">40%</td><td data-label="KI">0</td><td data-label="What reaches Mᵀ">$176B dividend + $54B spillover ≈ $230B</td><td data-label="Inflation"><strong>0%</strong></td></tr><tr><td data-label="Mode"><strong>C</strong> inflation</td><td data-label="k1">2.5%</td><td data-label="k2">17.5%</td><td data-label="κ_d (K3)">0%</td><td data-label="KI">1.98%</td><td data-label="What reaches Mᵀ">KI $443B (~$108/cit·mo)</td><td data-label="Inflation"><strong>+2.0%</strong></td></tr><tr><td data-label="Mode"><strong>D</strong> pure dividend</td><td data-label="k1">0</td><td data-label="k2">51.35%</td><td data-label="κ_d (K3)">100%</td><td data-label="KI">0</td><td data-label="What reaches Mᵀ">$230B dividend (on the locus)</td><td data-label="Inflation"><strong>0%</strong></td></tr></tbody></table></div>
 <p>Mode B and Mode D reach price stability by completely different routes: B locks 60% and pays 40%, D locks nothing and pays it all, yet both put about $230B into Mᵀ, which is the locus. That's the design working: the leash is on the transactional circuit, and there's more than one way to sit on it.</p>
 <p>---</p>
 <h2>The point: every channel can be zero</h2>
