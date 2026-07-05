@@ -430,7 +430,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
 <div class="card">
   <p class="card-title" style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
     <span style="display:flex;align-items:center;gap:8px;">Launch parameters
-      <select id="countrySel" title="Switch the calibration between countries. Each is built from primary-source national data (see the UK calibration note)." style="font:inherit;font-size:11px;font-weight:600;color:var(--accent-text);background:var(--surface,#18212B);border:1px solid var(--border-strong);border-radius:5px;padding:2px 6px;cursor:pointer;-webkit-appearance:none;appearance:none;">
+      <select id="countrySel" title="Switch the calibration between countries. Each is built from primary-source national data. Click the notes link for the full derivation and sources." style="font:inherit;font-size:11px;font-weight:600;color:var(--accent-text);background:var(--surface,#18212B);border:1px solid var(--border-strong);border-radius:5px;padding:2px 6px;cursor:pointer;-webkit-appearance:none;appearance:none;">
         <option value="US" style="background:#18212B;color:#F0D9A6;">United States ($)</option>
         <option value="EZ" style="background:#18212B;color:#F0D9A6;">Eurozone (€)</option>
         <option value="IN" style="background:#18212B;color:#F0D9A6;">India (₹)</option>
@@ -443,6 +443,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
         <option value="SE" style="background:#18212B;color:#F0D9A6;">Sweden (kr)</option>
         <option value="NO" style="background:#18212B;color:#F0D9A6;">Norway (kr)</option>
       </select>
+      <a id="calibLink" href="calibration_notes.html" title="Full calibration derivation and primary sources for the selected country" style="font:inherit;font-size:11px;font-weight:600;color:var(--accent-text);text-decoration:none;border-bottom:1px solid rgba(230,169,62,.4);white-space:nowrap;">notes &#8599;</a>
     </span>
     <button id="resetParams" type="button" title="Restore the calibrated baseline for the selected country. Does not change the selected Mode or the channel sliders." style="font:inherit;font-size:11px;font-weight:600;color:var(--accent-text);background:transparent;border:1px solid var(--border-strong);border-radius:5px;padding:2px 9px;cursor:pointer;">Reset to baseline</button></p>
     <div id="countryCaveat" style="display:none;margin:-2px 0 10px;padding:8px 11px;font-size:11.5px;line-height:1.5;color:var(--accent-text);background:rgba(240,217,166,0.07);border:1px solid var(--border-strong);border-left:3px solid var(--accent);border-radius:5px;"></div>
@@ -521,24 +522,25 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
         <p class="card-note" id="leashPanel" style="margin:10px 2px 0;padding-top:10px;border-top:1px solid var(--border)"></p>
 
 <div class="tabs" role="tablist">
-  <div class="tab active" data-tab="floor">Stable Floor</div>
-  <div class="tab" data-tab="m2">M2</div>
+  <div class="tab active" data-tab="compare">What you get</div>
+  <div class="tab" data-tab="floor">Stable Floor</div>
   <div class="tab" data-tab="income">Channels</div>
-  <div class="tab" data-tab="compare">What you get</div>
+  <div class="tab" data-tab="m2">M2</div>
   <div class="tab" data-tab="inflation">Inflation</div>
   <div class="tab" data-tab="stress">Stress test</div>
+  <div class="tab" data-tab="omega">Mode &#937;</div>
+  <div class="tab" data-tab="lambda">Mode Λ</div>
   <div class="tab" data-tab="modet">Mode T</div>
-  <div class="tab" data-tab="omega">Mode Λ</div>
   <div class="tab" data-tab="mu">μ &amp; Stability</div>
 </div>
 
-<div id="chart-view">
+<div id="chart-view" style="display:none;">
   <div class="legend" id="legend"></div>
   <div class="chart-wrap"><canvas id="chart" role="img" aria-label="Projection chart"></canvas></div>
   <p class="card-note" id="chartCaption" style="margin:10px 2px 0;color:var(--text-muted)"></p>
 </div>
 
-<div id="compare-view" style="display:none;">
+<div id="compare-view">
   <div class="info-banner">
     <strong>What you’d actually retire with — verified real-world data, not theoretical maximums.</strong>
     <span style="display: block; margin-top: 6px; font-size: 12px; opacity: 0.9;">
@@ -614,7 +616,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
 
 <div id="stress-view" style="display:none;">
   <div class="info-banner">
-    <strong>What this answers:</strong> "OK, but what if there's a Great Depression?" Each scenario embeds a real historical bad period into the citizen's working life and shows what they retire with — vs. the smooth-baseline projection. The Citizens Standard's structural advantage is what survives this stress test.
+    <strong>What this answers:</strong> "OK, but what if there's a Great Depression?" Each scenario embeds a real historical bad period into the citizen's working life and shows what they retire with. For a fair test, the same sequence is run through a market-only 401(k) (dashed gold), calibrated so its shock-free path lands at the real median ($95,642); the gap between the lines is the sequence-of-returns risk the Citizens Standard's structural floor is built to blunt.
   </div>
 
   <div class="scenario-pills" id="stress-pills">
@@ -636,7 +638,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
 
   <p style="font-size: 12px; color: var(--text-dim); margin: 16px 0 0; line-height: 1.6;">
     <strong>Sources for historical sequences:</strong>
-    Robert Shiller's annual real returns dataset (Yale, 1871-present). Great Depression: 1929-1944 produced ~1.5% annualized real return after the crash and recovery. 1970s Stagflation: 1966-1982 produced ~−1.0% annualized real return alongside ~7.5% CPI. Lost Decade: 2000-2009 produced ~−3% annualized real return. Each scenario applies these sequences as a contiguous bad period during the citizen's working life, then resumes long-run normal returns.
+    Robert Shiller's annual real returns dataset (Yale, 1871-present). Great Depression: 1929-1944 produced ~1.5% annualized real return after the crash and recovery. 1970s Stagflation: 1966-1982 produced ~−1.0% annualized real return alongside ~7.5% CPI. Lost Decade: 2000-2009 produced ~−3% annualized real return. Each scenario applies these sequences as a contiguous bad period during the citizen's working life, then resumes long-run normal returns. The market-only 401(k) comparison is a working-life accumulation calibrated so its shock-free path reaches the Vanguard 2025 median ($95,642) at retirement, then re-run through the identical sequence at the same ages; only the return path changes, so the endpoint is measured, not assumed. It captures that contributions made just before a crash suffer most, which a static benchmark hides.
   </p>
 </div>
 
@@ -679,29 +681,43 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   </p>
 </div>
 
-<div id="omega-view" style="display:none;">
+<div id="lambda-view" style="display:none;">
   <div class="info-banner">
     <strong>What this answers:</strong> "What if conditions change — aging, depopulation, an AI productivity boom?" <strong>Mode Λ</strong> is the adaptive configuration: instead of fixed channel settings, its K1, K2, and KI respond automatically to demographic and productivity conditions by published formula — no committee, no discretion. In calm conditions it runs conservatively (≈60% K2 capture, mild deflationary bias, no KI); its governors engage only when conditions warrant and revert at 25%/year once conditions normalize. Pick a scenario to watch the governors respond; the lifetime figures are the architecture paper §9.6's simulation results.
   </div>
-  <div class="scenario-pills" id="omega-pills" style="margin-top:12px;">
-    <button class="pill active" data-omega="normal">Normal (+0.3% pop)</button>
-    <button class="pill" data-omega="negpop">Aging / negative pop (−0.5%)</button>
-    <button class="pill" data-omega="negpop_opt">Negative pop + high capital share</button>
-    <button class="pill" data-omega="negpop_pess">Negative pop + low capital share</button>
-    <button class="pill" data-omega="prodboom">Productivity boom + negative pop</button>
+  <div class="scenario-pills" id="lambda-pills" style="margin-top:12px;">
+    <button class="pill active" data-lambda="normal">Normal (+0.3% pop)</button>
+    <button class="pill" data-lambda="negpop">Aging / negative pop (−0.5%)</button>
+    <button class="pill" data-lambda="negpop_opt">Negative pop + high capital share</button>
+    <button class="pill" data-lambda="negpop_pess">Negative pop + low capital share</button>
+    <button class="pill" data-lambda="prodboom">Productivity boom + negative pop</button>
   </div>
   <div class="stats" style="margin-top:16px;">
-    <div class="stat"><p class="stat-label">Stable Floor at 65 (real)</p><p class="stat-val" id="omega-floor">—</p><p class="stat-sub">the architecture paper §9.6 simulation</p></div>
-    <div class="stat"><p class="stat-label">Annual real income</p><p class="stat-val" id="omega-income">—</p><p class="stat-sub">at 5% withdrawal</p></div>
-    <div class="stat"><p class="stat-label">Governors</p><p class="stat-val" id="omega-gov" style="font-size:16px">—</p><p class="stat-sub" id="omega-note">—</p></div>
+    <div class="stat"><p class="stat-label">Stable Floor at 65 (real)</p><p class="stat-val" id="lambda-floor">—</p><p class="stat-sub">the architecture paper §9.6 simulation</p></div>
+    <div class="stat"><p class="stat-label">Annual real income</p><p class="stat-val" id="lambda-income">—</p><p class="stat-sub">at 5% withdrawal</p></div>
+    <div class="stat"><p class="stat-label">Governors</p><p class="stat-val" id="lambda-gov" style="font-size:16px">—</p><p class="stat-sub" id="lambda-note">—</p></div>
   </div>
-  <div class="legend" id="omega-legend"></div>
-  <div class="chart-wrap"><canvas id="omega-chart" role="img" aria-label="Mode Omega governor response chart"></canvas></div>
+  <div class="legend" id="lambda-legend"></div>
+  <div class="chart-wrap"><canvas id="lambda-chart" role="img" aria-label="Mode Omega governor response chart"></canvas></div>
   <p style="font-size:12px; color:var(--text-dim); margin:16px 0 0; line-height:1.6;">
     <strong>Mode Λ guardrails (Architecture §9):</strong> every multiplier, threshold, and reversion rate is formula-specified and publicly auditable — adaptive means the formula responds to observable data, not that anyone exercises judgment. K1 is capped at 2.0× base; combined issuance is capped at 3.5% of M2; the conditional KI issues 0–0.6% of M2 (split 60% to Stable Floors / 40% spendable), activates only on sustained deflation (&gt;1.2%) or demographic stress with weak wage growth, and carries a 36-month sunset with mandatory reaffirmation. Governors above baseline revert at 25%/year once the trigger resolves. Floor figures are the paper's §9.6 results; the three negative-pop scenarios share the same governor path and differ only by equity return. Governor paths shown are illustrative of that response (cf. Figure 5).
   </p>
 </div>
 
+<div id="omega-view" style="display:none;">
+  <div class="info-banner">
+    <strong>What this answers:</strong> "If Mode &#937; holds prices flat, what actually moves?" &#937; solves the split (and, where needed, KI) so derived inflation stays at zero <em>as conditions change</em>. Vary this economy's real growth and watch the result: <strong>prices stay pinned near 0%</strong> while the <strong>citizen dividend scales with growth</strong> and the <strong>split barely moves</strong> near the balance point. Growth sets the <em>size</em> of the dividend, not the split that keeps prices stable. Below the growth floor (where issuance ceases) &#937;'s lever is exhausted and contraction becomes the Surge Brake's domain, not &#937;'s.
+  </div>
+  <div class="mu-svg-wrap" id="omega-svg-wrap" style="margin-top:16px; width:100%; overflow-x:auto;"></div>
+  <div class="stats" style="margin-top:16px;">
+    <div class="stat"><p class="stat-label">Prices held at</p><p class="stat-val" id="mo-cpi">&#8212;</p><p class="stat-sub">&#937; derived inflation, this growth</p></div>
+    <div class="stat"><p class="stat-label">Stabilizing split</p><p class="stat-val" id="mo-split">&#8212;</p><p class="stat-sub" id="mo-split-sub">standing dividend share</p></div>
+    <div class="stat"><p class="stat-label">Citizen dividend</p><p class="stat-val" id="mo-div">&#8212;</p><p class="stat-sub">new money to citizens / yr</p></div>
+  </div>
+  <p style="font-size:12px; color:var(--text-dim); margin:16px 0 0; line-height:1.6;">
+    <strong>What the curve shows (Architecture &sect;8).</strong> The gold line is &#937;'s derived inflation across real-growth rates for this economy: it holds at approximately zero wherever the growth-funded budget is positive. The teal line is the citizen dividend in local currency, which scales roughly linearly with growth. Near an economy's balance point the split is nearly flat (the budget size does the work); away from it the split moves more to keep prices pinned. The marked growth floor is the structural point where issuance ceases (real growth at K1's aggregate draw); below it the dividend budget is zero, &#937;'s trim-or-inject lever cannot act, and removing residual inflation requires active money retirement (Tool 14a), not &#937;. Curve is computed live from this economy's calibration.
+  </p>
+</div>
 <div id="mu-view" style="display:none;">
   <div class="info-banner">
     <strong>What this answers:</strong> "Is a fixed split actually price-stable?" No — not universally. Under a fixed 60/40 split (Mode B), whether an economy holds prices flat depends on one structural number: <strong>&mu;</strong>, the share of broad money that sits in transaction accounts rather than time deposits. Economies below the balance point (&mu;* &#8776; 0.51) run <span style="color:#E0685A">inflation</span>; those above it run <span style="color:#5BA6E6">mild deflation</span>; only an economy sitting on the point is stable. The US lands there by coincidence of its monetary structure, not by design. <strong>Mode &#937;</strong> removes the coincidence: it solves the split per economy so every point below lands on zero.
@@ -965,12 +981,12 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
     mmtJobsWage: 31200                  // $15/hr × 2080 hrs
   };
 
-  let activeTab = 'floor';
+  let activeTab = 'compare';
   let activeScenario = 'median';
   let activeStress = 'smooth';
   let modetShock = 'none';
   let recessionScenario = 'none';
-  let omegaScenario = 'normal';
+  let lambdaScenario = 'normal';
   let tool14Episode = '2022';
   let tool14Chart = null;
   let activeMode = 'O';   // tracks the last Mode button clicked (A/B/C/X)
@@ -978,7 +994,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   let inflationChart = null;
   let stressChart = null;
   let modetChart = null;
-  let omegaChart = null;
+  let lambdaChart = null;
 
   function readInputs(){
     const k1 = parseFloat($('k1').value)/100;
@@ -1411,8 +1427,10 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
         drawStressChart(p, sim);
       } else if (activeTab === 'modet') {
         drawModeT(p);
+      } else if (activeTab === 'lambda') {
+        drawLambda();
       } else if (activeTab === 'omega') {
-        drawOmega();
+        drawOmegaChart(p);
       } else if (activeTab === 'mu') {
         drawMuChart(p);
       } else {
@@ -1638,14 +1656,14 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   }
 
   // ===== Mode Λ (adaptive) — reproduces the architecture paper §9.6 simulation outcomes =====
-  const OMEGA_SCENARIOS = {
+  const LAMBDA_SCENARIOS = {
     normal:      { floor:403000,  demo:false, prod:false, gov:'inactive',                note:'Base case on the realizable basis (Table 8): ~60% K2 capture, mild deflationary bias, no KI' },
     negpop:      { floor:480000,  demo:true,  prod:false, gov:'demographic active',      note:'+19% vs the normal-conditions floor from the demographic governor (Table 8, realizable basis)' },
     negpop_opt:  { floor:638000,  demo:true,  prod:false, gov:'demographic active',      note:'Same governors, with a high capital-share (high α/δ) parameterization (Table 8)' },
     negpop_pess: { floor:343000,  demo:true,  prod:false, gov:'demographic active',      note:'Same governors, with a low capital-share (low α/δ) parameterization (Table 8)' },
     prodboom:    { floor:541000,  demo:true,  prod:true,  gov:'demographic + productivity', note:'Both governors engaged; productivity windfall routed to floors (Table 8)' },
   };
-  function omegaGovernors(sc){
+  function lambdaGovernors(sc){
     // Illustrative 65-year governor response (faithful to §8.2–8.5), driven by the scenario's conditions.
     const HZ=65, k1=[], k2=[], ki=[];
     for(let t=0;t<=HZ;t++){
@@ -1670,6 +1688,72 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   // would drift (below the balance point → inflate, above → deflate), the balance point marked,
   // and the active country highlighted. Static geometry (μ values are fixed calibrations), so it
   // needs no charting library and cannot be affected by the Chart.js load path.
+  function drawOmegaChart(p){
+    const wrap = $('omega-svg-wrap');
+    if (!wrap) return;
+    // Live per-economy sweep: for each real-growth rate, take Ω's exact solved config and its derived inflation
+    // and its citizen-dividend dollars. Uses the SAME internals as omegaConfig()/mtCPI for this economy.
+    const m2  = parseFloat($('m2').value)*1e12;
+    const gdp = parseFloat($('gdp').value)*1e12;
+    const k1 = 0.025, k2 = 1.00;
+    const solveAt = rg => {
+      const base = mtCPI(k1, k2, 0.40, 0, m2, gdp, rg);          // fixed-split derived inflation
+      const MT = MU*m2, k1Agg = k1*gdp*NC, S = Math.max(0, k2*m2*rg - k1Agg);
+      let k3 = 40, ki = 0;
+      if (base.cpi > 0){ let x = S>0 ? (rg*MT - 0.20*(k1Agg+S))/(0.80*S) : 0; x=Math.max(0,Math.min(0.40,x)); k3=+(x*100).toFixed(2); }
+      else if (base.cpi < 0){ let x = (rg*MT - 0.40*S - 0.20*(k1Agg+0.60*S))/m2; x=Math.max(0,x); ki=+(x*100).toFixed(3); }
+      const cpi = mtCPI(k1, k2, k3/100, ki/100, m2, gdp, rg).cpi;
+      const div = (k3/100)*S + (ki/100)*m2;                       // citizen dividend dollars/yr
+      const limited = (S<=0) && cpi>0.00005;
+      return { rg, k3, ki, cpi, div, S, limited };
+    };
+    const gMax = 0.08, N = 80;
+    const pts = [];
+    for (let i=0;i<=N;i++){ const g = gMax*i/N; pts.push(solveAt(g)); }
+    const gFloor = k1*gdp*NC / (k2*m2);                            // growth where S hits 0 (issuance ceases)
+    const divMax = Math.max.apply(null, pts.map(o=>o.div)) || 1;
+
+    const W=860, H=320, padL=54, padR=54, padT=28, padB=44;
+    const x = g => padL + (g/gMax)*(W-padL-padR);
+    const yInfl = c => { const lo=-1, hi=1; const cc=Math.max(lo,Math.min(hi,c*100)); return padT + (hi-cc)/(hi-lo)*(H-padT-padB); };
+    const yDiv  = d => (H-padB) - (d/divMax)*(H-padT-padB);
+    const zeroY = yInfl(0);
+
+    const inflPath = pts.map((o,i)=>(i?'L':'M')+x(o.rg).toFixed(1)+' '+yInfl(o.cpi).toFixed(1)).join(' ');
+    const divPath  = pts.map((o,i)=>(i?'L':'M')+x(o.rg).toFixed(1)+' '+yDiv(o.div).toFixed(1)).join(' ');
+    const fx = x(gFloor);
+
+    const svg =
+      '<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="max-width:'+W+'px; display:block; margin:0 auto; font-family:var(--font,sans-serif);" role="img" aria-label="Mode Omega holds prices flat while the dividend scales with growth">'
+      // zero-inflation reference band
+      + '<rect x="'+padL+'" y="'+(zeroY-14)+'" width="'+(W-padL-padR)+'" height="28" fill="var(--accent)" opacity="0.07" rx="4"/>'
+      + '<line x1="'+padL+'" y1="'+zeroY+'" x2="'+(W-padR)+'" y2="'+zeroY+'" stroke="var(--accent)" stroke-width="1" stroke-dasharray="3 3" opacity="0.5"/>'
+      + '<text x="'+padL+'" y="'+(zeroY-18)+'" font-size="11" font-weight="700" fill="var(--accent)">prices held at 0%</text>'
+      // growth-floor marker
+      + (gFloor>0 && gFloor<gMax ? '<line x1="'+fx.toFixed(1)+'" y1="'+padT+'" x2="'+fx.toFixed(1)+'" y2="'+(H-padB)+'" stroke="#E0685A" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.7"/>'
+          + '<text x="'+(fx+5).toFixed(1)+'" y="'+(padT+12)+'" font-size="9.5" fill="#E0685A">issuance floor</text>' : '')
+      // dividend curve (teal) + inflation curve (gold)
+      + '<path d="'+divPath+'" fill="none" stroke="var(--teal-text,#9BE0BE)" stroke-width="2.4"/>'
+      + '<path d="'+inflPath+'" fill="none" stroke="var(--accent)" stroke-width="2.6"/>'
+      // axes
+      + '<line x1="'+padL+'" y1="'+(H-padB)+'" x2="'+(W-padR)+'" y2="'+(H-padB)+'" stroke="var(--border-strong)" stroke-width="1.2"/>'
+      + [0,2,4,6,8].map(function(g){return '<text x="'+x(g/100).toFixed(1)+'" y="'+(H-padB+18)+'" text-anchor="middle" font-size="9.5" fill="var(--text-dim)">'+g+'%</text>';}).join('')
+      + '<text x="'+((padL+W-padR)/2)+'" y="'+(H-6)+'" text-anchor="middle" font-size="10.5" fill="var(--text-muted)">real growth rate</text>'
+      // legend
+      + '<circle cx="'+(padL+6)+'" cy="'+(padT-8)+'" r="4" fill="var(--accent)"/><text x="'+(padL+16)+'" y="'+(padT-4)+'" font-size="10.5" fill="var(--text-muted)">&#937; derived inflation</text>'
+      + '<circle cx="'+(padL+170)+'" cy="'+(padT-8)+'" r="4" fill="var(--teal-text,#9BE0BE)"/><text x="'+(padL+180)+'" y="'+(padT-4)+'" font-size="10.5" fill="var(--text-muted)">citizen dividend ($/yr)</text>'
+      + '</svg>';
+    wrap.innerHTML = svg;
+
+    // stat cards: report at THIS economy's current growth setting
+    const rgNow = parseFloat($('rg').value)/100;
+    const now = solveAt(rgNow);
+    if ($('mo-cpi')) $('mo-cpi').textContent = (now.cpi>=0?'+':'') + (now.cpi*100).toFixed(2) + '%';
+    if ($('mo-split')) $('mo-split').textContent = now.k3.toFixed(1) + '%' + (now.ki>0? ' + KI '+now.ki.toFixed(2)+'%' : '');
+    if ($('mo-split-sub')) $('mo-split-sub').textContent = now.limited ? 'lever exhausted at this growth' : 'standing dividend share';
+    if ($('mo-div')) $('mo-div').textContent = CUR + (now.div/1e9).toFixed(1) + 'B';
+  }
+
   function drawMuChart(p){
     const wrap = $('mu-svg-wrap');
     if (!wrap) return;
@@ -1740,19 +1824,19 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
     if ($('mu-omega')) $('mu-omega').textContent = kd.toFixed(1) + '%' + (me.mu > 0.52 ? ' + KI' : '');
   }
 
-  function drawOmega(){
-    const sc = OMEGA_SCENARIOS[omegaScenario];
-    $('omega-floor').textContent = fmt(sc.floor);
-    $('omega-income').textContent = fmt(sc.floor*0.05) + '/yr';
-    $('omega-gov').textContent = sc.gov;
-    $('omega-note').textContent = sc.note;
-    const g = omegaGovernors(sc), labels = g.k1.map((_,t)=>t);
+  function drawLambda(){
+    const sc = LAMBDA_SCENARIOS[lambdaScenario];
+    $('lambda-floor').textContent = fmt(sc.floor);
+    $('lambda-income').textContent = fmt(sc.floor*0.05) + '/yr';
+    $('lambda-gov').textContent = sc.gov;
+    $('lambda-note').textContent = sc.note;
+    const g = lambdaGovernors(sc), labels = g.k1.map((_,t)=>t);
     const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const tickColor = '#9AA3AE';
     const gridColor = isDark ? 'rgba(180,178,169,0.15)' : 'rgba(136,135,128,0.15)';
-    const ctx = $('omega-chart').getContext('2d');
-    if(omegaChart) omegaChart.destroy();
-    omegaChart = new Chart(ctx, {
+    const ctx = $('lambda-chart').getContext('2d');
+    if(lambdaChart) lambdaChart.destroy();
+    lambdaChart = new Chart(ctx, {
       type:'line',
       data:{ labels, datasets:[
         { label:'K1 endowment multiplier (×)', data:g.k1, borderColor:'#5BA6E6', backgroundColor:'transparent', borderWidth:2.4, pointRadius:0, yAxisID:'yL', tension:0.25 },
@@ -1769,7 +1853,33 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
         interaction:{mode:'index',intersect:false}
       }
     });
-    $('omega-legend').innerHTML = '<span style="color:#5BA6E6">\u25a0</span> K1 multiplier (×) &nbsp; <span style="color:#9B95EC">\u25a0</span> K2 capture (fraction) &nbsp; <span style="color:#E6A93E">\u25a0</span> conditional KI (% of M2, right axis)';
+    $('lambda-legend').innerHTML = '<span style="color:#5BA6E6">\u25a0</span> K1 multiplier (×) &nbsp; <span style="color:#9B95EC">\u25a0</span> K2 capture (fraction) &nbsp; <span style="color:#E6A93E">\u25a0</span> conditional KI (% of M2, right axis)';
+  }
+
+  // Honest "stress both": a market-only 401(k) modeled as a working-life accumulation,
+  // calibrated so its SMOOTH path lands exactly at the known median endpoint (REAL_DATA.median401k),
+  // then re-run through the SAME historical sequence at the SAME ages. Only the return path differs;
+  // the endpoint is not fabricated. This exposes sequence-of-returns risk that a static benchmark hides.
+  function market401kStressPath(p, stressKey){
+    const TARGET = (typeof REAL_DATA !== 'undefined') ? REAL_DATA.median401k_at_retirement : 95642;
+    const smoothReal = p.er;                 // use the model's own smooth real return as the baseline
+    const hz = p.hz;
+    // stress events aligned to the same ages the CS stress sim uses
+    let evs = [];
+    if (stressKey === 'all-bad'){
+      evs = [ {...STRESS_SEQUENCES.depression, startAge:22}, {...STRESS_SEQUENCES['lost-decade'], startAge:38}, {...STRESS_SEQUENCES.stagflation, startAge:48} ];
+    } else if (STRESS_SEQUENCES[stressKey]) { evs = [STRESS_SEQUENCES[stressKey]]; }
+    const retAt = t => {
+      for (const ev of evs){ const o = t - ev.startAge; if (o>=0 && o<ev.seq.length){ const s=ev.seq[o]; return (1+s[0])/(1+s[1]) - 1; } }
+      return smoothReal;
+    };
+    // calibrate constant real contribution so the SMOOTH path hits TARGET (balance is linear in C)
+    const unit = (() => { let b=0; for (let t=0;t<=hz;t++){ b=(b+1)*(1+smoothReal); } return b; })();
+    const C = unit>0 ? TARGET/unit : 0;
+    // build the stressed accumulation path (real dollars)
+    const path = []; let b=0;
+    for (let t=0;t<=hz;t++){ b=(b+C)*(1+retAt(t)); path.push(b); }
+    return path;   // path[hz] is the stressed endpoint
   }
 
   function drawStressChart(p, smoothSim){
@@ -1816,6 +1926,19 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
         pointRadius: 0
       });
 
+      // Honest comparison: the SAME sequence run through a market-only 401(k) accumulation.
+      const mkt = market401kStressPath(p, activeStress);
+      datasets.push({
+        label: 'Market 401(k), same sequence',
+        data: mkt,
+        borderColor: '#C9A24B',
+        borderDash: [5,4],
+        borderWidth: 2,
+        backgroundColor: 'transparent',
+        tension: 0.2,
+        pointRadius: 0
+      });
+
       // Shade the affected period(s)
       // Done via dataset annotations would require chartjs-plugin-annotation;
       // instead we mark it with a thin overlay dataset that highlights the bad years
@@ -1831,9 +1954,14 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
     const stressIncome = stressFinal * p.wr;
     $('stress-income').textContent = fmt(stressIncome);
 
-    const medianAmerican = 95642 * p.wr;  // ~$3,503/yr
-    const ratio = medianAmerican > 0 ? stressFinal / 95642 : 0;
+    // vs. a market-only 401(k) hit by the SAME sequence (stressed-vs-stressed, the fair comparison).
+    const mktBench = (activeStress === 'smooth')
+      ? ((typeof REAL_DATA !== 'undefined') ? REAL_DATA.median401k_at_retirement : 95642)
+      : market401kStressPath(p, activeStress)[p.hz];
+    const ratio = mktBench > 0 ? stressFinal / mktBench : 0;
     $('stress-vs-median').textContent = ratio >= 1 ? ratio.toFixed(1) + '×' : (ratio*100).toFixed(0) + '%';
+    const vsSub = document.querySelector('#stress-view .stat:nth-child(3) .stat-sub');
+    if (vsSub) vsSub.textContent = (activeStress === 'smooth') ? '$95,642 Vanguard 2025' : 'market 401(k), same shock';
 
     $('stress-legend').innerHTML = datasets.map(d =>
       `<span><span class="swatch" style="background:${d.borderColor}"></span>${d.label}</span>`
@@ -1868,11 +1996,15 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
     let datasets = [], legendHtml = '';
 
     if (activeTab === 'floor'){
+      // Current-system reference: what a typical American actually retires with today (median 401(k), Vanguard 2025).
+      // Flat because it is an endpoint balance, not a launch-anchored trajectory; shown so the CS floor is read against the status quo, not in a vacuum.
+      const curSys = (typeof REAL_DATA !== 'undefined') ? REAL_DATA.median401k_at_retirement : 95642;
       datasets = [
         { label: 'Stable Floor (nominal)', data: sim.map(s => s.floor), borderColor: '#9AA3AE', backgroundColor: 'transparent', borderDash: [4,4], tension: 0.2, pointRadius: 0 },
-        { label: 'Stable Floor (real)',    data: sim.map(s => s.floorReal), borderColor: '#5BA6E6', backgroundColor: 'rgba(24,95,165,0.10)', fill: true, tension: 0.2, pointRadius: 0 }
+        { label: 'Stable Floor (real)',    data: sim.map(s => s.floorReal), borderColor: '#5BA6E6', backgroundColor: 'rgba(24,95,165,0.10)', fill: true, tension: 0.2, pointRadius: 0 },
+        { label: 'Median 401(k) today', data: sim.map(() => curSys), borderColor: '#E0685A', borderDash: [2,3], borderWidth: 1.6, backgroundColor: 'transparent', tension: 0, pointRadius: 0 }
       ];
-      legendHtml = '<span><span class="swatch" style="background:#5BA6E6"></span>Real (today $)</span><span><span class="swatch" style="background:#9AA3AE"></span>Nominal</span>';
+      legendHtml = '<span><span class="swatch" style="background:#5BA6E6"></span>Real (today $)</span><span><span class="swatch" style="background:#9AA3AE"></span>Nominal</span><span><span class="swatch" style="background:#E0685A"></span>Median 401(k) today ($95,642)</span>';
     } else if (activeTab === 'm2'){
       datasets = [
         { label: 'M2 ($T)',  data: sim.map(s => s.m2/1e12), borderColor: '#5FBE93', backgroundColor: 'rgba(15,110,86,0.10)', fill: true, tension: 0.2, pointRadius: 0 },
@@ -2209,12 +2341,13 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   function showTab(name){
     activeTab = name;
     document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
-    $('chart-view').style.display = (name === 'compare' || name === 'inflation' || name === 'stress' || name === 'modet' || name === 'omega' || name === 'mu') ? 'none' : 'block';
+    $('chart-view').style.display = (name === 'compare' || name === 'inflation' || name === 'stress' || name === 'modet' || name === 'lambda' || name === 'omega' || name === 'mu') ? 'none' : 'block';
     $('compare-view').style.display = name === 'compare' ? 'block' : 'none';
     $('inflation-view').style.display = name === 'inflation' ? 'block' : 'none';
     $('stress-view').style.display = name === 'stress' ? 'block' : 'none';
     $('modet-view').style.display = name === 'modet' ? 'block' : 'none';
-    $('omega-view').style.display = name === 'omega' ? 'block' : 'none';
+    $('lambda-view').style.display = name === 'lambda' ? 'block' : 'none';
+    if ($('omega-view')) $('omega-view').style.display = name === 'omega' ? 'block' : 'none';
     if ($('mu-view')) $('mu-view').style.display = name === 'mu' ? 'block' : 'none';
 
     // Destroy any existing chart instances so they rebuild fresh against the
@@ -2257,9 +2390,9 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
     document.querySelectorAll('#tool14-pills .pill').forEach(x => x.classList.toggle('active', x === p));
     drawTool14();
   }));
-  document.querySelectorAll('#omega-pills .pill').forEach(p => p.addEventListener('click', () => {
-    omegaScenario = p.dataset.omega;
-    document.querySelectorAll('#omega-pills .pill').forEach(x => x.classList.toggle('active', x === p));
+  document.querySelectorAll('#lambda-pills .pill').forEach(p => p.addEventListener('click', () => {
+    lambdaScenario = p.dataset.omega;
+    document.querySelectorAll('#lambda-pills .pill').forEach(x => x.classList.toggle('active', x === p));
     update();
   }));
   [['ktr',1],['psr',1],['flr',0]].forEach(([id,dec]) => $(id).addEventListener('input', () => {
@@ -2450,7 +2583,11 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   // Country selector: swap calibration (currency, M^T share, defaults, returns) and re-render
   const countrySel = $('countrySel');
   if (countrySel) {
+    const CALIB_ANCHOR = {US:'', EZ:'#eurozone', IN:'#india', JP:'#japan', UK:'#uk', CA:'#canada', KR:'#south-korea', AU:'#australia', CH:'#switzerland', SE:'#sweden', NO:'#norway'};
+    const updateCalibLink = () => { const a=$('calibLink'); if(a){ a.href='calibration_notes.html'+(CALIB_ANCHOR[countrySel.value]||''); } };
+    updateCalibLink();
     countrySel.addEventListener('change', () => {
+      updateCalibLink();
       CTY = COUNTRIES[countrySel.value] || COUNTRIES.US;
       CUR = CTY.cur;
       MU  = CTY.mu;
@@ -2476,6 +2613,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
     try {
       applyCountryDefaults();   // window the sliders to the initial country (US) on first load
       applyMode('O');
+      showTab('compare');       // default view is "What you get"; establishes view display + fires compare render
     } catch (e) {
       try { update(); } catch (e2) {}
     }
