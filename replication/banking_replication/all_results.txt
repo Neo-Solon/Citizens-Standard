@@ -1,44 +1,144 @@
-==========================================================================
-REWORKED PAPER 6 -- FULL-RESERVE BANKING: quantitative results
-==========================================================================
+########################################################################
+# PAPER 6 -- FULL-RESERVE BANKING: CONSOLIDATED EVIDENCE REPORT
+# (unified driver over the replication modules; no new analysis)
+########################################################################
 
-[R1] COMPLETE MONETARY CONTROL
-  inside-money share of the money stock:  today ~0.80  |  CS full-reserve 0.00
-  -> M_T = M_o exactly; throttle sets M_o directly; no offset, no saturation.
-  determinacy root theta = 1+(1+phi)/alpha = 3.00 > 1 (applies to M_o directly)
+==========================================
+      Paper 6 Verification Summary
+==========================================
 
-[R2] TRANSACTION AGGREGATE ENTIRELY SOVEREIGN
-  today: ~$18.0T of $22.4T money stock is a private bank liability (inside money)
-  CS:    transaction money is 100% sovereign reserves; term deposits are
-         investment claims (not money); the locked floor is equity (not a deposit).
+  N1  PASS   complete monetary control  [structural]
+  N2  PASS   circuit separation  [calibration]
+  N3  PASS   credit capacity  [calibration]
+  N4  PASS   run-proof payments  [structural]
+  N5  PASS   near-money boundary  [calibration]
 
-[R3] CREDIT SUPPLY UNDER FULL RESERVE
-  (a) term-deposit pool at launch ~ 60% x M2 = $13.4T
-      leverage cap 4:1 -> equity $4.5T, bank credit capacity $17.9T
-  (b) full-reserve conversion removes bank money creation (one-time contraction).
-      sovereign offset: TLF 12%-38% + KT 41%-59% = 53%-97% of credit-at-risk;
-      residual absorbed by the conditional KI_T damper -> coverage approaches full.
-  (c) loanable-funds frontier under a 30% term-deposit shortfall (bank credit $17.9T):
-      hold rate  -> sovereign offset 30%, rate premium 0.0pp, credit $17.9T
-      let clear  -> sovereign offset 0%, rate premium 6.4pp, credit $13.3T
-      saving's near-zero rate elasticity makes the price route a crunch; the citizen-channel
-      offset (TLF/KT/KI_T) and the countercyclical 3:1/5:1 leverage rule are the design's answer.
+  Inside money (derived):        $0.000T  (0 = full control)
+  Determinacy root theta:        3.00  (>1 = determinate)
+  Credit capacity:               $17.9T
+  Binding constraint:            term deposits (funding)
+  Equity / credit capacity:      25.0%
 
-[R4] PAYMENT-CREDIT SEPARATION AND RUN-PROOFNESS
-  max systemic money contraction: 1930-33 ~all deposits runnable; CS bounded by term share ~60% of launch M2
-  transaction accounts (~40%) are 100% reserved -> cannot be run;
-  term deposits are explicit at-risk term claims -> not demandable, no Diamond-Dybvig run;
-  the dominant asset (locked floor) is equity, not a deposit -> outside the run technology.
+  Run-proof (reserved) share:    40%
+  At-risk (term-deposit) share:  60%
+  Controllability margin:        5.5 pp  (zeta* - coupling)
 
-[R5] NEAR-MONEY / BOUNDARY PROBLEM
-  if 5% of term deposits circulate as near-money ($0.7T): 7% of transaction money -- throttle offsets it IF observable
-  if 10% of term deposits circulate as near-money ($1.3T): 13% of transaction money -- throttle offsets it IF observable
-  if 20% of term deposits circulate as near-money ($2.7T): 23% of transaction money -- throttle offsets it IF observable
-  honest claim (Paper 1 sec.17.3): full reserve raises cost+visibility of near-money,
-  does not abolish it; observability is the falsifiable condition, not a guarantee.
+  Max term-deposit share:        0.750  (keeps M_o >= 25% of M2)
+  Max credit intensity:          0.333  (preserves separation)
 
-==========================================================================
-All figures are illustrative calibrations on verified anchors, not forecasts.
-==========================================================================
+==========================================
+  Overall: all structural propositions verified;
+           calibration-dependent ones hold at baseline.
+==========================================
 
-[figures saved: paper6_figures.png]
+========================================================================
+# PROPOSITION TESTS  (N1-N5 at baseline; derived, structural vs calibration)
+========================================================================
+STRUCTURAL (unchanged if parameters change):
+  PASS  N1  (complete monetary control)
+          inside money derived = $0.000T (incumbent 0.89 of stock); M_T = M_o = $8.9T; theta = 3.00 > 1
+  PASS  N4  (run-proof payments)
+          runnable transaction money = $0.000T; max contraction 60% (term share) vs incumbent 89% of money stock
+
+CALIBRATION-DEPENDENT (contingent on calibrated values):
+  PASS  N2  (separation survives bank credit)
+          coupling(kappa=0.075) = 0.052 < zeta* = 0.13; holds for kappa < ceiling = 0.333, fails above it
+  PASS  N3  (credit supply under full reserve)
+          D = $13.4T, E = $4.5T, capacity = D*4/3 = $17.9T (leverage 3:1 within 4:1)
+  PASS  N5  (near-money boundary is bounded and conditional)
+          near-money at [0.05, 0.1, 0.2] of term deposits adds [0.07, 0.15, 0.3] of M_T; enters the throttled aggregate when observable (conditional, not abolished)
+
+  -> ALL PROPOSITIONS PASS (5/5)
+
+========================================================================
+# BALANCE SHEET  (derived quantities; intentionally minimal scope)
+========================================================================
+  incumbent inside-money share of money stock: 0.89
+  CS transaction money  = $8.9T
+  CS term deposits      = $13.4T
+  CS inside money (derived) = $0.000T
+  CS credit capacity    = $17.9T
+  determinacy root theta = 3.00
+
+========================================================================
+# SENSITIVITY, THRESHOLDS, AND 10,000-DRAW MONTE CARLO
+========================================================================
+1. SENSITIVITY  (phi_liq swept; other parameters at baseline)
+    phi_liq        binding constraint  coupling  capacity($T)  sep?
+       0.10   term deposits (funding)     0.060         17.9   yes
+       0.15   term deposits (funding)     0.075         17.9   yes
+       0.20   term deposits (funding)     0.090         17.9   yes
+       0.30   term deposits (funding)     0.120         17.9   yes
+
+   (leverage swept; phi_liq at baseline)
+   leverage    equity($T)  capacity($T)
+         3:1          6.7         20.1
+         4:1          4.5         17.9
+         5:1          3.4         16.8
+
+2. THRESHOLD DISCOVERY  (computed, not hardcoded)
+   N2  max credit intensity kappa preserving separation = 0.3333
+       (baseline kappa = 0.150; margin to boundary = 0.1833)
+   N5  max observable near-money preserving throttle (<= 20% of M_T) = 13.3% of term deposits
+   N5  max observable near-money preserving throttle (<= 25% of M_T) = 16.7% of term deposits
+   N5  max observable near-money preserving throttle (<= 30% of M_T) = 20.0% of term deposits
+
+3. RANDOMIZED INVARIANT TESTING  (10,000 admissible calibrations, seed 12345)
+   STRUCTURAL (must hold for every draw):
+     N1   10000/10000  (100.0%)  PASS (invariant)
+     N4   10000/10000  (100.0%)  PASS (invariant)
+   CALIBRATION-DEPENDENT (pass rate over the admissible space):
+     N2    8142/10000  (81.4% of admissible draws)
+     N3   10000/10000  (100.0% of admissible draws)
+     N5   10000/10000  (100.0% of admissible draws)
+
+========================================================================
+# EXPLORATION  (discovered boundaries)
+========================================================================
+BOUNDARY DISCOVERY (computed, publishable quantities)
+------------------------------------------------------------
+  Maximum transactional (term-deposit) share
+    keeping M_o >= 25% of M2:                 0.750
+  Maximum credit intensity (phi_liq)
+    preserving circuit separation (N2):        0.333
+    (baseline 0.150; headroom 0.183)
+  Maximum observable near-money
+    before it exceeds 25% of M_T (N5):     16.7% of term deposits
+  Maximum observable near-money
+    before it exceeds 30% of M_T (N5):     20.0% of term deposits
+
+========================================================================
+# PARAMETER IMPORTANCE  (what drives each proposition)
+========================================================================
+======================================================================
+PARAMETER IMPORTANCE ANALYSIS
+  20,000 admissible calibrations, seed 770
+  first-order variance share (main effect, 0..1) + Spearman rho (sign)
+======================================================================
+
+N2 (separation)   (margin mean +0.035, sd 0.040)
+   phi_liq      var-share  0.44  ( 46% of top-effects)  rho -0.67  ########################################
+   chi_c        var-share  0.20  ( 20% of top-effects)  rho -0.43  ##################
+   zeta_star    var-share  0.19  ( 20% of top-effects)  rho +0.44  ##################
+   lambda_leak  var-share  0.14  ( 14% of top-effects)  rho -0.37  #############
+   -> dominant assumption: phi_liq
+
+N3 (credit capacity)   (margin mean +17.962, sd 8.065)
+   m2           var-share  0.60  ( 63% of top-effects)  rho +0.79  ########################################
+   term_share   var-share  0.34  ( 35% of top-effects)  rho +0.57  #######################
+   leverage     var-share  0.02  (  2% of top-effects)  rho -0.11  #
+   -> dominant assumption: m2
+
+N4 (run-proof share)   (margin mean +0.450, sd 0.144)
+   term_share   var-share  1.00  (100% of top-effects)  rho -1.00  ########################################
+   -> dominant assumption: term_share
+
+======================================================================
+Reading: for N2 (separation), the assumptions that most move the margin
+are the ones a referee should scrutinize; for N3 the capacity scale is
+driven by term share and money-stock size, not the leverage cap.
+======================================================================
+
+========================================================================
+# END OF REPORT
+========================================================================
