@@ -26,7 +26,7 @@ Issue money in proportion to real growth, route it through four transparent chan
 
 ## The deeper layer
 
-The simple pages sit on top of a full body of work: **fourteen papers, 382 pages**, the architecture, a macroeconomic model with formal results, a statutory draft, full-reserve banking and external interoperability, crisis behaviour, distribution and inequality, and a comparative analysis against UBI, Social Security, sovereign wealth funds, and Georgism. Every empirical claim ships with a **replication package** built on real data (BLS, SSA, the Survey of Consumer Finances, the Alaska Permanent Fund), so the numbers can be reproduced, not just asserted.
+The simple pages sit on top of a full body of work: **fourteen papers, 390 pages**, the architecture, a macroeconomic model with formal results, a statutory draft, full-reserve banking and external interoperability, crisis behaviour, distribution and inequality, and a comparative analysis against UBI, Social Security, sovereign wealth funds, and Georgism. Every empirical claim ships with a **replication package** built on real data (BLS, SSA, the Survey of Consumer Finances, the Alaska Permanent Fund), so the numbers can be reproduced, not just asserted.
 
 All fourteen papers are in this repository and free to read. The **[papers and replication index](https://neo-solon.github.io/Citizens-Standard/papers.html)** is the full table of contents, with a one-click PDF for every paper and the replication suite beside it. Three are on SSRN, linked there directly; the rest open as PDFs here until they post:
 
