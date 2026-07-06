@@ -10,18 +10,18 @@ You don't need any of it to see the problem. You already felt it.
 
 | Page | What it is |
 |---|---|
-| **[Diagnosis](https://neo-solon.github.io/Citizens-Standard/front_door.html)** | The diagnosis on one page, with the fix made tangible right there: one slider, one outcome, a dollar that holds its value versus one that doesn't. No mechanism, no jargon. |
-| **[Declaration](https://neo-solon.github.io/Citizens-Standard/declaration.html)** | The right to remake the money system, and the constitutional power that already exists to do it. No amendment required, plus an honest map of where it would be litigated. |
-| **[How it works](https://neo-solon.github.io/Citizens-Standard/how_the_engine_works.html)** | The mechanism in plain language: the four channels, and why inflation is an output rather than a dial. |
-| **[Engine](https://neo-solon.github.io/Citizens-Standard/Citizens_Standard_Engine.html)** | Every lever, every mode, calibrated across countries from primary-source national data. Inflation is derived from your settings, never assumed. Includes a comparison against alternative monetary systems and embedded stress tests. |
-| **[Papers &amp; data](https://neo-solon.github.io/Citizens-Standard/papers.html)** | All fourteen papers, free to read, the three on SSRN linked there, plus the full replication suite. |
-| **[Calibrations](https://neo-solon.github.io/Citizens-Standard/calibration_notes.html)** | The national data behind each country in the engine: macro parameters, transaction-active shares, and realizable returns, each derived from primary sources with an audit checklist. |
-| **[Q&amp;A](https://neo-solon.github.io/Citizens-Standard/questions_and_answers.html)** | The questions a skeptic asks: the money-printing fear, who controls it, hasn't this been tried, would anyone still work. Answered plainly. |
-| **[Methodology](https://neo-solon.github.io/Citizens-Standard/methodology.html)** | How to check it: every load-bearing claim mapped to the script that backs it, what the stress tests confirmed, and the handful of places the data made us qualify a claim. |
+| **[Diagnosis](https://citizensstandard.org/)** | The diagnosis on one page, with the fix made tangible right there: one slider, one outcome, a dollar that holds its value versus one that doesn't. No mechanism, no jargon. |
+| **[Declaration](https://citizensstandard.org/declaration.html)** | The right to remake the money system, and the constitutional power that already exists to do it. No amendment required, plus an honest map of where it would be litigated. |
+| **[How it works](https://citizensstandard.org/how_the_engine_works.html)** | The mechanism in plain language: the four channels, and why inflation is an output rather than a dial. |
+| **[Engine](https://citizensstandard.org/Citizens_Standard_Engine.html)** | Every lever, every mode, calibrated across countries from primary-source national data. Inflation is derived from your settings, never assumed. Includes a comparison against alternative monetary systems and embedded stress tests. |
+| **[Papers &amp; data](https://citizensstandard.org/papers.html)** | All fourteen papers, free to read, the three on SSRN linked there, plus the full replication suite. |
+| **[Calibrations](https://citizensstandard.org/calibration_notes.html)** | The national data behind each country in the engine: macro parameters, transaction-active shares, and realizable returns, each derived from primary sources with an audit checklist. |
+| **[Q&amp;A](https://citizensstandard.org/questions_and_answers.html)** | The questions a skeptic asks: the money-printing fear, who controls it, hasn't this been tried, would anyone still work. Answered plainly. |
+| **[Methodology](https://citizensstandard.org/methodology.html)** | How to check it: every load-bearing claim mapped to the script that backs it, what the stress tests confirmed, and the handful of places the data made us qualify a claim. |
 
 Every page is a single self-contained `.html` file that opens in any browser, and each links to the next, so the Diagnosis page alone is enough to reach everything.
 
-The engine runs on the United States by default and switches, from one dropdown, to further calibrations — Australia, Canada, the Eurozone, India, Indonesia, Japan, Mexico, Norway, Saudi Arabia, South Korea, Sweden, Switzerland, Turkey, and the United Kingdom — each built from primary-source national data, with the full derivations on the [Calibrations](https://neo-solon.github.io/Citizens-Standard/calibration_notes.html) page.
+The engine runs on the United States by default and switches, from one dropdown, to further calibrations — Australia, Canada, the Eurozone, India, Indonesia, Japan, Mexico, Norway, Saudi Arabia, South Korea, Sweden, Switzerland, Turkey, and the United Kingdom — each built from primary-source national data, with the full derivations on the [Calibrations](https://citizensstandard.org/calibration_notes.html) page.
 
 ## What it proposes, in one breath
 
@@ -31,7 +31,7 @@ Issue money in proportion to real growth, route it through four transparent chan
 
 The simple pages sit on top of a full body of work: **fourteen papers, 390 pages**, the architecture, a macroeconomic model with formal results, a statutory draft, full-reserve banking and external interoperability, crisis behaviour, distribution and inequality, and a comparative analysis against UBI, Social Security, sovereign wealth funds, and Georgism. Every empirical claim ships with a **replication package** — eleven in all, one per empirical paper — built on real data (BLS, SSA, the Survey of Consumer Finances, the Alaska Permanent Fund), so the numbers can be reproduced, not just asserted.
 
-All fourteen papers are in this repository and free to read. The **[papers and replication index](https://neo-solon.github.io/Citizens-Standard/papers.html)** is the full table of contents, with a one-click PDF for every paper and the replication suite beside it. Three are on SSRN, linked there directly; the rest open as PDFs here until they post:
+All fourteen papers are in this repository and free to read. The **[papers and replication index](https://citizensstandard.org/papers.html)** is the full table of contents, with a one-click PDF for every paper and the replication suite beside it. Three are on SSRN, linked there directly; the rest open as PDFs here until they post:
 
 - **[One Model, Many Systems: A Constitutional Monetary Architecture](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6702518)** (105 pp) · [PDF](papers/01_Architecture.pdf)
 - [A Historical Counterfactual, 1960-2055](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6735078) (27 pp) · [PDF](papers/02_Counterfactual.pdf)

@@ -8,14 +8,14 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Citizens Standard: country calibrations">
 <meta property="og:description" content="Primary-sourced national data behind each country in the engine, with sources for every number.">
-<meta property="og:url" content="https://neo-solon.github.io/Citizens-Standard/calibration_notes.html">
-<meta property="og:image" content="https://neo-solon.github.io/Citizens-Standard/preview_card.png">
+<meta property="og:url" content="https://citizensstandard.org/calibration_notes.html">
+<meta property="og:image" content="https://citizensstandard.org/preview_card.png">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Citizens Standard: country calibrations">
 <meta name="twitter:description" content="Primary-sourced national data behind each country in the engine.">
-<meta name="twitter:image" content="https://neo-solon.github.io/Citizens-Standard/preview_card.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2310161C'/%3E%3Ctext x='16' y='24' font-size='22' text-anchor='middle' fill='%23E6A93E' font-family='Georgia,serif'%3E%24%3C/text%3E%3C/svg%3E">
+<meta name="twitter:image" content="https://citizensstandard.org/preview_card.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23141C26'/%3E%3Crect x='3' y='3' width='58' height='58' rx='10' fill='none' stroke='%232C3742' stroke-width='1.5'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='36' font-weight='700' text-anchor='middle' fill='%23C7CCD1' letter-spacing='-2'%3ECS%3C/text%3E%3Crect x='21' y='50' width='22' height='2.5' rx='1.25' fill='%238E2230'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
@@ -95,7 +95,7 @@
 <body>
 <a id="top"></a>
 <nav class="sitenav"><div class="sitenav-inner">
-  <a href="front_door.html">Diagnosis</a>
+  <a href="index.html">Diagnosis</a>
   <a href="declaration.html">Declaration</a>
   <a href="how_the_engine_works.html">How it works</a>
   <a href="Citizens_Standard_Engine.html">Engine</a>
@@ -110,7 +110,7 @@
   <p class="lede">Every country in the engine is built from primary-source national data. Here is the full derivation for each: broad money, the transaction-active share, real growth, and the <em>realizable</em> Mode B return band, with a source for every number.</p>
 </header>
 
-<div class="cindex"><a href="#australia">Australia</a> <a href="#canada">Canada</a> <a href="#eurozone">Eurozone</a> <a href="#india">India</a> <a href="#indonesia">Indonesia</a> <a href="#japan">Japan</a> <a href="#mexico">Mexico</a> <a href="#norway">Norway</a> <a href="#saudi-arabia">Saudi Arabia</a> <a href="#south-korea">South Korea</a> <a href="#sweden">Sweden</a> <a href="#switzerland">Switzerland</a> <a href="#turkey">Turkey</a> <a href="#uk">United Kingdom</a></div>
+<div class="cindex"><a href="#australia">Australia</a> <a href="#canada">Canada</a> <a href="#eurozone">Eurozone</a> <a href="#india">India</a> <a href="#indonesia">Indonesia</a> <a href="#japan">Japan</a> <a href="#mexico">Mexico</a> <a href="#norway">Norway</a> <a href="#saudi-arabia">Saudi Arabia</a> <a href="#south-korea">South Korea</a> <a href="#sweden">Sweden</a> <a href="#switzerland">Switzerland</a> <a href="#turkey">Turkey</a> <a href="#uk">United Kingdom</a> <a href="#united-states">United States</a></div>
 
 <main class="wrap">
 <section id="australia" class="note">
@@ -2145,6 +2145,135 @@ pounds."</p>
 </ul></div>
   <p class="backtop"><a href="#top">back to top &uarr;</a></p>
 </section>
+
+<section id="united-states" class="note">
+  <h2 class="cname">United States <span style="font-weight:400;font-size:.62em;color:var(--dim);letter-spacing:.04em;">(baseline)</span></h2>
+  <div class="md"><p>The United States is the reference calibration, the baseline against which every other country
+on this page is described. When another note says a share is "elevated relative to the US ~10%" or
+that a transaction-active ratio sits "below the developed set," this is the calibration it is
+measured against. It is not an emerging-market case and carries no EM caution: its data is drawn
+directly from the primary US statistical agencies (Federal Reserve, BEA, Census), and its
+realizable-return derivation is the original one the other countries are compared to. It is also the
+default the engine opens on.</p>
+<p><strong>Status:</strong> baseline calibration; the M^T/M2 ratio is derived in Paper 10, the rest
+primary-sourced (Federal Reserve H.6, BEA, Census, Fed Financial Accounts).</p>
+<hr />
+<h2>1. Macro parameters (engine units: US$ trillion)</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+<th>Reference</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Broad money <strong>M2</strong></td>
+<td><strong>≈ US$22.4 T</strong></td>
+<td>2025-26</td>
+<td>Federal Reserve (H.6 money stock)</td>
+</tr>
+<tr>
+<td>Transaction-active <strong>M^T</strong></td>
+<td><strong>≈ US$11.5 T</strong></td>
+<td>2025-26</td>
+<td>constructed (see §2), M^T = μ·M2</td>
+</tr>
+<tr>
+<td><strong>M^T / M2 ratio (μ)</strong></td>
+<td><strong>≈ 51.4%</strong></td>
+<td>-</td>
+<td>Paper 10 (transaction-active decomposition)</td>
+</tr>
+<tr>
+<td>Nominal <strong>GDP</strong></td>
+<td><strong>≈ US$30.8 T</strong></td>
+<td>2025-26</td>
+<td>BEA (per-capita ≈ US$90,000)</td>
+</tr>
+<tr>
+<td>Real trend growth <strong>g</strong></td>
+<td><strong>≈ 2.0%</strong></td>
+<td>2025-26</td>
+<td>BEA (long-run real trend)</td>
+</tr>
+<tr>
+<td><strong>Population</strong></td>
+<td><strong>≈ 342 M</strong></td>
+<td>2025-26</td>
+<td>Census (growth ~0.5%)</td>
+</tr>
+<tr>
+<td>Equity <strong>market cap</strong></td>
+<td><strong>≈ US$69.1 T ≈ 224% of GDP</strong></td>
+<td>2025-26</td>
+<td>Fed Financial Accounts (deep, developed)</td>
+</tr>
+</tbody>
+</table>
+<p>The US is the deep-market, developed-economy reference: a large, liquid equity market (~224% of
+GDP, the highest in the set), moderate real growth (~2%), and a transaction-active share near the
+middle of the developed band. Every "shallow market" or "elevated ownership" observation elsewhere
+on this page is a departure from this profile.</p>
+<hr />
+<h2>2. Transaction-active share (M^T / M2): the reference ratio</h2>
+<p>The transaction-active measure M^T is the money actually available to change hands, currency plus
+transaction-accessible deposits. The ratio μ = M^T / M2 is derived in Paper 10 from the deposit
+decomposition rather than assumed.</p>
+<pre><code>M^T (United States) = μ · M2 ≈ 0.514 × US$22.4 T ≈ US$11.5 T
+M2                  ≈ US$22.4 T
+M^T / M2 (μ)        ≈ 51.4%
+</code></pre>
+<p><strong>At ~51%, the US sits in the lower-middle of the developed band</strong> (developed set is
+50-80%; India and Korea are ~28-30%). Roughly half of US broad money is transaction-active. Because
+this is the baseline, μ ≈ 0.514 is the figure the whole framework is anchored to, and it is the
+number Paper 10 exists to establish. The other calibrations reuse this method with their own
+national deposit data.</p>
+<hr />
+<h2>3. Realizable return: the reference derivation</h2>
+<h3>Production function and realized history</h3>
+<p>The US realizable-return estimate is the original two-path derivation the other countries are
+measured against. The production-function path and the long-run realized US equity history (the
+deepest, best-documented total-return series available) are used together to set the Mode B central
+figure. Unlike the emerging-market cases, the two paths do not sharply diverge and no currency-risk
+or market-depth caution is applied, this is the reference, not an adjustment from it.</p>
+<h3>The Mode B band</h3>
+<p>The central realizable return is <strong>4.3% (Mode B), band 3.3-5.0%</strong>. The band reflects
+the attenuated marginal product of the deepened capital stock at the 60/40 split: as the
+structural-buyer mechanism deepens the stock, the marginal return falls, so the realized figure sits
+below the raw historical equity return. The higher per-mode figures (5.4% for Modes A and C, 6.67%
+for Mode D) apply where the mechanism deepens the stock less or not at all, and the equity return
+stays closer to unattenuated. These are the reference values every other country's band is a
+variation on.</p>
+<hr />
+<h2>4. Broad citizen ownership under Mode Ω: the ~10% reference</h2>
+<p>Running the US in Mode Ω produces the citizen market-ownership share that anchors this page:
+<strong>on the order of 10%</strong>. This is the figure other notes point to when they say a shallow
+market pushes ownership "above the US ~10%." The US lands here precisely because its market is deep:
+at ~224% of GDP, the structural-buyer flow is small relative to market size, so the ownership ceiling
+(set by the flow-to-growth ratio c / g) is modest.</p>
+<p>This is the mechanism's honest output for a deep-market economy, and it is the reason the shallow
+markets look different. In shallower markets the same flow is large relative to a small market, so
+the ceiling rises; the US, with the deepest market in the set, sits at the low end of the ownership
+range. Every comparison on this page runs through this number.</p>
+<hr />
+<h2>5. Engine values</h2>
+<p>Currency US$. M^T share 51.4% (μ = 0.514). Defaults: M2 US$22.4T, GDP US$30.8T, pop 342M, market
+cap US$69.1T. Real growth 2.0%, pop growth 0.5%. Realizable band 3.3 / 4.3 / 5.0, with per-mode
+5.4% (A, C) and 6.67% (D). Mode B return 4.3%. This is the default calibration the engine opens on.</p>
+<hr />
+<h2>6. Audit checklist</h2>
+<ul>
+<li>[ ] Confirm M2 to the current Federal Reserve H.6 release</li>
+<li>[ ] Confirm the μ ≈ 0.514 decomposition against Paper 10 (this is the load-bearing baseline ratio)</li>
+<li>[ ] Confirm nominal GDP to the printed BEA figure</li>
+<li>[ ] Confirm equity market cap to the Fed Financial Accounts (the ~224%-of-GDP ratio is why US ownership sits at ~10%)</li>
+<li>[ ] Return: the 4.3% Mode B central is the reference figure; confirm against a US equity total-return real series and the 60/40 attenuation</li>
+</ul></div>
+  <p class="backtop"><a href="#top">back to top &uarr;</a></p>
+</section>
 </main>
 
 <div class="wrap">
@@ -2157,7 +2286,7 @@ pounds."</p>
 <nav aria-label="next page" style="max-width:980px;margin:48px auto 0;padding:18px 24px 0;border-top:1px solid #27313C;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:.95rem;"> <a href="methodology.html" class="pagenav-btn">&larr; Methodology</a> </nav>
 
 <nav aria-label="Citizens Standard pages" style="max-width:980px;margin:20px auto 38px;padding:18px 24px 0;border-top:1px solid #27313C;display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;justify-content:center;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:.92rem;line-height:1.6;">
-  <a href="front_door.html" style="color:#9AA3AE;text-decoration:none;">Diagnosis</a>
+  <a href="index.html" style="color:#9AA3AE;text-decoration:none;">Diagnosis</a>
   <a href="declaration.html" style="color:#9AA3AE;text-decoration:none;">Declaration</a>
   <a href="how_the_engine_works.html" style="color:#9AA3AE;text-decoration:none;">How it works</a>
   <a href="Citizens_Standard_Engine.html" style="color:#9AA3AE;text-decoration:none;">Engine</a>

@@ -8,15 +8,15 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Citizens Standard — interactive engine">
 <meta property="og:description" content="Every lever, every mode. Inflation is derived from your settings, never assumed, with a comparison against other monetary systems and built-in stress tests.">
-<meta property="og:url" content="https://neo-solon.github.io/Citizens-Standard/Citizens_Standard_Engine.html">
-<meta property="og:image" content="https://neo-solon.github.io/Citizens-Standard/preview_card.png">
+<meta property="og:url" content="https://citizensstandard.org/Citizens_Standard_Engine.html">
+<meta property="og:image" content="https://citizensstandard.org/preview_card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Citizens Standard — interactive engine">
 <meta name="twitter:description" content="Every lever, every mode. Inflation is derived from your settings, never assumed, with a comparison against other monetary systems and built-in stress tests.">
-<meta name="twitter:image" content="https://neo-solon.github.io/Citizens-Standard/preview_card.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2310161C'/%3E%3Ctext x='16' y='24' font-size='22' text-anchor='middle' fill='%23E6A93E' font-family='Georgia,serif'%3E%24%3C/text%3E%3C/svg%3E">
+<meta name="twitter:image" content="https://citizensstandard.org/preview_card.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23141C26'/%3E%3Crect x='3' y='3' width='58' height='58' rx='10' fill='none' stroke='%232C3742' stroke-width='1.5'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='36' font-weight='700' text-anchor='middle' fill='%23C7CCD1' letter-spacing='-2'%3ECS%3C/text%3E%3Crect x='21' y='50' width='22' height='2.5' rx='1.25' fill='%238E2230'/%3E%3C/svg%3E">
 
 <meta name="description" content="Interactive monetary policy model builder for the Citizens Standard framework. Tune K1, K2, K3 and KI issuance channels and compare against seven alternative monetary systems using real-world median outcome data.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -396,7 +396,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
 <body>
 <nav class="sitenav" aria-label="Site navigation">
   <div class="sitenav-inner">
-    <a href="front_door.html">Diagnosis</a>
+    <a href="index.html">Diagnosis</a>
     <a href="declaration.html">Declaration</a>
     <a href="how_the_engine_works.html">How it works</a>
     <a href="Citizens_Standard_Engine.html" aria-current="page">Engine</a>
@@ -2675,7 +2675,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   // Country selector: swap calibration (currency, M^T share, defaults, returns) and re-render
   const countrySel = $('countrySel');
   if (countrySel) {
-    const CALIB_ANCHOR = {US:'', EZ:'#eurozone', IN:'#india', JP:'#japan', MX:'#mexico', ID:'#indonesia', SA:'#saudi-arabia', TR:'#turkey', UK:'#uk', CA:'#canada', KR:'#south-korea', AU:'#australia', CH:'#switzerland', SE:'#sweden', NO:'#norway'};
+    const CALIB_ANCHOR = {US:'#united-states', EZ:'#eurozone', IN:'#india', JP:'#japan', MX:'#mexico', ID:'#indonesia', SA:'#saudi-arabia', TR:'#turkey', UK:'#uk', CA:'#canada', KR:'#south-korea', AU:'#australia', CH:'#switzerland', SE:'#sweden', NO:'#norway'};
     const updateCalibLink = () => { const a=$('calibLink'); if(a){ a.href='calibration_notes.html'+(CALIB_ANCHOR[countrySel.value]||''); } };
     updateCalibLink();
     countrySel.addEventListener('change', () => {
@@ -2722,6 +2722,6 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
 
 <nav aria-label="Previous and next page" style="max-width:980px;margin:48px auto 0;padding:18px 24px 0;border-top:1px solid #27313C;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:.95rem;"> <a href="how_the_engine_works.html" class="pagenav-btn">&larr; How it works</a> <a href="papers.html" class="pagenav-btn">Papers &amp; data &rarr;</a> </nav>
 
-<nav aria-label="Citizens Standard pages" style="max-width:980px;margin:24px auto 38px;padding:18px 24px 0;border-top:1px solid #27313C;display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;justify-content:center;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:.92rem;line-height:1.6;"> <a href="front_door.html" style="color:#9AA3AE;text-decoration:none;">Diagnosis</a> <a href="declaration.html" style="color:#9AA3AE;text-decoration:none;">Declaration</a> <a href="how_the_engine_works.html" style="color:#9AA3AE;text-decoration:none;">How it works</a> <a href="Citizens_Standard_Engine.html" style="color:#E6A93E;text-decoration:none;font-weight:600;">Engine</a> <a href="papers.html" style="color:#9AA3AE;text-decoration:none;">Papers &amp; data</a> <a href="questions_and_answers.html" style="color:#9AA3AE;text-decoration:none;">Q&amp;A</a>  <a href="methodology.html" style="color:#9AA3AE;text-decoration:none;">Methodology</a> <a href="calibration_notes.html" style="color:#9AA3AE;text-decoration:none;">Calibrations</a>  <a href="mailto:Neo-Solon@hotmail.com" style="color:#9AA3AE;text-decoration:none;">Contact</a> </nav>
+<nav aria-label="Citizens Standard pages" style="max-width:980px;margin:24px auto 38px;padding:18px 24px 0;border-top:1px solid #27313C;display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;justify-content:center;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:.92rem;line-height:1.6;"> <a href="index.html" style="color:#9AA3AE;text-decoration:none;">Diagnosis</a> <a href="declaration.html" style="color:#9AA3AE;text-decoration:none;">Declaration</a> <a href="how_the_engine_works.html" style="color:#9AA3AE;text-decoration:none;">How it works</a> <a href="Citizens_Standard_Engine.html" style="color:#E6A93E;text-decoration:none;font-weight:600;">Engine</a> <a href="papers.html" style="color:#9AA3AE;text-decoration:none;">Papers &amp; data</a> <a href="questions_and_answers.html" style="color:#9AA3AE;text-decoration:none;">Q&amp;A</a>  <a href="methodology.html" style="color:#9AA3AE;text-decoration:none;">Methodology</a> <a href="calibration_notes.html" style="color:#9AA3AE;text-decoration:none;">Calibrations</a>  <a href="mailto:Neo-Solon@hotmail.com" style="color:#9AA3AE;text-decoration:none;">Contact</a> </nav>
 </body>
 </html>
