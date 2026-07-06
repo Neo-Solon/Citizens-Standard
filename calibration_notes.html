@@ -110,7 +110,7 @@
   <p class="lede">Every country in the engine is built from primary-source national data. Here is the full derivation for each: broad money, the transaction-active share, real growth, and the <em>realizable</em> Mode B return band, with a source for every number.</p>
 </header>
 
-<div class="cindex"><a href="#australia">Australia</a> <a href="#canada">Canada</a> <a href="#eurozone">Eurozone</a> <a href="#india">India</a> <a href="#japan">Japan</a> <a href="#norway">Norway</a> <a href="#south-korea">South Korea</a> <a href="#sweden">Sweden</a> <a href="#switzerland">Switzerland</a> <a href="#uk">United Kingdom</a></div>
+<div class="cindex"><a href="#australia">Australia</a> <a href="#canada">Canada</a> <a href="#eurozone">Eurozone</a> <a href="#india">India</a> <a href="#indonesia">Indonesia</a> <a href="#japan">Japan</a> <a href="#mexico">Mexico</a> <a href="#norway">Norway</a> <a href="#saudi-arabia">Saudi Arabia</a> <a href="#south-korea">South Korea</a> <a href="#sweden">Sweden</a> <a href="#switzerland">Switzerland</a> <a href="#turkey">Turkey</a> <a href="#uk">United Kingdom</a></div>
 
 <main class="wrap">
 <section id="australia" class="note">
@@ -662,7 +662,7 @@ realizable return (Mode B) ≈ 5.00%, band 3.8-5.8%, with a conservative alterna
 <section id="india" class="note">
   <h2 class="cname">India</h2>
   <div class="md"><p>India is a monetary sovereign (RBI issues the rupee), a standard unilateral calibration
-mechanically. But as the first genuine emerging market in the set, it differs from the
+mechanically. But as a genuine emerging market, it differs from the
 developed-economy calibrations in two ways that are flagged honestly below: a low
 transaction-active share (term-deposit-heavy savings) and a high-but-volatile equity return.</p>
 <p><strong>Status:</strong> macro block primary-sourced (RBI, MoSPI, NSE, IMF).</p>
@@ -803,6 +803,141 @@ Real growth 6.5%, pop growth 0.9%. Realizable band 4.2 / 5.5 / 6.4 / 6.9 / 8.5. 
 </ul></div>
   <p class="backtop"><a href="#top">back to top &uarr;</a></p>
 </section>
+<section id="indonesia" class="note">
+  <h2 class="cname">Indonesia</h2>
+  <div class="md"><p>Indonesia is a monetary sovereign (Bank Indonesia issues the rupiah), a standard unilateral
+calibration mechanically. As an emerging market (like India and Mexico), it carries the usual EM
+caution, but it is the cleanest of the emerging-market fits: a well-managed, low-inflation economy
+(BI-Rate ~4.75%, CPI ~2-3%) with strong, stable real growth (~5%) and the fourth-largest population
+in the world. Its two realizable-return paths roughly converge rather than diverge, so no
+sharp downward resolution is required.</p>
+<p><strong>Status:</strong> macro block primary-sourced (Bank Indonesia, BPS, IDX).</p>
+<hr />
+<h2>1. Macro parameters (engine units: Rp trillion)</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+<th>Reference</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Broad money <strong>M2</strong></td>
+<td><strong>Rp10,090 T</strong></td>
+<td>Feb 2026</td>
+<td>Bank Indonesia (broad money)</td>
+</tr>
+<tr>
+<td>Transaction-active <strong>M1</strong></td>
+<td><strong>≈ Rp5,550 T</strong></td>
+<td>early 2026</td>
+<td>Bank Indonesia (currency + demand deposits)</td>
+</tr>
+<tr>
+<td><strong>M^T / M2 ratio</strong></td>
+<td><strong>≈ 55%</strong></td>
+<td>-</td>
+<td>constructed (see §2), M1/M2</td>
+</tr>
+<tr>
+<td>Nominal <strong>GDP</strong></td>
+<td><strong>≈ Rp23,821 T</strong></td>
+<td>2025</td>
+<td>BPS (~US$1.44T; per-capita US$5,083)</td>
+</tr>
+<tr>
+<td>Real trend growth <strong>g</strong></td>
+<td><strong>≈ 5.1%</strong></td>
+<td>2025</td>
+<td>BPS (5.11% in 2025; 5.03% in 2024, very stable)</td>
+</tr>
+<tr>
+<td><strong>Population</strong></td>
+<td><strong>≈ 287.9 M</strong></td>
+<td>2026</td>
+<td>BPS / IMF (4th most populous)</td>
+</tr>
+<tr>
+<td>Equity <strong>market cap</strong></td>
+<td><strong>≈ Rp11,030 T ≈ 46% of GDP</strong></td>
+<td>2025-26</td>
+<td>IDX / CEIC (moderate depth, EM)</td>
+</tr>
+<tr>
+<td>Inflation</td>
+<td><strong>~2-3%</strong></td>
+<td>2025-26</td>
+<td>Bank Indonesia (BI-Rate 4.75%, well-anchored)</td>
+</tr>
+</tbody>
+</table>
+<p>Indonesia is a strong-growth economy (~5% real, remarkably stable across 2024-25) with a
+well-managed currency and low inflation, a favourable macro backdrop by emerging-market standards.
+Its equity market is of moderate depth (~46% of GDP), deeper than India or Mexico but still below
+the developed set, which matters for the ownership arithmetic in §4.</p>
+<hr />
+<h2>2. Transaction-active share (M^T / M2): mid-range</h2>
+<p>Bank Indonesia's M1 = currency outside banks + rupiah demand deposits, the transaction-active
+measure. M2 = M1 + quasi-money (time and savings deposits, foreign-currency deposits).</p>
+<pre><code>M^T (Indonesia) = M1 ≈ Rp5,550 T
+M2              ≈ Rp10,090 T
+M^T / M2        ≈ 55%
+</code></pre>
+<p><strong>At ~55%, Indonesia sits mid-range</strong> (developed set is 50-80%; India and Korea are
+~28-30%). Just over half of Indonesian broad money is transaction-active, typical of a middle-income
+economy with a substantial but not dominant term-deposit segment. This is a clean primary-sourced
+ratio; no adjustment flag is needed.</p>
+<hr />
+<h2>3. Realizable return: two paths that roughly converge</h2>
+<h3>Path 1: Production function</h3>
+<p>Indonesia's labour share is ~0.58 → alpha ≈ 0.42, with a capital-output ratio ~3.0 →
+production-function baseline ~6.0% → <strong>~5.0% realizable</strong>. A solid mid-set figure,
+supported by sustained 5% real growth.</p>
+<h3>Path 2: Historical realised returns</h3>
+<p>Indonesian equity (Jakarta Composite) has delivered long-run real returns in the
+<strong>~5-6% range</strong>, better than Mexico or Turkey and closer to India, reflecting a
+diversified, consumption-driven economy with a relatively stable currency. Standard market-based
+forward estimates (mean-reversion of a ~46%-of-GDP market cap) also point to mid-single-digit real
+returns.</p>
+<h3>Resolution: paths agree, so a mid-single-digit central holds</h3>
+<p>Unlike Mexico and Turkey, Indonesia's two paths <strong>do not sharply diverge</strong>: the
+production function says ~5.0-6.0% and the realized history says ~5-6%. The central realizable is
+therefore set at <strong>5.0% (Mode B), band 4.0-6.0%</strong>, with standard EM caution applied for
+market depth and currency risk but without the aggressive downward adjustment Mexico and Turkey
+require. This is the honest call: where a production estimate and a realized history agree, the
+convergence is the finding, and Indonesia is the emerging market in the set where they agree best.</p>
+<hr />
+<h2>4. Broad citizen ownership under Mode Ω</h2>
+<p>Running Indonesia in Mode Ω produces a citizen market-ownership share that is <strong>elevated
+relative to the US but below India and Mexico</strong>. The mechanism is the same flow-to-growth
+ratio <strong>c / g</strong>: Indonesia's strong growth (g ~5.1%) enlarges the growth-funded budget
+(pushing the share up), but its deeper market (~46% of GDP, versus India's ~10-15% and Mexico's
+~28%) enlarges the denominator (pulling the share down). The deeper market is the dominant term, so
+the ceiling lands below the shallower-market EMs.</p>
+<p>As with every country, this is reported as the true output of the design, not tuned to a target.
+The honest framing holds: <strong>a moderate-depth market and strong growth roughly offset, leaving
+Indonesia's citizen ownership share above the US ~10% but below the shallow-market cases</strong>.</p>
+<hr />
+<h2>5. Engine values</h2>
+<p>Currency Rp. M^T share 55%. Defaults: M2 Rp10,090T, GDP Rp23,821T, pop 287.9M, market cap
+Rp11,030T. Real growth 5.1%, pop growth 0.8%. Realizable band 4.0 / 5.0 / 6.0 / 7.5 / 7.5. Mode B
+return 5.0%.</p>
+<hr />
+<h2>6. Audit checklist</h2>
+<ul>
+<li>[ ] Confirm M1 and M2 at a common date from the Bank Indonesia broad-money release</li>
+<li>[ ] Confirm nominal GDP to the printed BPS figure (annual, current prices)</li>
+<li>[ ] Confirm IDX domestic market cap at a stated date (the ~46%-of-GDP ratio feeds §4)</li>
+<li>[ ] Return: the 5.0% central reflects convergence of the production-function (~5-6%) and
+      realized JCI (~5-6%) paths; pin to an Indonesian equity total-return real series</li>
+<li>[ ] Population growth: confirm current annual rate (~0.8%)</li>
+</ul></div>
+  <p class="backtop"><a href="#top">back to top &uarr;</a></p>
+</section>
+
 <section id="japan" class="note">
   <h2 class="cname">Japan</h2>
   <div class="md"><p>Japan is a monetary sovereign (BoJ issues the yen), so it can implement CS unilaterally, 
@@ -934,6 +1069,149 @@ Realizable band 3.2 / 4.2 / 4.9 / 5.3 / 6.5. Mode B return 4.2%.</p>
 </ul></div>
   <p class="backtop"><a href="#top">back to top &uarr;</a></p>
 </section>
+<section id="mexico" class="note">
+  <h2 class="cname">Mexico</h2>
+  <div class="md"><p>Mexico is a monetary sovereign (Banco de México issues the peso), a standard unilateral
+calibration mechanically. As an emerging market (like India), it is flagged
+honestly on two fronts: a shallow equity market (~28% of GDP) and a realizable-return estimate
+where the two estimation paths genuinely <em>diverge</em>, resolved conservatively toward the weaker
+realized history rather than the more favourable production-function figure.</p>
+<p><strong>Status:</strong> macro block primary-sourced (Banxico, INEGI, SHCP, BMV).</p>
+<hr />
+<h2>1. Macro parameters (engine units: Mex$ trillion)</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+<th>Reference</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Broad money <strong>M2</strong></td>
+<td><strong>Mex$16.5 T</strong></td>
+<td>Mar 2026</td>
+<td>Banco de México (Agregados Monetarios)</td>
+</tr>
+<tr>
+<td>Transaction-active <strong>M1</strong></td>
+<td><strong>≈ Mex$8.25 T</strong></td>
+<td>early 2026</td>
+<td>Banxico (currency + immediate-demand deposits)</td>
+</tr>
+<tr>
+<td><strong>M^T / M2 ratio</strong></td>
+<td><strong>≈ 50%</strong></td>
+<td>-</td>
+<td>constructed (see §2), M1/M2 ≈ 8.25/16.5</td>
+</tr>
+<tr>
+<td>Nominal <strong>GDP</strong></td>
+<td><strong>≈ Mex$35.5 T</strong></td>
+<td>Mar 2026</td>
+<td>INEGI / SHCP (~US$2.03T)</td>
+</tr>
+<tr>
+<td>Real trend growth <strong>g</strong></td>
+<td><strong>≈ 1.8%</strong></td>
+<td>2025-26</td>
+<td>INEGI (2025 weak ~0.6-0.8%); Banxico 2026 proj 1.6%</td>
+</tr>
+<tr>
+<td><strong>Population</strong></td>
+<td><strong>≈ 130.8 M</strong></td>
+<td>Jan 2026</td>
+<td>INEGI / CONAPO / UN (10th most populous)</td>
+</tr>
+<tr>
+<td>Equity <strong>market cap</strong></td>
+<td><strong>≈ Mex$9.9 T ≈ 28% of GDP</strong></td>
+<td>2025</td>
+<td>BMV / CEIC (US$508bn; shallow, EM feature)</td>
+</tr>
+<tr>
+<td>Government <strong>debt</strong></td>
+<td><strong>≈ 50% of GDP</strong></td>
+<td>Apr 2026</td>
+<td>SHCP (SHRFSP, broadest measure; 18.6T MXN)</td>
+</tr>
+<tr>
+<td>Inflation</td>
+<td><strong>~3.5-4%</strong></td>
+<td>2025-26</td>
+<td>Banxico (near the upper target band)</td>
+</tr>
+</tbody>
+</table>
+<p>Mexico is a mid-growth economy (~1.8% real trend, weaker in 2025 at ~0.6-0.8%), with a peso that
+has seen repeated historical crises. Its equity market, while liquid, is small relative to GDP
+(~28%), which matters for the ownership arithmetic in §4.</p>
+<hr />
+<h2>2. Transaction-active share (M^T / M2): mid-range</h2>
+<p>Banxico's M1 = banknotes and coins held by the public + immediate-demand deposits, the
+transaction-active measure. M2 = M1 + resident time deposits, debt mutual-fund shares, and
+repo creditors.</p>
+<pre><code>M^T (Mexico) = M1 ≈ Mex$8.25 T
+M2           ≈ Mex$16.5 T
+M^T / M2     ≈ 50%
+</code></pre>
+<p><strong>At ~50%, Mexico sits mid-range</strong> (developed set is 50-80%; India and Korea are ~28-30%).
+Roughly half of Mexican broad money is held in transaction-active form and half in term/savings
+instruments, a balance typical of a middle-income economy with a sizeable but not dominant
+term-deposit segment. No adjustment flag is needed on this figure; it is a clean primary-sourced
+ratio.</p>
+<hr />
+<h2>3. Realizable return: two paths that diverge (EM caution applied)</h2>
+<h3>Path 1: Production function</h3>
+<p>Mexico's labour share is ~0.56 (a large informal sector, moderate formal capital share) →
+alpha ≈ 0.44 → production-function baseline ~9.8% → <strong>~6.2% realizable</strong>. That is a solid
+mid-set figure, below India's ~7.0% but comfortably above the developed floor.</p>
+<h3>Path 2: Historical realised returns</h3>
+<p>Mexican equity (IPC / Bolsa) has delivered materially weaker long-run real returns than India,
+roughly <strong>~4.5% real</strong> and among the lower emerging markets in the DMS dataset, with high
+volatility driven by repeated peso crises (1976, 1982, 1994) and persistent currency risk. The
+shallow market (~28% of GDP) compounds the caution.</p>
+<h3>Resolution: weight the weaker realized path</h3>
+<p>Unlike India, where both paths pointed high and agreed, Mexico's two paths <strong>diverge</strong>: the
+production function says ~6.2% but the realized equity history says ~4.5%. When a structural-buyer
+mechanism must pick one, anchoring on the more favourable production-function number would ignore
+a century of actual Mexican equity experience. The central realizable is therefore set
+<strong>conservatively at 4.7% (Mode B), band 3.7-5.7%</strong>, close to the realized-history path,
+with the production-function figure retained only as the top of the band. This is the honest
+call: the divergence itself is the finding, and where a production estimate and a realized
+history disagree for an EM, the realized history plus currency risk should dominate.</p>
+<hr />
+<h2>4. Broad citizen ownership under Mode Ω</h2>
+<p>Running Mexico in Mode Ω produces a citizen market-ownership share that is <strong>elevated relative
+to the US</strong>, for the same structural reason as India: a shallow equity market (~28% of GDP) means
+the structural-buyer flow is large relative to market size, pushing the ownership ceiling up.</p>
+<p>The ceiling is set by the flow-to-growth ratio <strong>c / g</strong>, not a fixed percentage. Mexico's
+moderate growth (g ~1.8%) gives a smaller growth-funded budget than India's, so the ownership
+share lands below India's ~47% but still above the developed set: the shallow market is the
+dominant term. As with every country, this is reported as the true output of the design, not
+tuned to a target. The honest framing holds: <strong>in shallower markets citizens can end up owning
+a larger share than the US ~10%, and Mexico's ~28%-of-GDP market makes it one of those cases</strong>,
+though its slower growth keeps the share below India's.</p>
+<hr />
+<h2>5. Engine values</h2>
+<p>Currency Mex$. M^T share 50%. Defaults: M2 Mex$16.5T, GDP Mex$35.5T, pop 130.8M, market cap
+Mex$9.9T. Real growth 1.8%, pop growth 0.6%. Realizable band 3.7 / 4.7 / 5.7 / 7.2 / 7.2. Mode B
+return 4.7%.</p>
+<hr />
+<h2>6. Audit checklist</h2>
+<ul>
+<li>[ ] Confirm M1 and M2 at a common date from the Banxico Agregados Monetarios release</li>
+<li>[ ] Confirm nominal GDP to the printed INEGI/SHCP figure (seasonally-adjusted annualized)</li>
+<li>[ ] Confirm BMV domestic market cap at a stated date (the ~28%-of-GDP ratio is the load-bearing input for §4)</li>
+<li>[ ] Return: the 4.7% central is a deliberate weighting toward realized IPC/Bolsa history (~4.5%)
+      over the production-function figure (~6.2%); pin to a Mexican equity total-return real series</li>
+<li>[ ] Population growth: confirm current annual rate (~0.6%, decelerating)</li>
+</ul></div>
+  <p class="backtop"><a href="#top">back to top &uarr;</a></p>
+</section>
+
 <section id="norway" class="note">
   <h2 class="cname">Norway</h2>
   <div class="md"><p>Norway is a monetary sovereign (Norges Bank issues the krone), a standard unilateral calibration.
@@ -1036,6 +1314,158 @@ market cap NOK 4.0T. Realizable band 3.7 / 4.8 / 5.6 / 6.0 / 7.4. Mode B return 
 </ul></div>
   <p class="backtop"><a href="#top">back to top &uarr;</a></p>
 </section>
+<section id="saudi-arabia" class="note">
+  <h2 class="cname">Saudi Arabia</h2>
+  <div class="md"><p>Saudi Arabia is the most qualified fit in the set, and is included with two caveats stated plainly
+rather than buried. First, the riyal is <strong>hard-pegged to the US dollar</strong> (SAR 3.75,
+unchanged since 1986), so Saudi Arabia is not a free-floating monetary sovereign in the way the
+other calibrations are: SAMA's policy rate follows the US Federal Reserve by necessity, and the
+peg constrains independent control of the domestic money quantity. Second, the headline equity
+market is <strong>dominated by the state</strong>, one company (Aramco) and government-related
+entities account for the bulk of it, so the tradeable, citizen-accessible market is far smaller than
+the headline suggests. Both points bear directly on the framework's premises and are handled below.</p>
+<p><strong>Status:</strong> macro block primary-sourced (SAMA, GASTAT, Tadawul). Peg and market-
+concentration caveats foregrounded (§0 and §4).</p>
+<hr />
+<h2>0. The peg caveat (read first)</h2>
+<p>The Citizens Standard assumes a country issues its own free-floating currency and can control the
+quantity of its transaction-active money. Saudi Arabia's dollar peg is a genuine departure from that
+premise. Under the peg, a large citizens-dividend money injection would create pressure on the
+exchange rate (capital would tend to flow out, testing the 3.75 parity) unless it were sterilized or
+matched by reserve movements. SAMA holds ample reserves (net foreign assets ~US$415bn, ~15 months of
+imports), so the peg is credible and defensible, but the constraint is real: <strong>Saudi Arabia
+could run the CS levers on its domestic money base only to the extent the peg allows, and a
+full-strength dividend would be in tension with the peg</strong>. The calibration is presented as a
+what-if for a pegged economy, not as a claim that the mechanism operates as freely as it does for a
+floating sovereign. This is the honest seam, and it is surfaced rather than hidden.</p>
+<hr />
+<h2>1. Macro parameters (engine units: SR trillion)</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+<th>Reference</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Broad money <strong>M2</strong></td>
+<td><strong>≈ SR2.9 T</strong></td>
+<td>2025</td>
+<td>SAMA (M3 SR3.12T; M2 excludes some quasi-money)</td>
+</tr>
+<tr>
+<td>Transaction-active <strong>M1</strong></td>
+<td><strong>≈ SR1.65 T</strong></td>
+<td>2025</td>
+<td>SAMA (currency + demand deposits ~46.5% of M3)</td>
+</tr>
+<tr>
+<td><strong>M^T / M2 ratio</strong></td>
+<td><strong>≈ 57%</strong></td>
+<td>-</td>
+<td>constructed (see §2), M1/M2</td>
+</tr>
+<tr>
+<td>Nominal <strong>GDP</strong></td>
+<td><strong>≈ SR4.79 T</strong></td>
+<td>2025</td>
+<td>GASTAT (~US$1.275T; rebased +14% May 2025)</td>
+</tr>
+<tr>
+<td>Real trend growth <strong>g</strong></td>
+<td><strong>≈ 4.5%</strong></td>
+<td>2025</td>
+<td>GASTAT (oil-driven, volatile; −0.8% in 2024)</td>
+</tr>
+<tr>
+<td><strong>Population</strong></td>
+<td><strong>≈ 33.5 M</strong></td>
+<td>2025</td>
+<td>GASTAT (large expat share ~42%; growth ~1.5%)</td>
+</tr>
+<tr>
+<td>Equity <strong>market cap</strong> (free-float-adjusted)</td>
+<td><strong>≈ SR1.9 T ≈ 40% of GDP</strong></td>
+<td>2024-25</td>
+<td>Tadawul, ex-Aramco/GRE (see §4; headline ~210%)</td>
+</tr>
+<tr>
+<td>Inflation</td>
+<td><strong>~2.0-2.3%</strong></td>
+<td>2025</td>
+<td>GASTAT (low, anchored by the dollar peg)</td>
+</tr>
+</tbody>
+</table>
+<p>Saudi Arabia has strong but oil-cyclical real growth (4.5% in 2025, but −0.8% in 2024 on OPEC+
+production cuts) and very low, peg-anchored inflation (~2%). The economy is concentrated: the
+hydrocarbon complex is ~35-40% of GDP on a broad definition, and Vision-2030 diversification is
+under way but incomplete.</p>
+<hr />
+<h2>2. Transaction-active share (M^T / M2): mid-range</h2>
+<p>SAMA's M1 = currency outside banks + demand deposits, the transaction-active measure. M2 = M1 +
+time and savings deposits; M3 adds other quasi-monetary deposits.</p>
+<pre><code>M^T (Saudi Arabia) = M1 ≈ SR1.65 T
+M2                 ≈ SR2.9 T
+M^T / M2           ≈ 57%
+</code></pre>
+<p><strong>At ~57%, Saudi Arabia sits mid-range</strong> (developed set 50-80%; India and Korea
+~28-30%; Mexico ~50%). Demand deposits are the largest single component of Saudi broad money, giving
+a transaction-active share a little above Mexico's. This is a clean primary-sourced ratio; the peg
+caveat in §0 concerns money-quantity <em>control</em>, not the composition measured here.</p>
+<hr />
+<h2>3. Realizable return: production-function baseline, oil and concentration caution</h2>
+<h3>Path 1: Production function</h3>
+<p>Saudi Arabia's capital share is high (a capital- and resource-intensive economy) → alpha ≈ 0.50,
+capital-output ratio ~3.2 → production-function baseline ~6.2% → <strong>~4.5% realizable</strong>.</p>
+<h3>Path 2: Historical realised returns and the peg</h3>
+<p>Tadawul's long-run real returns have been modest and oil-cyclical. One axis actually works in
+Saudi Arabia's favour relative to other EMs: <strong>the dollar peg removes currency risk</strong>,
+a Saudi return in riyals is, by construction, a return in dollars, unlike Turkey or Mexico where FX
+depreciation erodes realized returns. But this is offset by heavy oil-cyclicality and by the market-
+concentration problem in §4: the freely tradeable market is small and dominated by a few state-linked
+names.</p>
+<h3>Resolution: mid-single-digit, with concentration rather than currency the binding caution</h3>
+<p>The central realizable is set at <strong>4.5% (Mode B), band 3.5-5.5%</strong>. Currency risk is
+low (the peg), so the downward adjustment here is driven not by FX (as in Turkey/Mexico) but by oil-
+cyclicality and the shallow, state-dominated free float. The high band assumes Vision-2030
+diversification broadens the tradeable market; the low band assumes continued oil dependence and
+concentration. This is the honest call for a pegged, oil-concentrated economy.</p>
+<hr />
+<h2>4. Broad citizen ownership under Mode Ω, and the free-float adjustment</h2>
+<p>The headline Tadawul market cap is very large, on the order of <strong>210% of GDP (~US$2.7T)</strong>.
+Taken at face value this would make Saudi Arabia look like a deep-market case where citizen ownership
+barely moves. That would be misleading. Roughly <strong>67% of the exchange is Aramco alone, and
+government-related entities (the sovereign fund PIF and pension fund GOSI) hold ~64% of total market
+value</strong>; foreign investors hold only ~4%. The freely tradeable, citizen-accessible market is
+therefore far smaller, on the order of <strong>~40% of GDP once Aramco and the state blocks are
+stripped out</strong>. The engine uses this free-float-adjusted figure (~SR1.9T), not the headline,
+because the ownership mechanism concerns shares citizens can actually acquire.</p>
+<p>On the adjusted market, Saudi Arabia behaves like a moderate-to-shallow-market case: the
+structural-buyer flow is meaningful relative to the tradeable float, so the citizen ownership share
+comes out <strong>above the US ~10%</strong>. As always this is the true output of the design, not a
+target, and it rests on the free-float adjustment above, which is the load-bearing honesty in this
+calibration.</p>
+<hr />
+<h2>5. Engine values</h2>
+<p>Currency SR. M^T share 57%. Defaults: M2 SR2.9T, GDP SR4.79T, pop 33.5M, market cap SR1.9T
+(free-float-adjusted). Real growth 4.5%, pop growth 1.5%. Realizable band 3.5 / 4.5 / 5.5 / 6.9 /
+6.9. Mode B return 4.5%.</p>
+<hr />
+<h2>6. Audit checklist</h2>
+<ul>
+<li>[ ] <strong>Peg:</strong> confirm the calibration is read as a pegged-economy what-if (§0); a full-strength dividend is in tension with the 3.75 parity</li>
+<li>[ ] Confirm M1 and M2 (or M3 components) at a common date from the SAMA monthly bulletin</li>
+<li>[ ] Confirm nominal GDP to the printed GASTAT figure (rebased series, current prices)</li>
+<li>[ ] <strong>Market cap:</strong> confirm the free-float-adjusted figure ex-Aramco/GRE (~40% of GDP), not the ~210% headline; this is the load-bearing input for §4</li>
+<li>[ ] Return: the 4.5% central reflects low FX risk (peg) offset by oil-cyclicality and concentration; pin to a Tadawul real total-return series</li>
+</ul></div>
+  <p class="backtop"><a href="#top">back to top &uarr;</a></p>
+</section>
+
 <section id="south-korea" class="note">
   <h2 class="cname">South Korea</h2>
   <div class="md"><p>South Korea is a monetary sovereign (Bank of Korea issues the won), a standard unilateral
@@ -1338,6 +1768,149 @@ Realizable band 3.5 / 4.6 / 5.3 / 5.8 / 7.1. Mode B return 4.6%.</p>
 </ul></div>
   <p class="backtop"><a href="#top">back to top &uarr;</a></p>
 </section>
+<section id="turkey" class="note">
+  <h2 class="cname">Turkey</h2>
+  <div class="md"><p>Turkey is a monetary sovereign (the TCMB issues the lira), a standard unilateral calibration
+mechanically. It is the most cautionary emerging-market fit in the set, and deliberately included
+for that reason: a <strong>high-inflation regime</strong> (CPI ~31%, down from a peak of ~86% in
+2022) with a history of severe lira depreciation. This makes Turkey a revealing stress case for a
+money-quantity framework, precisely the kind of economy the design is meant to discipline, but it
+also means the realizable-return estimate must be handled with the heaviest caution in the set.</p>
+<p><strong>Status:</strong> macro block primary-sourced (TCMB, TurkStat, Borsa Istanbul).
+Inflation regime flagged as the dominant caveat (§3).</p>
+<hr />
+<h2>1. Macro parameters (engine units: ₺ trillion)</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+<th>Reference</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Broad money <strong>M2</strong></td>
+<td><strong>≈ ₺26.4 T</strong></td>
+<td>early 2026</td>
+<td>TCMB (monthly money &amp; banking statistics)</td>
+</tr>
+<tr>
+<td>Transaction-active <strong>M1</strong></td>
+<td><strong>≈ ₺10.6 T</strong></td>
+<td>Jan 2026</td>
+<td>TCMB (currency + demand deposits)</td>
+</tr>
+<tr>
+<td><strong>M^T / M2 ratio</strong></td>
+<td><strong>≈ 40%</strong></td>
+<td>-</td>
+<td>constructed (see §2), M1/M2 ≈ 10.6/26.4</td>
+</tr>
+<tr>
+<td>Nominal <strong>GDP</strong></td>
+<td><strong>≈ ₺68 T</strong></td>
+<td>2025</td>
+<td>TurkStat (~US$1.35T)</td>
+</tr>
+<tr>
+<td>Real trend growth <strong>g</strong></td>
+<td><strong>≈ 3.2%</strong></td>
+<td>2024-25</td>
+<td>TurkStat / World Bank (solid real growth)</td>
+</tr>
+<tr>
+<td><strong>Population</strong></td>
+<td><strong>≈ 86.1 M</strong></td>
+<td>Dec 2025</td>
+<td>TurkStat (86,092,168; growth ~0.5%)</td>
+</tr>
+<tr>
+<td>Equity <strong>market cap</strong></td>
+<td><strong>≈ ₺20.5 T ≈ 30% of GDP</strong></td>
+<td>2024-25</td>
+<td>Borsa Istanbul / CEIC (shallow, EM)</td>
+</tr>
+<tr>
+<td>Inflation</td>
+<td><strong>~31%</strong></td>
+<td>early 2026</td>
+<td>TurkStat (down from ~86% peak in 2022; disinflating)</td>
+</tr>
+</tbody>
+</table>
+<p>Turkey combines solid real growth (~3.2%) with very high inflation (~31%) and a policy rate above
+40%, an unusual pairing. The nominal figures move fast: broad money and GDP both roughly double on
+a multi-year horizon in nominal terms, so any snapshot must be read at its stated date. The lira has
+depreciated dramatically over the past decade, which is the central fact behind the return
+treatment in §3.</p>
+<hr />
+<h2>2. Transaction-active share (M^T / M2): low, and why</h2>
+<p>The TCMB's M1 = currency in circulation + demand deposits, the transaction-active measure. M2 =
+M1 + time deposits + money-market funds.</p>
+<pre><code>M^T (Turkey) = M1 ≈ ₺10.6 T
+M2           ≈ ₺26.4 T
+M^T / M2     ≈ 40%
+</code></pre>
+<p><strong>At ~40%, Turkey's transaction-active share is the low end of the set</strong> (developed
+set 50-80%; India and Korea ~28-30%; Mexico ~50%). This is a direct consequence of the
+high-rate environment: with time-deposit rates above 50%, households and firms hold an unusually
+large share of money in interest-bearing term deposits rather than in transaction balances. The low
+ratio is economically meaningful, not a data artifact, it is what a high-inflation, high-rate
+regime does to money composition, and it is exactly the kind of distortion the framework's
+transaction-active anchor is designed to measure.</p>
+<hr />
+<h2>3. Realizable return: two paths that diverge sharply (heaviest EM caution)</h2>
+<h3>Path 1: Production function</h3>
+<p>Turkey's labour share is ~0.55 → alpha ≈ 0.45, with a capital-output ratio ~2.8 →
+production-function baseline ~7.0% → <strong>~4.5% realizable</strong> on the production side alone.
+On paper this looks like a healthy mid-set figure.</p>
+<h3>Path 2: Historical realised returns</h3>
+<p>Here the picture changes completely. Turkish equity has produced strong <em>nominal</em> returns
+but poor <strong>real and USD</strong> returns: the lira's sustained depreciation has eroded most of
+the nominal gains for any investor measuring in constant purchasing power or dollars. Long-run real
+returns have been low and extraordinarily volatile, among the weakest risk-adjusted records of any
+sizeable market. The shallow market (~30% of GDP) and the ongoing 31% inflation compound the
+caution.</p>
+<h3>Resolution: weight the realized history heavily</h3>
+<p>Turkey's two paths <strong>diverge more sharply than any other country in the set</strong>: the
+production function says ~4.5% but the realized real/USD history says materially less, with severe
+volatility. Anchoring on the production-function figure would ignore precisely the currency and
+inflation risk that defines the Turkish experience. The central realizable is therefore set at the
+low end, <strong>4.0% (Mode B), band 3.0-5.2%</strong>, close to the realized-history path, with the
+production-function figure retained only as the top of the band. This is the honest call, and the
+divergence itself is the finding: for an economy with Turkey's inflation and currency record, the
+realized history must dominate a favourable production estimate.</p>
+<hr />
+<h2>4. Broad citizen ownership under Mode Ω</h2>
+<p>Running Turkey in Mode Ω produces a citizen market-ownership share <strong>elevated relative to
+the US</strong>, for the same structural reason as the other shallow-market EMs: a small equity
+market (~30% of GDP) means the structural-buyer flow is large relative to market size, pushing the
+ownership ceiling up. Turkey's solid growth (g ~3.2%) enlarges the growth-funded budget somewhat,
+working in the same direction.</p>
+<p>The ceiling is set by the flow-to-growth ratio <strong>c / g</strong>, reported as the true output
+of the design rather than tuned to a target. The honest framing holds: <strong>in shallower markets
+citizens can end up owning a larger share than the US ~10%, and Turkey's ~30%-of-GDP market is one
+of those cases</strong>. The heavy caveat here is not on the ownership arithmetic but on the return
+band feeding it, which is deliberately conservative for the reasons in §3.</p>
+<hr />
+<h2>5. Engine values</h2>
+<p>Currency ₺. M^T share 40%. Defaults: M2 ₺26.4T, GDP ₺68T, pop 86.1M, market cap ₺20.5T. Real
+growth 3.2%, pop growth 0.5%. Realizable band 3.0 / 4.0 / 5.2 / 6.3 / 6.3. Mode B return 4.0%.</p>
+<hr />
+<h2>6. Audit checklist</h2>
+<ul>
+<li>[ ] Confirm M1 and M2 at a common date from the TCMB money &amp; banking statistics (fast-moving nominal figures)</li>
+<li>[ ] Confirm nominal GDP to the printed TurkStat figure (annual, current prices)</li>
+<li>[ ] Confirm Borsa Istanbul domestic market cap at a stated date (the ~30%-of-GDP ratio feeds §4)</li>
+<li>[ ] Return: the 4.0% central is a deliberate weighting toward realized real/USD equity history
+      over the production-function figure (~4.5%); pin to a Turkish equity real-return series in constant terms</li>
+<li>[ ] Inflation regime: re-confirm current CPI; the ~40% M^T/M2 share tracks the high-rate environment and will shift as rates normalize</li>
+</ul></div>
+  <p class="backtop"><a href="#top">back to top &uarr;</a></p>
+</section>
+
 <section id="uk" class="note">
   <h2 class="cname">United Kingdom</h2>
   <div class="md"><p><strong>Purpose.</strong> Re-parameterise the CS engine to the United Kingdom using primary-source

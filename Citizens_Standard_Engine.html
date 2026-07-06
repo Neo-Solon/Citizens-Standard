@@ -435,11 +435,15 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
         <option value="CA" style="background:#18212B;color:#F0D9A6;">Canada (C$)</option>
         <option value="EZ" style="background:#18212B;color:#F0D9A6;">Eurozone (€)</option>
         <option value="IN" style="background:#18212B;color:#F0D9A6;">India (₹)</option>
+        <option value="ID" style="background:#18212B;color:#F0D9A6;">Indonesia (Rp)</option>
         <option value="JP" style="background:#18212B;color:#F0D9A6;">Japan (¥)</option>
+        <option value="MX" style="background:#18212B;color:#F0D9A6;">Mexico (Mex$)</option>
         <option value="NO" style="background:#18212B;color:#F0D9A6;">Norway (kr)</option>
+        <option value="SA" style="background:#18212B;color:#F0D9A6;">Saudi Arabia (SR)</option>
         <option value="KR" style="background:#18212B;color:#F0D9A6;">South Korea (₩)</option>
         <option value="SE" style="background:#18212B;color:#F0D9A6;">Sweden (kr)</option>
         <option value="CH" style="background:#18212B;color:#F0D9A6;">Switzerland (CHF)</option>
+        <option value="TR" style="background:#18212B;color:#F0D9A6;">Turkey (₺)</option>
         <option value="UK" style="background:#18212B;color:#F0D9A6;">United Kingdom (£)</option>
         <option selected value="US" style="background:#18212B;color:#F0D9A6;">United States ($)</option>
       </select>
@@ -826,6 +830,18 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
         { v: 7.67, label: 'No-index 7.7%',    t: 'Canada Mode D: no floor, no index, unattenuated Canada baseline return 7.67%.' }
       ]
     },
+    MX: {
+      name: 'Mexico', cur: 'Mex$', broad: 'M2',
+      mu: 0.500,                     // M^T/M2 = M1/M2 = 8250/16496 (Banxico Mar 2026)
+      defaults: { m2: 16.5, gdp: 35.5, pop: 130.8, mkt: 9.9 },  // Mex$T; Mex$T; M; Mex$T (Banxico/INEGI/BMV)
+      growth: { rg: 1.8, pg: 0.6 },   // real GDP trend %, population growth % (2025 weak ~0.6-0.8%; Banxico 2026 proj 1.6%)
+      er: { A: 5.9, B: 4.7, C: 5.9, D: 7.2, Z: 7.2 },  // Mexico realizable (two-path); baseline 7.2%, Mode B 4.70% (EM caution, paths diverge)
+      erBand: [                      // Mexico band: central 4.70, EM caution (weak realized history)
+        { v: 3.7,  label: 'Low band 3.7%',    t: 'Low end of the Mexico Mode B realizable band; weak realized equity history dominates (calibration note §3).' },
+        { v: 4.7,  label: 'Central 4.7%',     t: 'Mexico Mode B central realizable return: production-function ~6.2% pulled down to DMS-realized ~4.5% by EM caution (shallow ~28%-of-GDP market, peso/currency risk, weak recent growth). Calibration note §3.' },
+        { v: 5.7,  label: 'High band 5.7%',   t: 'High end: if the production-function path (~6.2%) is given more weight and value-up/nearshoring holds (calibration note §3).' }
+      ]
+    },
     EZ: {
       name: 'Eurozone', cur: '\u20AC', broad: 'M3',
       mu: 0.655,                     // M^T/M3 = M1/M3 = 11.27/17.2 (ECB); currency + overnight deposits
@@ -897,6 +913,18 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
         { v: 7.1,  label: 'No-index 7.1%',    t: 'Switzerland Mode D: no floor, no index, unattenuated return.' }
       ]
     },
+    TR: {
+      name: 'Turkey', cur: '\u20BA', broad: 'M2',
+      mu: 0.400,                     // M^T/M2 = M1/M2 = 10.6/26.4 (TCMB; LOW, high rates push money into time deposits)
+      defaults: { m2: 26.4, gdp: 68.0, pop: 86.1, mkt: 20.5 },  // TL T; TL T; M; TL T (TCMB/TurkStat/Borsa Istanbul)
+      growth: { rg: 3.2, pg: 0.5 },   // real GDP growth %, population growth % (TurkStat 2024-25; solid real growth)
+      er: { A: 5.0, B: 4.0, C: 5.0, D: 6.3, Z: 6.3 },  // Turkey realizable (two-path); baseline 6.3%, Mode B 4.00% (high-inflation regime; poor real/USD equity history)
+      erBand: [                      // Turkey band: central 4.00; high-inflation caution, paths diverge
+        { v: 3.0,  label: 'Low band 3.0%',    t: 'Low end of the Turkey Mode B realizable band; poor realized real/USD equity returns (lira depreciation) dominate (calibration note below).' },
+        { v: 4.0,  label: 'Central 4.0%',     t: 'Turkey Mode B central realizable return: production-function ~7.0% pulled sharply down to ~4.0% by a high-inflation regime (CPI ~31%, down from 86% in 2022), extreme volatility, and weak historical real/USD returns. Calibration note below.' },
+        { v: 5.2,  label: 'High band 5.2%',   t: 'High end: if disinflation sustains and the production-function path is given more weight (calibration note below).' }
+      ]
+    },
     SE: {
       name: 'Sweden', cur: 'kr', broad: 'M3',
       mu: 0.795,                     // M^T/M3 = M1/M3 = 4.104/5.161 (Riksbank); HIGH end of set
@@ -925,6 +953,18 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
         { v: 7.4,  label: 'No-index 7.4%',    t: 'Norway Mode D: no floor, no index, unattenuated return.' }
       ]
     },
+    SA: {
+      name: 'Saudi Arabia', cur: 'SR', broad: 'M2',
+      mu: 0.570,                     // M^T/M2 = M1/M2 (SAMA; M1 ~57% of M2, 2025)
+      defaults: { m2: 2.9, gdp: 4.79, pop: 33.5, mkt: 1.92 },  // SRT; SRT; M; SRT free-float-adj (SAMA/GASTAT/Tadawul, ex-Aramco/GRE)
+      growth: { rg: 4.5, pg: 1.5 },   // real GDP growth %, population growth % (GASTAT 2025: 4.5%; oil-driven, volatile)
+      er: { A: 5.6, B: 4.5, C: 5.6, D: 6.9, Z: 6.9 },  // Saudi realizable (two-path); baseline 6.9%, Mode B 4.50% (peg removes FX risk; oil/GRE concentration caution)
+      erBand: [                      // Saudi band: central 4.50; peg + free-float-adjusted market
+        { v: 3.5,  label: 'Low band 3.5%',    t: 'Low end of the Saudi Mode B realizable band; oil concentration and shallow free float dominate (calibration note below).' },
+        { v: 4.5,  label: 'Central 4.5%',     t: 'Saudi Mode B central realizable return: production-function ~6.2% pulled toward ~4.5% by oil-cyclicality and a state-dominated market (Aramco/GREs ~64% of cap, foreign float ~4%). The dollar peg removes currency risk but not concentration risk. Calibration note below.' },
+        { v: 5.5,  label: 'High band 5.5%',   t: 'High end: if Vision-2030 diversification broadens the tradeable market and the production-function path holds (calibration note below).' }
+      ]
+    },
     IN: {
       name: 'India', cur: '\u20B9', broad: 'M3',
       mu: 0.28,                      // M^T/M3 = M1/M3 ~ 80.6/281.4 (RBI); LOW - India's term-deposit-heavy savings (time dep 74.6% of M3)
@@ -937,6 +977,18 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
         { v: 6.4,  label: 'High band 6.4%',   t: 'High end of the India Mode B realizable band.' },
         { v: 6.9,  label: 'Low-capture 6.9%', t: 'India low-capture return for Modes A and C.' },
         { v: 8.5,  label: 'No-index 8.5%',    t: 'India Mode D: no floor, no index, unattenuated return.' }
+      ]
+    },
+    ID: {
+      name: 'Indonesia', cur: 'Rp', broad: 'M2',
+      mu: 0.550,                     // M^T/M2 = M1/M2 (Bank Indonesia; M1 ~55% of M2, 2025-26)
+      defaults: { m2: 10090, gdp: 23821, pop: 287.9, mkt: 11030 },  // RpT; RpT; M; RpT (Bank Indonesia/BPS/IDX)
+      growth: { rg: 5.1, pg: 0.8 },   // real GDP growth %, population growth % (BPS 2025: 5.11%; strong, stable)
+      er: { A: 6.2, B: 5.0, C: 6.2, D: 7.5, Z: 7.5 },  // Indonesia realizable (two-path); baseline 7.5%, Mode B 5.00% (EM; paths converge)
+      erBand: [                      // Indonesia band: central 5.00, moderate-depth EM, low inflation
+        { v: 4.0,  label: 'Low band 4.0%',    t: 'Low end of the Indonesia Mode B realizable band (calibration note the section below).' },
+        { v: 5.0,  label: 'Central 5.0%',     t: 'Indonesia Mode B central realizable return: production-function ~6.0% and DMS-style JCI real ~5-6% roughly converge; moderate ~46%-of-GDP market, well-managed low inflation (BI-Rate ~4.75%). Calibration note section below.' },
+        { v: 6.0,  label: 'High band 6.0%',   t: 'High end: if the production-function path and sustained 5%+ growth are given more weight (calibration note below).' }
       ]
     }
   };
@@ -2623,7 +2675,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   // Country selector: swap calibration (currency, M^T share, defaults, returns) and re-render
   const countrySel = $('countrySel');
   if (countrySel) {
-    const CALIB_ANCHOR = {US:'', EZ:'#eurozone', IN:'#india', JP:'#japan', UK:'#uk', CA:'#canada', KR:'#south-korea', AU:'#australia', CH:'#switzerland', SE:'#sweden', NO:'#norway'};
+    const CALIB_ANCHOR = {US:'', EZ:'#eurozone', IN:'#india', JP:'#japan', MX:'#mexico', ID:'#indonesia', SA:'#saudi-arabia', TR:'#turkey', UK:'#uk', CA:'#canada', KR:'#south-korea', AU:'#australia', CH:'#switzerland', SE:'#sweden', NO:'#norway'};
     const updateCalibLink = () => { const a=$('calibLink'); if(a){ a.href='calibration_notes.html'+(CALIB_ANCHOR[countrySel.value]||''); } };
     updateCalibLink();
     countrySel.addEventListener('change', () => {

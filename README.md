@@ -13,7 +13,7 @@ You don't need any of it to see the problem. You already felt it.
 | **[Diagnosis](https://neo-solon.github.io/Citizens-Standard/front_door.html)** | The diagnosis on one page, with the fix made tangible right there: one slider, one outcome, a dollar that holds its value versus one that doesn't. No mechanism, no jargon. |
 | **[Declaration](https://neo-solon.github.io/Citizens-Standard/declaration.html)** | The right to remake the money system, and the constitutional power that already exists to do it. No amendment required, plus an honest map of where it would be litigated. |
 | **[How it works](https://neo-solon.github.io/Citizens-Standard/how_the_engine_works.html)** | The mechanism in plain language: the four channels, and why inflation is an output rather than a dial. |
-| **[Engine](https://neo-solon.github.io/Citizens-Standard/Citizens_Standard_Engine.html)** | Every lever, every mode, calibrated for eleven countries from primary-source national data. Inflation is derived from your settings, never assumed. Includes a comparison against alternative monetary systems and embedded stress tests. |
+| **[Engine](https://neo-solon.github.io/Citizens-Standard/Citizens_Standard_Engine.html)** | Every lever, every mode, calibrated across countries from primary-source national data. Inflation is derived from your settings, never assumed. Includes a comparison against alternative monetary systems and embedded stress tests. |
 | **[Papers &amp; data](https://neo-solon.github.io/Citizens-Standard/papers.html)** | All fourteen papers, free to read, the three on SSRN linked there, plus the full replication suite. |
 | **[Calibrations](https://neo-solon.github.io/Citizens-Standard/calibration_notes.html)** | The national data behind each country in the engine: macro parameters, transaction-active shares, and realizable returns, each derived from primary sources with an audit checklist. |
 | **[Q&amp;A](https://neo-solon.github.io/Citizens-Standard/questions_and_answers.html)** | The questions a skeptic asks: the money-printing fear, who controls it, hasn't this been tried, would anyone still work. Answered plainly. |
@@ -21,7 +21,7 @@ You don't need any of it to see the problem. You already felt it.
 
 Every page is a single self-contained `.html` file that opens in any browser, and each links to the next, so the Diagnosis page alone is enough to reach everything.
 
-The engine runs on the United States by default and switches, from one dropdown, to ten more calibrations — Australia, Canada, the Eurozone, India, Japan, Norway, South Korea, Sweden, Switzerland, and the United Kingdom — each built from primary-source national data, with the full derivations on the [Calibrations](https://neo-solon.github.io/Citizens-Standard/calibration_notes.html) page.
+The engine runs on the United States by default and switches, from one dropdown, to further calibrations — Australia, Canada, the Eurozone, India, Indonesia, Japan, Mexico, Norway, Saudi Arabia, South Korea, Sweden, Switzerland, Turkey, and the United Kingdom — each built from primary-source national data, with the full derivations on the [Calibrations](https://neo-solon.github.io/Citizens-Standard/calibration_notes.html) page.
 
 ## What it proposes, in one breath
 
