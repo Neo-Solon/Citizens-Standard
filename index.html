@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You saved a dollar. It didn't wait for you.</title>
+<!-- social share + discovery -->
+<meta name="description" content="A dollar you saved in 2000 buys about 54 cents today, by design, and that lost value flows to whoever spends the new money first, never to you. The Citizens Standard hands the rules to the citizens and returns that money to them as a dividend and a savings floor instead of draining it away.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Citizens Standard: money the citizens control">
+<meta property="og:description" content="A dollar you saved in 2000 buys about 54 cents today, by design, and that lost value flows to whoever spends the new money first, never to you. The Citizens Standard hands the rules to the citizens and returns that money to them as a dividend and a savings floor instead of draining it away.">
+<meta property="og:url" content="https://citizensstandard.org/">
+<meta property="og:image" content="https://citizensstandard.org/preview_card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Citizens Standard: money the citizens control">
+<meta name="twitter:description" content="A dollar you saved in 2000 buys about 54 cents today, by design, and that lost value flows to whoever spends the new money first, never to you. The Citizens Standard hands the rules to the citizens and returns that money to them as a dividend and a savings floor instead of draining it away.">
+<meta name="twitter:image" content="https://citizensstandard.org/preview_card.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2310161C'/%3E%3Ctext x='16' y='24' font-size='22' text-anchor='middle' fill='%23E6A93E' font-family='Georgia,serif'%3E%24%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10161C;          /* warm blue-black ground */
+    --ink-soft:#18212B;     /* raised panel */
+    --line:#27313C;         /* hairlines */
+    --text:#ECE7DB;         /* warm near-white */
+    --dim:#9AA3AE;          /* secondary */
+    --kept:#5FBE93;         /* the value you keep */
+    --lost:#3C4855;--lost-text:#737E8A;         /* the value drained away */
+    --amber:#E6A93E;        /* the doorway upstairs */
+    --amber-ink:#1a1206;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink);color:var(--text);
+    font-family:"Newsreader",Georgia,serif;
+    font-size:clamp(18px,1.1rem + 0.3vw,21px);line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px}
+  .display{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;letter-spacing:-0.02em;line-height:1.02}
+  .label{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;font-size:.72rem}
+
+  /* ---- hero ---- */
+  header.wrap{padding:60px 24px 8px}
+  .kicker{color:var(--amber);margin-bottom:42px}
+  .kicker b{color:var(--text);font-weight:700}
+  h1.display{font-size:clamp(2.4rem,7vw,3.4rem);margin-bottom:28px;text-align:center}
+  h1 .turn2{color:#AEB6C0}
+  .subhead{display:block;text-align:center;font-family:"Bricolage Grotesque",sans-serif;font-weight:700;color:#AEB6C0;font-size:clamp(1.55rem,1.2rem + 1.8vw,2.3rem);letter-spacing:-0.01em;line-height:1.12;margin-top:.34em}
+  .lede{font-size:clamp(1.15rem,1.05rem + 0.5vw,1.4rem);color:#D9D3C6;max-width:36ch;margin-left:auto;margin-right:auto;text-align:center}
+  .lede em{font-style:italic;color:var(--text)}
+  .text{text-align:left}
+  .text p{max-width:60ch}
+  .big{text-align:left;max-width:60ch}
+
+  /* ---- draining dollar signature ---- */
+  .meter{margin:52px 0 14px}
+  .meter-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;gap:16px}
+  .meter-head .from{color:var(--dim)}
+  .meter-head .now{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(1.6rem,1.2rem + 2vw,2.4rem);color:var(--kept)}
+  .bar{position:relative;height:64px;background:var(--lost);border-radius:7px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+  .bar .kept{position:absolute;inset:0 auto 0 0;width:100%;background:linear-gradient(180deg,#6CCBA0,#4FA77D);border-radius:7px 0 0 7px}
+  .bar.go .kept{width:12%;transition:width 2.4s cubic-bezier(.5,0,.1,1) .2s}
+  .bar .seam{position:absolute;top:0;bottom:0;left:12%;width:1px;background:rgba(0,0,0,.35);opacity:0;transition:opacity .4s 2.2s}
+  .bar.go .seam{opacity:1}
+  .tag{position:absolute;top:50%;transform:translateY(-50%);font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:.95rem;color:#06281b;left:calc(12% - 12px);transform:translate(-100%,-50%);white-space:nowrap;opacity:0;transition:opacity .5s 2.4s}
+  .bar.go .tag{opacity:1}
+  .tag.lost-tag{left:auto;right:16px;transform:translateY(-50%);color:#aeb7c1}
+  .meter-cap{color:var(--dim);font-size:.92rem;line-height:1.5;margin-top:14px;font-family:"Bricolage Grotesque",sans-serif;font-weight:500}
+
+  /* ---- narrative ---- */
+  section{padding:26px 0}
+  p{margin-bottom:22px}
+  p.big{font-size:1.18em}
+  .text strong{font-weight:500;color:#fff;background:linear-gradient(transparent 62%,rgba(95,190,147,.22) 0)}
+
+  /* ---- inequality ---- */
+  .ineq{margin:30px 0;padding:34px 28px;background:var(--ink-soft);border:1px solid var(--line);border-radius:12px;text-align:center}
+  .ineq .expr{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(1.7rem,1.2rem + 3vw,2.6rem);letter-spacing:-0.01em;display:flex;align-items:center;justify-content:center;gap:.5em;flex-wrap:wrap}
+  .ineq .now{color:var(--kept)}
+  .ineq .later{color:var(--lost-text)}
+  .ineq .gt{color:var(--dim);font-weight:500}
+  .ineq .gloss{margin:18px 0 0;color:var(--dim);font-size:.98rem;font-family:"Bricolage Grotesque",sans-serif;font-weight:500}
+  .ineq .gloss b{color:var(--amber);font-weight:700}
+
+  /* ---- the door ---- */
+  .door{margin:18px 0 96px;padding:48px 0 0;border-top:1px solid var(--line);text-align:center}
+  .door .q{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(1.5rem,1.1rem + 2.4vw,2.2rem);line-height:1.25;color:#fff;margin-bottom:26px;max-width:24ch;margin-left:auto;margin-right:auto}
+  .cta{display:inline-flex;align-items:center;gap:.6em;background:var(--amber);color:var(--amber-ink);
+    font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.05rem;text-decoration:none;
+    padding:16px 26px;border-radius:9px;transition:transform .15s ease, box-shadow .15s ease;box-shadow:0 0 0 0 rgba(230,169,62,.0)}
+  .cta:hover{transform:translateY(-2px);box-shadow:0 10px 28px -10px rgba(230,169,62,.55)}
+  .cta:focus-visible{outline:3px solid #fff;outline-offset:3px}
+  .cta .arrow{transition:transform .18s ease}
+  .cta:hover .arrow{transform:translateX(4px)}
+  .door .note{margin-top:22px;color:var(--dim);font-size:.95rem;max-width:40ch;margin-left:auto;margin-right:auto}
+
+  @media (max-width:560px){
+    header.wrap{padding:42px 24px 4px}
+    .meter-head{flex-direction:row;flex-wrap:nowrap;align-items:baseline;gap:10px}
+    .from{flex:0 1 auto;min-width:0}
+    .now{flex:0 0 auto;font-size:clamp(1.3rem,1rem + 4vw,1.9rem)}
+    .tag{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .bar .kept{width:12%;transition:none}
+    .bar .seam,.tag{opacity:1;transition:none}
+  }
+
+  .pagenav-btn{display:inline-flex;align-items:center;gap:.4em;color:#E6A93E;text-decoration:none;
+    border:1px solid rgba(230,169,62,.5);border-radius:8px;padding:8px 16px;font-weight:600;
+    transition:background .15s ease,border-color .15s ease,transform .15s ease;}
+  .pagenav-btn:hover{background:#E6A93E;color:#11161c;border-color:#E6A93E;transform:translateY(-1px);}
+  .pagenav-btn:focus-visible{outline:2px solid #E6A93E;outline-offset:2px;}
+</style>
+<style>
+.sitenav{border-bottom:1px solid var(--line,#27313c);font-family:inherit;}
+.sitenav-inner{max-width:760px;margin:0 auto;padding:13px 24px;display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:center;align-items:baseline;}
+.sitenav a{color:var(--dim,#9aa3ae);text-decoration:none;font-size:13.5px;font-weight:500;}
+.sitenav a:hover{color:#e6e8eb;}
+.sitenav a[aria-current="page"]{color:var(--amber,#e6a93e);font-weight:700;}
+</style>
+<style>
+  /* ---- see-the-difference instrument (merged in) ---- */
+  .lead-q{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(1.5rem,1.1rem + 2.4vw,2.2rem);line-height:1.25;color:#fff;margin:10px 0 0;padding:46px 0 0;border-top:1px solid var(--line);text-align:center}
+  .lead-q span{display:block;max-width:26ch;margin:0 auto}
+  .see-intro{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;color:var(--amber);margin:34px 0 14px}
+  .panel{margin:0 0 8px;background:var(--ink-soft);border:1px solid var(--line);border-radius:14px;padding:30px 28px}
+  .ctrl-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;gap:12px}
+  .ctrl-row .label{color:var(--dim)}
+  .ctrl-row .yrs{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.5rem;color:var(--text)}
+  .ctrl-row .yrs span{font-size:.95rem;color:var(--dim);font-weight:500}
+  .panel input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:6px;background:var(--lost);outline:none;margin:10px 0 4px}
+  .panel input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;border-radius:50%;background:var(--amber);cursor:pointer;border:3px solid transparent;box-shadow:0 2px 10px rgba(0,0,0,.4)}
+  .panel input[type=range]::-moz-range-thumb{width:26px;height:26px;border:none;border-radius:50%;background:var(--amber);cursor:pointer}
+  .panel input[type=range]:focus-visible{box-shadow:0 0 0 3px rgba(230,169,62,.4)}
+  .outcomes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0 6px}
+  .card{padding:20px 18px;border-radius:11px;border:1px solid var(--line)}
+  .card .label{margin-bottom:10px}
+  .card .val{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(2.2rem,1.4rem + 4vw,3.2rem);line-height:1}
+  .card .sub{font-family:"Bricolage Grotesque",sans-serif;font-weight:500;font-size:.86rem;color:var(--dim);margin-top:8px}
+  .card.today{background:rgba(60,72,85,.18)}
+  .card.today .label{color:var(--lost-text)} .card.today .val{color:var(--lost-text)}
+  .card.std{background:rgba(95,190,147,.14);border-color:rgba(95,190,147,.3)}
+  .card.std .label{color:var(--kept)} .card.std .val{color:var(--kept)}
+  .gap-note{font-family:"Bricolage Grotesque",sans-serif;font-weight:500;color:var(--dim);font-size:.98rem;text-align:center;margin-top:18px}
+  .gap-note b{color:var(--amber);font-weight:700}
+  .chart{margin-top:24px}
+  .chart svg{width:100%;height:auto;display:block;overflow:visible}
+  .axis{fill:var(--dim);font-family:"Bricolage Grotesque",sans-serif;font-weight:500;font-size:11px}
+  .rate{color:var(--dim);font-size:.9rem;font-family:"Bricolage Grotesque",sans-serif;font-weight:500;margin-top:18px;text-align:center}
+  @media (max-width:560px){.outcomes{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="sitenav" aria-label="Site navigation">
+  <div class="sitenav-inner">
+    <a href="/" aria-current="page">Diagnosis</a>
+    <a href="declaration.html">Declaration</a>
+    <a href="how_the_engine_works.html">How it works</a>
+    <a href="Citizens_Standard_Engine.html">Engine</a>
+    <a href="papers.html">Papers &amp; data</a>
+    <a href="questions_and_answers.html">Q&amp;A</a>
+    <a href="methodology.html">Methodology</a> <a href="calibration_notes.html">Calibrations</a>
+  </div>
+</nav>
+
+
+<header class="wrap">
+  <p class="kicker label">The Citizens Standard &nbsp;·&nbsp; <b>the diagnosis</b></p>
+  <h1 class="display">You saved a dollar<span class="subhead">It didn&rsquo;t wait for you</span></h1>
+  <p class="lede">A dollar you saved in 2000 buys about <em>54 cents</em> today. You didn&rsquo;t spend it. It simply bought less every year.</p>
+</header>
+
+<div class="wrap">
+  <div class="meter" aria-label="Purchasing power of one US dollar saved in 1971, worth about 12 cents today">
+    <div class="meter-head">
+      <span class="from">$1 saved in 1971&hellip;</span>
+      <span class="now">&asymp; 12&cent; now</span>
+    </div>
+    <div class="bar" id="bar">
+      <div class="kept"></div>
+      <div class="seam"></div>
+      <span class="tag">12&cent; kept</span>
+      <span class="tag lost-tag">88&cent; gone</span>
+    </div>
+    <p class="meter-cap">Purchasing power of one US dollar, 1971 to today. Illustrative, from US Bureau of Labor Statistics CPI-U data (1971-2026).</p>
+  </div>
+</div>
+
+<section class="wrap text">
+  <p class="big">Here is the strange part: that didn&rsquo;t happen because you were careless. It happened because <strong>more dollars kept being made</strong>, and every new one made the ones you were holding worth a little less.</p>
+  <p>No one calls it a tax. But year after year it takes the same thing a tax would, a slice of what you earned and kept, and it takes the most from the people who did the responsible thing and saved.</p>
+</section>
+
+<div class="wrap">
+  <div class="ineq">
+    <div class="expr"><span class="now">$1 now</span><span class="gt">is worth more than</span><span class="later">$1 later</span></div>
+    <p class="gloss">Next year it takes a dollar <b>and some change</b> to buy what one dollar buys today: $1.x&nbsp;&gt;&nbsp;$1. The &ldquo;and some change&rdquo; is the part that quietly leaves your pocket.</p>
+  </div>
+</div>
+
+<section class="wrap text">
+  <p class="big" style="text-align:center;max-width:none;font-family:&#39;Bricolage Grotesque&#39;,sans-serif;font-weight:800;font-size:1.7em;letter-spacing:-0.015em;color:#fff;margin:6px 0 20px">This isn&rsquo;t a law of nature</p>
+  <p>Money is a human institution. It is unlike rain, which you cannot stop. What was made can be remade.</p>
+  <p>The erosion isn&rsquo;t baked into money. It&rsquo;s baked into <strong>who gets to make it, how much, and whether you had any say</strong>. You didn&rsquo;t.</p>
+  <p>And the value that slips out of your dollar doesn&rsquo;t evaporate. It goes to <strong>whoever spends the new money first</strong>. Just never you.</p>
+</section>
+
+<div class="wrap">
+  <p class="lead-q"><span>So the real question is who gets to decide, and where the difference goes. What if both answers were you?</span></p>
+  <p class="see-intro">See the difference</p>
+  <div class="panel">
+    <div class="ctrl-row">
+      <span class="label">Years you hold it</span>
+      <span class="yrs"><span id="yrsVal">20</span> <span>years</span></span>
+    </div>
+    <input type="range" id="yrs" min="1" max="40" value="20" step="1" aria-label="Years you hold your dollar">
+
+    <div class="outcomes">
+      <div class="card today">
+        <div class="label">Today&rsquo;s money</div>
+        <div class="val" id="todayVal">55&cent;</div>
+        <div class="sub">what your dollar can still buy</div>
+      </div>
+      <div class="card std">
+        <div class="label">The Citizens Standard</div>
+        <div class="val">$1.00</div>
+        <div class="sub">your choice, kept</div>
+      </div>
+    </div>
+
+    <p class="gap-note">After <span id="gapYrs">20</span> years, inflation has quietly taken <b id="gapAmt">45&cent;</b> of every dollar you saved.</p>
+
+    <div class="chart">
+      <svg id="chart" viewBox="0 0 600 240" role="img" aria-label="A dollar's purchasing power over time: flat under the Citizens Standard, declining under today's money.">
+        <line x1="48" y1="200" x2="592" y2="200" stroke="#27313C" stroke-width="1"/>
+        <line x1="48" y1="40"  x2="48"  y2="200" stroke="#27313C" stroke-width="1"/>
+        <path id="gapArea" fill="rgba(230,169,62,.10)" stroke="none"/>
+        <path id="stdLine" fill="none" stroke="#5FBE93" stroke-width="3" stroke-linecap="round"/>
+        <path id="todayLine" fill="none" stroke="#8A95A1" stroke-width="3" stroke-linecap="round"/>
+        <circle id="todayDot" r="5" fill="#8A95A1"/>
+        <circle id="stdDot" r="5" fill="#5FBE93"/>
+        <text class="axis" x="44" y="44" text-anchor="end">$1</text>
+        <text class="axis" x="44" y="204" text-anchor="end">0</text>
+        <text class="axis" x="48" y="222" text-anchor="start">today</text>
+        <text class="axis" id="xEnd" x="592" y="222" text-anchor="end">20 yrs</text>
+      </svg>
+    </div>
+    <p class="rate">Figured at 3% inflation a year, close to the dollar&rsquo;s long-run average. You can change that, and everything else, in the full engine.</p>
+  </div>
+</div>
+
+<section class="wrap text">
+  <p>That gap isn&rsquo;t a forecast or an opinion. It&rsquo;s just arithmetic: what happens to money that loses a few percent of its value every year, for years on end. <strong>The longer you do the responsible thing and save, the more it takes.</strong></p>
+  <p><strong>That&rsquo;s one choice: money that holds its value.</strong> Citizens could pick differently, a little inflation for a larger dividend, and that&rsquo;s the point. Nobody hands you a rate you never voted for. The choice belongs to the citizens, and however it&rsquo;s set, the newly made money returns to you as a dividend and a locked savings floor instead of quietly leaving your pocket.</p>
+</section>
+
+<div class="wrap">
+  <div class="door">
+    <p class="q">This is one dial out of many. And changing how money works isn&rsquo;t a radical act. It&rsquo;s your right.</p>
+    <a class="cta" href="declaration.html">The right to remake money <span class="arrow">&rarr;</span></a>
+    <p class="note">The founders named a right to remake any governing power that stops serving the people. A money system is one of those powers, and the Constitution already gives Congress the means to remake it. No amendment required.</p>
+    <p class="note" style="margin-top:30px;padding-top:22px;border-top:1px solid var(--line);"><span style="display:block;max-width:46ch;margin:0 auto;">This framework shares its diagnosis with another independent project, <a href="https://publiccashmoney.com" style="color:var(--amber);text-decoration:none;">Public Cash Money</a>.</span></p>
+  </div>
+</div>
+
+<script>
+  // Reveal the drain when the meter scrolls into view (once).
+  (function(){
+    var bar = document.getElementById('bar');
+    if(!bar) return;
+    var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    if(reduce){ bar.classList.add('go'); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ bar.classList.add('go'); io.disconnect(); }
+      });
+    }, {threshold:0.6});
+    io.observe(bar);
+  })();
+</script>
+
+<script>
+  // See-the-difference slider: $1 held over N years, today's money vs the Standard.
+  (function(){
+    var RATE=0.03;
+    var L=48, Rr=592, T=40, Bm=200;
+    var slider=document.getElementById('yrs');
+    if(!slider) return;
+    var yrsVal=document.getElementById('yrsVal'), todayVal=document.getElementById('todayVal');
+    var gapYrs=document.getElementById('gapYrs'), gapAmt=document.getElementById('gapAmt'), xEnd=document.getElementById('xEnd');
+    var stdLine=document.getElementById('stdLine'), todayLine=document.getElementById('todayLine'), gapArea=document.getElementById('gapArea');
+    var todayDot=document.getElementById('todayDot'), stdDot=document.getElementById('stdDot');
+
+    function pp(y){ return 1/Math.pow(1+RATE,y); }
+    function cents(v){ return Math.round(v*100); }
+    function X(y,years){ return L + (Rr-L)*(y/years); }
+    function Y(v){ return Bm - (Bm-T)*v; }
+
+    function render(){
+      var years=+slider.value;
+      yrsVal.textContent=years;
+      var pv=pp(years);
+      todayVal.innerHTML = cents(pv)+'&cent;';
+      var lost=100-cents(pv);
+      gapYrs.textContent=years;
+      gapAmt.innerHTML=lost+'&cent;';
+      xEnd.textContent=years+' yrs';
+
+      var N=Math.max(2,years), todayPts=[], topPts=[];
+      for(var i=0;i<=N;i++){
+        var y=years*i/N, x=X(y,years);
+        todayPts.push(x+','+Y(pp(y)));
+        topPts.push(x+','+Y(1));
+      }
+      stdLine.setAttribute('d','M'+topPts.join(' L'));
+      todayLine.setAttribute('d','M'+todayPts.join(' L'));
+      gapArea.setAttribute('d','M'+topPts.join(' L')+' L'+todayPts.slice().reverse().join(' L')+' Z');
+      var ex=X(years,years);
+      todayDot.setAttribute('cx',ex); todayDot.setAttribute('cy',Y(pv));
+      stdDot.setAttribute('cx',ex);  stdDot.setAttribute('cy',Y(1));
+    }
+    slider.addEventListener('input',render);
+    render();
+  })();
+</script>
+
+<nav aria-label="Citizens Standard pages" style="max-width:980px;margin:56px auto 38px;padding:18px 24px 0;border-top:1px solid #27313C;display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;justify-content:center;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:.92rem;line-height:1.6;"> <a href="/" style="color:#E6A93E;text-decoration:none;font-weight:600;">Diagnosis</a> <a href="declaration.html" style="color:#9AA3AE;text-decoration:none;">Declaration</a> <a href="how_the_engine_works.html" style="color:#9AA3AE;text-decoration:none;">How it works</a> <a href="Citizens_Standard_Engine.html" style="color:#9AA3AE;text-decoration:none;">Engine</a> <a href="papers.html" style="color:#9AA3AE;text-decoration:none;">Papers &amp; data</a> <a href="questions_and_answers.html" style="color:#9AA3AE;text-decoration:none;">Q&amp;A</a> <a href="methodology.html" style="color:#9AA3AE;text-decoration:none;">Methodology</a> <a href="calibration_notes.html" style="color:#9AA3AE;text-decoration:none;">Calibrations</a>  <a href="mailto:Neo-Solon@hotmail.com" style="color:#9AA3AE;text-decoration:none;">Contact</a> </nav>
+</body>
+</html>
