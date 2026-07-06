@@ -56,6 +56,9 @@
   .formula{font-family:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;font-size:.95rem;line-height:1.6;
     background:var(--ink-soft);border:1px solid var(--line);border-left:3px solid var(--kept);border-radius:9px;
     color:#E7E2D6;padding:18px 20px;margin:6px 0 24px;overflow-x:auto;white-space:pre}
+  @media (max-width:560px){
+    .formula{font-size:.74rem;white-space:pre-wrap;overflow-wrap:anywhere;overflow-x:visible;padding:14px 14px;line-height:1.5}
+  }
   .formula code{background:none;border:none;padding:0;color:inherit}
   .aside{font-style:italic;color:var(--dim);font-size:.98em;border-left:2px solid var(--line);padding-left:18px;margin:8px 0 22px}
   .tablewrap{overflow-x:auto;margin:6px 0 26px;border:1px solid var(--line);border-radius:10px}
@@ -66,6 +69,12 @@
   td:nth-child(6){white-space:normal;line-height:1.35}
   th:nth-child(6){white-space:normal}
   tr:last-child td{border-bottom:none}
+  @media (max-width:560px){
+    .tablewrap{overflow-x:auto}
+    .tablewrap table{font-size:.68rem;table-layout:fixed}
+    .tablewrap th{padding:6px 4px;white-space:normal;word-break:break-word;text-transform:none;letter-spacing:0}
+    .tablewrap td{padding:6px 5px;white-space:normal;word-break:break-word;overflow-wrap:anywhere}
+  }
   td strong{color:var(--kept)}
   .door{margin:64px 0 96px;padding:42px 0 0;border-top:1px solid var(--line);text-align:center}
   .door .q{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(1.3rem,1.05rem + 1.8vw,1.85rem);
@@ -81,15 +90,6 @@
   .backlink:hover{color:var(--text)}
   @media (max-width:520px){
   header.wrap{padding:42px 24px 6px}
-  /* Responsive: stack the 7-col mode table into cards on narrow screens */
-  .tablewrap{overflow-x:visible;border:none;border-radius:0}
-  .tablewrap table{font-size:.9rem}
-  .tablewrap thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-  .tablewrap tr{display:block;border:1px solid var(--line);border-radius:10px;padding:6px 4px;margin:0 0 12px}
-  .tablewrap td{display:flex;justify-content:space-between;gap:14px;white-space:normal;padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.06);text-align:right}
-  .tablewrap tr td:last-child{border-bottom:none}
-  .tablewrap td::before{content:attr(data-label);font-weight:700;color:var(--dim);text-align:left;white-space:nowrap}
-  .tablewrap td:first-child{font-size:1.05em;background:rgba(255,255,255,.03);border-radius:6px}
 }
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 
