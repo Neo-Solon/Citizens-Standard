@@ -232,7 +232,7 @@ def fig6_omega_deviation(path):
     fig.tight_layout(); fig.savefig(path,bbox_inches="tight"); plt.close(fig)
 
 def fig7_omega_scenarios(path):
-    # Mode Omega floors are the published Table 8 values (Section 8.6; macro model Neo-Solon 2026e
+    # Mode Omega floors are the published Table 8 values (Section 10.6; macro model Neo-Solon 2026e
     # Section 6.7 supplies the general-equilibrium realizable return per scenario, including the
     # capture->return feedback that the simple replication engine does not solve). Mode A and Mode B
     # central-case floors ($233K, $413K) are shown for reference.

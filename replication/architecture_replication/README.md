@@ -31,7 +31,7 @@ python3 growth_scenario.py --figure  # regenerates Paper 9 Figure 1 into ../figu
 | Mode C cumulative KI $262K; lifetime $492K | §5.3, Table 5 |
 | Implied inflation −1.6% / 0% / +2% / 0% | Table 6, §5 |
 
-All targets are checked automatically; see `all_results.txt` for the captured run (19/19 PASS).
+All targets are checked automatically; see `all_results.txt` for the captured run (22/22 PASS).
 
 ## Two notes on the calibration
 

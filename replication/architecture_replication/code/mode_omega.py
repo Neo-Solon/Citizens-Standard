@@ -1,5 +1,5 @@
-# Mode Omega replication — grounds the Section 8.6 figures in the documented
-# governor formulas (Architecture Section 8) applied to the corrected base engine.
+# Mode Omega replication — grounds the Section 10.6 figures in the documented
+# governor formulas (Architecture Section 10) applied to the corrected base engine.
 #
 # Mode Omega = adaptive multi-governor configuration:
 #   K1 base 2.5% of GDP/cap, demographic multiplier capped at 2.0x total
@@ -59,7 +59,7 @@ if __name__ == "__main__":
 
     # Governor settings for the negative-pop stress path (shared across the three
     # neg-pop return scenarios): demographic governor at full strength.
-    # Demographic governor calibrated to the Section 8.6 anchor (+55% vs normal at
+    # Demographic governor calibrated to the Section 10.6 anchor (+55% vs normal at
     # -0.5% pop): K1 multiplier +0.3x (bottom of the +0.3-0.8x range) and K2 governor
     # +30% (within the +15-40% range). Productivity governor at its +30% ceiling.
     DEMO = dict(k1_mult=1.3, k2_demo=0.30)

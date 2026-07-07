@@ -19,14 +19,14 @@ THE CITIZENS STANDARD — PAPER 1 (ARCHITECTURE) REPRODUCTION
     Mode A envelope (17.5%xg_rxM2) $78.3B   (0.35% of M2)
     Mode A K1 total / K2 residual $9.0B / $69.3B
     Mode A total issuance        ~0.35% of M2  -> drift ~-1.7%
-    Mode C KI (3.65% of M2)     $816.4B   -> $199/citizen/mo
+    Mode C KI (1.98% of M2)     $442.9B   -> $108/citizen/mo
     Mode B dividend (kappa_d=0.4)  $175.3B   -> $43/citizen/mo
     Mode B structural-buyer flow into equity  $272.0B   = 0.39% of $69T market
 
 [3] STABLE FLOOR AT AGE 65, ON THE GE REALIZABLE RETURN  (real launch-year $)
     Mode A (er 5.4%)            $235K
     Mode B (er 4.3%, 60/40)     $421K   band $278K - $580K over 3.30%-5.03%
-    Mode C (er 5.4%)            $232K   (+ KI dividend -> lifetime in [4])
+    Mode C (er 5.4%)            $234K   (+ KI dividend -> lifetime in [4])
 
 [5] IMPLIED INFLATION BY MODE
     Mode A ~ -1.65%  Mode B  0%   Mode C +2.0%
@@ -40,14 +40,14 @@ REGRESSION vs PAPER 1 PUBLISHED VALUES
     [PASS] Mode A K2 residual ~ $69B          got 69,281,478,885
     [PASS] Mode A total issuance ~ $78B       got 78,281,700,000
     [PASS] Mode B total issuance = $447B      got 447,324,000,000
-    [PASS] Mode C KI = $816B                  got 816,366,300,000
+    [PASS] Mode C KI = $443B                  got 442,850,760,000
     [PASS] Mode A floor (GE 5.4%) ~ $233K     got 234,962
     [PASS] Mode B floor (GE 4.3%, 60/40) ~ $413K got 421,215
-    [PASS] Mode C floor (GE 5.4%) ~ $230K     got 232,359
+    [PASS] Mode C floor (GE 5.4%) ~ $230K     got 233,519
     [PASS] Mode B band low (3.30%) ~ $277K    got 277,720
-    [PASS] Mode C cumulative KI ~ $262K       got 261,593
-    [PASS] Mode C lifetime ~ $492K            got 493,952
-    [PASS] Mode C dividend ~ $199/mo          got 199.0
+    [PASS] Mode C cumulative KI ~ $81K        got 81,009
+    [PASS] Mode C lifetime ~ $315K            got 314,528
+    [PASS] Mode C dividend ~ $108/mo          got 108.0
     [PASS] Mode B dividend ~ $43/mo (60/40)   got 42.7
     [PASS] Mode B equity flow ~ $272B         got 271,994,488,446
     [PASS] Mode B equity flow ~ 0.39% of mkt  got 0.4

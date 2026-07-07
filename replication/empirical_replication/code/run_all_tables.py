@@ -40,7 +40,8 @@ data = build_dataset(end_year=2060)
 out("=" * 90)
 out("CITIZENS STANDARD COUNTERFACTUAL — FULL RESULTS")
 out("Reconstructed with authoritative data (FRED/BLS/Census/BEA latest vintages)")
-out("Run date: 2026-05-12 audit")
+from datetime import date
+out(f"Run date: {date.today().isoformat()} audit")
 out("=" * 90)
 
 

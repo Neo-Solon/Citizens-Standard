@@ -1,4 +1,4 @@
-# Replication Data and Code for: The Citizens Standard as Counterfactual Benchmark and Forward Projection
+# Replication Data and Code for: The Citizens Standard — A Historical Counterfactual
 
 **Author:** Neo-Solon
 **Contact:** Neo-Solon@hotmail.com
@@ -7,13 +7,14 @@
 
 This archive is the replication package for the working paper:
 
-> Neo-Solon (2026). *The Citizens Standard as Counterfactual Benchmark and Forward Projection: An Empirical Analysis of an Alternative US Monetary Architecture, 1960–2121.* Working Paper. SSRN: 6735078
+> Neo-Solon (2026b). *The Citizens Standard: A Historical Counterfactual — Empirical Analysis of an Alternative US Monetary Architecture, 1960–2055.* Working Paper. SSRN: 6735078
 
 Companion papers in the series:
 
-> Neo-Solon (2026a). *The Citizens Standard — One Model, Many Constitutional Systems.* SSRN: 6702518
+> Neo-Solon (2026a). *The Citizens Standard: One Model, Many Systems — A Constitutional Monetary Architecture.* SSRN: 6702518
 > Neo-Solon (2026c). *The Citizens Standard: Transition Architecture and Migration Mechanics.* SSRN: 6810741
-> Neo-Solon (2026d). *The Citizens Standard: A Statutory Implementation Pathway.* Working Paper.
+> Neo-Solon (2026d). *The Citizens Standard: A Statutory Implementation Pathway.* SSRN: 6873798
+> Neo-Solon (2026e). *The Citizens Standard: A Macroeconomic Model of a Two-Circuit Monetary System.* SSRN: 6939418
 
 ---
 
@@ -43,10 +44,10 @@ FLOOR_SHARE          = 0.60     # Mode B 60/40 floor share
 
 | Cohort | Born | Retire | Locked floor | vs median | vs mean | + dividend (cash) |
 |---|---|---|---|---|---|---|
-| A | 1960 | 2025 | $209,942 | 0.81× | 0.35× | $236,549 (0.91×) |
-| B | 1970 | 2035 | $215,961 | 0.90× | 0.38× | $243,626 (1.02×) |
-| C | 1980 | 2045 | $229,696 | 1.04× | 0.41× | $259,441 (1.18×) |
-| D | 1990 | 2055 | $245,435 | 1.17× | 0.45× | $277,892 (1.32×) |
+| A | 1960 | 2025 | $209,942 | 0.81× | 0.31× | $236,549 (0.91×) |
+| B | 1970 | 2035 | $215,961 | 0.83× | 0.32× | $243,626 (0.94×) |
+| C | 1980 | 2045 | $229,696 | 0.88× | 0.34× | $259,441 (1.00×) |
+| D | 1990 | 2055 | $245,435 | 0.94× | 0.37× | $277,892 (1.07×) |
 
 The floor universalizes approximately the **median** (0.81×–1.17×) at roughly **0.4× the mean** — the egalitarian signature of a universal floor. Decomposition (Cohort A): K1 $816 (0.39%), K2 floor $39,911 (19.01%), compounding gain $169,216 (80.60%) — an **81/19** split (versus 95/5 under the price-taker return). Monte Carlo (block, 1929–2025, recentered): P(floor &lt; median) = 54% (A), 40% (B), 28% (C), 22% (D); reinvesting the liquid dividend at after-tax rates reduces this to 34/22/15/11% and lifts every cohort's P50 above the median.
 
