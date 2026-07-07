@@ -10,9 +10,9 @@ This archive replicates the quantitative models in the Technical Appendix of:
 
 Companion papers:
 
-> Neo-Solon (2026a). *The Citizens Standard — One Model, Many Constitutional Systems.* SSRN: 6702518
-> Neo-Solon (2026b). *The Citizens Standard as Counterfactual Benchmark and Forward Projection.* SSRN: 6735078
-> Neo-Solon (2026d). *The Citizens Standard: A Statutory Implementation Pathway.* Working Paper.
+> Neo-Solon (2026a). *The Citizens Standard: One Model, Many Systems — A Constitutional Monetary Architecture.* SSRN: 6702518
+> Neo-Solon (2026b). *The Citizens Standard: A Historical Counterfactual.* SSRN: 6735078
+> Neo-Solon (2026d). *The Citizens Standard: A Statutory Implementation Pathway.* SSRN: 6873798
 
 ---
 

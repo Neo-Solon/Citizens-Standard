@@ -15,6 +15,8 @@ Two kinds of backing appear:
 
 Paths are relative to `front_door_kit/replication/`.
 
+**Last verified: 2026-07-07.** All eleven packages were executed end-to-end in a clean environment on this date; every captured result file matches the regenerated output, and every published figure checked matches its paper (empirical tables to the dollar; architecture 22/22 regression checks; banking 5/5 propositions; all stress suites complete).
+
 ---
 
 ## Paper 1 — Architecture
@@ -23,7 +25,7 @@ Paths are relative to `front_door_kit/replication/`.
 | Launch issuance $447B (2.0% of M2); K1 $9B; K2 residual | `architecture_replication/code/run_all.py` (19/19 checks) | Verification |
 | Stable Floors A $233K / B $413K / C $230K (GE realizable return) | `architecture_replication/code/cs_engine.py` | Verification |
 | Mode B return band 3.30–5.03% (floor $278K–$580K) | `architecture_replication/code/cs_engine.py` | Verification |
-| §13.3 Mode choice is a values question, not a technical optimization (no welfare-optimal κ_d) | `distribution_inequality_replication/mode_choice_welfare/` (welfare monotonic in κ_d; no interior optimum) | Stress-test (null result) |
+| §8.3 Mode choice is a values question, not a technical optimization (no welfare-optimal κ_d) | `distribution_inequality_replication/mode_choice_welfare/` (welfare monotonic in κ_d; no interior optimum) | Stress-test (null result) |
 | Return-risk under bad draws / sequence risk | `empirical_replication/code/mc_engine.py` (10,000-path bootstrap, two universes inc. Depression & Great Inflation) | Stress-test |
 | Floor survival under real equity drawdowns | `distribution_inequality_replication/procyclicality/` (stage 2) | Stress-test |
 
