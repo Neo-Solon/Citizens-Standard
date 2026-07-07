@@ -648,7 +648,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
 
 <div id="modet-view" style="display:none;">
   <div class="info-banner">
-    <strong>What this answers:</strong> "How does the framework retire the national debt?" Under <strong>Mode T</strong>, citizen K1/K2 keep running at full Mode-B price stability, while <strong>KT</strong> retires the legacy debt down to a small <strong>operational floor</strong> — not to zero. The floor is kept on purpose: it's the financial system's safe-asset benchmark and the standing base for monetary operations. Tightening against inflation is a <strong>separate</strong> job — handled on the Inflation tab by the <strong>Tool 14 surcharge</strong>, which retires circulating money directly and issues no sterilization bonds, so the debt path is left untouched. The inflation-shock scenario below makes that contrast visible: the framework's debt line holds its course, while a conventional bond-issuance QT would have pushed the stock back up. Retiring debt as a fiscal <em>burden</em> (interest, rollover risk) is the goal; the small remaining stock is debt held by choice, as a tool.
+    <strong>What this answers:</strong> "How does the framework retire the national debt?" Under <strong>Mode T</strong>, citizen K1/K2 keep running at full Mode-B price stability, while <strong>KT</strong> retires the legacy debt down into a moderate <strong>operational band</strong> (~30–60% of GDP, central ~45%) — not to zero. The standing stock is kept on purpose: it's the financial system's safe-asset benchmark and the standing base for monetary operations. Tightening against inflation is a <strong>separate</strong> job — handled on the Inflation tab by the <strong>Tool 14 surcharge</strong>, which retires circulating money directly and issues no sterilization bonds, so the debt path is left untouched. The inflation-shock scenario below makes that contrast visible: the framework's debt line holds its course, while a conventional bond-issuance QT would have pushed the stock back up. Retiring debt as a fiscal <em>burden</em> (interest, rollover risk) is the goal; the small remaining stock is debt held by choice, as a tool.
   </div>
 
   <div style="display:flex; flex-wrap:wrap; gap:18px 20px; align-items:flex-start; margin-top:14px;">
@@ -661,8 +661,8 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
       <div style="display:flex; align-items:center; gap:10px;"><input type="range" id="psr" min="0" max="3" step="0.1" value="1.5" style="flex:1; min-width:0;"><span class="readout" id="psrr" style="min-width:auto;">1.5%</span></div>
     </div>
     <div style="flex:1; min-width:200px;">
-      <div class="label" style="margin-bottom:5px;">Operational floor (% GDP)</div>
-      <div style="display:flex; align-items:center; gap:10px;"><input type="range" id="flr" min="0" max="30" step="1" value="15" style="flex:1; min-width:0;"><span class="readout" id="flrr" style="min-width:auto;">15%</span></div>
+      <div class="label" style="margin-bottom:5px;">Debt band target (% GDP)</div>
+      <div style="display:flex; align-items:center; gap:10px;"><input type="range" id="flr" min="0" max="60" step="1" value="45" style="flex:1; min-width:0;"><span class="readout" id="flrr" style="min-width:auto;">45%</span></div>
     </div>
   </div>
   <div class="scenario-pills" id="modet-pills" style="margin-top:12px;">
@@ -681,7 +681,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   <div class="chart-wrap"><canvas id="modet-chart" role="img" aria-label="Debt-to-GDP transition chart"></canvas></div>
 
   <p style="font-size: 12px; color: var(--text-dim); margin: 16px 0 0; line-height: 1.6;">
-    <strong>Mode T calibration (Transition paper, 2026c §4, extended):</strong> public debt ≈ $31.4T at enactment (~102% of GDP); KT at 1.5% of M2; primary surplus 0 → 1.5% of GDP over 25 years; coupon repricing ~4.5% → ~1.5% by Year 6. KT retires the legacy debt down to a small <strong>operational floor</strong> (default ~15% of GDP) rather than to zero — eliminating debt as a fiscal burden while keeping a safe-asset benchmark and a standing base for monetary operations. Tightening against inflation is <strong>not</strong> done here: it is the <strong>Tool 14 surcharge</strong> (Inflation tab), which retires circulating money directly and issues no sterilization bonds, so the debt path is unaffected. The inflation-shock scenario makes the contrast explicit — the framework's debt line holds while a conventional bond-issuance QT (grey dashed) would push the stock back up. Reduced-form sketch, illustrative; separate from the cohort-floor projection on the other tabs.
+    <strong>Mode T calibration (Transition paper, 2026c §4, extended):</strong> public debt ≈ $31.4T at enactment (~102% of GDP); KT at 1.5% of M2; primary surplus 0 → 1.5% of GDP over 25 years; coupon repricing ~4.5% → ~1.5% by Year 6. KT retires the legacy debt down into a moderate <strong>operational band</strong> of ~30–60% of GDP (default: the ~45% central path, reached around Year 26) rather than to zero — eliminating debt as a fiscal burden while keeping a safe-asset benchmark and a standing base for monetary operations. Tightening against inflation is <strong>not</strong> done here: it is the <strong>Tool 14 surcharge</strong> (Inflation tab), which retires circulating money directly and issues no sterilization bonds, so the debt path is unaffected. The inflation-shock scenario makes the contrast explicit — the framework's debt line holds while a conventional bond-issuance QT (grey dashed) would push the stock back up. Reduced-form sketch, illustrative; separate from the cohort-floor projection on the other tabs.
   </p>
 </div>
 
@@ -2188,7 +2188,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   // Mode T — transition debt dynamics (the transition paper (§4)). Citizen K1/K2 run
   // at Mode B throughout; KT issues ~1.5% of M2/yr to redeem public debt (asset swap,
   // price-neutral). Primary surplus phases 0 -> 1.5% of GDP over 25y; average coupon
-  // reprices 4.5% -> 1.5% by ~Y6. Reproduces 102% -> ~39% @ Y30 -> retirement ~Y45.
+  // reprices 4.5% -> 1.5% by ~Y6. Reproduces 102% -> ~58% @ Y20 -> band arrival (~45%) ~Y26.
   function drawModeT(p){
     const ctx = $('modet-chart').getContext('2d');
     if (modetChart) modetChart.destroy();

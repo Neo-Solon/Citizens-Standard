@@ -14,7 +14,7 @@ You don't need any of it to see the problem. You already felt it.
 | **[Declaration](https://citizensstandard.org/declaration.html)** | The right to remake the money system, and the constitutional power that already exists to do it. No amendment required, plus an honest map of where it would be litigated. |
 | **[How it works](https://citizensstandard.org/how_the_engine_works.html)** | The mechanism in plain language: the four channels, and why inflation is an output rather than a dial. |
 | **[Engine](https://citizensstandard.org/Citizens_Standard_Engine.html)** | Every lever, every mode, calibrated across countries from primary-source national data. Inflation is derived from your settings, never assumed. Includes a comparison against alternative monetary systems and embedded stress tests. |
-| **[Papers &amp; data](https://citizensstandard.org/papers.html)** | All fourteen papers, free to read, the three on SSRN linked there, plus the full replication suite. |
+| **[Papers &amp; data](https://citizensstandard.org/papers.html)** | The full paper series, free to read, with SSRN links where posted, plus the full replication suite. |
 | **[Calibrations](https://citizensstandard.org/calibration_notes.html)** | The national data behind each country in the engine: macro parameters, transaction-active shares, and realizable returns, each derived from primary sources with an audit checklist. |
 | **[Q&amp;A](https://citizensstandard.org/questions_and_answers.html)** | The questions a skeptic asks: the money-printing fear, who controls it, hasn't this been tried, would anyone still work. Answered plainly. |
 | **[Methodology](https://citizensstandard.org/methodology.html)** | How to check it: every load-bearing claim mapped to the script that backs it, what the stress tests confirmed, and the handful of places the data made us qualify a claim. |
@@ -29,15 +29,15 @@ Issue money in proportion to real growth, route it through four transparent chan
 
 ## The deeper layer
 
-The simple pages sit on top of a full body of work: **fourteen papers, 390 pages**, the architecture, a macroeconomic model with formal results, a statutory draft, full-reserve banking and external interoperability, crisis behaviour, distribution and inequality, and a comparative analysis against UBI, Social Security, sovereign wealth funds, and Georgism. Every empirical claim ships with a **replication package** — eleven in all, one per empirical paper — built on real data (BLS, SSA, the Survey of Consumer Finances, the Alaska Permanent Fund), so the numbers can be reproduced, not just asserted.
+The simple pages sit on top of a full body of work — a series of working papers spanning the architecture, a macroeconomic model with formal results, a statutory draft, full-reserve banking and external interoperability, crisis behaviour, distribution and inequality, and a comparative analysis against UBI, Social Security, sovereign wealth funds, and Georgism. Every empirical claim ships with a **replication package** — one per empirical paper — built on real data (BLS, SSA, the Survey of Consumer Finances, the Alaska Permanent Fund), so the numbers can be reproduced, not just asserted.
 
-All fourteen papers are in this repository and free to read. The **[papers and replication index](https://citizensstandard.org/papers.html)** is the full table of contents, with a one-click PDF for every paper and the replication suite beside it. Three are on SSRN, linked there directly; the rest open as PDFs here until they post:
+Every paper in the series is in this repository and free to read. The **[papers and replication index](https://citizensstandard.org/papers.html)** is the full table of contents, with a one-click PDF for every paper and the replication suite beside it. Papers already posted to SSRN are linked there directly; the rest open as PDFs here until they post:
 
-- **[One Model, Many Systems: A Constitutional Monetary Architecture](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6702518)** (105 pp) · [PDF](papers/01_Architecture.pdf)
+- **[One Model, Many Systems: A Constitutional Monetary Architecture](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6702518)** (106 pp) · [PDF](papers/01_Architecture.pdf)
 - [A Historical Counterfactual, 1960-2055](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6735078) (27 pp) · [PDF](papers/02_Counterfactual.pdf)
 - [Transition Architecture and Migration Mechanics](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6810741) (33 pp) · [PDF](papers/03_Transition.pdf)
 
-The [replication suite](replication/) carries one package per empirical paper, each runnable with `pip install -r requirements.txt && python run_all.py`.
+The [replication suite](replication/) carries one package per empirical paper; each README states its exact run command (most are one command, e.g. `python run_all.py`).
 
 ## A related project
 
