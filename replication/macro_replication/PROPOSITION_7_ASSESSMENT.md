@@ -101,3 +101,90 @@ suggested (PRS especially). The defensible novelty is NARROW and SPECIFIC: the
 segmented-circuit channel + spillover threshold + pure quantity rule. Paper 5's
 positioning paragraph now engages all of PRS, Woodford 1995/1994, Giannoni,
 Bauducco-Caputo. NOT claimed: priority over "determinacy without Taylor" broadly.
+
+## LOAD-BEARING TEST (is P7 a linchpin?)
+Tested whether the framework's other claims DEPEND on P7 (code/test_p7_loadbearing.py
+and code/test_regime_selection_needs_p7.py).
+
+Dependency findings:
+- Mode C's ~2% inflation / $108 dividend basis: DEPENDS on circuit SEPARATION
+  (computed: with separation +1.85% on M^T; without, ~0% on M2 — the headline
+  number is wrong without the two-circuit split).
+- "Constitution selects the inflation regime" (the framework's central price
+  claim): DEPENDS on DETERMINACY. Computationally confirmed — with P7 on, sunspot
+  equilibria explode and are ruled out (200/200), so the selected target is unique;
+  with P7 off, sunspots stay bounded (dispersion ~1.1) and the economy can
+  self-fulfill an UNSELECTED inflation rate. Regime selection is empty without P7.
+- Full-dividend 0% inflation (Paper 9 §7): the ACCOUNTING mean survives without P7,
+  but the UNIQUENESS/STABILITY of that price path depends on P7.
+- Full-reserve banking (Paper 6): P7 is the macroeconomic PAYOFF of the banking
+  design — Paper 6 enforces separation institutionally; P7 shows that separation
+  delivers price determinacy.
+- Stable Floor (retirement values): INDEPENDENT of P7 (real-return accounting).
+
+VERDICT: P7 is a LINCHPIN for the monetary / price-stability half of the framework
+(regime selection, Mode C inflation, the meaning of "price stability", the banking
+design's macro payoff). It is NOT load-bearing for the retirement/floor half.
+Implication: P7 warrants MORE PROMINENCE within the existing papers (Paper 5 macro,
+cross-referenced from Papers 1/6/9) — but still NOT a standalone spin-off paper.
+The prominence belongs where the dependent claims live.
+
+## ELEVATION + CROSS-REFERENCING (follow-through on the load-bearing finding)
+Because the test showed P7 is load-bearing for the price/inflation half of the
+framework, its role was made VISIBLE across the papers (not spun into a new paper):
+- Paper 5 (P7's home): added a main-text framing sentence in Section 3.7 stating
+  P7 "is not a technical by-product but the result on which the framework's price
+  claims rest," and pointing to where those claims live (architecture, banking).
+- Paper 1 (Architecture): the regime-selection claim now notes it is meaningful
+  only because the chosen regime is the unique determinate equilibrium (2026e,
+  Prop 7); the Mode C ~2% inflation claim now notes it presupposes circuit
+  separation (2026e Prop 7 / 2026f banking).
+- Paper 6 (Banking): already referenced Prop 7 as a macro consequence of the
+  banking separation; left as-is (adequate).
+Result: a bidirectional cross-reference web — dependent claims point TO P7, P7
+points BACK to them, banking design feeds INTO P7. P7's prominence now matches its
+structural role WITHOUT a standalone paper.
+
+## PER-MODE REFINEMENT (does load-bearing vary by mode?)
+Tested (architecture_replication/code/test_p7_loadbearing_by_mode.py). P7 has TWO
+components with DIFFERENT mode-dependence:
+
+- DETERMINACY (unique price path): load-bearing in ALL THREE modes. Every mode
+  (A deflation, B 0%, C +2%) targets a distinct rate and claims delivery; that
+  claim is empty without uniqueness regardless of mode. Universal.
+- CIRCUIT SEPARATION (KI hits M^T not M2): load-bearing ONLY in Mode C (ki>0).
+  Modes A/B have ki=0 -> no inflation channel to mis-attribute -> the separation
+  dependency is VACUOUS for them. (Mode B's 0% is the k2=1 accounting identity,
+  needing no separation argument.) Verified: Mode C +1.85% (M^T) vs -0.02% (M2).
+
+So "P7 is only load-bearing under certain modes" is:
+  - TRUE for the SEPARATION half (Mode C / any inflationary mode only).
+  - FALSE for the DETERMINACY half (universal across all modes).
+
+The cross-references reflect this correctly: the regime-selection link (Paper 1)
+invokes determinacy at the mode-GENERAL claim; the Mode C link invokes separation
+at the Mode-C-specific 2% figure. No change needed; mapping verified.
+
+## EMPIRICAL THREAD (separation premise — resolved by connecting to existing evidence)
+P7's determinacy rests on two empirical premises: (a) alpha>0 (Cagan, already cited),
+and (b) circuit SEPARATION. Premise (b) was previously presented in Paper 5 as an
+assumption, but the framework already has DIRECT empirical support for it in the
+Paper 10 validation horserace (2026i), which was not connected to P7.
+
+The support (documented in code/verify_p7_separation_evidence.py):
+- High-inflation regime, in-sample: transaction-active aggregates (composition, M1,
+  Divisia) carry a significant consumer-price signal (R^2 ~ 0.19-0.21, t ~ 2.7-2.9);
+  broad M2 does not (R^2 ~ 0.04, t ~ 1.9).
+- DECISIVE: encompassing regression (composition + M2) -> composition significant
+  (t=2.26), M2 drops out (t=-0.31). Once transaction money is in, broad money adds
+  nothing to consumer-price prediction. This is the two-circuit split in the data.
+- Robust to PCE index (t=3.00).
+- HONEST LIMIT: out-of-sample, the transactional aggregate does NOT beat naive
+  persistence (RMSE 2.82 vs 2.69). In-sample structural, not an OOS forecasting edge.
+
+Paper 5's P7 section now cites this (2026i) as CORROBORATION of the separation
+premise, explicitly at its honest strength (in-sample, regime-dependent, not proof).
+So the "open empirical thread" is narrowed: the separation premise is no longer bare
+assumption -- it is assumption + in-sample evidence, with the OOS limit stated.
+What remains genuinely open is only the priority/novelty question (needs an expert
+lit review), which is separate and already honestly hedged in the paper.
