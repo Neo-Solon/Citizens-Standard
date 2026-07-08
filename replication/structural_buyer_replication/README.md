@@ -79,3 +79,6 @@ mirror-voting neutrality) hold as identities for any admissible parameters;
 calibration-dependent ones (P1b convergence band, P3 leak range, psi* bound)
 depend on the calibrated magnitudes. The harness reproduces the same computed
 values as the individual `verify_prop*.py` scripts.
+
+
+*`requirements.txt` added 2026-07-07 (numpy, matplotlib); run remains `cd code && python3 run_all.py`.*

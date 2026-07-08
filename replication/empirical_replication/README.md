@@ -160,3 +160,7 @@ crash is ruled out (gradual ramp; inheritance prevents a death-liquidation spike
 which would roughly double the outflow). Inheritance keeps the flow smooth and
 bounded but does NOT make the floors permanent net buyers.
 Reproduces demographic_flow.png. Run: `python code/demographic_flow_model.py`
+
+
+## One-command run (added 2026-07-07)
+`pip install -r requirements.txt && python3 run_all.py` — runs the deterministic tables + Monte Carlo (refreshing `all_results.txt` at the package root), the GE results, and the to-the-dollar paper comparison. Per-script commands below remain valid.
