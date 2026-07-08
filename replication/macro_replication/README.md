@@ -192,3 +192,7 @@ circuit separation holds under dynamics; and (3) runs a randomized dynamic-robus
 test over 10,000 admissible calibrations, with stability and separation holding in
 100% of draws (a deliberately unstable region is caught at under 100%, so the figure
 is meaningful). Run: `python3 code/dynamic_model.py`.
+
+
+
+*`requirements.txt` added 2026-07-07 (numpy, matplotlib, sympy); run remains `cd code && python3 run_all.py`.*

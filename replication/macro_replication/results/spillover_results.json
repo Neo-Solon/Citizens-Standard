@@ -1,0 +1,40 @@
+{
+ "literature_band": {
+  "low": 0.01,
+  "high": 0.07,
+  "sources": [
+   "Poterba (2000, JEP survey), stock wealth",
+   "Case-Quigley-Shiller (2005/2013), housing (upper ref)",
+   "Mian-Rao-Sufi (2013, QJE), housing net worth",
+   "Chodorow-Reich-Nenov-Simsek (2021, AER), stock",
+   "Di Maggio-Kermani-Majlesi (2020, JF), unrealized gains"
+  ]
+ },
+ "framework_lambda": 0.2,
+ "assessment": "cautious-high; ~3x-10x the literature point for locked, unrealized holdings",
+ "drift_at_60_40_by_lambda": {
+  "0.010": -0.0045,
+  "0.050": -0.00355,
+  "0.070": -0.00308,
+  "0.200": 0.0,
+  "0.300": 0.00237
+ },
+ "kappa_star_by_lambda": [
+  {
+   "lambda": 0.01,
+   "kappa_star": 0.519
+  },
+  {
+   "lambda": 0.05,
+   "kappa_star": 0.4979
+  },
+  {
+   "lambda": 0.07,
+   "kappa_star": 0.4867
+  },
+  {
+   "lambda": 0.2,
+   "kappa_star": 0.3999
+  }
+ ]
+}

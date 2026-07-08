@@ -1,3 +1,436 @@
+
+########################################################################
+# RUNNING: verify_proposition_3.py
+########################################################################
+======================================================================
+PROPOSITION 3 — convergence regime classification (lambda = 0.5)
+======================================================================
+   psi  psi*lam             analytic             observed  match
+----------------------------------------------------------------------
+  0.50     0.25    converge-monotone    converge-monotone     OK
+  1.00     0.50    converge-monotone    converge-monotone     OK
+  1.50     0.75    converge-monotone    converge-monotone     OK
+  1.90     0.95    converge-monotone    converge-monotone     OK
+  2.00     1.00    converge-monotone    converge-monotone     OK
+  2.10     1.05   converge-oscillate   converge-oscillate     OK
+  3.00     1.50   converge-oscillate   converge-oscillate     OK
+  4.00     2.00   marginal-oscillate   marginal-oscillate     OK
+  4.20     2.10              diverge              diverge     OK
+----------------------------------------------------------------------
+All observed regimes match the analytic boundaries: True
+
+SELF-CORRECTION (Sections 3.5 / 4.4): for any psi, choose lambda < 1/psi
+----------------------------------------------------------------------
+  psi= 1.0  ->  choose lambda=0.900  (psi*lambda=0.90)  ->  converge-monotone
+  psi= 2.0  ->  choose lambda=0.450  (psi*lambda=0.90)  ->  converge-monotone
+  psi= 4.0  ->  choose lambda=0.225  (psi*lambda=0.90)  ->  converge-monotone
+  psi= 8.0  ->  choose lambda=0.113  (psi*lambda=0.90)  ->  converge-monotone
+
+MODE T DAMPER KI_T (Section 4.7): effective gain chi*lambda <= lambda
+inherits convergence with strictly MORE margin for any chi in [0,1]
+----------------------------------------------------------------------
+  baseline rule: psi=1.8, lambda=0.5  ->  psi*lambda=0.90  (converge-monotone)
+  chi=1.00  ->  psi*chi*lambda=0.900  ->  converge-monotone
+  chi=0.75  ->  psi*chi*lambda=0.675  ->  converge-monotone
+  chi=0.50  ->  psi*chi*lambda=0.450  ->  converge-monotone
+  chi=0.25  ->  psi*chi*lambda=0.225  ->  converge-monotone
+
+Conclusion: KI_T cannot oscillate on any setting the steady-state rule does not,
+and is strictly more stable whenever chi < 1. Matches Section 4.7 / Proposition 3.
+======================================================================
+
+########################################################################
+# RUNNING: verify_proposition_3prime.py
+########################################################################
+======================================================================
+PART 1 — psi = M2/M^T reproduced from the price mechanism (not formula)
+======================================================================
+  M^T ($B)  M2/M^T=psi   lam*x  pi (direct)  lam*x*psi  match
+----------------------------------------------------------------------
+    22,366        1.00   0.020      0.02000    0.02000     OK
+    15,656        1.43   0.020      0.02857    0.02857     OK
+    12,435        1.80   0.020      0.03597    0.03597     OK
+     6,710        3.33   0.020      0.06667    0.06667     OK
+     3,355        6.67   0.020      0.13333    0.13333     OK
+----------------------------------------------------------------------
+psi = M2/M^T reproduces the direct price response everywhere: True
+
+======================================================================
+PART 2 — stability regime by transactional share (lambda = 0.5)
+  ceiling: lambda < M^T/M2 (monotone),  lambda < 2 M^T/M2 (convergent)
+======================================================================
+ M^T/M2    psi  psi*lam                 regime
+----------------------------------------------------------------------
+  1.000   1.00     0.50      converge-monotone
+  0.700   1.43     0.71      converge-monotone
+  0.556   1.80     0.90      converge-monotone
+  0.500   2.00     1.00     converge-oscillate
+  0.300   3.33     1.67     converge-oscillate
+  0.150   6.67     3.33                diverge
+  0.080  12.50     6.25                diverge
+----------------------------------------------------------------------
+Baseline near-boundary illustration psi=1.8 (M^T/M2=0.556): psi*lam=0.90 -> converge-monotone
+
+======================================================================
+PART 3 — maturing-circuit drift (fixed lambda=0.5)
+  psi = 1 + M^A/M^T rises as the locked asset circuit grows
+======================================================================
+ year  M^A/M^T    psi  psi*lam                 regime
+----------------------------------------------------------------------
+    0     0.81   1.81     0.91      converge-monotone
+   10     0.87   1.87     0.93      converge-monotone
+   20     1.11   2.11     1.05     converge-oscillate
+   30     1.90   2.90     1.45     converge-oscillate
+   40     3.11   4.11     2.06                diverge
+   50     3.77   4.77     2.39                diverge
+   60     3.95   4.95     2.48                diverge
+----------------------------------------------------------------------
+M2-indexed rule crosses oscillation onset (psi*lam=1) at ~year 18, divergence (psi*lam=2) at ~year 39.
+
+======================================================================
+PART 4 — re-indexing remedies (maturity-invariant stability)
+======================================================================
+Remedy A: index gap-closure to M^T (B=M^T) -> psi_eff = 1
+   psi_eff*lam = 0.50  ->  converge-monotone  at ALL maturities
+Remedy B: adaptive gain lambda_t = c * M^T_t/M2_t  ->  psi*lam = c
+   c=0.50: psi*lam_t = 0.50 constant  ->  converge-monotone
+   c=0.90: psi*lam_t = 0.90 constant  ->  converge-monotone
+
+Two speeds (Section 3.6): the liquidation flow L_t is predetermined
+(set by floors accumulated decades earlier), so it enters the gap law as
+forcing, not feedback, and contributes no root. Determinacy depends only
+on the contemporaneous feedback gain psi*lam — which is why the decade-
+scale lag in L_t, destabilizing in any feedback loop, is harmless here.
+
+======================================================================
+PART 5 — minimum-variance gain (stochastic gap, paper Section 3.6)
+  stationary Var(x)/sigma^2 = 1/(1-(1-psi*lam)^2), min (=1) at psi*lam=1
+======================================================================
+ psi*lam  Var/sig^2  vs floor                     note
+----------------------------------------------------------------------
+    0.25     2.2857    128.6%        converge-monotone
+    0.50     1.3333     33.3%        converge-monotone
+    0.90     1.0101      1.0%        converge-monotone
+    1.00     1.0000      0.0%       deadbeat (min-var)
+    1.10     1.0101      1.0%       converge-oscillate
+    1.50     1.3333     33.3%       converge-oscillate
+    1.90     5.2632    426.3%       converge-oscillate
+    1.99    50.2513   4925.1%       converge-oscillate
+----------------------------------------------------------------------
+Baseline psi*lam=0.90: Var=1.0101 sigma^2 (+1.0% over the floor),
+strictly monotone. The choice is one-sided robustness: undershooting the
+boundary costs negligible variance, while overshooting invites oscillation and
+-- if psi is under-estimated (the maturing-circuit risk) -- divergence. Under
+M^T-indexing psi=1 is fixed, so lambda may be raised toward 1 (toward the
+variance floor) at no maturity risk; under M2-indexing the drifting psi forbids it.
+
+All Proposition 3' magnitudes reproduce Section 3.6 of Neo-Solon (2026e).
+
+########################################################################
+# RUNNING: verify_proposition_4.py
+########################################################################
+======================================================================
+PART 1 — labor response l(b) and the bounded elasticity  [Prop 4(i)]
+======================================================================
+ nu=0.25  dl/db|0  numeric=-0.2000  analytic=-0.2000  match=True
+          b=0.0: l=1.0000 (+0.0%)   b=0.1: l=0.9808 (-1.9%)   b=0.2: l=0.9630 (-3.7%)   b=0.5: l=0.9166 (-8.3%)
+ nu=0.50  dl/db|0  numeric=-0.3333  analytic=-0.3333  match=True
+          b=0.0: l=1.0000 (+0.0%)   b=0.1: l=0.9678 (-3.2%)   b=0.2: l=0.9376 (-6.2%)   b=0.5: l=0.8581 (-14.2%)
+ nu=1.00  dl/db|0  numeric=-0.5000  analytic=-0.5000  match=True
+          b=0.0: l=1.0000 (+0.0%)   b=0.1: l=0.9512 (-4.9%)   b=0.2: l=0.9050 (-9.5%)   b=0.5: l=0.7808 (-21.9%)
+  [paper Sec 5.5 / Prop 4(i): bounded, dl/db = -nu/(1+nu); ~1/3 at nu=0.5]
+======================================================================
+PART 2 — the lock is load-bearing: liquid vs locked  [Prop 4(ii)]
+======================================================================
+  liquid (full return spendable)         b=0.720 -> l=0.8088 (-19.1% labor)
+  locked, kappa_d distributes ~1%        b=0.160 -> l=0.9494 (-5.1% labor)
+  locked, near kappa_d=0 + bequest       b=0.032 -> l=0.9894 (-1.1% labor)
+  kappa_d -> 0, full bequest (rho_eff=0) b=0.000 -> l=1.0000 (+0.0% labor)
+  lock factor = rho_eff/r ; liquid ~-19%, locked ~1-5%, rho_eff=0 -> no effect
+  [paper Sec 5.5: liquid ~-19%, locked ~1-5%, vanishes as kappa_d->0]
+======================================================================
+PART 3 — level, not trend: scale-invariance of b  [Prop 4(iii)]
+======================================================================
+  economy scale x1     : omega=1.0 F=16.0 Y_F=0.160 -> b=0.1600 l=0.9494
+  economy scale x10    : omega=10.0 F=160.0 Y_F=1.600 -> b=0.1600 l=0.9494
+  economy scale x100   : omega=100.0 F=1600.0 Y_F=16.000 -> b=0.1600 l=0.9494
+  b invariant to scale -> ONE-TIME LEVEL effect (not a trend change)
+  endogenous-growth trend bound eps_g*[nu/(1+nu)]*b = 0.0167 (<= 1.67% of g)
+  [paper Sec 5.5 / A.7(iii): level effect; trend change <= eps_g*[nu/(1+nu)]*b]
+======================================================================
+PART 4 — self-correcting labor-growth loop (contraction)  [Prop 4(iv)]
+======================================================================
+  start g/g*=0.600 -> 0.6000 0.9902 0.9840 0.9841 0.9841 0.9841 0.9841 0.9841 0.9841
+  start g/g*=0.999 -> 0.9990 0.9839 0.9841 0.9841 0.9841 0.9841 0.9841 0.9841 0.9841
+  fixed point g/g* = 0.9841 ; loop gain |dg'/dg| = 0.0156 (<1 => contraction)
+  [paper Sec 5.5 / A.7(iv): fixed point ~0.984, loop gain ~0.016, self-correcting]
+======================================================================
+All Proposition 4 claims reproduced: True
+======================================================================
+
+########################################################################
+# RUNNING: verify_proposition_5.py
+########################################################################
+======================================================================
+PART 1 — small-gain box |a|+|lamL|<1 is stable at EVERY delay  [Prop 5(i)]
+======================================================================
+  d=  1 : interior small-gain point lamL=0.899 stable = True
+  d=  2 : interior small-gain point lamL=0.899 stable = True
+  d=  4 : interior small-gain point lamL=0.899 stable = True
+  d=  8 : interior small-gain point lamL=0.899 stable = True
+  d= 16 : interior small-gain point lamL=0.899 stable = True
+  d= 32 : interior small-gain point lamL=0.899 stable = True
+  d= 64 : interior small-gain point lamL=0.899 stable = True
+  [paper A.8(i): |1-psi*lambda|+|lamL|<1 sufficient for all d]  -> all stable: True
+======================================================================
+PART 2 — critical gain collapses toward 1-|a| as delay grows  [Prop 5(ii)]
+======================================================================
+  d=  1 : lamL_crit = 1.0000
+  d=  2 : lamL_crit = 1.0000
+  d=  4 : lamL_crit = 0.9306
+  d=  8 : lamL_crit = 0.9082
+  d= 16 : lamL_crit = 0.9021
+  d= 32 : lamL_crit = 0.9005
+  d= 64 : lamL_crit = 0.9001
+  small-gain asymptote 1-|a| = 0.90 ; monotonically non-increasing: True
+  [paper A.8(ii): 1.00 (d<=2), 0.93 (d=4), 0.91 (d=8) -> 0.90]
+======================================================================
+PART 3 — damping vanishes like |ln lamL|/d at fixed lamL  [Prop 5(iii)]
+======================================================================
+  d=  1 : max|z|=0.5000  damping=0.5000   |ln lamL|/d=0.6931
+  d=  2 : max|z|=0.7071  damping=0.2929   |ln lamL|/d=0.3466
+  d=  4 : max|z|=0.8587  damping=0.1413   |ln lamL|/d=0.1733
+  d=  8 : max|z|=0.9290  damping=0.0710   |ln lamL|/d=0.0866
+  d= 16 : max|z|=0.9640  damping=0.0360   |ln lamL|/d=0.0433
+  d= 32 : max|z|=0.9818  damping=0.0182   |ln lamL|/d=0.0217
+  d= 64 : max|z|=0.9909  damping=0.0091   |ln lamL|/d=0.0108
+  d=128 : max|z|=0.9954  damping=0.0046   |ln lamL|/d=0.0054
+  decade-scale delay (d~10-40) -> damping ~ a few %% (stable but very sluggish)
+  [paper A.8(iii): max|z|->1, damping = |ln lamL|/d + o(1/d)]  -> asymptote holds: True
+======================================================================
+All Proposition 5 claims reproduced: True
+======================================================================
+
+########################################################################
+# RUNNING: verify_proposition_6.py
+########################################################################
+======================================================================
+PART 1 — stability & reduction to Proposition 3'  [Prop 6(i)]
+======================================================================
+  eigenvalues = [0.1207, 0.6793, 0.9] ; max|eig| = 0.9000 ; stable = True
+  reduces to Prop 3' recursion (kappa=gamma=leak=0): True  [x-eig = 1-psi*lam = 0.10]
+======================================================================
+PART 2 — demand shock: floor cushions the trough  [Prop 6(ii)]
+======================================================================
+  omega_F=0.00 : trough=-1.0000  (=1.00 x no-floor ; expect 1.00)
+  omega_F=0.15 : trough=-0.8500  (=0.85 x no-floor ; expect 0.85)
+  omega_F=0.30 : trough=-0.7000  (=0.70 x no-floor ; expect 0.70)
+  [paper A.9(ii): trough proportional to (1-omega_F); -15%% at omega_F=0.15]
+======================================================================
+PART 3 — cost-push: KI self-corrects vs unit root  [Prop 6(iii)]
+======================================================================
+  with KI (psi*lam=0.9): x0=1.000 x8=-0.0017 x20=-0.0000  -> returns to target
+  no KI   (psi*lam=0.0): x0=1.000 x8=0.8118 x20=0.4645  -> persists (unit root)
+  [paper A.9(iii): return rate ~ 1-psi*lam; KI off carries a unit root]
+======================================================================
+PART 4 — asset shock: consumer-price containment  [Prop 6(iv)]
+======================================================================
+  asset valuation peak = 1.000 ; consumer price-path peak = 0.0300
+  bound leak/(psi*lam) = 0.0333 ; observed peak x/peak v = 0.0300
+  [paper A.9(iv): consumer-price response bounded by leak/(psi*lam) ~ 3%%]
+======================================================================
+All Proposition 6 claims reproduced: True
+======================================================================
+
+########################################################################
+# RUNNING: verify_proposition_7.py
+########################################################################
+======================================================================
+PART 1 — money-quantity anchor: theta>1 for all alpha,phi  [Prop 7(i)]
+======================================================================
+  alpha=0.5 | phi=0.0:theta=3.000(det)  phi=0.5:theta=4.000(det)  phi=1.0:theta=5.000(det)  phi=2.0:theta=7.000(det)
+  alpha=2.0 | phi=0.0:theta=1.500(det)  phi=0.5:theta=1.750(det)  phi=1.0:theta=2.000(det)  phi=2.0:theta=2.500(det)
+  alpha=4.0 | phi=0.0:theta=1.250(det)  phi=0.5:theta=1.375(det)  phi=1.0:theta=1.500(det)  phi=2.0:theta=1.750(det)
+  determinate for ALL alpha>0, phi>=0 (incl. phi=0): True
+  [paper A.10(i): theta=1+(1+phi)/alpha>1 always; no Taylor principle]
+======================================================================
+PART 2 — interest-rate analog needs the Taylor principle  [Prop 7(ii)]
+======================================================================
+  phi=0.0 : root=0.00  INDETERMINATE (sunspots)
+  phi=0.5 : root=0.50  INDETERMINATE (sunspots)
+  phi=1.0 : root=1.00  INDETERMINATE (sunspots)
+  phi=1.5 : root=1.50  det
+  phi=2.0 : root=2.00  det
+  [paper A.10(ii): interest-rate root = phi; determinate iff phi>1]
+======================================================================
+PART 3 — two-circuit Blanchard-Kahn determinacy threshold  [Prop 7(iii)]
+======================================================================
+  coupling=0.00 : |eig|=[1.375, 1.045]  #explosive=2  DETERMINATE (2 jumps)
+  coupling=0.03 : |eig|=[1.378, 1.042]  #explosive=2  DETERMINATE (2 jumps)
+  coupling=0.10 : |eig|=[1.404, 1.016]  #explosive=2  DETERMINATE (2 jumps)
+  coupling=0.30 : |eig|=[1.558, 0.862]  #explosive=1  indeterminate
+  determinacy threshold coupling = 0.127 ; calibrated leak ~0.03 lies inside
+  [paper A.10(iii): two explosive eigenvalues until coupling ~0.13]
+======================================================================
+All Proposition 7 claims reproduced: True
+======================================================================
+
+########################################################################
+# RUNNING: verify_proposition_8.py
+########################################################################
+======================================================================
+PART 1 — terminal wealth maximised at kappa=0  [Prop 8(i)]
+======================================================================
+  kappa=0.000 : retained floor (terminal wealth)=0.2090
+  kappa=0.250 : retained floor (terminal wealth)=0.1568
+  kappa=0.500 : retained floor (terminal wealth)=0.1045
+  kappa=0.795 : retained floor (terminal wealth)=0.0428
+  kappa=1.000 : retained floor (terminal wealth)=0.0000
+  strictly decreasing in kappa -> wealth-max at kappa=0: True
+======================================================================
+PART 2 — welfare optimum c2/c1=R, baseline kappa*~0.795  [Prop 8(ii)]
+======================================================================
+  baseline beta=0.90, Omega=1, r=4.5%: R=0.9405
+  kappa*_FOC=0.7953  kappa*_grid=0.7953  c2/c1=0.9405
+  [paper: kappa*~0.795, FOC c2/c1=R]: True
+======================================================================
+PART 3 — kappa* decreasing in R; wealth-max corner ~1.21  [Prop 8(iii)]
+======================================================================
+  beta=0.80 R=0.836 kappa*=1.000
+  beta=0.90 R=0.941 kappa*=0.795
+  beta=0.96 R=1.003 kappa*=0.596
+  beta=1.00 R=1.045 kappa*=0.468
+  wealth-max corner threshold R = c2/c1|_{kappa=0} = 1.209
+  bequest Omega<1 raises payout: Om=1.0->kappa*=0.63, Om=0.7->kappa*=1.00, Om=0.4->kappa*=1.00
+  monotone-decreasing & corner~1.21: True
+======================================================================
+PART 4 — labor distortion second-order (envelope)  [Prop 8(iv)]
+======================================================================
+  dW/dkappa at optimum   = -2.78e-11
+  FOC residual c2/c1 - R = 0.00e+00
+  dW/dh at hh optimum    = 2.31e-12  (labor term first-order only if !=0)
+  with 20% labor wedge: kappa* shifts 0.795 -> 0.812 (first-order under a wedge)
+  envelope (all ~0 without wedge): True
+======================================================================
+All Proposition 8 claims reproduced: True
+======================================================================
+
+########################################################################
+# RUNNING: verify_proposition_9.py
+########################################################################
+======================================================================
+PART 1 — bank-credit coupling: locked vs pledgeable collateral  [Prop 9(i)]
+======================================================================
+  locked baseline        phi_liq=0.15 m=0.50 kappa_bank=0.075 zeta_tot=0.052 | sep(conservative)=True sep(structural)=True
+  NO-LOCK counterfactual phi_liq=1.00 m=0.50 kappa_bank=0.500 zeta_tot=0.180 | sep(conservative)=False sep(structural)=True
+  [locked safe under both; no-lock breaks conservative, saved only by structural buyer]: True
+======================================================================
+PART 2 — conservative critical credit intensity  [Prop 9(ii)]
+======================================================================
+  analytic kappa_bank* = (zstar-lam)/chi_c = 0.323 ; numeric = 0.324
+  [paper: separation iff m*phi_liq < ~0.32]
+======================================================================
+PART 3 — the lock is decisive: critical LTV m*=kappa*/phi_liq  [Prop 9(iii)]
+======================================================================
+  phi_liq=0.10 : m* = 3.23  (no feasible LTV)
+  phi_liq=0.15 : m* = 2.16  (no feasible LTV)
+  phi_liq=0.25 : m* = 1.29  (no feasible LTV)
+  phi_liq=0.50 : m* = 0.65  (breaks at LTV>=0.65)
+  phi_liq=1.00 : m* = 0.32  (breaks at LTV>=0.32)
+  locked (phi_liq=0.15): m*=2.16 (>1) ; no-lock (phi_liq=1): m*=0.32 (ordinary)
+======================================================================
+PART 4 — structural buyer damps accelerator (2nd margin)  [Prop 9(iv)]
+======================================================================
+  damped-accelerator critical intensity kappa_bank* = 1.694 (vs 0.32 conservative)
+  baseline kappa_bank=0.075 inside both bounds: True
+======================================================================
+All Proposition 9 claims reproduced: True
+======================================================================
+
+########################################################################
+# RUNNING: verify_realizable_return.py
+########################################################################
+==================================================================================
+REALIZABLE RETURN ON THE STABLE FLOOR — GE derivation (Paper 5, Sec 6.7, Table 3)
+==================================================================================
+
+[1] No-program baseline
+    alpha=0.35, delta=0.05, K/Y=3.0, g=2%
+    r0 = alpha/(K/Y) - delta = 0.35/3.0 - 0.05 = 6.67%   [paper 6.67%]  OK
+
+[2] Capital-deepening primitive (pinned by the paper's Mode B anchor)
+    Mode B 4.26% at 25% share  =>  K/Y = 3.780 (x1.260 the baseline)
+    deepening map  K/Y(s) = 3.0 * (1 + 1.040*s)
+
+[3] Return by Mode (Table 3)
+    power map: K/Y(s) = 3.0*(1 + 2.592*s^1.659)   [two-anchor closed form]
+    Mode   cap.share   linear map   power map   paper r
+    A           16%      5.00%      5.38%     5.38%   OK
+    B           25%      4.26%      4.26%     4.26%   OK
+    C           16%      5.00%      5.38%     5.38%   OK
+    D            0%      6.67%      6.67%     6.67%   OK
+    (Power map reproduces every row of Table 3 exactly by two-anchor
+     construction — the closed form stated in Paper 5, Appendix A.13. The
+     single-anchor linear map brackets the A/C returns from below by ~0.4pp,
+     which would place the A/C floors on the order of 15% lower; the
+     published figures therefore sit on the conservative-return side of the
+     one-primitive alternative for Mode B and above it for A/C.)
+
+[4] Mode B realizable-return band (alpha, delta parameter uncertainty)
+    low  (a=0.335,d=0.0556):  3.30%   [paper 3.30%]  OK
+    cen  (a=0.35,d=0.05):  4.26%   [paper 4.26%]  OK
+    high (a=0.365,d=0.0463):  5.03%   [paper 5.03%]  OK
+    band reproduces 3.30-5.03 under alpha=0.35+-0.015, delta=0.05+-0.005 (plausible range).
+
+[5] r-g compression (the central equality result)
+    no-program r-g = 4.67pp ;  Mode B with-program r-g = 2.26pp
+    broad ownership at 25% share compresses r-g from 4.7pp to 2.3pp
+
+==================================================================================
+Baseline 6.67% derived exactly; Mode B 4.26% reproduced; band brackets 3.30-5.03.
+Honest note: the cross-Mode returns are stylized OLG estimates, not one closed form.
+==================================================================================
+
+########################################################################
+# RUNNING: spillover_estimate.py
+########################################################################
+==================================================================================
+ASSET-TO-GOODS SPILLOVER lambda -- empirical anchoring (Paper 9, Sec 8.2)
+==================================================================================
+
+[1] Literature band, MPC out of equity/housing wealth (annual, per $):
+    Poterba (2000, JEP survey), stock wealth                0.020-0.050
+    Case-Quigley-Shiller (2005/2013), housing (upper ref)   0.030-0.050
+    Mian-Rao-Sufi (2013, QJE), housing net worth            0.050-0.070
+    Chodorow-Reich-Nenov-Simsek (2021, AER), stock          0.028-0.032
+    Di Maggio-Kermani-Majlesi (2020, JF), unrealized gains  0.010-0.050
+    pooled band: 0.01-0.07   |   framework lambda = 0.20 (2.9x-20x the literature range)
+    -> 0.20 is cautious-HIGH: it overstates the leak, hence overstates
+       inflation risk. A measured spillover below 0.20 makes the fixed
+       60/40 split mildly deflationary, never inflationary.
+
+[2] Mode B drift at the fixed 60/40 split, by lambda:
+    lambda=0.01: drift = -0.45%/yr
+    lambda=0.05: drift = -0.35%/yr
+    lambda=0.07: drift = -0.31%/yr
+    lambda=0.20: drift = +0.00%/yr
+    lambda=0.30: drift = +0.24%/yr
+
+[3] Locus-exact dividend share kappa_d*(lambda) -- the recentering instrument:
+    lambda=0.01: kappa_d* = 51.9%   (recentred split at this estimate)
+    lambda=0.05: kappa_d* = 49.8%   (recentred split at this estimate)
+    lambda=0.07: kappa_d* = 48.7%   (recentred split at this estimate)
+    lambda=0.20: kappa_d* = 40.0%   (the published 60/40 split)
+    At literature-point spillovers the locus-exact dividend share rises
+    toward roughly 49-52% (floor share falls correspondingly). Direction and
+    magnitude match Paper 9 Table 4: the spillover sets a calibration,
+    not an outcome.
+
+Saved /home/claude/kit_out/replication/macro_replication/results/spillover_results.json
+
+########################################################################
+# RUNNING: recompute_illustrations.py
+########################################################################
 ======================================================================
 SECTION 3.2a — illustrative consumer-price leak
   Leak = kappa_W * (Delta / mu*) * (1 - s_t)
@@ -51,7 +484,32 @@ All illustrative magnitudes reproduce the figures printed in
 Sections 3.2a and 6.5 of Neo-Solon (2026e).
 
 ########################################################################
-# Calibrated dynamic model (dynamic_model.py) -- IRFs + dynamic robustness
+# RUNNING: make_figure.py
+########################################################################
+wrote /home/claude/kit_out/replication/macro_replication/figures/figure_P3_convergence_regimes.png
+
+########################################################################
+# RUNNING: make_determinacy_figure.py
+########################################################################
+wrote /home/claude/kit_out/replication/macro_replication/figures/figure_P3prime_determinacy.png
+
+########################################################################
+# RUNNING: make_labor_figure.py
+########################################################################
+wrote /home/claude/kit_out/replication/macro_replication/figures/figure_P4_labor_growth.png ; loop gain=0.0156 fixed point=0.9841
+
+########################################################################
+# RUNNING: make_delay_figure.py
+########################################################################
+wrote figure_P5_delay_feedback.png
+
+########################################################################
+# RUNNING: make_irf_figure.py
+########################################################################
+wrote figure_P6_irf.png
+
+########################################################################
+# RUNNING: dynamic_model.py
 ########################################################################
 ======================================================================
 CITIZENS STANDARD -- CALIBRATED DYNAMIC MODEL (Paper 5 A.9)
@@ -74,3 +532,19 @@ CITIZENS STANDARD -- CALIBRATED DYNAMIC MODEL (Paper 5 A.9)
    both simultaneously:                        10000/10000 (100.0%)
 ======================================================================
 validation OK; baseline separation bounded; stability holds in 10000/10000 admissible draws.
+
+########################################################################
+# RUNNING: make_forward_figure.py
+########################################################################
+two-circuit determinacy threshold coupling = 0.127
+wrote figure_P7_forward_determinacy.png
+
+########################################################################
+# RUNNING: make_welfare_figure.py
+########################################################################
+wrote figure_P8_welfare_dividend.png; baseline kappa*=0.795 corner R=1.209
+
+########################################################################
+# RUNNING: make_banking_figure.py
+########################################################################
+wrote figure_P9_banking_separation.png; kappa_bank*=0.323

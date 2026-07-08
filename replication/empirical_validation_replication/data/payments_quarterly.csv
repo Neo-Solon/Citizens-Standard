@@ -1,0 +1,29 @@
+year,quarter,ach_value_bil,basis
+2019,1,13240,"derived: Q1-2020 release states Q1-2020 = $14.6T, +10.3% YoY (14600/1.103)"
+2019,2,14170,"allocated: Q2+Q4 residual (55800 - Q1 - Q3 = 28460) split by 2021-23 average Q2 share (49.8%); affects only the 2020Q2 YoY base"
+2019,3,14100,"stated: Nacha Oct 15 2019 release; cross-confirmed by Q3-2020 release (+13.1% -> 15900/1.131 = 14.06)"
+2019,4,14290,"allocated: remainder of the Q2+Q4 residual split; affects only the 2020Q4 YoY base"
+2020,1,14600,"stated: Nacha Apr 9 2020 release ($14.6T, +10.3%)"
+2020,2,14700,"stated: Nacha Jul 15 2020 release ($14.7T); independently ~confirmed by Q2-2021 +24.6% (18400/1.246 = 14.77)"
+2020,3,15900,"stated: Nacha Oct 20 2020 release ($15.9T, +13.1%)"
+2020,4,16700,"residual: 2020 annual 61900 (stated, Nacha 2020 full-year release) minus Q1-Q3"
+2021,1,17300,derived: Q1-2022 release states Q1-2022 +7.1% YoY (18500/1.071)
+2021,2,18400,stated: Nacha Jul 27 2021 release
+2021,3,18100,stated: Nacha Oct 19 2021 release
+2021,4,18800,residual: 2021 annual 72600 minus Q1-Q3
+2022,1,18500,stated: Nacha Q1-2022 release; cross-checks 19700/1.064 from Q1-2023 release
+2022,2,19600,residual: 2022 annual 76700 minus Q1 Q3 Q4
+2022,3,19200,derived: Q3-2023 release states Q3-2023 +2.6% YoY (19700/1.026)
+2022,4,19400,derived: 2023 annual release states Q4-2023 +5.6% YoY (20500/1.056)
+2023,1,19700,stated: Nacha Apr 17 2023 release
+2023,2,20200,residual: 2023 annual 80100 minus Q1 Q3 Q4; release rounds to "$20 trillion"
+2023,3,19700,stated: per PaymentsDive citing Nacha (+2.6% YoY)
+2023,4,20500,stated: Nacha Feb 14 2024 release
+2024,1,20700,stated: Nacha Apr 23 2024 release ($20.7T)
+2024,2,21600,derived: Q2-2025 release states Q2-2025 +7.9% YoY (23300/1.079)
+2024,3,21400,derived: Q3-2025 release states Q3-2025 +8.2% YoY (23200/1.082)
+2024,4,22500,residual: 2024 annual 86200 minus Q1-Q3
+2025,1,22100,stated: Nacha Apr 23 2025 release
+2025,2,23300,stated: Nacha Jul 21 2025 release
+2025,3,23200,stated: Nacha Oct 16 2025 release
+2025,4,24400,stated: Nacha Jan 28 2026 release
