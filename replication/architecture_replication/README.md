@@ -64,3 +64,6 @@ architecture_replication/
 ```
 
 Canonical macro inputs (GDP, M2, population) are sourced and dated in `../empirical_replication/code/authoritative_data.py` (FRED M2SL, BEA GDPA, Census Vintage 2025).
+
+
+*`requirements.txt` added 2026-07-07 (numpy, matplotlib); run remains `cd code && python3 run_all.py`.*

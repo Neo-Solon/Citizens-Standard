@@ -148,3 +148,7 @@ non-financial credit ~$42.4T, commercial-bank deposits $18.55T (Dec 2025, FRED D
 kappa_bank = m·phi_liq ~0.075, term-deposit share ~60% of launch M2, leverage cap
 4:1 (countercyclical 3:1/5:1), separation threshold zeta* ≈ 0.13 (coupling route
 0.32). All figures are illustrative calibrations on verified anchors, not forecasts.
+
+
+## One-command run (added 2026-07-07)
+`pip install -r requirements.txt && python3 run_all.py` — runs the proposition tests and the balance-sheet analysis in sequence. Per-script commands below remain valid.
