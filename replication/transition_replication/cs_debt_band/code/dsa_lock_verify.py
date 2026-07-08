@@ -69,5 +69,6 @@ print("""
 All six calibration moments + the held-out Mauro-Zhou moment reproduced and
 STABLE across seeds. Process locked for band-sizing.""")
 import json
-open('/home/claude/dsa_locked.json','w').write(json.dumps(PARAMS))
+import os as _os; _DB = _os.path.normpath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+open(_os.path.join(_DB, 'dsa_locked.json'),'w').write(json.dumps(PARAMS))
 print("locked params -> dsa_locked.json")

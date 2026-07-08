@@ -8,7 +8,8 @@ Report the welfare-optimal band under each combination -> robust recommendation,
 not a single point. Validated jump process throughout.
 """
 import json, random
-P=json.load(open('/home/claude/dsa_locked.json')); pk=['mu_c','sd_c','lam0','lam1','Jmag','Jsd','pp0','pp1']
+import os as _os; _DB = _os.path.normpath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+P=json.load(open(_os.path.join(_DB, 'dsa_locked.json'))); pk=['mu_c','sd_c','lam0','lam1','Jmag','Jsd','pp0','pp1']
 pv=[P[x] for x in pk]
 GDP=29000.0; M2=21500.0; real_g=0.020; g_nom=0.043
 def rg_year(d,st,ls):

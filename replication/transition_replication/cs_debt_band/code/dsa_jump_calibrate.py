@@ -5,6 +5,7 @@ comes down to +2% while preserving the low-debt reversal=25% the jump class give
 Search keeps top-5, verifies at N=10000.
 """
 import random
+import os as _os; _DB = _os.path.normpath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 H=28
 def series(d0,years,P):
     mu_c,sd_c,lam0,lam1,Jmag,Jsd,pp0,pp1=P
@@ -75,7 +76,7 @@ print("  "+"  ".join(f"{k}={v:+.4f}" for k,v in zip(keys,P)))
 if ok and ns>0.5:
     import json
     d=dict(zip(keys,P)); d['H']=H; d['model']='compound_jump'
-    json.dump(d,open('/home/claude/dsa_locked.json','w'))
+    json.dump(d,open(_os.path.join(_DB, 'dsa_locked.json'),'w'))
     print("  *** JUMP MODEL CENTERS ALL 6 + held-out at high N -> saved dsa_locked.json ***")
 else:
     print("  close; one tight refine pass if needed")

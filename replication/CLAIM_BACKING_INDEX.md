@@ -149,3 +149,7 @@ structure), which is argued, not modeled; the one empirical claim is backed abov
 
 Every mapping in this index was checked against the code. Where backing is internal
 analysis or a paper is institutional, that is stated rather than implied.
+
+| Paper 9 §8.2 — λ = 0.20 is cautious-high vs the wealth-effect literature (band 0.01–0.07); κ_d*(λ) recentres exactly | `macro_replication/code/spillover_estimate.py` → `results/spillover_results.json` |
+| Paper 10 — payment-flow construction of Mᵀ: EXECUTED 2026-07-08 (lower bound 25.1%; band ⇔ 9.7–12.0 turns/yr; annual data bracket, not pin — both ends independently measured (JPMC buffers: narrow τ 22.05 inside measured 14–28; band ⇔ ~1 month's spending); quarterly growth axis 2020Q1–2025Q4: full-window tie +0.67/+0.69, 2020–21 subwindow decoupling ≈0 — surge parked in idle balances) | `empirical_validation_replication/src/build_mt_paymentflow.py` → `results/PAYMENTFLOW_RESULTS.md` |
+| Paper 5 App. A.13 — closed-form deepening map reproduces Table 3; 6.67% baseline exact; band 3.30–5.03 re-derived | `macro_replication/code/verify_realizable_return.py` |

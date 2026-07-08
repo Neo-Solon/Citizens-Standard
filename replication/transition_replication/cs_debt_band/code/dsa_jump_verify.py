@@ -6,7 +6,8 @@ VERIFY the locked compound-jump process at high N across TWO independent seeds
   rise with debt. We didn't fit to it -> a genuine out-of-sample shape check.
 """
 import json, random
-P=json.load(open('/home/claude/dsa_locked.json'))
+import os as _os; _DB = _os.path.normpath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+P=json.load(open(_os.path.join(_DB, 'dsa_locked.json')))
 keys=['mu_c','sd_c','lam0','lam1','Jmag','Jsd','pp0','pp1']; H=P['H']
 pv=[P[k] for k in keys]
 def series(d0,years):

@@ -92,3 +92,7 @@ paper3_replication/
 - "Intragovernmental debt has no net effect on the government's overall finances" (CRFB, direct quotation).
 - CBO current-law projection: debt held by the public reaching ~156% of GDP by 2055.
 - Total US bank deposits ~$18T (FDIC 2025 Q4); US equity market cap ~$69T (Wilshire 5000 / CRSP 2025).
+
+
+## One-command run (added 2026-07-07)
+`pip install -r requirements.txt && python3 run_all.py` — runs the appendix modules, the debt-band verifier (`cs_debt_band/code/cs_band_verify_final.py`), and the phase milestones. Note: the `cs_debt_band` scripts were repaired on 2026-07-07 to resolve their parameter file (`dsa_locked.json`) relative to the package rather than an absolute authoring-machine path.

@@ -1,4 +1,5 @@
 import random
+import os as _os; _DB = _os.path.normpath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 random.seed(8888)
 M=4500; MR=4500; H=28
 def series(d0,years,P):
@@ -63,7 +64,7 @@ sev_ok=abs(p90_40)<0.006 and abs(p90_120-0.02)<0.006 and abs(p50_40+0.012)<0.006
 rev_ok=0.17<=rl<=0.33 and rh>=0.72
 print(f"  severity PASS={sev_ok}  reversal PASS={rev_ok}  held-out PASS={ns>0.5}")
 if sev_ok and rev_ok and ns>0.5:
-    open('/home/claude/dsa_params2.txt','w').write(f"{mu_c} {sd_c} {h0} {h1} {m0} {m1} {sd_s} {e0} {e1} {H}\n")
+    open(_os.path.join(_DB, 'dsa_params2.txt'),'w').write(f"{mu_c} {sd_c} {h0} {h1} {m0} {m1} {sd_s} {e0} {e1} {H}\n")
     print(f"  params: mu_c={mu_c:+.4f} sd_c={sd_c:.4f} h0={h0:.3f} h1={h1:.3f} m0={m0:+.3f} m1={m1:.3f} sd_s={sd_s:.3f} e0={e0:.3f} e1={e1:.3f}")
     print("  *** FULLY VALIDATED ON ALL 6 MOMENTS + HELD-OUT -> saved ***")
 else: print("  status above")
