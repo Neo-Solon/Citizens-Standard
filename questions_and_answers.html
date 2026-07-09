@@ -184,6 +184,62 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
 <p>Honestly, it's the hardest part, bigger than the design itself. A monetary system can't be swapped overnight without breaking things, so the work isn't just "what should money be" but "how do you move a live economy onto it without a shock." There's a staged transition mapped out for exactly that: a path with phases, off-ramps, and stress tests, not a flip of a switch. We'd rather show the whole route, including the difficult stretches, than pretend it's easy.</p>
 <p class="pointer"><b>Where it&rsquo;s worked out:</b> the transition design, phase by phase (the transition paper).</p>
 </div>
+
+<!-- ============================================================
+     AI ANALYSIS PROMPT BLOCK  —  paste into any page's <main class="wrap">
+     Uses the site's existing CSS variables (--ink, --paper, --amber,
+     --teal, --dim, --line). Self-contained: includes its own scoped
+     styles and a copy button. No external dependencies.
+     ============================================================ -->
+
+<section class="ai-analyze" aria-label="Analyze with AI">
+  <style>
+    .ai-analyze{ border:1px solid var(--line); border-radius:12px;
+      padding:22px 22px 20px; margin:34px 0;
+      background:linear-gradient(180deg, rgba(63,174,146,0.06), rgba(63,174,146,0.02)); }
+    .ai-analyze h2{ font-size:1.15rem; margin:0 0 4px; color:var(--paper); }
+    .ai-analyze .ai-sub{ color:var(--dim); font-size:.92rem; margin:0 0 16px; }
+    .ai-analyze .ai-prompt{ position:relative; background:var(--ink);
+      border:1px solid var(--line); border-radius:8px; padding:14px 14px 14px;
+      font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+      font-size:.82rem; line-height:1.55; color:#C9D2DC; white-space:pre-wrap;
+      max-height:230px; overflow:auto; }
+    .ai-analyze .ai-actions{ margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .ai-analyze .ai-copy{ display:inline-block; background:var(--amber); color:#10161C;
+      font-weight:600; font-size:.9rem; padding:8px 15px; border:none; border-radius:8px;
+      cursor:pointer; }
+    .ai-analyze .ai-copy:hover{ filter:brightness(1.08); }
+    .ai-analyze .ai-note{ color:var(--dim); font-size:.82rem; }
+    .ai-analyze .ai-open{ display:inline-block; border:1px solid var(--amber); color:var(--amber);
+      font-weight:600; font-size:.9rem; padding:7px 14px; border-radius:8px; text-decoration:none; }
+    .ai-analyze .ai-open:hover{ background:rgba(230,169,62,0.12); text-decoration:none; }
+  </style>
+
+  <h2>Have an AI analyze this for you</h2>
+  <p class="ai-sub">Don't take our word for it. Copy the prompt below into ChatGPT, Claude, Gemini, or any AI assistant. It points the model at the full framework and its own list of weak points, and asks it to explain and stress-test — not to flatter.</p>
+
+  <div class="ai-prompt" id="aiPromptText">I'm evaluating a constitutional monetary framework called the Citizens Standard. Please analyze it rigorously and skeptically, not favorably.
+
+Read the companion document here (it summarizes the whole framework, answers common questions, and lists the framework's own honest weak points):
+https://citizensstandard.org/CS_AI_Companion.md
+
+The full 14-paper series and runnable replication packages are here:
+https://citizensstandard.org/papers.html
+
+Do three things:
+1. Explain what the framework actually claims, in your own words.
+2. Stress-test it. The companion has a "Honest limits" section listing seven load-bearing weaknesses — probe those hardest, and look for any the author missed.
+3. Tell me where it holds up and where it doesn't. If a claim rests on an assumption or an unproven behavioral/empirical step, say so. Fetch the specific paper to check any number you're unsure about.
+
+Be direct. I want the real evaluation, not a summary that agrees with itself.</div>
+
+  <div class="ai-actions">
+    <button class="ai-copy" onclick="(function(b){var t=document.getElementById('aiPromptText').innerText;navigator.clipboard.writeText(t).then(function(){var o=b.innerText;b.innerText='Copied ✓';setTimeout(function(){b.innerText=o;},1800);});})(this)">Copy prompt</button>
+    <a class="ai-open" href="CS_AI_Companion.md">View companion document</a>
+    <span class="ai-note">Works with any AI. We don't run it — you do, in your own tool.</span>
+  </div>
+</section>
+
 </main>
 
 <nav aria-label="Previous and next page" style="max-width:980px;margin:48px auto 0;padding:18px 24px 0;border-top:1px solid #27313C;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:.95rem;"> <a href="papers.html" class="pagenav-btn">&larr; Papers &amp; data</a> <a href="methodology.html" class="pagenav-btn">Methodology &rarr;</a> </nav>

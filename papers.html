@@ -106,6 +106,61 @@ main.wrap > .lede{font-size:clamp(1.1rem,1rem + 0.5vw,1.34rem);color:#D9D3C6;max
   <h2>The series</h2>
   <p class="sub">Where a paper is on SSRN, the title links there and the PDF sits beside it; the rest open as PDFs here until they post. Each paper also has a <b>Data</b> link: a one-click download of the full package: the paper plus exactly the code and data behind it. Hover a row to see what it tests.</p>
   <p class="actions"><a class="btn" href="https://github.com/Neo-Solon/Citizens-Standard/raw/main/full_paper_list_all.zip">Download all papers &amp; data (zip)</a> <a class="btn-ghost" href="papers.zip">Papers only (PDF, 14 files)</a> <a class="btn-ghost" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=11425448" target="_blank" rel="noopener">Browse on SSRN &#8599;</a></p>
+  <!-- ============================================================
+     AI ANALYSIS PROMPT BLOCK  —  paste into any page's <main class="wrap">
+     Uses the site's existing CSS variables (--ink, --paper, --amber,
+     --teal, --dim, --line). Self-contained: includes its own scoped
+     styles and a copy button. No external dependencies.
+     ============================================================ -->
+
+<section class="ai-analyze" aria-label="Analyze with AI">
+  <style>
+    .ai-analyze{ border:1px solid var(--line); border-radius:12px;
+      padding:22px 22px 20px; margin:34px 0;
+      background:linear-gradient(180deg, rgba(63,174,146,0.06), rgba(63,174,146,0.02)); }
+    .ai-analyze h2{ font-size:1.15rem; margin:0 0 4px; color:var(--paper); }
+    .ai-analyze .ai-sub{ color:var(--dim); font-size:.92rem; margin:0 0 16px; }
+    .ai-analyze .ai-prompt{ position:relative; background:var(--ink);
+      border:1px solid var(--line); border-radius:8px; padding:14px 14px 14px;
+      font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+      font-size:.82rem; line-height:1.55; color:#C9D2DC; white-space:pre-wrap;
+      max-height:230px; overflow:auto; }
+    .ai-analyze .ai-actions{ margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .ai-analyze .ai-copy{ display:inline-block; background:var(--amber); color:#10161C;
+      font-weight:600; font-size:.9rem; padding:8px 15px; border:none; border-radius:8px;
+      cursor:pointer; }
+    .ai-analyze .ai-copy:hover{ filter:brightness(1.08); }
+    .ai-analyze .ai-note{ color:var(--dim); font-size:.82rem; }
+    .ai-analyze .ai-open{ display:inline-block; border:1px solid var(--amber); color:var(--amber);
+      font-weight:600; font-size:.9rem; padding:7px 14px; border-radius:8px; text-decoration:none; }
+    .ai-analyze .ai-open:hover{ background:rgba(230,169,62,0.12); text-decoration:none; }
+  </style>
+
+  <h2>Have an AI analyze this for you</h2>
+  <p class="ai-sub">Don't take our word for it. Copy the prompt below into ChatGPT, Claude, Gemini, or any AI assistant. It points the model at the full framework and its own list of weak points, and asks it to explain and stress-test — not to flatter.</p>
+
+  <div class="ai-prompt" id="aiPromptText">I'm evaluating a constitutional monetary framework called the Citizens Standard. Please analyze it rigorously and skeptically, not favorably.
+
+Read the companion document here (it summarizes the whole framework, answers common questions, and lists the framework's own honest weak points):
+https://citizensstandard.org/CS_AI_Companion.md
+
+The full 14-paper series and runnable replication packages are here:
+https://citizensstandard.org/papers.html
+
+Do three things:
+1. Explain what the framework actually claims, in your own words.
+2. Stress-test it. The companion has a "Honest limits" section listing seven load-bearing weaknesses — probe those hardest, and look for any the author missed.
+3. Tell me where it holds up and where it doesn't. If a claim rests on an assumption or an unproven behavioral/empirical step, say so. Fetch the specific paper to check any number you're unsure about.
+
+Be direct. I want the real evaluation, not a summary that agrees with itself.</div>
+
+  <div class="ai-actions">
+    <button class="ai-copy" onclick="(function(b){var t=document.getElementById('aiPromptText').innerText;navigator.clipboard.writeText(t).then(function(){var o=b.innerText;b.innerText='Copied ✓';setTimeout(function(){b.innerText=o;},1800);});})(this)">Copy prompt</button>
+    <a class="ai-open" href="CS_AI_Companion.md">View companion document</a>
+    <span class="ai-note">Works with any AI. We don't run it — you do, in your own tool.</span>
+  </div>
+</section>
+
   <ol class="papers">
     <li title="Reproduces the launch-year issuance channels, Mode A/B/C/D Stable Floors, implied inflation by mode, and the Mode C/D dividends."><span class="pt"><a class="ptitle" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6702518" target="_blank" rel="noopener">One Model, Many Systems: A Constitutional Monetary Architecture</a> <span class="pmeta">· 106 pp</span></span><span class="links"><a href="papers/01_Architecture.pdf">PDF</a> <a href="https://github.com/Neo-Solon/Citizens-Standard/raw/main/full_paper_list/Paper01_Architecture.zip">Data</a></span></li>
     <li title="The 1960-2055 historical counterfactual and the Tool 14 inflation episodes (2021-23 and the Great Inflation), on real BLS/FRED data."><span class="pt"><a class="ptitle" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6735078" target="_blank" rel="noopener">A Historical Counterfactual: Empirical Analysis, 1960-2055</a> <span class="pmeta">· 27 pp</span></span><span class="links"><a href="papers/02_Counterfactual.pdf">PDF</a> <a href="https://github.com/Neo-Solon/Citizens-Standard/raw/main/full_paper_list/Paper02_Counterfactual.zip">Data</a></span></li>
