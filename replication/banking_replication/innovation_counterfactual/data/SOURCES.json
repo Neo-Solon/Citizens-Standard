@@ -1,0 +1,22 @@
+{
+  "debt_share_of_RD": {
+    "measured_debt_to_assets_hitech_2000s": 0.005,
+    "source": "Gao (NUS), citing Brown, Fazzari & Petersen (2009): median short- and long-term debt-to-assets = 0.005 each for high-tech firms, 2000s; 'low reliance on debt financing'",
+    "corroboration": "Hall & Lerner (2009): debt is a disfavored source of R&D finance; R&D intensity and leverage negatively correlated (Friend-Lang 1988; Hall 1992; Bhagat-Welch 1995)"
+  },
+  "rd_composition": {
+    "business_own_funds_share_2023": 0.88,
+    "federal_share_of_all_US_RD_2023": 0.18,
+    "source": "NSF NCSES 2023 (nsf25353, nsf26314): $722B business R&D, ~87-89% company own-funds; total US R&D ~$937B, business 75% / federal 18%",
+    "dominant_external_channel": "external equity, not debt (Brown & Petersen 2009/2011: 'neither debt finance nor cash flow' funds the rise in R&D)"
+  },
+  "rd_usercost_elasticity": {
+    "range": [-4.0, -1.0],
+    "recent_central": [-4.0, -2.0],
+    "source": "CRS R48848: recent R&D user-cost elasticity -2.0 to -4.0; older -1.0"
+  },
+  "debt_cost_increase_from_full_reserve": {
+    "note": "Modelled as an intermediation-cost premium on the debt slice, not a ban. Bounded 20-50% adversarially. CS Paper 6 frames full reserve as raising intermediation cost, offsetting credit-elasticity loss to near-full coverage.",
+    "source": "Neo-Solon 2026 (Full-Reserve Banking paper), N3"
+  }
+}
