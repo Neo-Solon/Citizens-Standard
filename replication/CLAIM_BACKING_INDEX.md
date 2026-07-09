@@ -15,7 +15,7 @@ Two kinds of backing appear:
 
 Paths are relative to `front_door_kit/replication/`.
 
-**Last verified: 2026-07-07.** All eleven packages were executed end-to-end in a clean environment on this date; every captured result file matches the regenerated output, and every published figure checked matches its paper (empirical tables to the dollar; architecture 22/22 regression checks; banking 5/5 propositions; all stress suites complete).
+**Last verified: 2026-07-07 (eleven packages, end-to-end in a clean environment; every captured result file matches regenerated output, and every published figure checked matches its paper — empirical tables to the dollar; architecture 22/22 regression checks; banking 5/5 propositions; all stress suites complete). The innovation counterfactual, now nested at `banking_replication/innovation_counterfactual/` (it backs the R&D bound in Paper 6 section 5.4), was added and executed 2026-07-09; its results file matches its regenerated output.**
 
 ---
 
@@ -70,6 +70,7 @@ are backed above.*
 |---|---|---|
 | Propositions B1–B5 (control, lending cap, throttle, capital req, run-proof) | `banking_replication/code/paper6_model.py` (run_all) | Verification |
 | Credit-supply gap full reserve removes (~3.3% of GDP/yr; ~90% of broad money) | `distribution_inequality_replication/fullreserve_credit_gap/` | Stress-test (sizes, does not close) |
+| Innovation/R&D effect of removing bank money-creation: −0.4% central, −6% adversarial bound (§5.4) | `banking_replication/innovation_counterfactual/run_all.py` (partial-equilibrium; GE demand channel left open) | Stress-test (bounds) |
 | Collateral cap binds at σ ≈ 0.13 via the non-pledgeable lock | `banking_replication/code/paper6_model.py` (B2) | Verification |
 *The remaining question — whether less-credit-for-less-boom-bust is net-desirable — is
 a contested value judgment the paper flags as open; not code-modelable.*
