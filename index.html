@@ -371,8 +371,8 @@
     .ai-analyze .ai-note{ color:var(--dim); font-size:.82rem; }
   </style>
 
-  <h2>Have an AI analyze this for you</h2>
-  <p class="ai-sub">Don't take our word for it &mdash; have any AI evaluate it. The most reliable way is to give the AI the companion document directly, then paste the prompt below. It tells the model to explain and stress-test the framework, not flatter it.</p>
+  <h2>Have an AI explain and analyze this for you</h2>
+  <p class="ai-sub">Want to understand it, or check whether it holds up? Give any AI the companion document and paste the prompt below. It asks the AI to explain the framework clearly first, then evaluate it honestly, not to flatter it and not to attack it.</p>
 
   <ol class="ai-steps">
     <li><b>Download</b> the companion document (one file, the whole framework): the buttons below.</li>
@@ -380,14 +380,20 @@
     <li><b>Paste the prompt</b> below and send.</li>
   </ol>
 
-  <div class="ai-prompt" id="aiPromptText">I've attached a companion document for a constitutional monetary framework called the Citizens Standard. Please analyze it rigorously and skeptically, not favorably.
+  <div class="ai-prompt" id="aiPromptText">I've attached a companion document for a monetary framework called the Citizens Standard. I'm trying to understand it and judge whether it holds up. Please help me in two stages.
 
-Do three things:
-1. Explain what the framework actually claims, in your own words - reconstruct the mechanism (issuance rule, banking structure, inflation control, transition, governance), and separate positive economic claims from normative ones.
-2. Stress-test it as if you were a hostile peer reviewer. The document has an "Honest limits" section listing seven load-bearing weaknesses - probe those hardest, and look for load-bearing assumptions the author did NOT list (balance-sheet/stock-flow consistency, incentive compatibility, expectations, fiscal dominance, Goodhart effects, capital flight, shadow banking, constitutional enforceability).
-3. For each major conclusion, classify it: mathematical identity (proven) / accounting identity (proven if definitions hold) / simulation result (holds only under model assumptions) / institutional or behavioral claim (plausible/speculative/untested) / empirical claim (supported / weakly supported / unsupported). Where a result depends on assumptions, name them.
+First, explain it clearly, as if teaching someone smart who is new to it:
+- What problem is it trying to solve, and why does that problem exist?
+- How does the framework actually work? Walk me through the core mechanics in plain language: how new money is created, where it goes, the banking change, the different "Modes," and how it's meant to keep prices stable.
+- What is genuinely novel or interesting about the idea? Engage with it on its merits.
+Take your time here. I want to actually understand it before we judge it.
 
-Don't balance criticism with praise. If something is robust, say so; if a modeling assumption is being presented as an economic law, say that. If you have browsing, the full 14-paper series and replication code are at https://citizensstandard.org/papers.html - fetch any paper to check a specific number.</div>
+Then, evaluate it honestly:
+- What parts are solid (mathematical results, accounting identities), what parts hold only inside the model's assumptions (simulations), and what parts are unproven claims about the real world (behavioral, institutional, political)?
+- The document has an "Honest limits" section listing ten load-bearing weaknesses. Do you agree those are the real weak points, or are there load-bearing assumptions it missed?
+- Where does it hold up, and where is it weakest?
+
+Be fair and clear, not a cheerleader and not a hit piece. If something is well-supported, say so; if something is a modeling assumption presented as fact, say that too. If you have browsing, the full 14-paper series and replication code are at https://citizensstandard.org/papers.html - you can check any specific number there.</div>
 
   <div class="ai-actions">
     <button class="ai-copy" onclick="(function(b){var t=document.getElementById('aiPromptText').innerText;navigator.clipboard.writeText(t).then(function(){var o=b.innerText;b.innerText='Copied \u2713';setTimeout(function(){b.innerText=o;},1800);});})(this)">Copy prompt</button>
