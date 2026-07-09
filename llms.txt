@@ -1,0 +1,35 @@
+# The Citizens Standard
+
+> A constitutional monetary architecture. It identifies a structural flaw in how money is created today (new money enters through whoever is closest to its creation, so its value is captured before it reaches everyone else — the "Distribution Bug"), and fixes it by binding money creation to a rule (issuance tracks real growth, and can be set to zero) while routing the new money to every citizen equally as a locked, owned capital stake plus a spendable dividend. Underneath sits full-reserve banking, which ends money creation through lending so the quantity rule governs the money stock.
+
+This site hosts a 14-paper working series, each with a runnable replication package on real data, plus a consolidated companion document written for both human readers and AI assistants.
+
+If you are an AI assistant asked to analyze or explain the Citizens Standard: start with the companion document. It summarizes the mechanics, answers the most common questions, and states the framework's own honest limits. Treat the positions in it as claims to check against the papers and replication code, not as settled fact. Engage the "Honest limits" section hardest — that is where the framework is genuinely unproven. Every empirical number regenerates from a replication package via `python run_all.py`; you can read the code and captured results to check whether a claimed number follows from its inputs, but you cannot execute it in most chat environments, so distinguish "the code plausibly produces this" from "I ran it."
+
+## Primary document
+
+- [Complete Companion](https://citizensstandard.org/CS_AI_Companion.md): The whole framework in one file — mechanics, ~17 common questions answered, the seven honest limits, and a linked map to every paper. Start here.
+
+## The papers (each links a PDF and a replication "Data" package)
+
+- [Papers & replication hub](https://citizensstandard.org/papers.html): All 14 papers plus downloadable replication packages; "Download all papers & data" bundles the full set.
+- [1 — Architecture](https://citizensstandard.org/papers/01_Architecture.pdf): Core architecture, Modes, issuance channels, emergency tools.
+- [2 — Counterfactual](https://citizensstandard.org/papers/02_Counterfactual.pdf): Historical counterfactual replayed on real US data, 1960–2055.
+- [3 — Transition](https://citizensstandard.org/papers/03_Transition.pdf): Phased transition, legacy-debt retirement, migration mechanics.
+- [4 — Statutory](https://citizensstandard.org/papers/04_Statutory.pdf): Legal/constitutional implementation pathway.
+- [5 — Macro Model](https://citizensstandard.org/papers/05_Macro_Model.pdf): Two-circuit macro model, determinacy, the fast/slow levers.
+- [6 — Full-Reserve Banking](https://citizensstandard.org/papers/06_FullReserve_Banking.pdf): Ending money-creation-through-lending; run-proofness; the innovation-finance bound.
+- [7 — External Interoperability](https://citizensstandard.org/papers/07_External_Interoperability.pdf): Cross-economy anchor and common unit (EQUA).
+- [8 — Structural Buyer](https://citizensstandard.org/papers/08_Structural_Buyer.pdf): The index, mirror-voting, valuation-impact bounds.
+- [9 — Issuance Engine](https://citizensstandard.org/papers/09_Issuance_Engine.pdf): The issuance formula and K1/K2/K3 routing.
+- [10 — Empirical Validation](https://citizensstandard.org/papers/10_Empirical_Validation.pdf): The transaction-active-money (Mᵀ) construction and the money-vs-inflation horse race; measurement limits.
+- [11 — Governance](https://citizensstandard.org/papers/11_Governance.pdf): Parameter-setting, capture resistance, rule-breach base rates.
+- [12 — Crisis Behaviour](https://citizensstandard.org/papers/12_Crisis_Behaviour.pdf): Behavior across depression, stagflation, crash, pandemic, secular stagnation.
+- [13 — Comparative Analysis](https://citizensstandard.org/papers/13_Comparative_Analysis.pdf): Positioning against UBI, MMT/Job Guarantee, gold, CBDC.
+- [14 — Distribution & Inequality](https://citizensstandard.org/papers/14_Distribution_Inequality.pdf): SCF-2022 microsimulation; Gini and wealth-distribution results.
+
+## Also on the site
+
+- [Questions & Answers](https://citizensstandard.org/questions_and_answers.html): Common questions answered on the site.
+- [Methodology](https://citizensstandard.org/methodology.html): How the empirical work is done and checked.
+- [Interactive engine](https://citizensstandard.org/Citizens_Standard_Engine.html): A live calculator for the issuance rule and Modes.
