@@ -1,0 +1,27 @@
+AI ANALYSIS FEATURE v2 (attachment-first) — deployment
+========================================================
+
+WHY v2: ChatGPT (and many AIs) can't reliably open web links. The block now
+tells visitors to DOWNLOAD the companion and ATTACH it to their AI — which
+works on every model/tier — with the papers link only as a fallback for AIs
+that can browse.
+
+DROP THESE IN THE SITE ROOT:
+
+  REPLACE these three existing pages (now carry the attachment-first block):
+    1. index.html
+    2. questions_and_answers.html
+    3. papers.html
+
+  ADD these files (the block's download buttons + llms.txt point to them):
+    4. CS_AI_Companion.pdf   <- primary download (most universally attachable)
+    5. CS_AI_Companion.txt   <- plain-text alternative
+    6. CS_AI_Companion.md    <- markdown source (also what llms.txt links)
+    7. llms.txt              <- AI-crawler convention file
+
+All download buttons use relative paths (CS_AI_Companion.pdf / .txt), so the
+files must sit at site root alongside the pages. Verified: all three pages
+tag-balanced, one block each, buttons present.
+
+RESULT: a visitor downloads the companion, drags it into ChatGPT/Claude/Gemini,
+pastes the prompt, and gets a rigorous skeptical review — no browsing required.

@@ -192,51 +192,57 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
      styles and a copy button. No external dependencies.
      ============================================================ -->
 
+
+
+
 <section class="ai-analyze" aria-label="Analyze with AI">
   <style>
     .ai-analyze{ border:1px solid var(--line); border-radius:12px;
       padding:22px 22px 20px; margin:34px 0;
       background:linear-gradient(180deg, rgba(63,174,146,0.06), rgba(63,174,146,0.02)); }
     .ai-analyze h2{ font-size:1.15rem; margin:0 0 4px; color:var(--paper); }
-    .ai-analyze .ai-sub{ color:var(--dim); font-size:.92rem; margin:0 0 16px; }
+    .ai-analyze .ai-sub{ color:var(--dim); font-size:.92rem; margin:0 0 14px; }
+    .ai-analyze .ai-steps{ margin:0 0 14px; padding-left:20px; color:var(--paper); font-size:.92rem; }
+    .ai-analyze .ai-steps li{ margin:3px 0; }
+    .ai-analyze .ai-steps b{ color:var(--amber); }
     .ai-analyze .ai-prompt{ position:relative; background:var(--ink);
-      border:1px solid var(--line); border-radius:8px; padding:14px 14px 14px;
+      border:1px solid var(--line); border-radius:8px; padding:14px;
       font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
       font-size:.82rem; line-height:1.55; color:#C9D2DC; white-space:pre-wrap;
-      max-height:230px; overflow:auto; }
+      max-height:210px; overflow:auto; }
     .ai-analyze .ai-actions{ margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
     .ai-analyze .ai-copy{ display:inline-block; background:var(--amber); color:#10161C;
-      font-weight:600; font-size:.9rem; padding:8px 15px; border:none; border-radius:8px;
-      cursor:pointer; }
+      font-weight:600; font-size:.9rem; padding:8px 15px; border:none; border-radius:8px; cursor:pointer; }
     .ai-analyze .ai-copy:hover{ filter:brightness(1.08); }
-    .ai-analyze .ai-note{ color:var(--dim); font-size:.82rem; }
-    .ai-analyze .ai-open{ display:inline-block; border:1px solid var(--amber); color:var(--amber);
+    .ai-analyze .ai-dl{ display:inline-block; border:1px solid var(--amber); color:var(--amber);
       font-weight:600; font-size:.9rem; padding:7px 14px; border-radius:8px; text-decoration:none; }
-    .ai-analyze .ai-open:hover{ background:rgba(230,169,62,0.12); text-decoration:none; }
+    .ai-analyze .ai-dl:hover{ background:rgba(230,169,62,0.12); text-decoration:none; }
+    .ai-analyze .ai-note{ color:var(--dim); font-size:.82rem; }
   </style>
 
   <h2>Have an AI analyze this for you</h2>
-  <p class="ai-sub">Don't take our word for it. Copy the prompt below into ChatGPT, Claude, Gemini, or any AI assistant. It points the model at the full framework and its own list of weak points, and asks it to explain and stress-test — not to flatter.</p>
+  <p class="ai-sub">Don't take our word for it &mdash; have any AI evaluate it. The most reliable way is to give the AI the companion document directly, then paste the prompt below. It tells the model to explain and stress-test the framework, not flatter it.</p>
 
-  <div class="ai-prompt" id="aiPromptText">I'm evaluating a constitutional monetary framework called the Citizens Standard. Please analyze it rigorously and skeptically, not favorably.
+  <ol class="ai-steps">
+    <li><b>Download</b> the companion document (one file, the whole framework): the buttons below.</li>
+    <li><b>Attach it</b> to ChatGPT, Claude, Gemini, or any AI (drag the file in, or use the paperclip). Attaching is more reliable than links, since many AIs can't open web pages.</li>
+    <li><b>Paste the prompt</b> below and send.</li>
+  </ol>
 
-Read the companion document here (it summarizes the whole framework, answers common questions, and lists the framework's own honest weak points):
-https://citizensstandard.org/CS_AI_Companion.md
-
-The full 14-paper series and runnable replication packages are here:
-https://citizensstandard.org/papers.html
+  <div class="ai-prompt" id="aiPromptText">I've attached a companion document for a constitutional monetary framework called the Citizens Standard. Please analyze it rigorously and skeptically, not favorably.
 
 Do three things:
-1. Explain what the framework actually claims, in your own words.
-2. Stress-test it. The companion has a "Honest limits" section listing seven load-bearing weaknesses — probe those hardest, and look for any the author missed.
-3. Tell me where it holds up and where it doesn't. If a claim rests on an assumption or an unproven behavioral/empirical step, say so. Fetch the specific paper to check any number you're unsure about.
+1. Explain what the framework actually claims, in your own words - reconstruct the mechanism (issuance rule, banking structure, inflation control, transition, governance), and separate positive economic claims from normative ones.
+2. Stress-test it as if you were a hostile peer reviewer. The document has an "Honest limits" section listing seven load-bearing weaknesses - probe those hardest, and look for load-bearing assumptions the author did NOT list (balance-sheet/stock-flow consistency, incentive compatibility, expectations, fiscal dominance, Goodhart effects, capital flight, shadow banking, constitutional enforceability).
+3. For each major conclusion, classify it: mathematical identity (proven) / accounting identity (proven if definitions hold) / simulation result (holds only under model assumptions) / institutional or behavioral claim (plausible/speculative/untested) / empirical claim (supported / weakly supported / unsupported). Where a result depends on assumptions, name them.
 
-Be direct. I want the real evaluation, not a summary that agrees with itself.</div>
+Don't balance criticism with praise. If something is robust, say so; if a modeling assumption is being presented as an economic law, say that. If you have browsing, the full 14-paper series and replication code are at https://citizensstandard.org/papers.html - fetch any paper to check a specific number.</div>
 
   <div class="ai-actions">
-    <button class="ai-copy" onclick="(function(b){var t=document.getElementById('aiPromptText').innerText;navigator.clipboard.writeText(t).then(function(){var o=b.innerText;b.innerText='Copied ✓';setTimeout(function(){b.innerText=o;},1800);});})(this)">Copy prompt</button>
-    <a class="ai-open" href="CS_AI_Companion.md">View companion document</a>
-    <span class="ai-note">Works with any AI. We don't run it — you do, in your own tool.</span>
+    <button class="ai-copy" onclick="(function(b){var t=document.getElementById('aiPromptText').innerText;navigator.clipboard.writeText(t).then(function(){var o=b.innerText;b.innerText='Copied \u2713';setTimeout(function(){b.innerText=o;},1800);});})(this)">Copy prompt</button>
+    <a class="ai-dl" href="CS_AI_Companion.pdf" download>Download companion (PDF)</a>
+    <a class="ai-dl" href="CS_AI_Companion.txt" download>Download (text)</a>
+    <span class="ai-note">Runs in your own AI. No sign-up, nothing we control.</span>
   </div>
 </section>
 
