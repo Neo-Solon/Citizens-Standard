@@ -66,6 +66,106 @@
     transition:background .15s ease,border-color .15s ease,transform .15s ease;}
   .pagenav-btn:hover{background:#E6A93E;color:#11161c;border-color:#E6A93E;transform:translateY(-1px);}
   .pagenav-btn:focus-visible{outline:2px solid #E6A93E;outline-offset:2px;}
+
+/* ===== Audio overview player ===== */
+/* ---------- The audio player ---------- */
+  .cs-audio{
+    background:var(--ink-soft);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px 20px;
+    display:flex; flex-direction:column; gap:12px;
+    box-shadow:0 1px 0 rgba(255,255,255,.02) inset, 0 6px 22px rgba(0,0,0,.22);
+  }
+  .cs-audio__head{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+  .cs-audio__eyebrow{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--amber); font-weight:700; margin:0;
+  }
+  .cs-audio__title{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-size:16px; font-weight:600; margin:0; color:var(--text); line-height:1.2;
+  }
+  .cs-audio__sub{font-size:13.5px; color:var(--dim); margin:0; line-height:1.4}
+
+  .cs-audio__row{display:flex; align-items:center; gap:14px}
+
+  /* play/pause button — the amber accent, the one bold element */
+  .cs-audio__play{
+    flex:0 0 auto; width:52px; height:52px; border-radius:50%;
+    border:none; cursor:pointer; background:var(--amber); color:var(--amber-ink);
+    display:grid; place-items:center; transition:transform .12s ease, box-shadow .12s ease;
+    box-shadow:0 3px 14px rgba(230,169,62,.32);
+  }
+  .cs-audio__play:hover{transform:scale(1.05)}
+  .cs-audio__play:active{transform:scale(.97)}
+  .cs-audio__play:focus-visible{outline:3px solid var(--kept); outline-offset:3px}
+  .cs-audio__play svg{width:22px; height:22px; display:block}
+  .cs-audio__play .icon-pause{display:none}
+  .cs-audio.is-playing .cs-audio__play .icon-play{display:none}
+  .cs-audio.is-playing .cs-audio__play .icon-pause{display:block}
+
+  /* progress: echoes the site's kept/lost meter — amber = heard */
+  .cs-audio__track-area{flex:1 1 auto; display:flex; flex-direction:column; gap:8px; min-width:0}
+  .cs-audio__scrub{
+    position:relative; height:8px; border-radius:6px; background:var(--lost);
+    cursor:pointer; overflow:hidden;
+  }
+  .cs-audio__played{
+    position:absolute; inset:0 auto 0 0; width:0%;
+    background:linear-gradient(90deg,#F0BE5A,var(--amber));
+    border-radius:6px; transition:width .08s linear;
+  }
+  .cs-audio__buffer{
+    position:absolute; inset:0 auto 0 0; width:0%;
+    background:rgba(236,231,219,.10); border-radius:6px;
+  }
+  .cs-audio__scrub:focus-visible{outline:3px solid var(--kept); outline-offset:3px}
+  .cs-audio__times{
+    display:flex; justify-content:space-between;
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-size:12px; color:var(--lost-text); font-variant-numeric:tabular-nums; letter-spacing:.02em;
+  }
+
+  /* speed control */
+  .cs-audio__speed{
+    flex:0 0 auto; border:1px solid var(--line); background:transparent;
+    color:var(--dim); font-family:"Bricolage Grotesque",sans-serif; font-size:12px; font-weight:600;
+    border-radius:7px; padding:7px 11px; cursor:pointer; transition:border-color .12s, color .12s;
+    min-width:52px; text-align:center;
+  }
+  .cs-audio__speed:hover{border-color:var(--amber); color:var(--text)}
+  .cs-audio__speed:focus-visible{outline:3px solid var(--kept); outline-offset:2px}
+
+  @media (max-width:520px){
+    .cs-audio__row{gap:12px}
+    .cs-audio__play{width:46px; height:46px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .cs-audio__play,.cs-audio__played{transition:none}
+  }
+
+  /* ===== Listen pill + panel ===== */
+  .kicker-row{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:42px}
+  .kicker-row .kicker{margin-bottom:0}
+  .listen-pill{
+    flex:0 0 auto; display:inline-flex; align-items:center; gap:7px;
+    background:transparent; border:1px solid var(--line); color:var(--text);
+    font-family:"Bricolage Grotesque",sans-serif; font-size:12px; font-weight:600;
+    letter-spacing:.04em; padding:7px 14px 7px 11px; border-radius:999px; cursor:pointer;
+    transition:border-color .14s ease, color .14s ease, background .14s ease;
+  }
+  .listen-pill svg{width:15px; height:15px; color:var(--amber); flex:0 0 auto}
+  .listen-pill:hover{border-color:var(--amber); background:rgba(230,169,62,.06)}
+  .listen-pill:focus-visible{outline:3px solid var(--kept); outline-offset:2px}
+  .listen-pill.is-open{border-color:var(--amber); background:rgba(230,169,62,.08)}
+  .cs-audio-panel{margin-top:6px; animation:csPanelIn .28s ease}
+  @keyframes csPanelIn{from{opacity:0; transform:translateY(-6px)} to{opacity:1; transform:none}}
+  @media (prefers-reduced-motion:reduce){.cs-audio-panel{animation:none}}
+  @media (max-width:520px){
+    .kicker-row{flex-wrap:wrap; gap:10px}
+  }
 </style>
 <style>
 .sitenav{border-bottom:1px solid var(--line,#27313c);font-family:inherit;}
@@ -99,7 +199,51 @@ main.wrap > .lede{font-size:clamp(1.1rem,1rem + 0.5vw,1.34rem);color:#D9D3C6;max
 </nav>
 
 <main class="wrap">
-  <div class="kicker">The Citizens Standard &nbsp;&middot;&nbsp; <b>The papers &amp; data</b></div>
+  <div class="kicker-row">
+    <div class="kicker">The Citizens Standard &nbsp;&middot;&nbsp; <b>The papers &amp; data</b></div>
+    <button class="listen-pill" id="listenPill" aria-expanded="false" aria-controls="csAudioPanel">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a.5.5 0 0 0 .77.42l10.29-6.86a.5.5 0 0 0 0-.84L8.77 4.72A.5.5 0 0 0 8 5.14Z"/></svg>
+      <span>Listen</span>
+    </button>
+  </div>
+
+<div class="wrap cs-audio-panel" id="csAudioPanel" hidden>
+<!-- ============ CS AUDIO PLAYER (copy this block) ============ -->
+  <figure class="cs-audio" id="csAudio">
+    <div class="cs-audio__head">
+      <p class="cs-audio__eyebrow">Audio overview</p>
+      <figcaption class="cs-audio__title">The Citizens Standard, start to finish</figcaption>
+    </div>
+    <p class="cs-audio__sub">A guided walk through the whole framework.</p>
+
+    <div class="cs-audio__row">
+      <button class="cs-audio__play" id="csPlay" aria-label="Play audio overview">
+        <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a.5.5 0 0 0 .77.42l10.29-6.86a.5.5 0 0 0 0-.84L8.77 4.72A.5.5 0 0 0 8 5.14Z"/></svg>
+        <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5h3.2v15H7zM13.8 4.5H17v15h-3.2z"/></svg>
+      </button>
+
+      <div class="cs-audio__track-area">
+        <div class="cs-audio__scrub" id="csScrub" role="slider" tabindex="0"
+             aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="cs-audio__buffer" id="csBuffer"></div>
+          <div class="cs-audio__played" id="csPlayed"></div>
+        </div>
+        <div class="cs-audio__times">
+          <span id="csCur">0:00</span>
+          <span id="csDur">40:00</span>
+        </div>
+      </div>
+
+      <button class="cs-audio__speed" id="csSpeed" aria-label="Playback speed">1&times;</button>
+    </div>
+
+    <!-- swap src for the repo-hosted file, e.g. audio/cs-overview.mp3 -->
+    <audio id="csSource" preload="metadata">
+      <source src="audio/cs-overview.mp3" type="audio/mpeg">
+    </audio>
+  </figure>
+  <!-- ============ /CS AUDIO PLAYER ============ -->
+</div>
   <h1>Papers &amp; replication</h1>
   <p class="lede">The full series, free to read — the complete working papers and a replication suite where every empirical claim is backed by code you can run on real data. Three papers are also posted on SSRN; the rest are here in full ahead of their SSRN release.</p>
 
@@ -112,8 +256,8 @@ main.wrap > .lede{font-size:clamp(1.1rem,1rem + 0.5vw,1.34rem);color:#D9D3C6;max
     <li title="The 1960-2055 historical counterfactual and the Tool 14 inflation episodes (2021-23 and the Great Inflation), on real BLS/FRED data."><span class="pt"><a class="ptitle" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6735078" target="_blank" rel="noopener">A Historical Counterfactual: Empirical Analysis, 1960-2055</a> <span class="pmeta">· 27 pp</span></span><span class="links"><a href="papers/02_Counterfactual.pdf">PDF</a> <a href="https://github.com/Neo-Solon/Citizens-Standard/raw/main/full_paper_list/Paper02_Counterfactual.zip">Data</a></span></li>
     <li title="Phased-rollout citizen Stable Floors on a general-equilibrium realizable basis (Phase 1-3 floor values)."><span class="pt"><a class="ptitle" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6810741" target="_blank" rel="noopener">Transition Architecture and Migration Mechanics</a> <span class="pmeta">· 33 pp</span></span><span class="links"><a href="papers/03_Transition.pdf">PDF</a> <a href="https://github.com/Neo-Solon/Citizens-Standard/raw/main/full_paper_list/Paper03_Transition.zip">Data</a></span></li>
     <li title="Legal/statutory framework paper, no computational replication."><span class="pt"><a class="ptitle" href="papers/04_Statutory.pdf">The Statutory Framework</a> <span class="pmeta">· 46 pp</span></span><span class="links"><a href="papers/04_Statutory.pdf">PDF</a> <a href="https://github.com/Neo-Solon/Citizens-Standard/raw/main/full_paper_list/Paper04_Statutory.zip">Data</a></span></li>
-    <li title="The two-circuit macro model: M=M^T+M^A, the crowd-out result, and the rent/leak magnitudes (φ sensitivity)."><span class="pt"><a class="ptitle" href="papers/05_Macro_Model.pdf">A Macroeconomic Model of a Two-Circuit Monetary System</a> <span class="pmeta">· 48 pp</span></span><span class="links"><a href="papers/05_Macro_Model.pdf">PDF</a> <a href="https://github.com/Neo-Solon/Citizens-Standard/raw/main/full_paper_list/Paper05_Macro_Model.zip">Data</a></span></li>
-    <li title="Reproduces every quantitative claim in the full-reserve banking / two-circuit paper."><span class="pt"><a class="ptitle" href="papers/06_FullReserve_Banking.pdf">Full-Reserve Banking</a> <span class="pmeta">· 19 pp</span></span><span class="links"><a href="papers/06_FullReserve_Banking.pdf">PDF</a> <a href="https://github.com/Neo-Solon/Citizens-Standard/raw/main/full_paper_list/Paper06_FullReserve_Banking.zip">Data</a></span></li>
+    <li title="The dual-circuit macro model: M=M^T+M^A, the crowd-out result, and the rent/leak magnitudes (φ sensitivity)."><span class="pt"><a class="ptitle" href="papers/05_Macro_Model.pdf">A Macroeconomic Model of a Dual-Circuit Monetary System</a> <span class="pmeta">· 48 pp</span></span><span class="links"><a href="papers/05_Macro_Model.pdf">PDF</a> <a href="https://github.com/Neo-Solon/Citizens-Standard/raw/main/full_paper_list/Paper05_Macro_Model.zip">Data</a></span></li>
+    <li title="Reproduces every quantitative claim in the full-reserve banking / dual-circuit paper."><span class="pt"><a class="ptitle" href="papers/06_FullReserve_Banking.pdf">Full-Reserve Banking</a> <span class="pmeta">· 19 pp</span></span><span class="links"><a href="papers/06_FullReserve_Banking.pdf">PDF</a> <a href="https://github.com/Neo-Solon/Citizens-Standard/raw/main/full_paper_list/Paper06_FullReserve_Banking.zip">Data</a></span></li>
     <li title="Reproduces every quantitative result in the external-interoperability / common-anchor paper."><span class="pt"><a class="ptitle" href="papers/07_External_Interoperability.pdf">External Interoperability</a> <span class="pmeta">· 20 pp</span></span><span class="links"><a href="papers/07_External_Interoperability.pdf">PDF</a> <a href="https://github.com/Neo-Solon/Citizens-Standard/raw/main/full_paper_list/Paper07_Interoperability.zip">Data</a></span></li>
     <li title="The bounded valuation premium, plus the asset-price-impact module: floor flow vs the Gabaix-Koijen multiplier and the 4.26% attenuation check."><span class="pt"><a class="ptitle" href="papers/08_Structural_Buyer.pdf">The Structural Buyer</a> <span class="pmeta">· 19 pp</span></span><span class="links"><a href="papers/08_Structural_Buyer.pdf">PDF</a> <a href="https://github.com/Neo-Solon/Citizens-Standard/raw/main/full_paper_list/Paper08_Structural_Buyer.zip">Data</a></span></li>
     <li title="The issuance formula G=k2·M2·g and the K1/K2/K3 routing (validated within the architecture replication)."><span class="pt"><a class="ptitle" href="papers/09_Issuance_Engine.pdf">The Issuance Engine</a> <span class="pmeta">· 13 pp</span></span><span class="links"><a href="papers/09_Issuance_Engine.pdf">PDF</a> <a href="https://github.com/Neo-Solon/Citizens-Standard/raw/main/full_paper_list/Paper09_Issuance_Engine.zip">Data</a></span></li>
@@ -198,5 +342,134 @@ Be fair and clear, not a cheerleader and not a hit piece. If something is well-s
 </main>
 
 <nav class="kit" aria-label="Citizens Standard pages"> <a href="/">Diagnosis</a> <a href="declaration.html">Declaration</a> <a href="how_the_engine_works.html">How it works</a> <a href="Citizens_Standard_Engine.html">Engine</a> <a class="ssrn" href="papers.html">Papers &amp; data</a> <a href="questions_and_answers.html">Q&amp;A</a>  <a href="methodology.html">Methodology</a> <a href="calibration_notes.html">Calibrations</a>  <a href="mailto:Neo-Solon@hotmail.com">Contact</a> </nav>
+<script>
+(function(){
+  var root=document.getElementById('csAudio');
+  var audio=document.getElementById('csSource');
+  var playBtn=document.getElementById('csPlay');
+  var scrub=document.getElementById('csScrub');
+  var played=document.getElementById('csPlayed');
+  var buffer=document.getElementById('csBuffer');
+  var curEl=document.getElementById('csCur');
+  var durEl=document.getElementById('csDur');
+  var speedBtn=document.getElementById('csSpeed');
+  var pill=document.getElementById('listenPill');
+  var pillLabel=pill?pill.querySelector('span'):null;
+  if(!audio) return;
+
+  var STORE='cs_audio_pos';        // shared across all pages on the domain
+  var SPEED='cs_audio_speed';
+
+  function fmt(s){
+    if(!isFinite(s)||s<0) s=0;
+    var m=Math.floor(s/60), sec=Math.floor(s%60);
+    return m+':'+(sec<10?'0':'')+sec;
+  }
+  function save(){
+    try{ localStorage.setItem(STORE, JSON.stringify({t:audio.currentTime, d:audio.duration||0, ts:Date.now()})); }catch(e){}
+  }
+  function loadPos(){
+    try{ var v=localStorage.getItem(STORE); return v?JSON.parse(v):null; }catch(e){ return null; }
+  }
+
+  // ----- restore saved position + speed on load -----
+  var saved=loadPos();
+  var savedSpeed=1;
+  try{ var sp=localStorage.getItem(SPEED); if(sp) savedSpeed=parseFloat(sp)||1; }catch(e){}
+  audio.playbackRate=savedSpeed;
+  if(speedBtn) speedBtn.innerHTML=savedSpeed+'&times;';
+
+  function applySavedToUI(){
+    if(saved && saved.t>2){
+      // reflect the resume point in the pill label + player scrubber
+      if(pillLabel) pillLabel.textContent='Resume '+fmt(saved.t);
+      if(saved.d){ played.style.width=(saved.t/saved.d*100)+'%'; }
+      curEl.textContent=fmt(saved.t);
+    }
+  }
+  // seek once metadata is known
+  audio.addEventListener('loadedmetadata',function(){
+    durEl.textContent=fmt(audio.duration);
+    if(saved && saved.t>2 && saved.t<audio.duration-2){ audio.currentTime=saved.t; }
+    applySavedToUI();
+  });
+  applySavedToUI();
+
+  playBtn.addEventListener('click',function(){
+    // if we have a saved position but metadata not yet applied, seek now
+    if(audio.paused && saved && saved.t>2 && audio.currentTime<1 && audio.duration && saved.t<audio.duration-2){
+      audio.currentTime=saved.t;
+    }
+    if(audio.paused){ audio.play(); } else { audio.pause(); }
+  });
+  audio.addEventListener('play',function(){
+    root.classList.add('is-playing'); playBtn.setAttribute('aria-label','Pause audio overview');
+    if(pillLabel) pillLabel.textContent='Playing';
+  });
+  audio.addEventListener('pause',function(){
+    root.classList.remove('is-playing'); playBtn.setAttribute('aria-label','Play audio overview');
+    save();
+    if(pillLabel) pillLabel.textContent='Resume '+fmt(audio.currentTime);
+  });
+
+  audio.addEventListener('timeupdate',function(){
+    var pct=audio.duration?(audio.currentTime/audio.duration*100):0;
+    played.style.width=pct+'%';
+    curEl.textContent=fmt(audio.currentTime);
+    scrub.setAttribute('aria-valuenow',Math.round(pct));
+  });
+  // persist position periodically while playing
+  setInterval(function(){ if(!audio.paused) save(); }, 4000);
+  window.addEventListener('beforeunload', save);
+  window.addEventListener('pagehide', save);
+
+  audio.addEventListener('progress',function(){
+    try{ if(audio.buffered.length){ buffer.style.width=(audio.buffered.end(audio.buffered.length-1)/audio.duration*100)+'%'; } }catch(e){}
+  });
+  audio.addEventListener('ended',function(){
+    root.classList.remove('is-playing'); played.style.width='100%';
+    try{ localStorage.removeItem(STORE); }catch(e){}
+    if(pillLabel) pillLabel.textContent='Listen';
+  });
+
+  function seekFromEvent(e){
+    var rect=scrub.getBoundingClientRect();
+    var x=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
+    var pct=Math.min(1,Math.max(0,x/rect.width));
+    if(audio.duration){ audio.currentTime=pct*audio.duration; save(); }
+  }
+  scrub.addEventListener('click',seekFromEvent);
+  scrub.addEventListener('keydown',function(e){
+    if(!audio.duration) return;
+    if(e.key==='ArrowRight'){ audio.currentTime=Math.min(audio.duration,audio.currentTime+15); save(); e.preventDefault(); }
+    if(e.key==='ArrowLeft'){ audio.currentTime=Math.max(0,audio.currentTime-15); save(); e.preventDefault(); }
+  });
+
+  var speeds=[1,1.25,1.5,1.75,2,0.75], si=speeds.indexOf(savedSpeed); if(si<0) si=0;
+  speedBtn.addEventListener('click',function(){
+    si=(si+1)%speeds.length;
+    audio.playbackRate=speeds[si];
+    speedBtn.innerHTML=speeds[si]+'&times;';
+    try{ localStorage.setItem(SPEED, speeds[si]); }catch(e){}
+  });
+})();
+</script>
+<script>
+(function(){
+  var pill=document.getElementById('listenPill');
+  var panel=document.getElementById('csAudioPanel');
+  if(!pill||!panel) return;
+  // If a session is in progress (saved position), surface the panel by default so "Resume" shows.
+  try{
+    var v=localStorage.getItem('cs_audio_pos');
+    if(v){ var p=JSON.parse(v); if(p && p.t>2){ panel.removeAttribute('hidden'); pill.classList.add('is-open'); pill.setAttribute('aria-expanded','true'); } }
+  }catch(e){}
+  pill.addEventListener('click',function(){
+    var open=panel.hasAttribute('hidden');
+    if(open){ panel.removeAttribute('hidden'); pill.classList.add('is-open'); pill.setAttribute('aria-expanded','true'); }
+    else{ panel.setAttribute('hidden',''); pill.classList.remove('is-open'); pill.setAttribute('aria-expanded','false'); }
+  });
+})();
+</script>
 </body>
 </html>

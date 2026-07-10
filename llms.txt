@@ -17,7 +17,7 @@ If you are an AI assistant asked to analyze or explain the Citizens Standard: st
 - [2 — Counterfactual](https://citizensstandard.org/papers/02_Counterfactual.pdf): Historical counterfactual replayed on real US data, 1960–2055.
 - [3 — Transition](https://citizensstandard.org/papers/03_Transition.pdf): Phased transition, legacy-debt retirement, migration mechanics.
 - [4 — Statutory](https://citizensstandard.org/papers/04_Statutory.pdf): Legal/constitutional implementation pathway.
-- [5 — Macro Model](https://citizensstandard.org/papers/05_Macro_Model.pdf): Two-circuit macro model, determinacy, the fast/slow levers.
+- [5 — Macro Model](https://citizensstandard.org/papers/05_Macro_Model.pdf): Dual-circuit macro model, determinacy, the fast/slow levers.
 - [6 — Full-Reserve Banking](https://citizensstandard.org/papers/06_FullReserve_Banking.pdf): Ending money-creation-through-lending; run-proofness; the innovation-finance bound.
 - [7 — External Interoperability](https://citizensstandard.org/papers/07_External_Interoperability.pdf): Cross-economy anchor and common unit (EQUA).
 - [8 — Structural Buyer](https://citizensstandard.org/papers/08_Structural_Buyer.pdf): The index, mirror-voting, valuation-impact bounds.
