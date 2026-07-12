@@ -1,0 +1,55 @@
+{
+  "test": "PPP half-life ANNUAL, with real Hong Kong CPI (de-tautologized), apples-to-apples",
+  "why": "the earlier HKD result used nominal rate only (no HK CPI) \u2014 potentially a peg tautology. This adds real HK inflation to test if the anchor stabilizes the REAL rate.",
+  "headline": "Adding real HK CPI OVERTURNS the earlier HKD result. HKD real rate is NO LONGER clearly stationary.",
+  "HKD_nominal_vs_real": {
+    "nominal_only_ADF_p": 0.0,
+    "nominal_half_life_yr": 1.4,
+    "nominal_qvar": 0.028,
+    "real_with_HKcpi_ADF_p": 0.681,
+    "real_half_life_yr": 3.5,
+    "real_qvar": 0.051
+  },
+  "annual_results": {
+    "HKD": {
+      "regime": "anchored_USD",
+      "half_life_yr": 3.5,
+      "ADF_p": 0.681,
+      "qvar": 0.051
+    },
+    "CAD": {
+      "regime": "floating",
+      "half_life_yr": 4.4,
+      "ADF_p": 0.179,
+      "qvar": 0.074
+    },
+    "SEK": {
+      "regime": "floating",
+      "half_life_yr": 7.1,
+      "ADF_p": 0.215,
+      "qvar": 0.123
+    },
+    "DKK": {
+      "regime": "EUR_anchored",
+      "half_life_yr": 3.8,
+      "ADF_p": 0.05,
+      "qvar": 0.109
+    },
+    "KRW": {
+      "regime": "floating",
+      "half_life_yr": 5.5,
+      "ADF_p": 0.373,
+      "qvar": 0.143
+    },
+    "CHF": {
+      "regime": "soft_float",
+      "half_life_yr": 15.8,
+      "ADF_p": 0.388,
+      "qvar": 0.114
+    }
+  },
+  "interpretation": "Hong Kong's currency board fixes the NOMINAL rate, but HK ran large inflation differentials vs the US (double-digit in the 1980s-90s), so its REAL exchange rate drifted like a floater's. A nominal peg did NOT deliver a stable REAL exchange rate. HKD's real-rate half-life (3.5yr) and variance (0.051) are only modestly better than floaters and overlap them (CAD 4.4yr).",
+  "what_this_means_for_CS": "This CUTS AGAINST the simple CS FX-stability story. Even a HARD nominal anchor (HKD board) failed to stabilize the real exchange rate once real inflation is included. A CS currency anchors INFLATION (not the nominal rate) \u2014 which is arguably BETTER positioned for real-rate stability than HKD (since it targets the very thing \u2014 inflation differentials \u2014 that wrecked HKD's real rate). BUT that is a HOPEFUL INFERENCE, not shown: no CS-style currency exists to test, and this result shows the anchored analogue we DID have does not exhibit the claimed real-rate stability.",
+  "verdict": "HONEST NET on the FX interface: (1) monthly variance decomposition FAILED falsification; (2) volatility gap ~2x but confounded; (3) PPP half-life: floaters show the puzzle (robust), and the one hard-anchor analogue (HKD) does NOT show real-rate stability once its CPI is included. The CS FX-stability claim is NOT empirically supported by the available analogues. The strongest honest statement is a NULL/UNPROVEN, possibly with a theoretical argument that CS's inflation-anchor targets exactly what broke HKD \u2014 but that argument is untested.",
+  "audio_implication": "Audio international segment MUST stay 'under-specified, say so honestly.' If anything this STRENGTHENS the case for NOT claiming FX stability \u2014 the analogue evidence is null-to-negative, not supportive."
+}

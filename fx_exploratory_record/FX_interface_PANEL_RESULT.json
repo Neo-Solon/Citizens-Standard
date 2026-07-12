@@ -1,0 +1,33 @@
+{
+  "test": "FX interface Line B \u2014 7-currency panel (real data)",
+  "data": "user FRED: DEXHKUS,DEXDNUS,DEXSZUS,DEXJPUS,DEXCAUS,DEXSDUS,DEXKOUS (daily 2021-2026, monthly)",
+  "per_currency_annualized_vol": {
+    "HKD_board": 0.9,
+    "DKK_ERM2": 7.47,
+    "CHF_softfloat": 8.48,
+    "JPY_float": 10.7,
+    "CAD_float": 6.09,
+    "SEK_float": 10.67,
+    "KRW_float": 9.85
+  },
+  "group_means": {
+    "anchored": 4.18,
+    "floating": 9.33,
+    "soft_float_CHF": 8.48
+  },
+  "floating_over_anchored": "2.2x",
+  "clean_separation": false,
+  "key_findings": [
+    "Direction holds: anchored currencies less volatile on average (2.2x), but WEAKER and messier than the 2-currency pass (12x) suggested. Adding data corrected an over-clean result.",
+    "OVERLAP: DKK (anchored, 7.47%) > CAD (floating, 6.09%). The anchored/floating line is not clean.",
+    "METHODOLOGICAL CATCH: DKK is anchored to the EUR, not the USD \u2014 so vs USD it inherits EUR/USD volatility and looks like a floater. 'Anchored' is relative to the anchor target. Only HKD (hard board vs USD) is truly USD-anchored, hence its extreme 0.90%.",
+    "CS IMPLICATION (refined): a CS currency anchors INFLATION and floats nominally \u2014 so vs USD it behaves like a credibly-inflation-anchored FLOATER, not a hard peg. The realistic CS FX-stability effect is MODEST (~2x range), not dramatic (12x). Only a hard nominal USD peg gets HKD-like stability, which CS is NOT."
+  ],
+  "honest_caveats": [
+    "Still short window (2021-2026) including the 2022 dollar surge \u2014 inflates floating vols.",
+    "n=2 anchored (and one, HKD, is USD-pegged; the other, DKK, is EUR-pegged) \u2014 the 'anchored' group is not homogeneous. Needs USD-relevant anchors and more of them.",
+    "Line A (PPP/UIP decomposition) still not run \u2014 needs partner CPI + policy rates.",
+    "Vol vs USD conflates 'anchor to USD' with 'anchor to anything' \u2014 a cleaner design would measure vol vs the currency each is actually anchored to, plus vs a common numeraire."
+  ],
+  "verdict": "Real, honest first panel result. The anchor effect is REAL but MODEST (~2x) once you go beyond the HKD hard-peg extreme. This is a more defensible \u2014 and more useful \u2014 number than the 12x two-currency teaser."
+}

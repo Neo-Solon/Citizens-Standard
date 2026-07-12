@@ -1,0 +1,46 @@
+{
+  "test": "FX interface Line A \u2014 variance decomposition (real data)",
+  "data": "user FRED: DEX* FX + OECD CPI (JP,CA,SE,KR,DK) + IR3TIB 3-month rates + US CPI/rate",
+  "excluded": {
+    "JPY": "CPI series ends 2021-06, no FX-window overlap",
+    "CHF": "CPI not uploaded"
+  },
+  "monthly_result": {
+    "CAD_cs_removable": 0.043,
+    "SEK_cs_removable": 0.067,
+    "DKK_cs_removable": 0.131,
+    "KRW_cs_removable": 0.06,
+    "mean_cs_removable_share": 0.075,
+    "residual_share": "87-96%",
+    "FALSIFICATION_F1": "TRIGGERED \u2014 monetary share 7.5% < 10% threshold at monthly frequency"
+  },
+  "falsification_fired": true,
+  "horizon_investigation": {
+    "finding": "the near-zero monthly monetary share is a HORIZON ARTIFACT. Inflation-differential R\u00b2 rises sharply with horizon:",
+    "CAD": {
+      "1m": 0.04,
+      "12m": 0.19,
+      "24m": 0.22
+    },
+    "SEK": {
+      "1m": 0.0,
+      "12m": 0.13,
+      "24m": 0.35
+    },
+    "DKK": {
+      "1m": 0.04,
+      "12m": 0.37,
+      "24m": 0.41
+    },
+    "interpretation": "monthly FX ~ random walk (Meese-Rogoff puzzle); inflation differentials bind at MULTI-YEAR horizons where they explain 20-40% of the cumulative FX move \u2014 the horizon that matters for CS (trade competitiveness plays out over years)."
+  },
+  "honest_verdict": "The PRE-REGISTERED monthly test FAILED falsification F1 (monetary share 7.5% < 10%). A horizon analysis shows the share is horizon-dependent and reaches 20-40% at 1-2 years. This is a legitimate methodological finding (PPP is long-horizon, textbook), BUT switching horizon AFTER seeing the result is post-hoc. Clean path: RE-PRE-REGISTER Line A at a multi-year horizon and RE-RUN. Do NOT claim the anchor 'works' on the strength of a horizon switch made after a failed monthly test.",
+  "what_this_means_for_the_claim": "On the pre-registered test, FX stability is NOT a demonstrable CS advantage at monthly frequency. The long-horizon evidence is promising but must be tested under a fresh pre-registration to count. The audio's 'under-specified, say so honestly' framing remains correct \u2014 this does NOT upgrade it.",
+  "caveats": [
+    "short 2021-2026 window",
+    "n=21-45 months",
+    "KRW CPI ends 2023-11 (partial)",
+    "DKK anchored to EUR not USD",
+    "long-horizon n very small (21-22) \u2014 suggestive not conclusive"
+  ]
+}

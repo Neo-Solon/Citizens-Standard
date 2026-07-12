@@ -1,0 +1,17 @@
+{
+  "source": "SYNTHETIC (calibrated to published moments)",
+  "contrast": {
+    "anchored_fx_vol_mean": 0.02486774886434356,
+    "floating_fx_vol_mean": 0.09988245782269783,
+    "anchored_excess_mean": 2.7231124696232736,
+    "floating_excess_mean": 4.59857976225334,
+    "fx_vol_diff": 0.07501470895835427,
+    "excess_diff": 1.8754672926300668
+  },
+  "falsification": {
+    "mean_monetary_share": 0.2852663829908516,
+    "F1_triggered": false,
+    "F2_triggered": false,
+    "claim_survives": true
+  }
+}

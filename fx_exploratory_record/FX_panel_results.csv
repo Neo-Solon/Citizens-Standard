@@ -1,0 +1,8 @@
+currency,regime,vol,n,desc
+HKD,anchored,0.00895621272107227,60,currency board
+DKK,anchored,0.074660213546516,60,ERM-II hard band
+CHF,float_soft,0.08481726030375349,60,managed/low-inflation float
+JPY,floating,0.10704516638014151,60,free float
+CAD,floating,0.060935722395782224,60,free float
+SEK,floating,0.10668624996760302,60,free float
+KRW,floating,0.09854924083734198,60,free float

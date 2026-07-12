@@ -1,0 +1,20 @@
+{
+  "test": "FX interface Line B (anchored vs floating) \u2014 FIRST real-data pass",
+  "data": "user FRED files DEXHKUS, DEXJPUS (daily 2021-07..2026-07, aggregated monthly)",
+  "results": {
+    "HKD_anchored_annualized_vol": 0.009,
+    "JPY_floating_annualized_vol": 0.107,
+    "ratio_floating_over_anchored": "12.0x",
+    "HKD_total_band_5yr": "1.2%",
+    "JPY_total_range_5yr": "47.8%"
+  },
+  "interpretation": "A rule-anchored currency (HKD board) shows ~12x lower FX volatility vs USD than a free float (JPY) over the same window. Direction and magnitude consistent with the model's core hypothesis: fixing one side's nominal anchor removes a large share of bilateral-rate variance.",
+  "honest_caveats": [
+    "TWO currencies only \u2014 a demonstration, not a publishable result. Real strength needs the full anchored/floating panel (8-14 currencies) from the protocol.",
+    "HKD is a HARD PEG, the low-volatility BRACKET. A CS currency floats nominally while anchoring inflation, so it sits BETWEEN peg and free-float \u2014 this pass shows the bracket's low end, not the CS point.",
+    "Short window (2021-2026, n~60 months) that happens to include the 2022 JPY slide \u2014 a single stress episode inflates the floating vol. Longer sample needed.",
+    "Line A (variance decomposition into PPP/UIP/residual) NOT run \u2014 needs HK + Japan CPI and policy rates, not uploaded. This pass is Line B only.",
+    "No causal identification: HKD's low vol is partly the peg mechanism itself, not purely an inflation anchor. Bracket logic, not a clean CS estimate."
+  ],
+  "verdict": "Consistent with the model at a first pass; clearly labeled preliminary. Upgrades to a real result when the full currency panel + CPI + rates are added."
+}

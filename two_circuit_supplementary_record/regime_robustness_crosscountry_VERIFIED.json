@@ -1,0 +1,59 @@
+{
+  "analysis": "Cross-country + cross-measure robustness of the transactional-money / inflation regime result",
+  "date": "2026-07-10",
+  "motivation": "Methodology audit showed the US Divisia high-regime flip leans on the 1970s; widen across measure and country.",
+  "methodology": "Non-overlapping annual obs (overlap-corrected). OECD simple-sum narrow money (MANMM101) vs own next-year CPI, US and Japan, like-for-like.",
+  "US_OECD_narrow": {
+    "all_R2": 0.032,
+    "high_ge4pct_R2": 0.162,
+    "low_R2": 0.197,
+    "above_median_R2": 0.026,
+    "below_median_R2": 0.448,
+    "reading": "OECD narrow money predicts US inflation BETTER in LOW regimes \u2014 OPPOSITE of the Divisia-M1 high-regime flip found earlier."
+  },
+  "Japan_OECD_narrow": {
+    "all_R2": 0.373,
+    "high_ge4pct_R2": 0.224,
+    "low_R2": 0.241,
+    "above_median_R2": 0.352,
+    "below_median_R2": 0.007,
+    "reading": "Japan DOES show transactional money mattering more in higher-inflation periods (0.352 vs 0.007 on median split)."
+  },
+  "critical_finding": "The 'transactional aggregate wins in high-inflation regimes' result is NOT robust to the narrow-money measure. Divisia M1 (user-cost weighted) showed the flip; OECD simple-sum narrow money shows the reverse for the US. The two countries also disagree on the same OECD measure.",
+  "what_survives": [
+    "The two circuits are distinct objects (Divisia-M1 vs M2 growth corr 0.68) \u2014 robust, measure-independent.",
+    "The narrow-money/inflation relationship IS regime-dependent in both countries \u2014 real but weaker claim.",
+    "Deeper framework point holds: no single aggregate mechanically reads inflation; which one carries signal depends on measure, country, regime."
+  ],
+  "what_does_NOT_survive": "'Transaction-active aggregate reliably out-predicts broad money in high-inflation regimes' as a universal law. It is measure- and country-specific.",
+  "caveat_on_earlier_result": "The earlier two_circuit_divergence_VERIFIED.json high-regime flip (Divisia 0.138 vs M2 0.075) is real for THAT measure but should NOT be presented as measure-robust. Flag it accordingly if cited.",
+  "honest_verdict": "Widening WEAKENED the strong claim (correctly). Kept: circuits are distinct + relationship is regime-conditional. Lost: a stable universal direction. This is the accurate, defensible state.",
+  "japan_narrow_vs_broad_horserace": {
+    "basis": "OECD MEI: narrow MANMM101 vs broad MABMM301, own next-yr CPI, non-overlapping annual, n=40 (1981-2020)",
+    "all_periods": {
+      "narrow_R2": 0.026,
+      "broad_R2": 0.354,
+      "winner": "BROAD"
+    },
+    "above_median": {
+      "narrow_R2": 0.062,
+      "broad_R2": 0.299,
+      "winner": "BROAD"
+    },
+    "below_median": {
+      "narrow_R2": 0.005,
+      "broad_R2": 0.072,
+      "winner": "BROAD"
+    },
+    "critical_caveat": "Japan post-1980 is a chronic LOW-inflation economy: median 0.6%, max 7.4%, only 1 year >=4%. It cannot test the high-money-growth regime the framework's claim is about, because it lacks that regime. What it shows: in low-inflation conditions the transactional aggregate is NOT the better inflation predictor \u2014 broad wins in every regime available.",
+    "reading": "Direct contradiction of a naive 'narrow/transactional is universally the better inflation object' reading. Consistent with regime-dependence (narrow matters only in high-inflation regimes), but Japan can't supply that regime to confirm it."
+  },
+  "updated_scorecard": {
+    "survives": "Paper 10's ACTUAL claim: CORRECTED (Divisia/composition) transaction aggregates out-inform SIMPLE-SUM M2 in HIGH-money-growth regimes, on US data, as a lower-bound test. Reproduces.",
+    "does_not_generalize_to": [
+      "OECD simple-sum narrow money (even US)",
+      "Japan (broad wins; ~no high regime to test)"
+    ],
+    "bottom_line": "The Mt-beats-M2 result is US-and-high-regime-and-corrected-aggregate specific. It is NOT a universal 'transactional is the better inflation measure' law. Paper 10 already states it at exactly this bounded strength and refuses the overclaim; the papers need no edit."
+  }
+}

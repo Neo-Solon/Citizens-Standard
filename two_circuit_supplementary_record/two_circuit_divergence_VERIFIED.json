@@ -1,0 +1,51 @@
+{
+  "analysis": "Two-circuit (transactional vs broad money) divergence \u2014 grounded on real FRED/CFS data",
+  "date": "2026-07-10",
+  "question": "Do the transactional (MT) and asset/broad circuits vary? Grounded across episodes.",
+  "artifact_free_measure": "CFS Divisia M1 (continuous across the May-2020 M1 redefinition; user-cost weighted)",
+  "caveat_on_naive_MT": "Naive currency+demand MT gave +113.9% for 2020-22 but is contaminated by the May-2020 M1 reclassification. Divisia M1 strips the artifact: true surge +63.8%.",
+  "2020_22_episode": {
+    "divisia_m1_growth_pct": 63.8,
+    "m2_growth_pct": 39.7,
+    "ratio": 1.61,
+    "cpi_peak_pct": 9.0
+  },
+  "cross_episode_ratios": {
+    "2020-22_COVID": 1.61,
+    "1970s_Great_Inflation": 0.75,
+    "late70s_1980_peak": 0.83,
+    "2004-06": 0.79,
+    "2008_GFC": 1.37,
+    "2015-19_calm": 1.23,
+    "1995-99_calm": 0.95
+  },
+  "key_finding_1_distinct_objects": {
+    "corr_divisiaM1_vs_M2_growth": 0.682,
+    "spread_std": 4.4,
+    "spread_range": [
+      -8.2,
+      19.0
+    ],
+    "reading": "Circuits are NOT locked together; correlation 0.68 not ~1.0 means genuinely independent information."
+  },
+  "key_finding_2_regime_flip": {
+    "R2_next12m_CPI_all_periods": {
+      "divisia_m1": 0.007,
+      "m2": 0.106
+    },
+    "R2_next12m_CPI_high_regime_ge4pct": {
+      "divisia_m1": 0.138,
+      "m2": 0.075
+    },
+    "n_all": 687,
+    "n_high": 246,
+    "reading": "In normal times M2 predicts inflation better and transactional tells you ~nothing; in HIGH-inflation regimes it flips and the transactional aggregate wins. Matches the framework's core claim and the composition-MT result (0.186 vs 0.043)."
+  },
+  "honest_limits": [
+    "Divergence DIRECTION is episode-specific: transactional led in 2020-22 but M2 led in the 1970s. NOT 'transactional always runs hot.'",
+    "The defensible general claim is regime-conditional PREDICTIVE power, not a constant growth ratio.",
+    "MA (asset circuit) has no clean dollar measure here (Divisia is an index); only the relative-growth / residual direction is supportable.",
+    "Single-country, and the high-regime n is dominated by a few episodes."
+  ],
+  "verdict": "Grounded YES: the two circuits demonstrably vary (corr 0.68), and the transactional aggregate out-predicts M2 for inflation specifically in high-inflation regimes (0.138 vs 0.075). The 2020-22 divergence is real and artifact-free (1.6x) but episode-specific in direction."
+}

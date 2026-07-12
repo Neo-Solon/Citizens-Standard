@@ -1,0 +1,36 @@
+{
+  "test": "PPP half-life / real-exchange-rate mean-reversion (frozen pre-registered protocol)",
+  "data": "FRED DEX* FX 1971-2026 (55yr; KRW/HKD 45yr) + OECD CPI; US CPIAUCSL",
+  "half_lives_years": {
+    "HKD_nominal": 1.4,
+    "DKK": 4.9,
+    "CAD": 5.7,
+    "KRW": 7.3,
+    "SEK": 10.4,
+    "CHF": 15.8,
+    "JPY": 24.6
+  },
+  "ADF_pvalues": {
+    "HKD": 0.0,
+    "DKK": 0.313,
+    "CAD": 0.251,
+    "SEK": 0.469,
+    "CHF": 0.364,
+    "KRW": 0.42,
+    "JPY": 0.643
+  },
+  "robust_finding": "Floating real exchange rates behave like near-random-walks (ADF cannot reject unit root, p>0.25 for ALL floaters) \u2014 the classic Rogoff PPP puzzle. This half is solid and expected.",
+  "suggestive_finding": "The one USD-anchored currency (HKD) has a far more stable, stationary measured rate (ADF p=0.000, half-life 1.4yr, variance 0.028) than any floater.",
+  "falsification": "Protocol G1/G2 NOT triggered \u2014 anchored reverts faster + floaters can't reject unit root. Claim SURVIVES on this test.",
+  "CRITICAL_CAVEAT": "HKD result is PROVISIONAL and partly TAUTOLOGICAL: no Hong Kong CPI was available, so HKD's q used the NOMINAL rate only. A nominal peg fixes S by construction, so its 'stability' is largely the peg mechanism, not evidence about the REAL rate. A valid HKD real-rate test REQUIRES Hong Kong CPI (P_HK). Until then, HKD's stationarity is not a clean real-exchange-rate result.",
+  "what_it_shows": "Floaters exhibit the PPP puzzle (robust). A hard nominal anchor yields a more stable measured rate (suggestive, but needs HK CPI to be non-tautological).",
+  "what_it_does_NOT_show": "That a CS-style INFLATION anchor (nominal FLOAT + rule-fixed inflation) would stabilize the REAL rate. HKD is a hard nominal peg, not that object. The CS case remains BRACKETED between HKD (hard peg) and floaters, unobserved.",
+  "half_life_precision_warning": "Point half-lives are notoriously imprecise (literature CIs span years). Only the ADF stationary/non-stationary distinction is reliable; do not cite JPY '24.6yr' etc. as precise.",
+  "verdict": "Stronger and cleaner than the monthly Line A, and survives its own falsification \u2014 BUT the anchored side rests on HKD, whose result needs Hong Kong CPI to not be a nominal-peg tautology. NET: promising, provisional, still does NOT upgrade the audio. The honest statement is 'floating real rates don't mean-revert (puzzle); a hard anchor appears to help; CS-style inflation-anchoring untested and bracketed.'",
+  "next_to_make_it_solid": [
+    "Hong Kong CPI (make HKD a real-rate test not nominal)",
+    "more USD-anchored currencies (SAR/AED + their CPI)",
+    "report half-life confidence intervals (Rossi/median-unbiased estimator)",
+    "the CS object itself is unobservable \u2014 state the bracket honestly rather than claiming the anchored point"
+  ]
+}
