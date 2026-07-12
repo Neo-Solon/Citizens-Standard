@@ -1,0 +1,96 @@
+{
+  "note": "Bundled snapshot is authoritative for published figures. status=discontinued cannot be refreshed. status=external/derived are not FRED series and are not auto-refreshed.",
+  "series": [
+    {
+      "id": "CURRSL",
+      "file": "CURRSL.csv",
+      "status": "active",
+      "desc": "Currency component of M1 (transactional)",
+      "vintage": "2026-07"
+    },
+    {
+      "id": "DEMDEPSL",
+      "file": "DEMDEPSL.csv",
+      "status": "active",
+      "desc": "Demand deposits (transactional)",
+      "vintage": "2026-07"
+    },
+    {
+      "id": "M2SL",
+      "file": "M2SL.csv",
+      "status": "active",
+      "desc": "M2 money stock (broad)",
+      "vintage": "2026-07"
+    },
+    {
+      "id": "CPIAUCSL",
+      "file": "CPIAUCSL.csv",
+      "status": "active",
+      "desc": "US CPI, all urban consumers",
+      "vintage": "2026-07"
+    },
+    {
+      "id": "WSAVNS",
+      "file": "WSAVNS.csv",
+      "status": "discontinued",
+      "desc": "Savings deposits (weekly) - ENDS 2020-04, FRED discontinued at M1 redefinition",
+      "vintage": "snapshot"
+    },
+    {
+      "id": "MDLM",
+      "file": "MDLM.csv",
+      "status": "active",
+      "desc": "Savings deposits (continues post-2020, splices to WSAVNS)",
+      "vintage": "2026-07"
+    },
+    {
+      "id": "STDSL",
+      "file": "STDSL.csv",
+      "status": "active",
+      "desc": "Small-denomination time deposits (asset circuit)",
+      "vintage": "2026-07"
+    },
+    {
+      "id": "MANMM101USM189S",
+      "file": "MANMM101USM189S.csv",
+      "status": "active",
+      "desc": "OECD narrow money, US",
+      "vintage": "2026-07"
+    },
+    {
+      "id": "MANMM101JPM189S",
+      "file": "MANMM101JPM189S.csv",
+      "status": "active",
+      "desc": "OECD narrow money, Japan",
+      "vintage": "2026-07"
+    },
+    {
+      "id": "MABMM301JPM189S",
+      "file": "MABMM301JPM189S.csv",
+      "status": "active",
+      "desc": "OECD broad money, Japan",
+      "vintage": "2026-07"
+    },
+    {
+      "id": "JPNCPIALLMINMEI",
+      "file": "JPNCPIALLMINMEI.csv",
+      "status": "active",
+      "desc": "Japan CPI (OECD MEI)",
+      "vintage": "2026-07"
+    },
+    {
+      "id": "divisia_dm1",
+      "file": "divisia_dm1.csv",
+      "status": "external",
+      "desc": "CFS Divisia M1 (Center for Financial Stability; continuous across 2020 redefinition)",
+      "vintage": "2026-07"
+    },
+    {
+      "id": "macro_1959_2026",
+      "file": "macro_1959_2026.csv",
+      "status": "derived",
+      "desc": "Assembled macro panel (M2SL, CPI, PCE) from Paper 10 package",
+      "vintage": "2026-07"
+    }
+  ]
+}
