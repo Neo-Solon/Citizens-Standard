@@ -276,7 +276,6 @@
     color:var(--amber,#E6A93E);z-index:9000;pointer-events:none;text-shadow:0 1px 4px var(--ink,#10161C)}
   body{padding-bottom:84px}
   /* branding: nav badge */
-  .csp-badge{width:26px;height:26px;border-radius:50%;vertical-align:middle;margin-right:8px}
   /* branding: hero banner (index only) */
   .csp-hero{width:100%;max-width:900px;height:auto;border-radius:12px;display:block;margin:0 auto 8px;
     box-shadow:0 8px 30px rgba(0,0,0,.45)}
@@ -284,7 +283,7 @@
 </head>
 <body>
 <nav class="sitenav" aria-label="Site navigation">
-  <div class="sitenav-inner"><img class="csp-badge" src="assets/cs-badge-64.png" alt="CS">
+  <div class="sitenav-inner">
     <a href="/" aria-current="page">Diagnosis</a>
     <a href="declaration.html">Declaration</a>
     <a href="how_the_engine_works.html">How it works</a>
@@ -566,133 +565,29 @@ Be fair and clear, not a cheerleader and not a hit piece. If something is well-s
 </div>
 
 <nav aria-label="Citizens Standard pages" style="max-width:980px;margin:56px auto 38px;padding:18px 24px 0;border-top:1px solid #27313C;display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;justify-content:center;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:.92rem;line-height:1.6;"> <a href="/" style="color:#E6A93E;text-decoration:none;font-weight:600;">Diagnosis</a> <a href="declaration.html" style="color:#9AA3AE;text-decoration:none;">Declaration</a> <a href="how_the_engine_works.html" style="color:#9AA3AE;text-decoration:none;">How it works</a> <a href="Citizens_Standard_Engine.html" style="color:#9AA3AE;text-decoration:none;">Engine</a> <a href="papers.html" style="color:#9AA3AE;text-decoration:none;">Papers &amp; data</a> <a href="questions_and_answers.html" style="color:#9AA3AE;text-decoration:none;">Q&amp;A</a> <a href="methodology.html" style="color:#9AA3AE;text-decoration:none;">Methodology</a> <a href="calibration_notes.html" style="color:#9AA3AE;text-decoration:none;">Calibrations</a>  <a href="mailto:Neo-Solon@hotmail.com" style="color:#9AA3AE;text-decoration:none;">Contact</a> </nav>
+<!-- old cs-audio panel player retired; audio now handled by the single persistent bottom bar -->
 <script>
-(function(){
-  var root=document.getElementById('csAudio');
-  var audio=document.getElementById('csSource');
-  var playBtn=document.getElementById('csPlay');
-  var scrub=document.getElementById('csScrub');
-  var played=document.getElementById('csPlayed');
-  var buffer=document.getElementById('csBuffer');
-  var curEl=document.getElementById('csCur');
-  var durEl=document.getElementById('csDur');
-  var speedBtn=document.getElementById('csSpeed');
-  var pill=document.getElementById('listenPill');
-  var pillLabel=pill?pill.querySelector('span'):null;
-  if(!audio) return;
-
-  var STORE='cs_audio_pos';        // shared across all pages on the domain
-  var SPEED='cs_audio_speed';
-
-  function fmt(s){
-    if(!isFinite(s)||s<0) s=0;
-    var m=Math.floor(s/60), sec=Math.floor(s%60);
-    return m+':'+(sec<10?'0':'')+sec;
-  }
-  function save(){
-    try{ localStorage.setItem(STORE, JSON.stringify({t:audio.currentTime, d:audio.duration||0, ts:Date.now()})); }catch(e){}
-  }
-  function loadPos(){
-    try{ var v=localStorage.getItem(STORE); return v?JSON.parse(v):null; }catch(e){ return null; }
-  }
-
-  // ----- restore saved position + speed on load -----
-  var saved=loadPos();
-  var savedSpeed=1;
-  try{ var sp=localStorage.getItem(SPEED); if(sp) savedSpeed=parseFloat(sp)||1; }catch(e){}
-  audio.playbackRate=savedSpeed;
-  if(speedBtn) speedBtn.innerHTML=savedSpeed+'&times;';
-
-  function applySavedToUI(){
-    if(saved && saved.t>2){
-      // reflect the resume point in the pill label + player scrubber
-      if(pillLabel) pillLabel.textContent='Resume '+fmt(saved.t);
-      if(saved.d){ played.style.width=(saved.t/saved.d*100)+'%'; }
-      curEl.textContent=fmt(saved.t);
-    }
-  }
-  // seek once metadata is known
-  audio.addEventListener('loadedmetadata',function(){
-    durEl.textContent=fmt(audio.duration);
-    if(saved && saved.t>2 && saved.t<audio.duration-2){ audio.currentTime=saved.t; }
-    applySavedToUI();
-  });
-  applySavedToUI();
-
-  playBtn.addEventListener('click',function(){
-    // if we have a saved position but metadata not yet applied, seek now
-    if(audio.paused && saved && saved.t>2 && audio.currentTime<1 && audio.duration && saved.t<audio.duration-2){
-      audio.currentTime=saved.t;
-    }
-    if(audio.paused){ audio.play(); } else { audio.pause(); }
-  });
-  audio.addEventListener('play',function(){
-    root.classList.add('is-playing'); playBtn.setAttribute('aria-label','Pause audio overview');
-    if(pillLabel) pillLabel.textContent='Playing';
-  });
-  audio.addEventListener('pause',function(){
-    root.classList.remove('is-playing'); playBtn.setAttribute('aria-label','Play audio overview');
-    save();
-    if(pillLabel) pillLabel.textContent='Resume '+fmt(audio.currentTime);
-  });
-
-  audio.addEventListener('timeupdate',function(){
-    var pct=audio.duration?(audio.currentTime/audio.duration*100):0;
-    played.style.width=pct+'%';
-    curEl.textContent=fmt(audio.currentTime);
-    scrub.setAttribute('aria-valuenow',Math.round(pct));
-  });
-  // persist position periodically while playing
-  setInterval(function(){ if(!audio.paused) save(); }, 4000);
-  window.addEventListener('beforeunload', save);
-  window.addEventListener('pagehide', save);
-
-  audio.addEventListener('progress',function(){
-    try{ if(audio.buffered.length){ buffer.style.width=(audio.buffered.end(audio.buffered.length-1)/audio.duration*100)+'%'; } }catch(e){}
-  });
-  audio.addEventListener('ended',function(){
-    root.classList.remove('is-playing'); played.style.width='100%';
-    try{ localStorage.removeItem(STORE); }catch(e){}
-    if(pillLabel) pillLabel.textContent='Listen';
-  });
-
-  function seekFromEvent(e){
-    var rect=scrub.getBoundingClientRect();
-    var x=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
-    var pct=Math.min(1,Math.max(0,x/rect.width));
-    if(audio.duration){ audio.currentTime=pct*audio.duration; save(); }
-  }
-  scrub.addEventListener('click',seekFromEvent);
-  scrub.addEventListener('keydown',function(e){
-    if(!audio.duration) return;
-    if(e.key==='ArrowRight'){ audio.currentTime=Math.min(audio.duration,audio.currentTime+15); save(); e.preventDefault(); }
-    if(e.key==='ArrowLeft'){ audio.currentTime=Math.max(0,audio.currentTime-15); save(); e.preventDefault(); }
-  });
-
-  var speeds=[1,1.25,1.5,1.75,2,0.75], si=speeds.indexOf(savedSpeed); if(si<0) si=0;
-  speedBtn.addEventListener('click',function(){
-    si=(si+1)%speeds.length;
-    audio.playbackRate=speeds[si];
-    speedBtn.innerHTML=speeds[si]+'&times;';
-    try{ localStorage.setItem(SPEED, speeds[si]); }catch(e){}
-  });
-})();
-</script>
-<script>
+/* Listen pill now controls the persistent bottom player (single audio system) */
 (function(){
   var pill=document.getElementById('listenPill');
-  var panel=document.getElementById('csAudioPanel');
-  if(!pill||!panel) return;
-  // If a session is in progress (saved position), surface the panel by default so "Resume" shows.
-  try{
-    var v=localStorage.getItem('cs_audio_pos');
-    if(v){ var p=JSON.parse(v); if(p && p.t>2){ panel.removeAttribute('hidden'); pill.classList.add('is-open'); pill.setAttribute('aria-expanded','true'); } }
-  }catch(e){}
-  pill.addEventListener('click',function(){
-    var open=panel.hasAttribute('hidden');
-    if(open){ panel.removeAttribute('hidden'); pill.classList.add('is-open'); pill.setAttribute('aria-expanded','true'); }
-    else{ panel.setAttribute('hidden',''); pill.classList.remove('is-open'); pill.setAttribute('aria-expanded','false'); }
+  if(!pill) return;
+  var label=pill.querySelector('span');
+  function findAudio(){ return document.getElementById('cspAudio'); }
+  function sync(){
+    var a=findAudio(); if(!a||!label) return;
+    label.textContent = a.paused ? 'Listen' : 'Pause';
+    pill.classList.toggle('is-open', !a.paused);
+    pill.setAttribute('aria-expanded', a.paused?'false':'true');
+  }
+  pill.addEventListener('click', function(){
+    var a=findAudio(); if(!a) return;
+    if(a.paused){ a.play(); } else { a.pause(); }
   });
+  // keep the pill label in sync with the bottom player
+  document.addEventListener('play', function(e){ if(e.target && e.target.id==='cspAudio') sync(); }, true);
+  document.addEventListener('pause', function(e){ if(e.target && e.target.id==='cspAudio') sync(); }, true);
+  // initial state (in case audio resumed on load)
+  setTimeout(sync, 300);
 })();
 </script>
 
