@@ -296,7 +296,7 @@
 
 
 <header class="wrap">
-<img class="csp-hero" src="assets/cs-banner.jpg" alt="Citizens Standard — Sovereign, Rules-based, Universal">
+<img class="csp-hero" src="assets/cs-banner.jpg?v=20260712" alt="Citizens Standard — Sovereign, Rules-based, Universal">
 
   <div class="kicker-row">
     <p class="kicker label">The Citizens Standard &nbsp;·&nbsp; <b>the diagnosis</b></p>
@@ -341,7 +341,7 @@
 
     <!-- swap src for the repo-hosted file, e.g. audio/cs-overview.mp3 -->
     <audio id="csSource" preload="metadata">
-      <source src="audio/cs-overview.mp3" type="audio/mpeg">
+      <source src="audio/cs-overview.mp3?v=20260712" type="audio/mpeg">
     </audio>
   </figure>
   <!-- ============ /CS AUDIO PLAYER ============ -->
@@ -519,19 +519,19 @@
     .ai-analyze .ai-prompt{ position:relative; background:var(--ink);
       border:1px solid var(--line); border-radius:8px; padding:14px;
       font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-      font-size:.82rem; line-height:1.55; color:#C9D2DC; white-space:pre-wrap;
-      max-height:210px; overflow:auto; }
-    .ai-analyze .ai-actions{ margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+      font-size:.74rem; line-height:1.5; color:#C9D2DC; white-space:pre-wrap;
+      overflow-wrap:anywhere; word-break:break-word;
+      max-height:210px; overflow-y:auto; overflow-x:hidden; }
+    .ai-analyze .ai-actions{ margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
     .ai-analyze .ai-copy{ display:inline-block; background:var(--amber); color:#10161C;
       font-weight:600; font-size:.9rem; padding:8px 15px; border:none; border-radius:8px; cursor:pointer; }
     .ai-analyze .ai-copy:hover{ filter:brightness(1.08); }
     .ai-analyze .ai-dl{ display:inline-block; border:1px solid var(--amber); color:var(--amber);
       font-weight:600; font-size:.9rem; padding:7px 14px; border-radius:8px; text-decoration:none; }
     .ai-analyze .ai-dl:hover{ background:rgba(230,169,62,0.12); text-decoration:none; }
-    .ai-analyze .ai-note{ color:var(--dim); font-size:.82rem; }
   </style>
 
-  <h2>Have an AI explain and analyze this for you</h2>
+  <h2>Have AI explain the Citizens Standard</h2>
   <p class="ai-sub">Want to understand it, or check whether it holds up? Give any AI the companion document and paste the prompt below. It asks the AI to explain the framework clearly first, then evaluate it honestly.</p>
 
   <ol class="ai-steps">
@@ -559,7 +559,6 @@ Be fair and clear, not a cheerleader and not a hit piece. If something is well-s
     <button class="ai-copy" onclick="(function(b){var t=document.getElementById('aiPromptText').innerText;navigator.clipboard.writeText(t).then(function(){var o=b.innerText;b.innerText='Copied \u2713';setTimeout(function(){b.innerText=o;},1800);});})(this)">Copy prompt</button>
     <a class="ai-dl" href="CS_AI_Companion.pdf" download>Download companion (PDF)</a>
     <a class="ai-dl" href="CS_AI_Companion.txt" download>Download (text)</a>
-    <span class="ai-note">Runs in your own AI. No sign-up, nothing we control.</span>
   </div>
 </section>
 </div>
@@ -597,7 +596,7 @@ Be fair and clear, not a cheerleader and not a hit piece. If something is well-s
   <button id="cspPlay" aria-label="Play or pause audio overview">&#9654;</button>
   <div class="csp-meta"><b>Audio Overview</b><span id="cspTime">0:00 / 0:00</span></div>
   <input type="range" id="cspSeek" min="0" max="100" value="0" step="0.1" aria-label="Seek audio">
-  <audio id="cspAudio" preload="metadata" src="audio/cs-overview.mp3"></audio>
+  <audio id="cspAudio" preload="metadata" src="audio/cs-overview.mp3?v=20260712"></audio>
 </div>
 <script>
 (function(){
