@@ -1,0 +1,41 @@
+{
+  "test": "Paper 10 measurement claim \u2014 FULL replication on real uploaded data",
+  "protocol": "frozen validation_protocol.md from repo (regime = trailing 12m CPI >= 4%)",
+  "data": "user FRED files: CURRSL, DEMDEPSL, OCDSL, CPIAUCSL, M2SL + CFS Divisia",
+  "high_regime_sample": "1968-05 .. 2008-09, n=225",
+  "results": {
+    "Mt_composition_R2": 0.186,
+    "paper_claim": 0.19,
+    "M2_R2": 0.043,
+    "paper_claim_M2": 0.04,
+    "ratio_Mt_over_M2": "4.4x",
+    "paper_claim_ratio": "~5x",
+    "encompassing_Mt_t": 2.3,
+    "encompassing_Mt_p": 0.024,
+    "encompassing_M2_t": -0.3,
+    "encompassing_M2_p": 0.756,
+    "convergence_loglevel": 0.985,
+    "convergence_growth": 0.839
+  },
+  "verdict": "REPRODUCED \u2014 Mt beats M2 ~4.4x in high regime and displaces M2 in the joint regression; convergence 0.985/0.839. Matches Paper 10 headline.",
+  "caveats": [
+    "Divisia R2 RESOLVED: 0.209 on pre-2020 clean sample matches paper's 0.21; earlier 0.138 was a pooling artifact. The 2020-22 sub-window (n=26) is too small to adjudicate.",
+    "High-regime sample ends 2008-09 because composition (OCD) ends 2020-04 and few post-2008 months hit CPI>=4% before then; the 2021-22 high-CPI episode is post-OCD, carried by Divisia in the paper.",
+    "Out-of-sample vs persistence baseline not re-run here (paper reports Mt ties the naive baseline OOS \u2014 'beats broad money, not the central bank')."
+  ],
+  "divisia_investigation": {
+    "question": "why did pooled Divisia R2 (0.138) miss the paper's 0.21?",
+    "answer": "sample-split confirmed: pre-2020 clean high-regime R2 = 0.209 (n=225), matching paper's ~0.21 EXACTLY. Pooling the pre-2020 sample with the 2020+ window flattened the pooled fit to 0.138.",
+    "pre2020_clean_R2": 0.209,
+    "paper_claim": 0.21,
+    "status": "REPRODUCES cleanly on the paper's sample",
+    "note_2020_window": "2020-onward high-regime slice gives R2=0.75 but n=26 (too small to trust); paper reports ~0.14 there. Small-sample; not adjudicated either way. Do not lean on the 2020-22 sub-window.",
+    "wrinkle_resolved": {
+      "attempted": "extend the 2020+ high-regime window to grow n and stabilize R2",
+      "finding": "cannot extend \u2014 the high-CPI regime (trailing CPI>=4%) ENDS May 2023 when inflation fell below 4%. Full recent episode = 2021-04 to 2023-05, n=26, fixed.",
+      "what_the_scatter_shows": "Divisia M1 12m growth fell +21% -> -10% (2021->2023) and next-12m CPI tracked it 7.9% -> 3.0%; tight one-year-ahead co-movement \u2014 a clean illustration of the money->inflation link.",
+      "why_fragile": "all 26 points are ONE continuous run-up-and-unwind (single episode, heavily autocorrelated) \u2014 effectively n~1 EVENT, not 26 independent obs. Cumulative R2 swung 0.21->0.84->0.75 as months added; that instability is the point.",
+      "honest_verdict": "the 2020-22 window (whether paper's 0.14 or my 0.75) is a single-episode illustration, NOT a citable standalone R2. Do not lean on it either way. The robust results are pre-2020 (n=225): composition 0.186, Divisia 0.209, encompassing M2-displacement."
+    }
+  }
+}
