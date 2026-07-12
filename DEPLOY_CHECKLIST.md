@@ -62,30 +62,38 @@ editing — Paper 8 already carries the correct figures.
 
 - [ ] Nothing to do. Expected result is now **`12/12 packages passed`**.
 
-## STEP 5 — The download bundles
-`full_paper_list_all.zip` ("Download all papers & data" on papers.html) has been **regenerated**.
-It previously held only the 14 per-paper zips, so the flagship download could not actually be
-verified. It now contains:
+## STEP 5 — The download bundles (all under GitHub's 25 MB limit)
+
+`full_paper_list_all.zip` ("Download all papers & data" on papers.html) has been **regenerated and
+slimmed: 27.2 MB → 16.4 MB.** It was over GitHub's 25 MB web-upload limit.
+
+Nothing was degraded. It was carrying the replication code **twice**: once inside `full_paper_list/`
+(each per-paper zip bundles a `data_package/`) and again in `replication/`. The duplicate is gone:
 
 ```
-full_paper_list/                     14 per-paper zips (paper/ + data_package/)  — unchanged
-replication/                         11 packages + the one-command verifier      — NEW
-fx_exploratory_record/               exploratory: headline result is a NULL      — NEW
-two_circuit_supplementary_record/    supplementary robustness                    — NEW
-README.md                            how to verify; status of the two records    — NEW
+papers/                              14 PDFs
+replication/                         all 11 packages + the one-command verifier   ← the code, once
+fx_exploratory_record/               exploratory: headline result is a NULL
+two_circuit_supplementary_record/    supplementary robustness
+README.md                            how to verify; status of the two records
 ```
 
-Anyone who takes that one download can now run `cd replication && python run_all.py` and get a
-pass/fail table. 27 MB.
+The per-paper zips (`full_paper_list/PaperNN_*.zip`) are **unchanged and still in the repo**, still
+linked individually from papers.html as each paper's "Data" download. They just no longer need to be
+carried inside the all-in-one bundle.
 
-- [ ] `replication.zip` (harness alone) is regenerated from `replication/` and still offered separately.
-- [ ] `papers.zip` (PDFs only) unchanged.
+Verified: unzip the bundle, `cd replication && python run_all.py` → runs, 12/12.
 
-**On the two exploratory records:** they are in the bundle for completeness, in clearly-named
-folders whose READMEs state their status up front — the FX headline is a documented **null**. They
-are NOT wired into `run_all.py`, because folding a falsification into the harness that verifies
-published claims would miscategorise a null as support. They also remain at the repo root as the
-canonical copies; the bundle copies are generated from them, so the two cannot drift.
+| File | Size | GitHub 25 MB limit |
+|---|---|---|
+| `full_paper_list_all.zip` | **16.4 MB** | ✅ |
+| `replication.zip` | 11 MB | ✅ |
+| `papers.zip` | 5.1 MB | ✅ |
+| `audio/cs-overview.mp3` | 23.1 MB | ⚠️ close |
+| `replication/.../data/SCFP2022.csv` | 22.0 MB | ⚠️ close (the raw SCF 2022 microdata) |
+
+The last two are under the limit but near it — if either grows, use `git push` (100 MB limit) rather
+than the web uploader, or Git LFS.
 
 ## Post-push spot checks
 - [ ] Engine loads on the "What you get" tab (not blank).
