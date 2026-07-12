@@ -426,6 +426,387 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
 
 <section class="wrap text">
   <h2>Run it yourself</h2>
+<style>
+  .liveverify{border:1px solid var(--line);border-radius:12px;background:var(--ink-soft);padding:20px 20px 16px;margin:22px 0}
+  .liveverify h3{font-size:1.02rem;margin:0 0 6px;color:var(--text)}
+  .liveverify .lv-lede{color:var(--dim);font-size:.92rem;margin:0 0 14px;max-width:70ch;line-height:1.6}
+  .liveverify .lv-lede b{color:var(--text)}
+  .lv-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
+  .lv-bar select{font:inherit;font-size:.88rem;color:var(--text);background:var(--ink);border:1px solid var(--line);border-radius:7px;padding:7px 10px;cursor:pointer;font-family:system-ui,sans-serif}
+  .lv-run{font:inherit;font-family:system-ui,sans-serif;font-size:.88rem;font-weight:600;color:var(--amber-ink);background:var(--amber);border:none;border-radius:7px;padding:8px 16px;cursor:pointer}
+  .lv-run:hover{filter:brightness(1.08)}
+  .lv-run:disabled{opacity:.5;cursor:default;filter:none}
+  .lv-all{font:inherit;font-family:system-ui,sans-serif;font-size:.85rem;font-weight:600;color:var(--amber);background:transparent;border:1px solid var(--amber);border-radius:7px;padding:7px 13px;cursor:pointer}
+  .lv-all:disabled{opacity:.45;cursor:default}
+  .lv-status{font-size:.8rem;color:var(--dim);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .lv-verdict{display:none;font-weight:700;font-size:.95rem;padding:10px 14px;border-radius:8px;margin:0 0 12px;font-family:system-ui,sans-serif}
+  .lv-verdict.pass{color:var(--kept);border:1px solid var(--kept);background:rgba(95,190,147,.09)}
+  .lv-verdict.fail{color:#E0685A;border:1px solid #E0685A;background:rgba(224,104,90,.09)}
+  .lv-term{display:none;background:#0B1015;border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.74rem;line-height:1.5;color:#C9D2DC;white-space:pre-wrap;overflow-wrap:anywhere;max-height:340px;overflow-y:auto}
+  .lv-term .ok{color:var(--kept)} .lv-term .bad{color:#E0685A} .lv-term .dim{color:#6B7885}
+  .lv-figs{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:14px}
+  .lv-figs figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px}
+  .lv-figs img{width:100%;height:auto;display:block;border-radius:4px}
+  .lv-figs figcaption{color:var(--dim);font-size:.68rem;margin-top:5px;word-break:break-all;font-family:ui-monospace,monospace}
+  .lv-note{font-size:.8rem;color:var(--dim);margin:14px 0 0;line-height:1.6;border-top:1px solid var(--line);padding-top:12px}
+  .lv-note b{color:var(--text-muted,#B9C2CC)}
+  .lv-note code{font-family:ui-monospace,monospace;color:#AEB6C0}
+</style>
+
+<div class="liveverify">
+  <h3>Verify it in your browser — no install, no trust required</h3>
+  <p class="lv-lede">
+    This runs the <b>actual replication code</b> — real CPython, compiled to WebAssembly, executing in
+    this tab. It fetches a package's own scripts from this repository, runs them, and checks every
+    number they produce against the values the paper published. Nothing is precomputed. If the code
+    stops reproducing the paper, this page will say so.
+  </p>
+
+  <div class="lv-bar">
+    <select id="lvPkg" aria-label="Replication package"></select>
+    <button class="lv-run" id="lvRun">Run</button>
+    <button class="lv-all" id="lvRunAll">Run all 9</button>
+    <span class="lv-status" id="lvStatus">Python loads on first run (~15&nbsp;MB, cached afterwards).</span>
+  </div>
+
+  <div class="lv-verdict" id="lvVerdict"></div>
+  <div class="lv-term" id="lvTerm"></div>
+  <div class="lv-figs" id="lvFigs"></div>
+
+  <p class="lv-note">
+    <b>What a pass means.</b> Expected values come from each package's published artifact
+    (<code>all_results.txt</code> / <code>results/*.json</code>) — the numbers the papers cite — not from
+    this run. A pass means every one of them was reproduced to a relative tolerance of 1e-6. Figures are
+    drawn by the code as it runs; none are stored.
+    <br><br>
+    <b id="lvExcluded"></b>
+    <br><br>
+    <b>Prefer to run it locally?</b> <code>git clone</code> the repo, then
+    <code>cd replication &amp;&amp; python run_all.py</code> — that covers all 12 packages and takes a few
+    minutes. Add <code>--report</code> for an HTML report with every figure.
+  </p>
+</div>
+
+<script>
+(function () {
+  var BASE = 'replication/';
+  var PYODIDE = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/';
+  var py = null, manifest = null, booting = null;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var termEl = $('lvTerm'), figsEl = $('lvFigs'), verdictEl = $('lvVerdict'),
+      statusEl = $('lvStatus'), runBtn = $('lvRun'), allBtn = $('lvRunAll'), selEl = $('lvPkg');
+
+  function status(s) { statusEl.textContent = s; }
+  function term(html, cls) {
+    termEl.style.display = 'block';
+    var span = document.createElement('span');
+    if (cls) span.className = cls;
+    span.textContent = html + '\n';
+    termEl.appendChild(span);
+    termEl.scrollTop = termEl.scrollHeight;
+  }
+  function clearOut() {
+    termEl.innerHTML = ''; termEl.style.display = 'none';
+    figsEl.innerHTML = ''; verdictEl.style.display = 'none';
+  }
+
+  // ---- numeric comparison: identical rule to the offline harness (replication/paper_pkg.py) ----
+  var NUM = /-?\d+\.?\d*(?:[eE][-+]?\d+)?/g;
+  var TIMING = /runtime|elapsed|seconds|secs|\bsec\b|took /i;
+
+  function nums(text, dropTiming) {
+    // dropTiming applies ONLY to the published artifact, never to the run's output: packages print
+    // results and durations on the same line, and dropping the line would hide a real result.
+    if (dropTiming) {
+      text = text.split('\n').filter(function (l) { return !TIMING.test(l); }).join('\n');
+    }
+    var out = [], m;
+    NUM.lastIndex = 0;
+    while ((m = NUM.exec(text)) !== null) {
+      var v = parseFloat(m[0]);
+      if (!isNaN(v)) out.push(v);
+    }
+    return out;
+  }
+  function flat(o, p, into) {
+    into = into || {};
+    if (o && typeof o === 'object' && !Array.isArray(o)) {
+      for (var k in o) flat(o[k], p ? p + '.' + k : k, into);
+    } else if (Array.isArray(o)) {
+      for (var i = 0; i < o.length; i++) flat(o[i], p + '[' + i + ']', into);
+    } else if (typeof o === 'number') { into[p] = o; }
+    return into;
+  }
+  function close(a, b) {
+    if (a === b) return true;
+    var d = Math.max(Math.abs(a), Math.abs(b));
+    return d === 0 ? Math.abs(a - b) <= 1e-6 : Math.abs(a - b) / d <= 1e-6;
+  }
+
+  // ---- boot pyodide once ----
+  async function boot() {
+    if (py) return py;
+    if (booting) return booting;
+    booting = (async function () {
+      status('loading Python (WebAssembly)…');
+      await new Promise(function (res, rej) {
+        var s = document.createElement('script');
+        s.src = PYODIDE + 'pyodide.js'; s.onload = res; s.onerror = rej;
+        document.head.appendChild(s);
+      });
+      py = await loadPyodide({ indexURL: PYODIDE });
+      if (!manifest) {
+        manifest = await (await fetch(BASE + 'web_manifest.json')).json();
+      }
+      status('Python ready.');
+      return py;
+    })();
+    return booting;
+  }
+
+  // ---- fetch a package's files into pyodide's virtual filesystem ----
+  async function stage(pkg) {
+    var root = '/w/' + pkg.id;
+    try { py.FS.mkdirTree(root); } catch (e) {}
+    (pkg.mkdirs || []).forEach(function (d) {
+      try { py.FS.mkdirTree(root + '/' + d); } catch (e) {}
+    });
+
+    var all = pkg.files.concat(pkg.goldenFiles);
+    var golden = {};
+    for (var i = 0; i < all.length; i++) {
+      var rel = all[i];
+      var r = await fetch(BASE + pkg.id + '/' + rel);
+      if (!r.ok) throw new Error('missing file: ' + rel);
+      var buf = new Uint8Array(await r.arrayBuffer());
+      var dir = rel.lastIndexOf('/') > 0 ? root + '/' + rel.slice(0, rel.lastIndexOf('/')) : root;
+      try { py.FS.mkdirTree(dir); } catch (e) {}
+      py.FS.writeFile(root + '/' + rel, buf);
+      // Stash the PUBLISHED artifact now: the run will overwrite results/*.json in place.
+      if (pkg.goldenFiles.indexOf(rel) >= 0) {
+        golden[rel] = new TextDecoder().decode(buf);
+      }
+    }
+    return golden;
+  }
+
+  // ---- the python driver: exec each script in-process, no subprocess (Pyodide has none) ----
+  var DRIVER = `
+import base64, contextlib, glob, io, json, os, runpy, sys
+import matplotlib
+matplotlib.use("Agg")
+
+def run_package(root, steps):
+    buf = io.StringIO()
+    cwd0 = os.getcwd()
+    path0 = list(sys.path)
+    argv0 = list(sys.argv)
+    mods0 = set(sys.modules)
+    err = None
+    try:
+        with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
+            for d, script in steps:
+                wd = root if d == "." else os.path.join(root, d)
+                os.chdir(wd)
+                sys.path.insert(0, wd)
+                # Scripts branch on sys.argv (one package's runner takes a mode argument). A
+                # subprocess gets a clean argv; an in-process exec inherits the caller's.
+                sys.argv = [os.path.basename(script)]
+                try:
+                    runpy.run_path(os.path.join(wd, script), run_name="__main__")
+                except SystemExit:
+                    pass          # sys.exit() in one script must not abort the remaining steps
+    except Exception as e:
+        err = "%s: %s" % (type(e).__name__, e)
+    finally:
+        os.chdir(cwd0)
+        sys.path[:] = path0
+        sys.argv[:] = argv0
+        # Evict only the PACKAGE's modules. Purging library modules (matplotlib.pyplot!) leaves the
+        # library half-initialised and throws bizarre errors in the next package.
+        for m in list(set(sys.modules) - mods0):
+            f = getattr(sys.modules.get(m), "__file__", None) or ""
+            if f.startswith(root):
+                sys.modules.pop(m, None)
+        # matplotlib is process-global: open figures and mutated rcParams leak between packages.
+        import matplotlib.pyplot as plt
+        plt.close("all"); matplotlib.rcdefaults(); matplotlib.use("Agg")
+
+    figs = []
+    for p in sorted(glob.glob(os.path.join(root, "**", "*.png"), recursive=True)):
+        with open(p, "rb") as fh:
+            figs.append({"name": os.path.relpath(p, root),
+                         "b64": base64.b64encode(fh.read()).decode()})
+    regen = {}
+    for p in glob.glob(os.path.join(root, "**", "*.json"), recursive=True):
+        try:
+            regen[os.path.relpath(p, root)] = open(p).read()
+        except Exception:
+            pass
+    return json.dumps({"stdout": buf.getvalue(), "figures": figs,
+                       "regenerated": regen, "error": err})
+`;
+
+  async function runOne(pkg, quiet) {
+    await boot();
+    if (!py.__driverLoaded) { await py.runPythonAsync(DRIVER); py.__driverLoaded = true; }
+
+    status('loading ' + pkg.deps.join(', ') + '…');
+    await py.loadPackage(pkg.deps);
+
+    status('fetching ' + pkg.files.length + ' files…');
+    var golden = await stage(pkg);
+
+    status('running ' + pkg.title + '…');
+    term('$ cd replication/' + pkg.id, 'dim');
+    pkg.steps.forEach(function (s) { term('$ python ' + s[1], 'dim'); });
+
+    var t0 = performance.now();
+    py.globals.set('_root', '/w/' + pkg.id);
+    py.globals.set('_steps', py.toPy(pkg.steps));
+    var raw = await py.runPythonAsync('run_package(_root, [list(s) for s in _steps])');
+    var res = JSON.parse(raw);
+    var secs = ((performance.now() - t0) / 1000).toFixed(1);
+
+    if (res.error) {
+      term(res.stdout);
+      term('ERROR: ' + res.error, 'bad');
+      return { ok: false, summary: res.error, secs: secs, figures: [] };
+    }
+    term(res.stdout);
+
+    // ---- compare against the PUBLISHED values ----
+    var checked = 0, missed = [];
+    if (pkg.golden.slice(-1) === '/' || pkg.golden.slice(-4) !== '.json') {
+      var want = [];
+      pkg.goldenFiles.forEach(function (g) { want = want.concat(nums(golden[g], true)); });
+      var got = nums(res.stdout, false);
+      want.forEach(function (v) {
+        checked++;
+        if (!got.some(function (x) { return close(x, v); })) missed.push(v);
+      });
+    } else {
+      var w = flat(JSON.parse(golden[pkg.golden]), '');
+      var regenTxt = res.regenerated[pkg.golden];
+      if (!regenTxt) return { ok: false, summary: 'the run did not regenerate ' + pkg.golden, secs: secs, figures: res.figures };
+      var g2 = flat(JSON.parse(regenTxt), '');
+      for (var k in w) {
+        if (!(k in g2)) continue;
+        checked++;
+        if (!close(g2[k], w[k])) missed.push(w[k]);
+      }
+    }
+
+    var ok = missed.length === 0 && checked > 0;
+    var summary = ok ? checked + ' published values reproduced'
+                     : missed.length + '/' + checked + ' published values NOT reproduced';
+    term('');
+    term((ok ? '✓ PASS  ' : '✗ FAIL  ') + summary + '  (' + secs + 's, ' +
+         res.figures.length + ' figures)', ok ? 'ok' : 'bad');
+    if (!ok) term('   not reproduced: ' + missed.slice(0, 8).join(', '), 'bad');
+    return { ok: ok, summary: summary, secs: secs, figures: res.figures };
+  }
+
+  function showFigs(figs, prefix) {
+    figs.forEach(function (f) {
+      var fig = document.createElement('figure');
+      var img = document.createElement('img');
+      img.src = 'data:image/png;base64,' + f.b64;
+      img.loading = 'lazy';
+      var cap = document.createElement('figcaption');
+      cap.textContent = (prefix ? prefix + ' · ' : '') + f.name;
+      fig.appendChild(img); fig.appendChild(cap); figsEl.appendChild(fig);
+    });
+  }
+  function verdict(ok, text) {
+    verdictEl.style.display = 'block';
+    verdictEl.className = 'lv-verdict ' + (ok ? 'pass' : 'fail');
+    verdictEl.textContent = text;
+  }
+
+  runBtn.addEventListener('click', async function () {
+    clearOut(); runBtn.disabled = allBtn.disabled = true;
+    try {
+      await boot();
+      var pkg = manifest.packages.filter(function (p) { return p.id === selEl.value; })[0];
+      var r = await runOne(pkg);
+      verdict(r.ok, (r.ok ? 'PASS — ' : 'FAIL — ') + pkg.title + ' · ' + r.summary);
+      showFigs(r.figures, '');
+      status('done in ' + r.secs + 's.');
+    } catch (e) {
+      term('ERROR: ' + e.message, 'bad'); status('failed \u2014 ' + e.message);
+    }
+    runBtn.disabled = allBtn.disabled = false;
+  });
+
+  allBtn.addEventListener('click', async function () {
+    clearOut(); runBtn.disabled = allBtn.disabled = true;
+    try {
+      await boot();
+      var npass = 0, n = manifest.packages.length;
+      for (var i = 0; i < n; i++) {
+        var pkg = manifest.packages[i];
+        term('');
+        term('─── ' + pkg.title + ' ───', 'dim');
+        var r = await runOne(pkg, true);
+        if (r.ok) npass++;
+        showFigs(r.figures, pkg.title);
+      }
+      verdict(npass === n, npass + '/' + n + ' packages passed — every published value ' +
+              (npass === n ? 'reproduced, in your browser' : 'checked; see failures above'));
+      status('done.');
+    } catch (e) {
+      term('ERROR: ' + e.message, 'bad'); status('failed \u2014 ' + e.message);
+    }
+    runBtn.disabled = allBtn.disabled = false;
+  });
+
+  // ---- why this can't run, in plain terms, instead of an empty box ----
+  function blocked(msg) {
+    selEl.innerHTML = '<option>unavailable</option>';
+    selEl.disabled = runBtn.disabled = allBtn.disabled = true;
+    verdictEl.style.display = 'block';
+    verdictEl.className = 'lv-verdict fail';
+    verdictEl.innerHTML = msg;
+    status('');
+  }
+
+  function loadManifest() {
+    // fetch() is blocked on file:// by every browser. Opening this page straight off disk gives an
+    // empty box and no explanation, so say so rather than fail silently.
+    if (location.protocol === 'file:') {
+      blocked('This page is open from your <b>filesystem</b> (<code>file://</code>), and browsers ' +
+              'block a page from reading local files. Serve the folder over HTTP and it will work:' +
+              '<br><br><code style="font-family:ui-monospace,monospace">cd Citizens-Standard &amp;&amp; ' +
+              'python -m http.server 8000</code><br>then open ' +
+              '<code style="font-family:ui-monospace,monospace">http://localhost:8000/methodology.html</code>' +
+              '<br><br>On the live site it runs normally.');
+      return;
+    }
+    fetch(BASE + 'web_manifest.json').then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status + ' fetching replication/web_manifest.json');
+      return r.json();
+    }).then(function (m) {
+      manifest = m;
+      selEl.innerHTML = m.packages.map(function (p) {
+        return '<option value="' + p.id + '">' + p.title + '</option>';
+      }).join('');
+      allBtn.textContent = 'Run all ' + m.packages.length;
+      var ex = m.excluded.map(function (e) { return e.title + ' (' + e.reason + ')'; });
+      $('lvExcluded').innerHTML = 'Two of the twelve packages cannot run here, and are not quietly ' +
+        'skipped: ' + ex.join('; ') + '. Both still run in the offline suite and in CI.';
+      status('Python loads on first run (~15 MB, cached afterwards).');
+    }).catch(function (e) {
+      blocked('Could not load <code>replication/web_manifest.json</code> \u2014 ' + e.message +
+              '.<br><br>If you have just deployed, make sure the <code>replication/</code> folder ' +
+              'was pushed. The verifier needs it to know which scripts to run.');
+    });
+  }
+  loadManifest();
+})();
+</script>
+
   <div class="run">
     <p class="small">The whole suite is public. Clone it, and run any package end to end:</p>
     <code>git clone https://github.com/Neo-Solon/Citizens-Standard<br>cd Citizens-Standard/replication/architecture_replication/code<br>python run_all.py</code>
