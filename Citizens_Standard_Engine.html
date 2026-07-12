@@ -927,6 +927,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   #debt-trajectory .dts-sources a{color:var(--accent);text-decoration:none}
   #debt-trajectory .dts-sources a:hover{text-decoration:underline}
   #debt-trajectory .dts-sources b{color:var(--text-muted)}
+  #debt-trajectory .dts-pcm{text-align:center;margin:14px 0 2px;padding-top:12px;border-top:1px solid var(--border);color:var(--text-dim)}
 </style>
 
 <div class="card" style="margin-bottom:0;">
@@ -964,17 +965,16 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   <p class="dts-note" id="dts-csnote"></p>
 
   <div class="dts-sources">
-    <b>How each country is calibrated (2026 baseline, held constant to 2100):</b>
-    <b>Gross debt</b> — general government gross debt, % of GDP: <a href="https://www.imf.org/en/publications/weo/issues/2026/04/14/world-economic-outlook-april-2026" target="_blank" rel="noopener">IMF WEO, April 2026</a> / <a href="https://www.imf.org/en/publications/fm/issues/2026/04/15/fiscal-monitor-april-2026" target="_blank" rel="noopener">IMF Fiscal Monitor, April 2026</a>, one series for all 15 economies so the chart is like-for-like.
-    <b>Effective interest rate</b> — gross interest expense ÷ gross debt, from the IMF or the national fiscal authority.
-    <b>Primary deficit</b> — derived by identity (overall balance − interest), so the three inputs always reconcile.
-    <b>Nominal growth</b> — IMF 2026 real growth + the central bank's inflation target, rather than that year's realised inflation, so a single shock year isn't frozen in for 74 years.
-    <br><b>This is a mechanical projection, not a forecast.</b> It asks one question — what if the 2026 fiscal position never changed? — and no country's will. Debt is floored at 0%. Where an input is known to be fragile the chart says so above.
-    <br><b>Citizens Standard path:</b> the KT channel retires legacy debt as an asset swap (KT ≈ 1.5% of M2/yr), pulling debt/GDP from its enactment level into the 30–60% operational band (≈45% central) by roughly Year 26 — Statutory paper §4 (2026c). The band, not zero: the standing stock is kept deliberately as the safe-asset benchmark and as the base for symmetric reverse-KT operations.
-    <b>Countries already in the band</b> do not simply idle the channel: “the 30 percent figure marks the lower edge of the band, not a hard stop; within the band, KT routes the growth-matched seigniorage to citizen Stable Floors by default, and to redemption only as needed to hold the band” (Statutory §4, KT definition). KT retires at full rate until the stock enters the band, “then throttles to hold position, so that the growth-matched seigniorage no longer needed for retirement is routed to citizen Stable Floors” (Transition §4.1.1).
-    Inspired by <a href="https://publiccashmoney.com/" target="_blank" rel="noopener">Public Cash Money (PCM)</a>, Davide Serra's project.
+    <b>Calibration (2026 baseline, held constant to 2100).</b>
+    <b>Gross debt:</b> general government gross debt, % of GDP — <a href="https://www.imf.org/en/publications/weo/issues/2026/04/14/world-economic-outlook-april-2026" target="_blank" rel="noopener">IMF WEO</a> / <a href="https://www.imf.org/en/publications/fm/issues/2026/04/15/fiscal-monitor-april-2026" target="_blank" rel="noopener">Fiscal Monitor</a>, April 2026 — one series for all 15, so the chart is like-for-like.
+    <b>Effective rate:</b> gross interest ÷ gross debt.
+    <b>Primary deficit:</b> derived by identity (overall balance − interest), so the three inputs always reconcile.
+    <b>Nominal growth:</b> IMF 2026 real growth + the central bank's inflation target — not that year's realised inflation, so one shock year isn't frozen in for 74.
+    <br><b>A mechanical projection, not a forecast.</b> It asks one question: what if the 2026 fiscal position never changed? No country's will. Debt is floored at 0%. Fragile inputs are flagged on the chart.
+    <br><b>Citizens Standard path:</b> KT retires legacy debt as an asset swap (≈1.5% of M2/yr), pulling debt/GDP into the 30–60% operational band (≈45% central) by roughly Year 26 — Statutory §4 (2026c). The band, not zero: the standing stock is the safe-asset benchmark and the base for reverse-KT.
+    <b>Already in the band?</b> The channel doesn't idle — “within the band, KT routes the growth-matched seigniorage to citizen Stable Floors by default, and to redemption only as needed to hold the band” (Statutory §4). Those citizens receive the issuance that would otherwise have gone to bondholders.
+    <p class="dts-pcm">Inspired by <a href="https://publiccashmoney.com/" target="_blank" rel="noopener">Public Cash Money (PCM)</a>, Davide Serra's project.</p>
   </div>
-</div>
 </section>
 
 <script>
