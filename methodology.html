@@ -594,10 +594,14 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
   // ---- the python driver: exec each script in-process, no subprocess (Pyodide has none) ----
   var DRIVER = `
 import base64, contextlib, glob, io, json, os, runpy, sys
-import matplotlib
-matplotlib.use("Agg")
 
 def run_package(root, steps):
+    # Imported HERE, not at module scope: this driver is exec'd once, and pyodide.loadPackage()
+    # for a given package's deps runs before each call. A top-level import would execute before
+    # anything was loaded and die with ModuleNotFoundError.
+    import matplotlib
+    matplotlib.use("Agg")
+
     buf = io.StringIO()
     cwd0 = os.getcwd()
     path0 = list(sys.path)
@@ -650,10 +654,13 @@ def run_package(root, steps):
 
   async function runOne(pkg, quiet) {
     await boot();
-    if (!py.__driverLoaded) { await py.runPythonAsync(DRIVER); py.__driverLoaded = true; }
 
+    // Deps first — the driver's run_package() imports matplotlib on entry, so the wheels must be
+    // in place before it is called. (Loading is cached, so this is instant on later runs.)
     status('loading ' + pkg.deps.join(', ') + '…');
     await py.loadPackage(pkg.deps);
+
+    if (!py.__driverLoaded) { await py.runPythonAsync(DRIVER); py.__driverLoaded = true; }
 
     status('fetching ' + pkg.files.length + ' files…');
     var golden = await stage(pkg);
