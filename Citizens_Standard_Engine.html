@@ -492,10 +492,32 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   background:rgba(230,169,62,.12);
 }
 </style>
+
+<style id="cs-persistent-player-css">
+  .csp-bar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom));
+    width:calc(100% - 40px);max-width:760px;z-index:9000;background:var(--ink-soft,#18212B);
+    border:1px solid var(--line,#27313C);border-radius:14px;padding:8px 14px;
+    display:flex;align-items:center;gap:12px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .csp-bar button{background:var(--amber,#E6A93E);color:var(--ink,#10161C);border:none;border-radius:50%;
+    width:36px;height:36px;font-weight:700;cursor:pointer;flex:0 0 auto;font-size:14px;display:flex;
+    align-items:center;justify-content:center}
+  .csp-bar .csp-meta{font-size:12px;color:var(--dim,#9AA3AE);flex:0 0 auto;min-width:98px;line-height:1.25}
+  .csp-bar .csp-meta b{color:var(--text,#ECE7DB);display:block;font-size:12px}
+  .csp-bar input[type=range]{flex:1 1 auto;accent-color:var(--amber,#E6A93E);min-width:60px;height:6px}
+  .csp-status{position:fixed;left:50%;transform:translateX(-50%);width:calc(100% - 40px);max-width:760px;
+    bottom:calc(66px + env(safe-area-inset-bottom));font-size:11px;padding-left:4px;
+    color:var(--amber,#E6A93E);z-index:9000;pointer-events:none;text-shadow:0 1px 4px var(--ink,#10161C)}
+  body{padding-bottom:84px}
+  /* branding: nav badge */
+  .csp-badge{width:26px;height:26px;border-radius:50%;vertical-align:middle;margin-right:8px}
+  /* branding: hero banner (index only) */
+  .csp-hero{width:100%;max-width:900px;height:auto;border-radius:12px;display:block;margin:0 auto 8px;
+    box-shadow:0 8px 30px rgba(0,0,0,.45)}
+</style>
 </head>
 <body>
 <nav class="sitenav" aria-label="Site navigation">
-  <div class="sitenav-inner">
+  <div class="sitenav-inner"><img class="csp-badge" src="assets/cs-badge-64.png" alt="CS">
     <a href="/">Diagnosis</a>
     <a href="declaration.html">Declaration</a>
     <a href="how_the_engine_works.html">How it works</a>
@@ -2985,6 +3007,39 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
     if(open){ panel.removeAttribute('hidden'); pill.classList.add('is-open'); pill.setAttribute('aria-expanded','true'); }
     else{ panel.setAttribute('hidden',''); pill.classList.remove('is-open'); pill.setAttribute('aria-expanded','false'); }
   });
+})();
+</script>
+
+<!-- ===== CS persistent bottom audio player (Path B: resume-on-load across real navigations) ===== -->
+<div class="csp-status" id="cspStatus"></div>
+<div class="csp-bar" role="region" aria-label="Audio overview player">
+  <button id="cspPlay" aria-label="Play or pause audio overview">&#9654;</button>
+  <div class="csp-meta"><b>Audio Overview</b><span id="cspTime">0:00 / 0:00</span></div>
+  <input type="range" id="cspSeek" min="0" max="100" value="0" step="0.1" aria-label="Seek audio">
+  <audio id="cspAudio" preload="metadata" src="audio/cs-overview.mp3"></audio>
+</div>
+<script>
+(function(){
+  var KEY='cs_audio_state';
+  var a=document.getElementById('cspAudio'),pb=document.getElementById('cspPlay'),
+      sk=document.getElementById('cspSeek'),tl=document.getElementById('cspTime'),stx=document.getElementById('cspStatus');
+  function fmt(s){s=Math.floor(s||0);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({t:a.currentTime||0,playing:!a.paused}));}catch(e){}}
+  a.addEventListener('timeupdate',function(){var d=a.duration||1;sk.value=a.currentTime/d*100;
+    tl.textContent=fmt(a.currentTime)+' / '+fmt(d);if(Math.floor(a.currentTime*2)%2===0)save();});
+  pb.addEventListener('click',function(){a.paused?a.play():a.pause();});
+  a.addEventListener('play',function(){pb.innerHTML='&#10074;&#10074;';save();});
+  a.addEventListener('pause',function(){pb.innerHTML='&#9654;';save();});
+  sk.addEventListener('input',function(){a.currentTime=sk.value/100*(a.duration||0);});
+  window.addEventListener('beforeunload',save);
+  // resume on load
+  var s=null;try{s=JSON.parse(localStorage.getItem(KEY)||'null');}catch(e){}
+  if(s&&s.t>0){
+    var ap=function(){a.currentTime=Math.min(s.t,a.duration||s.t);};
+    if(a.readyState>=1)ap();else a.addEventListener('loadedmetadata',ap,{once:true});
+    if(s.playing){a.play().then(function(){stx.textContent='';})
+      .catch(function(){stx.textContent='\u25B8 tap play to resume';});}
+  }
 })();
 </script>
 </body>
