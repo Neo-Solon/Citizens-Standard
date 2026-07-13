@@ -183,14 +183,49 @@ crash, when it wasn't):
 4. **matplotlib is process-global.** Open figures and mutated rcParams leak between packages;
    reset between runs.
 
-**Not runnable in-browser (stated on the page, not silently skipped):**
-- `distribution_inequality_replication` — needs the 22 MB raw SCF 2022 microdata.
-- `empirical_validation_replication` — needs statsmodels, which pulls scipy (~25 MB of extra WASM).
+**All 11 paper packages now run in the browser.** Two are flagged **heavy** — they work, but they
+cost a large download, so the page asks before starting one and `Run all` skips them:
 
-Both run in the offline suite and in CI, so coverage is still 12/12.
+- `empirical_validation_replication` (~25 MB) — statsmodels pulls scipy.
+- `distribution_inequality_replication` (~30 MB) — the 22 MB raw SCF 2022 microdata, plus pandas.
+
+Two further things this shook out, both real:
+
+**A cross-package data dependency.** `distribution/procyclicality/code/` reads
+`../../../empirical_replication/data/citizens_standard_historical_data_1960_2025_v2.csv` — it reaches
+into a *sibling* package. Packages are staged side by side in the browser FS so the relative path
+resolves, but the file must be fetched too; the manifest records it under `siblings`.
+
+**The distribution package requires Python 3.12+.** Four supplementary scripts use PEP 701 f-strings
+(backslashes inside f-string expressions). On Python 3.10/3.11 they raise `SyntaxError` and are
+reported as `[FAIL]` by its own `run_all.py` — while the package still "passes" the harness, because
+the golden artifact only covers the core channels, not the supplementary models. Pyodide and CI both
+run 3.12, so both are fine. **If you run it locally on an older Python you will see four failures
+that are not real.** Worth pinning a minimum version in the package's README.
+
+`distribution_inequality_replication` produces no figures — that is correct, it has none.
 
 ## CI
 
 `.github/workflows/replication.yml` runs the **full** suite (all 12) on every push and weekly, and
 uploads `report/` as an artifact. `run_all.py` exits non-zero if any package fails to reproduce, so a
 regression breaks the build. The weekly cron catches rot from dependency drift, not just from edits.
+
+
+### A bug worth recording
+
+The browser verifier's first live run reported 7/9. Two packages "failed" on values like `-1960`
+and `-2024`.
+
+Cause: `pkg.golden.slice(-4)` returns `"json"` — **four** characters, no dot — so the test
+`slice(-4) !== '.json'` was always true, and every JSON-golden package silently took the **text**
+comparison path. Text-matching a JSON artifact reads the hyphen in a date range like `1960-2024` as
+a minus sign and invents a value of `-2024` that no code ever produced.
+
+It failed loudly on two packages, but it also made `crisis_behaviour` report "54 values reproduced"
+when the real count is 32 — a **passing** result computed the wrong way. That is the dangerous half:
+a green tick from a broken comparison. Fixed with `/\.json$/`, and all five JSON-golden packages now
+match the offline harness exactly (9 / 74 / 32 / 13 / 56).
+
+Moral: the offline harness compares in Python, the browser in JS. Two implementations of one rule
+will drift. Both are now checked against each other on every package.

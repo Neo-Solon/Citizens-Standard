@@ -26,28 +26,46 @@ ROOT = Path(__file__).resolve().parent
 # The working dir is per-script, matching exactly what each package's own run_all.py does with
 # subprocess cwd= / os.chdir(). Get this wrong and scripts fail on relative data paths or imports.
 SPEC = {
-    "architecture_replication":     ([["code", "run_all.py"]],
+    # run_all.py is the analysis itself; the figure scripts are separate and its runner never
+    # calls them. Added here so the browser actually draws the paper's figures.
+    "architecture_replication":     ([["code", "run_all.py"], ["code", "paper1_figures.py"],
+                                      ["code", "paper1_figA3.py"], ["code", "paper1_extra_figures.py"]],
                                      "all_results.txt", ["numpy", "matplotlib"]),
     "structural_buyer_replication": ([["code", s] for s in
                                       ["verify_prop1_premium.py", "verify_prop2_investment.py",
                                        "verify_prop3_leak.py", "verify_prop7_mirror_voting.py",
-                                       "verify_psi_plateau.py", "verify_all.py"]],
+                                       "verify_psi_plateau.py", "verify_all.py",
+                                       "make_figures.py"]],
                                      "all_results.txt", ["numpy", "matplotlib"]),
     "crisis_behaviour_replication": ([[".", "src/run_stress.py"], [".", "src/make_figure.py"]],
                                      "results/stress_results.json", ["matplotlib"]),
     "comparative_replication":      ([["src", "compare.py"], ["src", "make_figures.py"]],
                                      "results/comparison_results.json", ["matplotlib"]),
+    # --- HEAVY: runnable, but they cost a large download. Flagged, never auto-run. ---
+    "empirical_validation_replication": ([[".", s] for s in
+                                      ["src/build_mt.py", "src/run_horserace.py",
+                                       "src/run_divisia_horserace.py", "src/run_composition_horserace.py",
+                                       "src/build_mt_paymentflow.py", "src/make_divisia_figure.py",
+                                       "src/make_composition_figure.py", "src/robustness_and_figure.py"]],
+                                     "results/horserace_results.json",
+                                     ["numpy", "pandas", "matplotlib", "statsmodels"]),
+    # run_all.py mixes imports with subprocess; _web_run.py is the in-process equivalent.
+    "distribution_inequality_replication": ([[".", "_web_run.py"]],
+                                     "results/inequality_results.json",
+                                     ["numpy", "pandas", "matplotlib"]),
     "transition_replication":       ([["code", "run_all_appendix.py"],
                                       ["cs_debt_band/code", "cs_band_verify_final.py"],
-                                      ["code", "phase_milestones.py"]],
+                                      ["code", "phase_milestones.py"], ["code", "make_figures.py"]],
                                      "cs_debt_band/dsa_locked.json", ["numpy", "matplotlib"]),
     # banking's golden report also covers the nested innovation counterfactual, which its
     # run_all.py shells out to — so the browser must run that script directly too.
     "banking_replication":          ([["code", "test_propositions.py"], ["code", "run_analysis.py"],
-                                      ["innovation_counterfactual", "src/run_innovation_cf.py"]],
+                                      ["innovation_counterfactual", "src/run_innovation_cf.py"],
+                                      ["code", "make_figures.py"]],
                                      "all_results.txt", ["numpy", "matplotlib"]),
     "empirical_replication":        ([["code", s] for s in
-                                      ["run_all_tables.py", "run_ge_results.py", "compare_to_paper.py"]],
+                                      ["run_all_tables.py", "run_ge_results.py", "compare_to_paper.py",
+                                       "make_fig_M5.py"]],
                                      "all_results.txt", ["numpy", "matplotlib"]),
     "interoperability_replication": ([["code", s] for s in
                                       ["cs_engine.py", "equa_model_v3.py", "equa_redteam.py",
@@ -72,13 +90,28 @@ SPEC = {
                                      "all_results.txt", ["numpy", "matplotlib", "sympy"]),
 }
 
-# Deliberately NOT browser-runnable — stated on the page rather than quietly omitted.
-EXCLUDED = {
-    "distribution_inequality_replication":
-        "needs the 22 MB raw SCF 2022 microdata file — too large to pull into a browser tab",
-    "empirical_validation_replication":
-        "needs statsmodels, which pulls scipy (~25 MB of extra WASM) into the page",
+# Runnable in the browser, but expensive. The page warns and asks before starting one, and
+# "Run all" skips them — a visitor shouldn't accidentally pull 25 MB.
+HEAVY = {
+    "empirical_validation_replication": {
+        "mb": 25,
+        "why": "needs statsmodels, which pulls scipy — about 25 MB of extra WebAssembly",
+    },
+    "distribution_inequality_replication": {
+        "mb": 30,
+        "why": "downloads the 22 MB raw SCF 2022 microdata, plus pandas",
+    },
 }
+
+# Some scripts reach into a SIBLING package's data (distribution/procyclicality reads
+# empirical_replication's historical CSV via ../../../). Packages are staged side by side in the
+# browser FS, so the relative path resolves — but the file has to be fetched too.
+SIBLING_FILES = {
+    "distribution_inequality_replication": [
+        "empirical_replication/data/citizens_standard_historical_data_1960_2025_v2.csv",
+    ],
+}
+EXCLUDED = {}
 
 TITLES = {
     "architecture_replication": "Paper 1 — Architecture",
@@ -92,6 +125,21 @@ TITLES = {
     "macro_replication": "Paper 5 — Macroeconomic Model",
     "distribution_inequality_replication": "Paper 14 — Distribution & Inequality",
     "empirical_validation_replication": "Paper 10 — Empirical Validation",
+}
+
+# Paper number per package — drives both the manifest order and the dropdown on methodology.html.
+PAPER_NO = {
+    "architecture_replication": 1,
+    "transition_replication": 3,
+    "macro_replication": 5,
+    "banking_replication": 6,
+    "interoperability_replication": 7,
+    "structural_buyer_replication": 8,
+    "empirical_replication": 10,
+    "empirical_validation_replication": 10,
+    "crisis_behaviour_replication": 12,
+    "comparative_replication": 13,
+    "distribution_inequality_replication": 14,
 }
 
 SKIP_DIRS = {"figures", "results", "outputs", "report"}          # regenerated by the run
@@ -132,7 +180,10 @@ def files_for(pkg):
             continue           # figures/results/outputs are REGENERATED by the run
         if p.suffix in {".png", ".pdf", ".docx"}:
             continue
-        if p.stat().st_size > 3_000_000:
+        if p.name.startswith("_harness"):
+            continue           # offline-harness helper; the browser runs the scripts directly
+        cap = 25_000_000 if pkg in HEAVY else 3_000_000
+        if p.stat().st_size > cap:
             continue
         out.append(rel.as_posix())
     return out
@@ -140,12 +191,19 @@ def files_for(pkg):
 
 def main():
     pkgs = []
-    for pkg, (steps, golden, deps) in SPEC.items():
+    for pkg in sorted(SPEC, key=lambda k: (PAPER_NO[k], k)):
+        steps, golden, deps = SPEC[pkg]
         files = files_for(pkg)
         gfiles = golden_files(pkg, golden)
+        rec_heavy = HEAVY.get(pkg)
         pkgs.append({
             "id": pkg,
+            "paper": PAPER_NO[pkg],
             "title": TITLES[pkg],
+            "heavy": bool(rec_heavy),
+            "heavyMB": rec_heavy["mb"] if rec_heavy else 0,
+            "heavyWhy": rec_heavy["why"] if rec_heavy else "",
+            "siblings": SIBLING_FILES.get(pkg, []),
             "steps": steps,
             "golden": golden,
             "goldenFiles": gfiles,
@@ -158,7 +216,11 @@ def main():
         "note": "Drives the in-browser verifier on methodology.html. Regenerate with build_web_manifest.py.",
         "base": "replication",
         "packages": pkgs,
-        "excluded": [{"id": k, "title": TITLES[k], "reason": v} for k, v in EXCLUDED.items()],
+        "excluded": [{"id": k, "title": TITLES[k], "reason": v}
+                     for k, v in sorted(EXCLUDED.items(), key=lambda kv: PAPER_NO[kv[0]])],
+        "pythonNote": "Four supplementary scripts in the distribution package use PEP 701 f-strings "
+                      "and need Python 3.12+. Pyodide and CI both run 3.12; older local Pythons "
+                      "will report SyntaxError on those four.",
     }
     (ROOT / "web_manifest.json").write_text(json.dumps(manifest, indent=1))
     tot = sum(p["bytes"] for p in pkgs)

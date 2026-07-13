@@ -4,11 +4,28 @@
  "packages": [
   {
    "id": "architecture_replication",
+   "paper": 1,
    "title": "Paper 1 \u2014 Architecture",
+   "heavy": false,
+   "heavyMB": 0,
+   "heavyWhy": "",
+   "siblings": [],
    "steps": [
     [
      "code",
      "run_all.py"
+    ],
+    [
+     "code",
+     "paper1_figures.py"
+    ],
+    [
+     "code",
+     "paper1_figA3.py"
+    ],
+    [
+     "code",
+     "paper1_extra_figures.py"
     ]
    ],
    "golden": "all_results.txt",
@@ -50,141 +67,13 @@
    "bytes": 106933
   },
   {
-   "id": "structural_buyer_replication",
-   "title": "Paper 8 \u2014 The Structural Buyer",
-   "steps": [
-    [
-     "code",
-     "verify_prop1_premium.py"
-    ],
-    [
-     "code",
-     "verify_prop2_investment.py"
-    ],
-    [
-     "code",
-     "verify_prop3_leak.py"
-    ],
-    [
-     "code",
-     "verify_prop7_mirror_voting.py"
-    ],
-    [
-     "code",
-     "verify_psi_plateau.py"
-    ],
-    [
-     "code",
-     "verify_all.py"
-    ]
-   ],
-   "golden": "all_results.txt",
-   "goldenFiles": [
-    "all_results.txt"
-   ],
-   "mkdirs": [
-    "figures"
-   ],
-   "deps": [
-    "numpy",
-    "matplotlib"
-   ],
-   "files": [
-    "README.md",
-    "all_results.txt",
-    "code/_harness_report.py",
-    "code/make_figures.py",
-    "code/run_all.py",
-    "code/verify_all.py",
-    "code/verify_prop1_premium.py",
-    "code/verify_prop2_investment.py",
-    "code/verify_prop3_leak.py",
-    "code/verify_prop7_mirror_voting.py",
-    "code/verify_psi_plateau.py",
-    "requirements.txt"
-   ],
-   "bytes": 32228
-  },
-  {
-   "id": "crisis_behaviour_replication",
-   "title": "Paper 12 \u2014 Crisis Behaviour",
-   "steps": [
-    [
-     ".",
-     "src/run_stress.py"
-    ],
-    [
-     ".",
-     "src/make_figure.py"
-    ]
-   ],
-   "golden": "results/stress_results.json",
-   "goldenFiles": [
-    "results/stress_results.json"
-   ],
-   "mkdirs": [
-    "results"
-   ],
-   "deps": [
-    "matplotlib"
-   ],
-   "files": [
-    "README.md",
-    "requirements.txt",
-    "run_all.py",
-    "src/authoritative_data.py",
-    "src/authoritative_newcitizens.py",
-    "src/dashboard.py",
-    "src/deterministic_engine.py",
-    "src/make_figure.py",
-    "src/run_stress.py"
-   ],
-   "bytes": 44350
-  },
-  {
-   "id": "comparative_replication",
-   "title": "Paper 13 \u2014 Comparative Analysis",
-   "steps": [
-    [
-     "src",
-     "compare.py"
-    ],
-    [
-     "src",
-     "make_figures.py"
-    ]
-   ],
-   "golden": "results/comparison_results.json",
-   "goldenFiles": [
-    "results/comparison_results.json"
-   ],
-   "mkdirs": [
-    "results",
-    "scenario_lvt_hybrid/figures"
-   ],
-   "deps": [
-    "matplotlib"
-   ],
-   "files": [
-    "AUDIT.md",
-    "README.md",
-    "data/alaska_pfd_anchors.csv",
-    "data/comparators.csv",
-    "requirements.txt",
-    "results.txt",
-    "run_all.py",
-    "scenario_lvt_hybrid/README.md",
-    "scenario_lvt_hybrid/lvt_hybrid.py",
-    "src/compare.py",
-    "src/dashboard.py",
-    "src/data.py",
-    "src/make_figures.py"
-   ],
-   "bytes": 57610
-  },
-  {
    "id": "transition_replication",
+   "paper": 3,
    "title": "Paper 3 \u2014 Transition",
+   "heavy": false,
+   "heavyMB": 0,
+   "heavyWhy": "",
+   "siblings": [],
    "steps": [
     [
      "code",
@@ -197,6 +86,10 @@
     [
      "code",
      "phase_milestones.py"
+    ],
+    [
+     "code",
+     "make_figures.py"
     ]
    ],
    "golden": "cs_debt_band/dsa_locked.json",
@@ -251,219 +144,13 @@
    "bytes": 140782
   },
   {
-   "id": "banking_replication",
-   "title": "Paper 6 \u2014 Full-Reserve Banking",
-   "steps": [
-    [
-     "code",
-     "test_propositions.py"
-    ],
-    [
-     "code",
-     "run_analysis.py"
-    ],
-    [
-     "innovation_counterfactual",
-     "src/run_innovation_cf.py"
-    ]
-   ],
-   "golden": "all_results.txt",
-   "goldenFiles": [
-    "all_results.txt"
-   ],
-   "mkdirs": [
-    "figures",
-    "innovation_counterfactual/results"
-   ],
-   "deps": [
-    "numpy",
-    "matplotlib"
-   ],
-   "files": [
-    "README.md",
-    "all_results.txt",
-    "code/balance_sheet.py",
-    "code/explore.py",
-    "code/make_figures.py",
-    "code/paper6_model.py",
-    "code/parameter_importance.py",
-    "code/run_analysis.py",
-    "code/sensitivity.py",
-    "code/test_propositions.py",
-    "innovation_counterfactual/README.md",
-    "innovation_counterfactual/data/SOURCES.json",
-    "innovation_counterfactual/requirements.txt",
-    "innovation_counterfactual/run_all.py",
-    "innovation_counterfactual/src/run_innovation_cf.py",
-    "requirements.txt",
-    "run_all.py"
-   ],
-   "bytes": 97871
-  },
-  {
-   "id": "empirical_replication",
-   "title": "Paper 10 \u2014 Historical Counterfactual",
-   "steps": [
-    [
-     "code",
-     "run_all_tables.py"
-    ],
-    [
-     "code",
-     "run_ge_results.py"
-    ],
-    [
-     "code",
-     "compare_to_paper.py"
-    ]
-   ],
-   "golden": "all_results.txt",
-   "goldenFiles": [
-    "all_results.txt"
-   ],
-   "mkdirs": [
-    "figures",
-    "tool14_inflation/figures"
-   ],
-   "deps": [
-    "numpy",
-    "matplotlib"
-   ],
-   "files": [
-    "AUDIT.md",
-    "README.md",
-    "all_results.txt",
-    "code/all_results.txt",
-    "code/authoritative_data.py",
-    "code/authoritative_newcitizens.py",
-    "code/build_csv.py",
-    "code/compare_to_paper.py",
-    "code/demographic_flow_model.py",
-    "code/deterministic_engine.py",
-    "code/make_fig_M5.py",
-    "code/mc_engine.py",
-    "code/mc_plots.py",
-    "code/run_all_tables.py",
-    "code/run_ge_results.py",
-    "code/transition_cohorts.py",
-    "code/transition_lifetime.py",
-    "code/verify_all.py",
-    "data/citizens_standard_historical_data_1928_2025_full.csv",
-    "data/citizens_standard_historical_data_1960_2025_v2.csv",
-    "requirements.txt",
-    "run_all.py",
-    "tool14_inflation/AUDIT.md",
-    "tool14_inflation/README.md",
-    "tool14_inflation/code/data.py",
-    "tool14_inflation/code/make_figures.py",
-    "tool14_inflation/code/run_counterfactual.py",
-    "tool14_inflation/code/sensitivity.py",
-    "tool14_inflation/code/structural_run.py",
-    "tool14_inflation/code/tool14_engine.py",
-    "tool14_inflation/data/cpi_1980.csv",
-    "tool14_inflation/data/cpi_2022.csv",
-    "tool14_inflation/data/sffed_demand_share_2022.csv",
-    "tool14_inflation/results.txt"
-   ],
-   "bytes": 187354
-  },
-  {
-   "id": "interoperability_replication",
-   "title": "Paper 7 \u2014 External Interoperability",
-   "steps": [
-    [
-     "code",
-     "cs_engine.py"
-    ],
-    [
-     "code",
-     "equa_model_v3.py"
-    ],
-    [
-     "code",
-     "equa_redteam.py"
-    ],
-    [
-     "code",
-     "equa_stress.py"
-    ],
-    [
-     "code",
-     "cs_channel_test.py"
-    ],
-    [
-     "code",
-     "cs_independence_redteam.py"
-    ],
-    [
-     "code",
-     "cs_contraction_compare.py"
-    ],
-    [
-     "code",
-     "cs_sterilization_test.py"
-    ],
-    [
-     "code",
-     "behavioral_idle_capital.py"
-    ],
-    [
-     "code",
-     "behavioral_calibrated.py"
-    ],
-    [
-     "code",
-     "fig_paper7.py"
-    ]
-   ],
-   "golden": "outputs/",
-   "goldenFiles": [
-    "outputs/behavioral_calibrated.out.txt",
-    "outputs/behavioral_idle_capital.out.txt",
-    "outputs/cs_channel_test.out.txt",
-    "outputs/cs_contraction_compare.out.txt",
-    "outputs/cs_engine.out.txt",
-    "outputs/cs_independence_redteam.out.txt",
-    "outputs/cs_sterilization_test.out.txt",
-    "outputs/equa_model_v3.out.txt",
-    "outputs/equa_redteam.out.txt",
-    "outputs/equa_stress.out.txt",
-    "outputs/fig_paper7.out.txt"
-   ],
-   "mkdirs": [
-    "figures",
-    "outputs"
-   ],
-   "deps": [
-    "numpy",
-    "matplotlib"
-   ],
-   "files": [
-    "LICENSE.txt",
-    "README.md",
-    "RESULTS_manifest.md",
-    "VERIFICATION_2026-07-10.md",
-    "code/_harness_report.py",
-    "code/behavioral_calibrated.py",
-    "code/behavioral_idle_capital.py",
-    "code/cs_channel_test.py",
-    "code/cs_contraction_compare.py",
-    "code/cs_engine.py",
-    "code/cs_independence_redteam.py",
-    "code/cs_sterilization_test.py",
-    "code/dashboard.py",
-    "code/equa_model_v3.py",
-    "code/equa_redteam.py",
-    "code/equa_stress.py",
-    "code/fig_paper7.py",
-    "requirements.txt",
-    "run_all.py"
-   ],
-   "bytes": 69906
-  },
-  {
    "id": "macro_replication",
+   "paper": 5,
    "title": "Paper 5 \u2014 Macroeconomic Model",
+   "heavy": false,
+   "heavyMB": 0,
+   "heavyWhy": "",
+   "siblings": [],
    "steps": [
     [
      "code",
@@ -593,18 +280,591 @@
     "requirements.txt"
    ],
    "bytes": 187003
-  }
- ],
- "excluded": [
+  },
   {
-   "id": "distribution_inequality_replication",
-   "title": "Paper 14 \u2014 Distribution & Inequality",
-   "reason": "needs the 22 MB raw SCF 2022 microdata file \u2014 too large to pull into a browser tab"
+   "id": "banking_replication",
+   "paper": 6,
+   "title": "Paper 6 \u2014 Full-Reserve Banking",
+   "heavy": false,
+   "heavyMB": 0,
+   "heavyWhy": "",
+   "siblings": [],
+   "steps": [
+    [
+     "code",
+     "test_propositions.py"
+    ],
+    [
+     "code",
+     "run_analysis.py"
+    ],
+    [
+     "innovation_counterfactual",
+     "src/run_innovation_cf.py"
+    ],
+    [
+     "code",
+     "make_figures.py"
+    ]
+   ],
+   "golden": "all_results.txt",
+   "goldenFiles": [
+    "all_results.txt"
+   ],
+   "mkdirs": [
+    "figures",
+    "innovation_counterfactual/results"
+   ],
+   "deps": [
+    "numpy",
+    "matplotlib"
+   ],
+   "files": [
+    "README.md",
+    "all_results.txt",
+    "code/balance_sheet.py",
+    "code/explore.py",
+    "code/make_figures.py",
+    "code/paper6_model.py",
+    "code/parameter_importance.py",
+    "code/run_analysis.py",
+    "code/sensitivity.py",
+    "code/test_propositions.py",
+    "innovation_counterfactual/README.md",
+    "innovation_counterfactual/data/SOURCES.json",
+    "innovation_counterfactual/requirements.txt",
+    "innovation_counterfactual/run_all.py",
+    "innovation_counterfactual/src/run_innovation_cf.py",
+    "requirements.txt",
+    "run_all.py"
+   ],
+   "bytes": 97871
+  },
+  {
+   "id": "interoperability_replication",
+   "paper": 7,
+   "title": "Paper 7 \u2014 External Interoperability",
+   "heavy": false,
+   "heavyMB": 0,
+   "heavyWhy": "",
+   "siblings": [],
+   "steps": [
+    [
+     "code",
+     "cs_engine.py"
+    ],
+    [
+     "code",
+     "equa_model_v3.py"
+    ],
+    [
+     "code",
+     "equa_redteam.py"
+    ],
+    [
+     "code",
+     "equa_stress.py"
+    ],
+    [
+     "code",
+     "cs_channel_test.py"
+    ],
+    [
+     "code",
+     "cs_independence_redteam.py"
+    ],
+    [
+     "code",
+     "cs_contraction_compare.py"
+    ],
+    [
+     "code",
+     "cs_sterilization_test.py"
+    ],
+    [
+     "code",
+     "behavioral_idle_capital.py"
+    ],
+    [
+     "code",
+     "behavioral_calibrated.py"
+    ],
+    [
+     "code",
+     "fig_paper7.py"
+    ]
+   ],
+   "golden": "outputs/",
+   "goldenFiles": [
+    "outputs/behavioral_calibrated.out.txt",
+    "outputs/behavioral_idle_capital.out.txt",
+    "outputs/cs_channel_test.out.txt",
+    "outputs/cs_contraction_compare.out.txt",
+    "outputs/cs_engine.out.txt",
+    "outputs/cs_independence_redteam.out.txt",
+    "outputs/cs_sterilization_test.out.txt",
+    "outputs/equa_model_v3.out.txt",
+    "outputs/equa_redteam.out.txt",
+    "outputs/equa_stress.out.txt",
+    "outputs/fig_paper7.out.txt"
+   ],
+   "mkdirs": [
+    "figures",
+    "outputs"
+   ],
+   "deps": [
+    "numpy",
+    "matplotlib"
+   ],
+   "files": [
+    "LICENSE.txt",
+    "README.md",
+    "RESULTS_manifest.md",
+    "VERIFICATION_2026-07-10.md",
+    "code/behavioral_calibrated.py",
+    "code/behavioral_idle_capital.py",
+    "code/cs_channel_test.py",
+    "code/cs_contraction_compare.py",
+    "code/cs_engine.py",
+    "code/cs_independence_redteam.py",
+    "code/cs_sterilization_test.py",
+    "code/dashboard.py",
+    "code/equa_model_v3.py",
+    "code/equa_redteam.py",
+    "code/equa_stress.py",
+    "code/fig_paper7.py",
+    "requirements.txt",
+    "run_all.py"
+   ],
+   "bytes": 69309
+  },
+  {
+   "id": "structural_buyer_replication",
+   "paper": 8,
+   "title": "Paper 8 \u2014 The Structural Buyer",
+   "heavy": false,
+   "heavyMB": 0,
+   "heavyWhy": "",
+   "siblings": [],
+   "steps": [
+    [
+     "code",
+     "verify_prop1_premium.py"
+    ],
+    [
+     "code",
+     "verify_prop2_investment.py"
+    ],
+    [
+     "code",
+     "verify_prop3_leak.py"
+    ],
+    [
+     "code",
+     "verify_prop7_mirror_voting.py"
+    ],
+    [
+     "code",
+     "verify_psi_plateau.py"
+    ],
+    [
+     "code",
+     "verify_all.py"
+    ],
+    [
+     "code",
+     "make_figures.py"
+    ]
+   ],
+   "golden": "all_results.txt",
+   "goldenFiles": [
+    "all_results.txt"
+   ],
+   "mkdirs": [
+    "figures"
+   ],
+   "deps": [
+    "numpy",
+    "matplotlib"
+   ],
+   "files": [
+    "README.md",
+    "all_results.txt",
+    "code/make_figures.py",
+    "code/run_all.py",
+    "code/verify_all.py",
+    "code/verify_prop1_premium.py",
+    "code/verify_prop2_investment.py",
+    "code/verify_prop3_leak.py",
+    "code/verify_prop7_mirror_voting.py",
+    "code/verify_psi_plateau.py",
+    "requirements.txt"
+   ],
+   "bytes": 31449
+  },
+  {
+   "id": "empirical_replication",
+   "paper": 10,
+   "title": "Paper 10 \u2014 Historical Counterfactual",
+   "heavy": false,
+   "heavyMB": 0,
+   "heavyWhy": "",
+   "siblings": [],
+   "steps": [
+    [
+     "code",
+     "run_all_tables.py"
+    ],
+    [
+     "code",
+     "run_ge_results.py"
+    ],
+    [
+     "code",
+     "compare_to_paper.py"
+    ],
+    [
+     "code",
+     "make_fig_M5.py"
+    ]
+   ],
+   "golden": "all_results.txt",
+   "goldenFiles": [
+    "all_results.txt"
+   ],
+   "mkdirs": [
+    "figures",
+    "tool14_inflation/figures"
+   ],
+   "deps": [
+    "numpy",
+    "matplotlib"
+   ],
+   "files": [
+    "AUDIT.md",
+    "README.md",
+    "all_results.txt",
+    "code/all_results.txt",
+    "code/authoritative_data.py",
+    "code/authoritative_newcitizens.py",
+    "code/build_csv.py",
+    "code/compare_to_paper.py",
+    "code/demographic_flow_model.py",
+    "code/deterministic_engine.py",
+    "code/make_fig_M5.py",
+    "code/mc_engine.py",
+    "code/mc_plots.py",
+    "code/run_all_tables.py",
+    "code/run_ge_results.py",
+    "code/transition_cohorts.py",
+    "code/transition_lifetime.py",
+    "code/verify_all.py",
+    "data/citizens_standard_historical_data_1928_2025_full.csv",
+    "data/citizens_standard_historical_data_1960_2025_v2.csv",
+    "requirements.txt",
+    "run_all.py",
+    "tool14_inflation/AUDIT.md",
+    "tool14_inflation/README.md",
+    "tool14_inflation/code/data.py",
+    "tool14_inflation/code/make_figures.py",
+    "tool14_inflation/code/run_counterfactual.py",
+    "tool14_inflation/code/sensitivity.py",
+    "tool14_inflation/code/structural_run.py",
+    "tool14_inflation/code/tool14_engine.py",
+    "tool14_inflation/data/cpi_1980.csv",
+    "tool14_inflation/data/cpi_2022.csv",
+    "tool14_inflation/data/sffed_demand_share_2022.csv",
+    "tool14_inflation/results.txt"
+   ],
+   "bytes": 187354
   },
   {
    "id": "empirical_validation_replication",
+   "paper": 10,
    "title": "Paper 10 \u2014 Empirical Validation",
-   "reason": "needs statsmodels, which pulls scipy (~25 MB of extra WASM) into the page"
+   "heavy": true,
+   "heavyMB": 25,
+   "heavyWhy": "needs statsmodels, which pulls scipy \u2014 about 25 MB of extra WebAssembly",
+   "siblings": [],
+   "steps": [
+    [
+     ".",
+     "src/build_mt.py"
+    ],
+    [
+     ".",
+     "src/run_horserace.py"
+    ],
+    [
+     ".",
+     "src/run_divisia_horserace.py"
+    ],
+    [
+     ".",
+     "src/run_composition_horserace.py"
+    ],
+    [
+     ".",
+     "src/build_mt_paymentflow.py"
+    ],
+    [
+     ".",
+     "src/make_divisia_figure.py"
+    ],
+    [
+     ".",
+     "src/make_composition_figure.py"
+    ],
+    [
+     ".",
+     "src/robustness_and_figure.py"
+    ]
+   ],
+   "golden": "results/horserace_results.json",
+   "goldenFiles": [
+    "results/horserace_results.json"
+   ],
+   "mkdirs": [
+    "results"
+   ],
+   "deps": [
+    "numpy",
+    "pandas",
+    "matplotlib",
+    "statsmodels"
+   ],
+   "files": [
+    "README.md",
+    "data/CURRSL.csv",
+    "data/DEMDEPSL.csv",
+    "data/OCDSL.csv",
+    "data/SOURCES.json",
+    "data/divisia_dm1.csv",
+    "data/m1sl_1959_2019.csv",
+    "data/macro_1959_2026.csv",
+    "data/payments_quarterly.csv",
+    "data/payments_volumes.csv",
+    "data/payments_volumes_TEMPLATE.csv",
+    "requirements.txt",
+    "run_all.py",
+    "src/build_mt.py",
+    "src/build_mt_paymentflow.py",
+    "src/dashboard.py",
+    "src/make_composition_figure.py",
+    "src/make_divisia_figure.py",
+    "src/robustness_and_figure.py",
+    "src/run_composition_horserace.py",
+    "src/run_divisia_horserace.py",
+    "src/run_horserace.py",
+    "validation_protocol.md"
+   ],
+   "bytes": 168999
+  },
+  {
+   "id": "crisis_behaviour_replication",
+   "paper": 12,
+   "title": "Paper 12 \u2014 Crisis Behaviour",
+   "heavy": false,
+   "heavyMB": 0,
+   "heavyWhy": "",
+   "siblings": [],
+   "steps": [
+    [
+     ".",
+     "src/run_stress.py"
+    ],
+    [
+     ".",
+     "src/make_figure.py"
+    ]
+   ],
+   "golden": "results/stress_results.json",
+   "goldenFiles": [
+    "results/stress_results.json"
+   ],
+   "mkdirs": [
+    "results"
+   ],
+   "deps": [
+    "matplotlib"
+   ],
+   "files": [
+    "README.md",
+    "requirements.txt",
+    "run_all.py",
+    "src/authoritative_data.py",
+    "src/authoritative_newcitizens.py",
+    "src/dashboard.py",
+    "src/deterministic_engine.py",
+    "src/make_figure.py",
+    "src/run_stress.py"
+   ],
+   "bytes": 44350
+  },
+  {
+   "id": "comparative_replication",
+   "paper": 13,
+   "title": "Paper 13 \u2014 Comparative Analysis",
+   "heavy": false,
+   "heavyMB": 0,
+   "heavyWhy": "",
+   "siblings": [],
+   "steps": [
+    [
+     "src",
+     "compare.py"
+    ],
+    [
+     "src",
+     "make_figures.py"
+    ]
+   ],
+   "golden": "results/comparison_results.json",
+   "goldenFiles": [
+    "results/comparison_results.json"
+   ],
+   "mkdirs": [
+    "results",
+    "scenario_lvt_hybrid/figures"
+   ],
+   "deps": [
+    "matplotlib"
+   ],
+   "files": [
+    "AUDIT.md",
+    "README.md",
+    "data/alaska_pfd_anchors.csv",
+    "data/comparators.csv",
+    "requirements.txt",
+    "results.txt",
+    "run_all.py",
+    "scenario_lvt_hybrid/README.md",
+    "scenario_lvt_hybrid/lvt_hybrid.py",
+    "src/compare.py",
+    "src/dashboard.py",
+    "src/data.py",
+    "src/make_figures.py"
+   ],
+   "bytes": 57610
+  },
+  {
+   "id": "distribution_inequality_replication",
+   "paper": 14,
+   "title": "Paper 14 \u2014 Distribution & Inequality",
+   "heavy": true,
+   "heavyMB": 30,
+   "heavyWhy": "downloads the 22 MB raw SCF 2022 microdata, plus pandas",
+   "siblings": [
+    "empirical_replication/data/citizens_standard_historical_data_1960_2025_v2.csv"
+   ],
+   "steps": [
+    [
+     ".",
+     "_web_run.py"
+    ]
+   ],
+   "golden": "results/inequality_results.json",
+   "goldenFiles": [
+    "results/inequality_results.json"
+   ],
+   "mkdirs": [
+    "results"
+   ],
+   "deps": [
+    "numpy",
+    "pandas",
+    "matplotlib"
+   ],
+   "files": [
+    "README.md",
+    "_web_run.py",
+    "anchor_real_shocks/README.md",
+    "anchor_real_shocks/code/stage1_observed_divergence.py",
+    "anchor_real_shocks/code/stage2_zero_dominance.py",
+    "anchor_real_shocks/output/stage1_results.txt",
+    "anchor_real_shocks/output/stage2_results.txt",
+    "asset_price_impact/README.md",
+    "asset_price_impact/code/stage1_valuation_premium.py",
+    "asset_price_impact/code/stage2_return_consistency.py",
+    "asset_price_impact/output/stage1_results.txt",
+    "asset_price_impact/output/stage2_results.txt",
+    "capture_override_baserate/README.md",
+    "capture_override_baserate/code/stage1_override_baserate.py",
+    "capture_override_baserate/code/stage2_mitigants_and_cs.py",
+    "capture_override_baserate/output/stage1_results.txt",
+    "capture_override_baserate/output/stage2_results.txt",
+    "credit_displacement/README.md",
+    "credit_displacement/code/stage1_displacement_requirement.py",
+    "credit_displacement/code/stage2_breakeven_and_plausibility.py",
+    "credit_displacement/output/stage1_results.txt",
+    "credit_displacement/output/stage2_results.txt",
+    "crowdout_split/README.md",
+    "crowdout_split/code/stage1_crowdout.py",
+    "crowdout_split/code/stage2_crowdout_sweep.py",
+    "crowdout_split/output/stage1_results.txt",
+    "crowdout_split/output/stage2_results.txt",
+    "data/SCFP2022.csv",
+    "dsge_twocircuit/README.md",
+    "dsge_twocircuit/code/stage1_determinacy.py",
+    "dsge_twocircuit/code/stage2_price_response.py",
+    "dsge_twocircuit/output/stage1_results.txt",
+    "dsge_twocircuit/output/stage2_results.txt",
+    "fullreserve_credit_gap/README.md",
+    "fullreserve_credit_gap/code/stage1_gap_sizing.py",
+    "fullreserve_credit_gap/code/stage2_residual_and_debate.py",
+    "fullreserve_credit_gap/output/stage1_results.txt",
+    "fullreserve_credit_gap/output/stage2_results.txt",
+    "growth_measurement/README.md",
+    "growth_measurement/code/stage1_measurement_drift.py",
+    "growth_measurement/code/stage2_drift_accumulation.py",
+    "growth_measurement/output/stage1_results.txt",
+    "growth_measurement/output/stage2_results.txt",
+    "labor_supply/README.md",
+    "labor_supply/code/stage1_labor_supply.py",
+    "labor_supply/code/stage2_labor_sweep.py",
+    "labor_supply/output/stage1_results.txt",
+    "labor_supply/output/stage2_results.txt",
+    "mode_choice_welfare/README.md",
+    "mode_choice_welfare/code/stage1_no_welfare_optimum.py",
+    "mode_choice_welfare/output/stage1_results.txt",
+    "mpc_demand_impulse/README.md",
+    "mpc_demand_impulse/code/stage1_mpc_impulse.py",
+    "mpc_demand_impulse/code/stage2_impulse_sweep.py",
+    "mpc_demand_impulse/output/stage1_results.txt",
+    "mpc_demand_impulse/output/stage2_results.txt",
+    "procyclicality/README.md",
+    "procyclicality/code/stage1_procyclicality.py",
+    "procyclicality/code/stage2_stock_survival.py",
+    "procyclicality/output/stage1_results.txt",
+    "procyclicality/output/stage2_results.txt",
+    "rent_capitalization/README.md",
+    "rent_capitalization/code/stage1_rent_exposure.py",
+    "rent_capitalization/code/stage2_capitalization.py",
+    "rent_capitalization/output/stage1_results.txt",
+    "rent_capitalization/output/stage2_results.txt",
+    "requirements.txt",
+    "run_all.py",
+    "src/authoritative_data.py",
+    "src/authoritative_newcitizens.py",
+    "src/channels.py",
+    "src/dashboard.py",
+    "src/deterministic_engine.py",
+    "src/floor_by_age.py",
+    "src/verify_scf.py",
+    "structural_buyer_endgame/README.md",
+    "structural_buyer_endgame/code/stage1_ownership_plateau.py",
+    "structural_buyer_endgame/code/stage2_float_and_verdict.py",
+    "structural_buyer_endgame/output/stage1_results.txt",
+    "structural_buyer_endgame/output/stage2_results.txt",
+    "transition_debt_path/README.md",
+    "transition_debt_path/code/stage1_band_path.py",
+    "transition_debt_path/code/stage2_band_robustness.py",
+    "transition_debt_path/output/stage1_results.txt",
+    "transition_debt_path/output/stage2_results.txt"
+   ],
+   "bytes": 22223063
   }
- ]
+ ],
+ "excluded": [],
+ "pythonNote": "Four supplementary scripts in the distribution package use PEP 701 f-strings and need Python 3.12+. Pyodide and CI both run 3.12; older local Pythons will report SyntaxError on those four."
 }
