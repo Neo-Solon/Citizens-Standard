@@ -103,9 +103,29 @@ containment, not eyeballing: the runner's output must contain every published va
 
 ## Citation
 
-> Neo-Solon. *The Citizens Standard: A Constitutional Monetary Architecture with Mode-Selectable
-> Inflation Regimes* (2026). SSRN: <https://ssrn.com/abstract=6702518> ·
-> DOI: [10.2139/ssrn.6702518](http://dx.doi.org/10.2139/ssrn.6702518)
+The Citizens Standard is a **fourteen-paper series**, not a single paper. Papers are lettered as
+they are cited within the series (2026a, 2026b, …).
+
+| | Paper | SSRN |
+|---|---|---|
+| **2026a** | *One Model, Many Systems: A Constitutional Monetary Architecture* | [6702518](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6702518) |
+| **2026b** | *A Historical Counterfactual: Empirical Analysis of an Alternative US Monetary Architecture* | [6735078](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6735078) |
+| **2026c** | *Transition Architecture and Migration Mechanics* | [6810741](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6810741) |
+| **2026d** | *A Statutory Implementation Pathway* | [6873798](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6873798) |
+| **2026e** | *A Macroeconomic Model of a Dual-Circuit Monetary System* | [6939418](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6939418) |
+
+Papers 6–14 are in this repository under [`papers/`](papers/) and on
+[citizensstandard.org](https://citizensstandard.org/papers.html); SSRN entries to follow.
+
+**To cite the architecture (the entry point):**
+
+> Neo-Solon (2026a). *The Citizens Standard: One Model, Many Systems — A Constitutional Monetary
+> Architecture.* Working Paper. SSRN: <https://ssrn.com/abstract=6702518>
+
+**To cite the series:**
+
+> Neo-Solon (2026). *The Citizens Standard.* Fourteen-paper series with full replication code.
+> <https://github.com/Neo-Solon/Citizens-Standard>
 
 ## Licence
 
