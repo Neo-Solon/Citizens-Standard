@@ -692,7 +692,7 @@
    "steps": [
     [
      ".",
-     "_web_run.py"
+     "web_run.py"
     ]
    ],
    "golden": "results/inequality_results.json",
@@ -709,7 +709,6 @@
    ],
    "files": [
     "README.md",
-    "_web_run.py",
     "anchor_real_shocks/README.md",
     "anchor_real_shocks/code/stage1_observed_divergence.py",
     "anchor_real_shocks/code/stage2_zero_dominance.py",
@@ -792,7 +791,8 @@
     "transition_debt_path/code/stage1_band_path.py",
     "transition_debt_path/code/stage2_band_robustness.py",
     "transition_debt_path/output/stage1_results.txt",
-    "transition_debt_path/output/stage2_results.txt"
+    "transition_debt_path/output/stage2_results.txt",
+    "web_run.py"
    ],
    "bytes": 22223063
   }
