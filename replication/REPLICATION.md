@@ -158,7 +158,13 @@ it directly — the harness runs packages in a scratch copy so it never mutates 
 
 ## Verify in the browser (no install)
 
-`methodology.html` runs **9 of the 12 packages live in the page** — real CPython compiled to
+`methodology.html` runs the packages **live in the page**, with Pyodide in a **Web Worker**
+(`replication/verify_worker.js`). CPython-in-WASM executes synchronously: on the main thread, Paper 5's
+~40-second run freezes the tab hard enough that the browser offers to kill the page. Off-thread, the
+page stays responsive and the run reports progress. The worker must be same-origin, so it sits beside
+the manifest.
+
+It runs **9 of the 12 packages by default** — real CPython compiled to
 WebAssembly (Pyodide), executing the packages' own scripts, checking every number against the
 published artifact, and rendering the figures the code draws. Nothing is precomputed.
 
