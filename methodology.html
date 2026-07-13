@@ -489,7 +489,9 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
   // ---- the worker: Python runs OFF the main thread, so the page never freezes ----
   function ensureWorker() {
     if (worker) return worker;
-    worker = new Worker(BASE + 'verify_worker.js');
+    // Version the worker URL: a cached worker would keep running the old code (and the old
+    // cache policy), and nothing on the page would reveal which build is live.
+    worker = new Worker(BASE + 'verify_worker.js?v=20260712d');
     return worker;
   }
 
