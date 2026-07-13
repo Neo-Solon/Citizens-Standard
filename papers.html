@@ -257,6 +257,11 @@ main.wrap > .lede{font-size:clamp(1.1rem,1rem + 0.5vw,1.34rem);color:#D9D3C6;max
 
       <button class="cs-audio__speed" id="csSpeed" aria-label="Playback speed">1&times;</button>
     </div>
+
+    <!-- swap src for the repo-hosted file, e.g. audio/cs-overview.mp3 -->
+    <audio id="csSource" preload="metadata">
+      <source src="audio/cs-overview.mp3?v=20260712" type="audio/mpeg">
+    </audio>
   </figure>
   <!-- ============ /CS AUDIO PLAYER ============ -->
 </div>
@@ -789,7 +794,7 @@ Be fair and clear, not a cheerleader and not a hit piece. If something is well-s
   <button id="cspPlay" aria-label="Play or pause audio overview">&#9654;</button>
   <div class="csp-meta"><b>Audio Overview</b><span id="cspTime">0:00 / 0:00</span></div>
   <input type="range" id="cspSeek" min="0" max="100" value="0" step="0.1" aria-label="Seek audio">
-  <audio id="cspAudio" preload="metadata" src="audio/cs-overview.mp3?v=20260712b"></audio>
+  <audio id="cspAudio" preload="metadata" src="audio/cs-overview.mp3?v=20260712"></audio>
 </div>
 <script>
 (function(){
@@ -863,10 +868,9 @@ Be fair and clear, not a cheerleader and not a hit piece. If something is well-s
                         .catch(function(){stx.textContent='\u25B8 tap play to resume';});
       };
       a.addEventListener('seeked',go,{once:true});
-      /* NOT fastSeek(). fastSeek is DEFINED as trading accuracy for speed — it lands on the
-       * nearest keyframe, which is EARLIER than asked for. That is precisely the "falls back a
-       * bit" symptom. currentTime is the accurate seek; use it. */
-      a.currentTime=t;
+      try{
+        if(a.fastSeek) a.fastSeek(t); else a.currentTime=t;
+      }catch(e){ a.currentTime=t; }
       /* If the browser never fires `seeked` (some do not when the seek is a no-op), don't hang. */
       setTimeout(function(){ if(a.paused && s.playing) go(); },400);
     }
@@ -890,77 +894,6 @@ Be fair and clear, not a cheerleader and not a hit piece. If something is well-s
       navigator.mediaSession.setActionHandler('seekto',function(d){ if(d.seekTime!=null) a.currentTime=d.seekTime; });
     }catch(e){}
   }
-})();
-</script>
-
-<script>
-/* ---- in-page audio card (figure.cs-audio) ----------------------------------------------
- * This card was fully styled but had NO script: every one of its ids (csPlay, csScrub,
- * csPlayed, csBuffer, csCur, csDur, csSpeed) appeared exactly once in the page — the markup
- * and nothing else. The play button did nothing when clicked, and it carried its own second
- * <audio id="csSource"> pointing at the same 22 MB mp3, so the file was fetched twice.
- *
- * It is now driven by the SAME element as the persistent bar (#cspAudio). One stream, two
- * UIs, always in sync — press play here and the bar follows it across page navigations.
- */
-(function(){
-  var a=document.getElementById('cspAudio'), fig=document.getElementById('csAudio');
-  if(!a||!fig) return;
-  var play=document.getElementById('csPlay'), scrub=document.getElementById('csScrub'),
-      played=document.getElementById('csPlayed'), buf=document.getElementById('csBuffer'),
-      cur=document.getElementById('csCur'), dur=document.getElementById('csDur'),
-      spd=document.getElementById('csSpeed');
-
-  function fmt(s){s=Math.floor(s||0);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
-  function pct(){var d=a.duration||0; return d?(a.currentTime/d*100):0;}
-
-  function paint(){
-    var p=pct();
-    if(played) played.style.width=p+'%';
-    if(cur) cur.textContent=fmt(a.currentTime);
-    if(dur && a.duration) dur.textContent=fmt(a.duration);   /* was hardcoded 40:00; real 40:50 */
-    if(scrub) scrub.setAttribute('aria-valuenow',Math.round(p));
-    if(buf && a.buffered && a.buffered.length && a.duration)
-      buf.style.width=(a.buffered.end(a.buffered.length-1)/a.duration*100)+'%';
-  }
-  a.addEventListener('timeupdate',paint);
-  a.addEventListener('progress',paint);
-  a.addEventListener('loadedmetadata',paint);
-  a.addEventListener('play', function(){fig.classList.add('is-playing');});
-  a.addEventListener('pause',function(){fig.classList.remove('is-playing');});
-  if(!a.paused) fig.classList.add('is-playing');
-
-  if(play) play.addEventListener('click',function(){
-    a.preload='auto';                       /* card is the entry point: commit to the file now */
-    a.paused?a.play():a.pause();
-  });
-
-  /* scrub: click or drag anywhere on the track, plus keyboard for the role="slider" */
-  function seekTo(clientX){
-    var r=scrub.getBoundingClientRect();
-    var f=Math.min(1,Math.max(0,(clientX-r.left)/r.width));
-    if(a.duration) a.currentTime=f*a.duration;
-  }
-  if(scrub){
-    var dragging=false;
-    scrub.addEventListener('pointerdown',function(e){dragging=true;scrub.setPointerCapture(e.pointerId);seekTo(e.clientX);});
-    scrub.addEventListener('pointermove',function(e){if(dragging)seekTo(e.clientX);});
-    scrub.addEventListener('pointerup',  function(e){dragging=false;try{scrub.releasePointerCapture(e.pointerId);}catch(_){}}); 
-    scrub.addEventListener('keydown',function(e){
-      if(!a.duration) return;
-      if(e.key==='ArrowRight'){a.currentTime=Math.min(a.duration,a.currentTime+15);e.preventDefault();}
-      if(e.key==='ArrowLeft'){ a.currentTime=Math.max(0,a.currentTime-15);e.preventDefault();}
-      if(e.key===' '||e.key==='Enter'){a.paused?a.play():a.pause();e.preventDefault();}
-    });
-  }
-
-  var RATES=[1,1.25,1.5,1.75,2,0.75], ri=0;
-  if(spd) spd.addEventListener('click',function(){
-    ri=(ri+1)%RATES.length; a.playbackRate=RATES[ri];
-    spd.innerHTML=RATES[ri]+'&times;';
-  });
-
-  paint();
 })();
 </script>
 </body>
