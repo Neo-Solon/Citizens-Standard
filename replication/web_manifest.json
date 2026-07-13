@@ -1,5 +1,19 @@
 {
  "note": "Drives the in-browser verifier on methodology.html. Regenerate with build_web_manifest.py.",
+ "noCode": [
+  {
+   "paper": 4,
+   "title": "Paper 4 \u2014 Statutory"
+  },
+  {
+   "paper": 9,
+   "title": "Paper 9 \u2014 Issuance Engine"
+  },
+  {
+   "paper": 11,
+   "title": "Paper 11 \u2014 Governance"
+  }
+ ],
  "base": "replication",
  "packages": [
   {
@@ -65,6 +79,82 @@
     "requirements.txt"
    ],
    "bytes": 106933
+  },
+  {
+   "id": "empirical_replication",
+   "paper": 2,
+   "title": "Paper 2 \u2014 Historical Counterfactual",
+   "heavy": false,
+   "heavyMB": 0,
+   "heavyWhy": "",
+   "siblings": [],
+   "steps": [
+    [
+     "code",
+     "run_all_tables.py"
+    ],
+    [
+     "code",
+     "run_ge_results.py"
+    ],
+    [
+     "code",
+     "compare_to_paper.py"
+    ],
+    [
+     "code",
+     "make_fig_M5.py"
+    ]
+   ],
+   "golden": "all_results.txt",
+   "goldenFiles": [
+    "all_results.txt"
+   ],
+   "mkdirs": [
+    "figures",
+    "tool14_inflation/figures"
+   ],
+   "deps": [
+    "numpy",
+    "matplotlib"
+   ],
+   "files": [
+    "AUDIT.md",
+    "README.md",
+    "all_results.txt",
+    "code/all_results.txt",
+    "code/authoritative_data.py",
+    "code/authoritative_newcitizens.py",
+    "code/build_csv.py",
+    "code/compare_to_paper.py",
+    "code/demographic_flow_model.py",
+    "code/deterministic_engine.py",
+    "code/make_fig_M5.py",
+    "code/mc_engine.py",
+    "code/mc_plots.py",
+    "code/run_all_tables.py",
+    "code/run_ge_results.py",
+    "code/transition_cohorts.py",
+    "code/transition_lifetime.py",
+    "code/verify_all.py",
+    "data/citizens_standard_historical_data_1928_2025_full.csv",
+    "data/citizens_standard_historical_data_1960_2025_v2.csv",
+    "requirements.txt",
+    "run_all.py",
+    "tool14_inflation/AUDIT.md",
+    "tool14_inflation/README.md",
+    "tool14_inflation/code/data.py",
+    "tool14_inflation/code/make_figures.py",
+    "tool14_inflation/code/run_counterfactual.py",
+    "tool14_inflation/code/sensitivity.py",
+    "tool14_inflation/code/structural_run.py",
+    "tool14_inflation/code/tool14_engine.py",
+    "tool14_inflation/data/cpi_1980.csv",
+    "tool14_inflation/data/cpi_2022.csv",
+    "tool14_inflation/data/sffed_demand_share_2022.csv",
+    "tool14_inflation/results.txt"
+   ],
+   "bytes": 187354
   },
   {
    "id": "transition_replication",
@@ -501,82 +591,6 @@
     "requirements.txt"
    ],
    "bytes": 31449
-  },
-  {
-   "id": "empirical_replication",
-   "paper": 10,
-   "title": "Paper 10 \u2014 Historical Counterfactual",
-   "heavy": false,
-   "heavyMB": 0,
-   "heavyWhy": "",
-   "siblings": [],
-   "steps": [
-    [
-     "code",
-     "run_all_tables.py"
-    ],
-    [
-     "code",
-     "run_ge_results.py"
-    ],
-    [
-     "code",
-     "compare_to_paper.py"
-    ],
-    [
-     "code",
-     "make_fig_M5.py"
-    ]
-   ],
-   "golden": "all_results.txt",
-   "goldenFiles": [
-    "all_results.txt"
-   ],
-   "mkdirs": [
-    "figures",
-    "tool14_inflation/figures"
-   ],
-   "deps": [
-    "numpy",
-    "matplotlib"
-   ],
-   "files": [
-    "AUDIT.md",
-    "README.md",
-    "all_results.txt",
-    "code/all_results.txt",
-    "code/authoritative_data.py",
-    "code/authoritative_newcitizens.py",
-    "code/build_csv.py",
-    "code/compare_to_paper.py",
-    "code/demographic_flow_model.py",
-    "code/deterministic_engine.py",
-    "code/make_fig_M5.py",
-    "code/mc_engine.py",
-    "code/mc_plots.py",
-    "code/run_all_tables.py",
-    "code/run_ge_results.py",
-    "code/transition_cohorts.py",
-    "code/transition_lifetime.py",
-    "code/verify_all.py",
-    "data/citizens_standard_historical_data_1928_2025_full.csv",
-    "data/citizens_standard_historical_data_1960_2025_v2.csv",
-    "requirements.txt",
-    "run_all.py",
-    "tool14_inflation/AUDIT.md",
-    "tool14_inflation/README.md",
-    "tool14_inflation/code/data.py",
-    "tool14_inflation/code/make_figures.py",
-    "tool14_inflation/code/run_counterfactual.py",
-    "tool14_inflation/code/sensitivity.py",
-    "tool14_inflation/code/structural_run.py",
-    "tool14_inflation/code/tool14_engine.py",
-    "tool14_inflation/data/cpi_1980.csv",
-    "tool14_inflation/data/cpi_2022.csv",
-    "tool14_inflation/data/sffed_demand_share_2022.csv",
-    "tool14_inflation/results.txt"
-   ],
-   "bytes": 187354
   },
   {
    "id": "crisis_behaviour_replication",
