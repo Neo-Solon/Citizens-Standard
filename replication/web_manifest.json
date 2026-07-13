@@ -683,9 +683,9 @@
    "id": "distribution_inequality_replication",
    "paper": 14,
    "title": "Paper 14 \u2014 Distribution & Inequality",
-   "heavy": true,
-   "heavyMB": 30,
-   "heavyWhy": "downloads the 22 MB raw SCF 2022 microdata, plus pandas",
+   "heavy": false,
+   "heavyMB": 0,
+   "heavyWhy": "",
    "siblings": [
     "empirical_replication/data/citizens_standard_historical_data_1960_2025_v2.csv"
    ],
@@ -734,7 +734,6 @@
     "crowdout_split/code/stage2_crowdout_sweep.py",
     "crowdout_split/output/stage1_results.txt",
     "crowdout_split/output/stage2_results.txt",
-    "data/SCFP2022.csv",
     "dsge_twocircuit/README.md",
     "dsge_twocircuit/code/stage1_determinacy.py",
     "dsge_twocircuit/code/stage2_price_response.py",
@@ -794,7 +793,7 @@
     "transition_debt_path/output/stage2_results.txt",
     "web_run.py"
    ],
-   "bytes": 22223063
+   "bytes": 269740
   }
  ],
  "excluded": [
