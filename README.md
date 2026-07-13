@@ -95,7 +95,9 @@ containment, not eyeballing: the runner's output must contain every published va
   statsmodels (OLS, and OLS with Newey–West HAC errors). It reproduces statsmodels to machine
   precision, and the package's output is **byte-identical** with and without it. All 12 packages
   now run in the browser.
-- **Papers 4, 9, 11** are argument, not computation — nothing to replicate.
+- **Papers 4 and 11** are argument, not computation — nothing to replicate. **Paper 9** has no
+  package of its own, but its numbers are computed elsewhere: its technical appendix maps every
+  reported quantity to the script that produces it.
 - **The liquidation flow `L_t`** — defined in Macro §3.3 and never given a number in any paper — is
   now computed in `replication/liquidation_flow_replication`. It finds the circulating-pool ceiling
   breached from ~2048 under a fixed κ_d. **This postdates the papers and is not yet in them.** It is
@@ -118,9 +120,15 @@ the papers use to cite each other.
 | **2026g** | External Interoperability and the Common Anchor | [6939600](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6939600) |
 | **2026h** | The Structural Buyer — Asset-Market Dynamics, Price Discovery, and Universal Ownership | [6945320](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6945320) |
 
-**In this repository, SSRN posting pending:** Statutory Implementation (2026d), The Issuance Engine
-(2026i), Empirical Validation (2026j), Governance (2026k), Crisis Behaviour (2026l), Comparative
-Analysis (2026m), Distribution & Inequality (2026n).
+**Submitted, under review:**
+
+| | Paper | SSRN |
+|---|---|---|
+| **2026d** | Constitutional Vulnerability of a Rules-Based Monetary Statute | [7115018](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7115018) |
+| **2026i** | Bounded Citizen Ownership and the Transactional-Money Locus | [7114938](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7114938) |
+
+**Submitted, awaiting release:** Empirical Validation (2026j), Governance (2026k), Crisis Behaviour
+(2026l), Comparative Analysis (2026m), Distribution & Inequality (2026n).
 
 All fourteen — published or not — are in [`papers/`](papers/) as PDF and DOCX, on
 [citizensstandard.org](https://citizensstandard.org/papers.html), and every quantitative claim in
