@@ -74,11 +74,3 @@ if __name__=="__main__":
           "| last", round(float(mt.dropna().iloc[-1]),1))
     print("payment_flow:", "available" if payment_flow(pd.Series(dtype=float),None) is not None else "data-gated (needs Fedwire/ACH/RTP)")
     print("divisia:", "available" if divisia_transaction_tier(None) is not None else "data-gated (needs CFS Divisia)")
-
-def divisia_dm1_index(csv="data/divisia_dm1.csv"):
-    """Load the CFS Divisia M1 index (user-cost aggregate). This IS the construction-3 output,
-    computed by CFS the proper way (user-cost weights), so we use their published index directly
-    rather than re-deriving it. Returns the monthly level (index, base 100 @ 1967)."""
-    import pandas as pd
-    d = pd.read_csv(csv, parse_dates=["date"]).set_index("date")["DM1"]
-    return d.rename("Mt_divisia")

@@ -1,146 +1,30 @@
 {
- "provenance": {
-  "macro_1959_2026.csv": {
-   "series": [
-    "M2SL",
-    "CPIAUCSL",
-    "PCEPI"
-   ],
-   "range": "1959-01-01..2026-04-01",
-   "n": 808,
-   "md5": "21cc80cf0f70",
-   "source": "FRED via US-Macro-Forecast-Hub 2026 target snapshot"
+  "provenance": {
+    "macro_1959_2026.csv": {
+      "series": [
+        "M2SL",
+        "CPIAUCSL",
+        "PCEPI"
+      ],
+      "range": "1959-01-01..2026-04-01",
+      "n": 808,
+      "md5": "21cc80cf0f70",
+      "source": "FRED via US-Macro-Forecast-Hub 2026 target snapshot"
+    },
+    "m1sl_1959_2019.csv": {
+      "series": [
+        "M1SL"
+      ],
+      "range": "1959-01-01..2019-09-01",
+      "n": 729,
+      "md5": "2b573c071733",
+      "source": "FRED-MD current.csv (pre-2020 clean M1)"
+    }
   },
-  "m1sl_1959_2019.csv": {
-   "series": [
-    "M1SL"
-   ],
-   "range": "1959-01-01..2019-09-01",
-   "n": 729,
-   "md5": "2b573c071733",
-   "source": "FRED-MD current.csv (pre-2020 clean M1)"
-  },
-  "divisia_dm1.csv": {
-   "series": [
-    "DM1 (CFS Divisia M1, level index, base 100 @ 1967-01)"
-   ],
-   "range": "1967-01-01..2026-04-01",
-   "n": 712,
-   "source": "Center for Financial Stability, AMFM program (Barnett Divisia), Narrow worksheet, user-supplied workbook",
-   "note": "user-cost weighted; continuous across the May-2020 M1 redefinition"
-  },
-  "CURRSL.csv": {
-   "series": [
-    "CURRSL (Currency Component of M1, SA, $bn)"
-   ],
-   "range": "1959-01-01..2026-04-01",
-   "n": 808,
-   "md5": "6fcb58dd2a92",
-   "source": "FRED (Board of Governors, H.6), monthly seasonally-adjusted level",
-   "note": "composition tier component (active): currency"
-  },
-  "DEMDEPSL.csv": {
-   "series": [
-    "DEMDEPSL (Demand Deposits, SA, $bn)"
-   ],
-   "range": "1959-01-01..2026-04-01",
-   "n": 808,
-   "md5": "049a6956a329",
-   "source": "FRED (Board of Governors, H.6), monthly seasonally-adjusted level",
-   "note": "composition tier component (active): demand deposits"
-  },
-  "OCDSL.csv": {
-   "series": [
-    "OCDSL (Other Checkable Deposits, SA, $bn)"
-   ],
-   "range": "1959-01-01..2020-04-01",
-   "n": 736,
-   "md5": "262e23262dd3",
-   "source": "FRED (Board of Governors, H.6), monthly seasonally-adjusted level",
-   "note": "composition tier component (active): other-checkable deposits. DISCONTINUED after 2020-04 (H.6 Feb-2021 change stopped separate OCD reporting). Do NOT substitute MDLM, which folds savings into the transactional tier and defeats the test. The composition tier ends here by construction; Divisia carries 2021 onward."
+  "integrity_checks": {
+    "M2_loggrowth_Feb2020_Apr2022_pct": 34.0,
+    "CPI_YoY_Jun2022_pct": 9.0,
+    "M2SL_last": 22804.5,
+    "M2SL_last_date": "2026-04-01"
   }
- },
- "constructions": {
-  "Mt_composition": "CURRSL + DEMDEPSL + OCDSL (currency + demand + other-checkable), savings held OUT. Built by src/build_mt.py:composition_granular; horserace in src/run_composition_horserace.py. Window 1959-01..2020-04."
- },
- "integrity_checks": {
-  "M2_loggrowth_Feb2020_Apr2022_pct": 34.0,
-  "CPI_YoY_Jun2022_pct": 9.0,
-  "M2SL_last": 22804.5,
-  "M2SL_last_date": "2026-04-01"
- },
- "payments_volumes (registered, not yet pulled)": {
-  "ach_value_bil": "Nacha, ACH Network Volume and Value statistics (annual), nacha.org",
-  "rtp_value_bil": "The Clearing House, RTP network statistics (annual)",
-  "fedwire_nonfin_value_bil": "FRB Financial Services, Fedwire Funds Service annual statistics, frbservices.org; non-financial exclusion rule per build_mt_paymentflow.py header",
-  "check_value_bil": "Federal Reserve Payments Study (triennial, interpolated)",
-  "status": "schema registered in build_mt_paymentflow.py; awaiting data pull"
- },
- "payments_volumes.csv (pulled 2026-07-08)": {
-  "ach_value_bil": {
-   "source": "Nacha, ACH Network annual volume/value releases (network figures, excl. on-us)",
-   "values": {
-    "2025": "$93.00T -- nacha.org, 'ACH Network Volume and Value Statistics' + Jan 29 2026 release",
-    "2024": "$86.2T -- Nacha Jan 30 2025 release (also 93.00/1.079 from the 2025 release's +7.9%)",
-    "2023": "$80.1T -- Nacha Feb 14 2024 release",
-    "2022": "$76.7T -- Nacha Feb 22 2023 release",
-    "2021": "$72.6T -- Nacha 2021 full-year release",
-    "2020": "$61.8T -- 2021 release states value rose $10.8T over 2020 (72.6 - 10.8)",
-    "2019": "$55.8T -- Nacha Feb 2020 release (24.7B payments)",
-    "2018": "$51.2T -- Nacha/ACH Network 2018 full-year figures",
-    "2017": "$46.8T -- Nacha Apr 2018 release (21.5B payments)",
-    "2016": "$43.7T -- Nacha Apr 14 2017 release (25.6B payments)",
-    "2015": "$41.6T -- Nacha Apr 14 2016 release (24B payments)",
-    "2014": "$40.0T -- derived exactly: 2015 release states 2015 value +4% over 2014 (41.6/1.04)",
-    "2013": "$38.69T -- derived exactly: Nacha-sourced 2013-22 value gain of 98.25% (76.7/1.9825)"
-   }
-  },
-  "check_value_bil": {
-   "source": "Federal Reserve Payments Study (FRPS) triennial benchmarks; geometric interpolation between benchmarks",
-   "benchmarks": {
-    "2015": "$29.19T -- back-cast from revised 2018 at the FRPS-revised -2.8%/yr value trend (26.8/0.972^3)",
-    "2018": "$26.8T -- FRPS 2019 Detailed Data Release (revised)",
-    "2021": "$27.23T -- FRPS 2022 Triennial Initial Data Release"
-   },
-   "notes": "2013-2014 back-cast at -2.8%/yr; 2016-2017 and 2019-2020 geometric interpolation; 2022-2025 held flat at the 2021 benchmark (FRPS shows check VALUE roughly stable, +0.6%/yr 2018-2021, as counts fall and average value rises). Flat-hold is an assumption and is flagged in PAYMENTFLOW_RESULTS.md."
-  },
-  "rtp_value_bil": {
-   "source": "The Clearing House RTP network releases",
-   "values": {
-    "2023": "$127B -- derived: TCH Jan 8 2025 release states 2024 value +94% over 2023 (246/1.94)",
-    "2024": "$246B -- TCH Jan 8 2025 release (343M payments)",
-    "2025": "$1,300B -- TCH Dec 4 2025 release: 'surpassed $1.3 trillion for 2025' through November; conservative floor for the full year"
-   },
-   "notes": "2017-2022 left empty: cumulative network total since 2017 inception is ~$3T, so pre-2023 annual values are immaterial (<0.3% of P)."
-  },
-  "fedwire_nonfin_value_bil": {
-   "source": "INTENTIONALLY EMPTY -- Fedwire Funds gross value (frbservices.org annual statistics, e.g. $1,148.3T in 2025, average transfer $5.28M) is dominated by financial-circuit settlement (interbank funding, securities/FX legs). FRPS DFIPS 2021 corroborates: commercial wires $1,441T with interbank about two-thirds by number. No public non-financial decomposition exists; including gross wires would contaminate the goods-transactional measure with exactly the asset-circuit flows the M^T concept excludes. The exclusion and its direction are documented in PAYMENTFLOW_RESULTS.md.",
-   "fedwire_gross_reference_bil": {
-    "2019": 695835,
-    "2025": 1148267
-   }
-  }
- },
- "payments_quarterly.csv (pulled 2026-07-08)": {
-  "source": "Nacha quarterly ACH Network releases, 2021Q1-2025Q4; per-row basis column records whether each value is stated verbatim in a Nacha release, derived from a stated Nacha YoY percentage, or the annual-consistent residual quarter",
-  "integrity": "each year sums exactly to the confirmed Nacha annual total (72.6/76.7/80.1/86.2/93.0 )",
-  "stated_releases": [
-   "Jul 27 2021 (Q2-21 18.4T)",
-   "Oct 19 2021 (Q3-21 18.1T)",
-   "Q1-2022 release (18.5T, +7.1%)",
-   "Apr 17 2023 (Q1-23 19.7T)",
-   "Feb 14 2024 (Q4-23 20.5T; FY 80.1T)",
-   "Apr 23 2024 (Q1-24 20.7T)",
-   "Apr 23 2025 (Q1-25 22.1T)",
-   "Jul 21 2025 (Q2-25 23.3T)",
-   "Oct 16 2025 (Q3-25 23.2T)",
-   "Jan 28 2026 (Q4-25 24.4T; FY 93.0T)"
-  ]
- },
- "turnover_benchmark (results section D)": {
-  "source": "Wheat, C. & Eckerd, G. (2023). Household Cash Buffer Management from the Great Recession through COVID-19. JPMorgan Chase Institute.",
-  "url": "https://www.jpmorganchase.com/institute/all-topics/financial-health-wealth-creation/household-cash-buffer-management-from-the-great-recession-through-covid-19",
-  "figures_used": "pre-pandemic (2009-2020) median cash buffers by income quartile: 13/16/19/26 days (Figure 1); buffer = liquid balances / trailing-12m median checking outflows ex transfers",
-  "accessed": "2026-07-08"
- }
 }
