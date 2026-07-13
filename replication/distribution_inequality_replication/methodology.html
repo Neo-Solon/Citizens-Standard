@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test the data. How to check every claim.</title>
+<meta name="description" content="Every empirical claim in the Citizens Standard ships with code that runs on real, public data. The map from each claim to the script that backs it, what the stress tests confirmed, and the places the data made us qualify a claim.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Citizens Standard: how to check it">
+<meta property="og:description" content="Every empirical claim ships with runnable code on real data. Here is the claim-to-code map, what held, and what the data made us qualify.">
+<meta property="og:url" content="https://citizensstandard.org/methodology.html">
+<meta property="og:image" content="https://citizensstandard.org/preview_card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Citizens Standard: how to check it">
+<meta name="twitter:description" content="Every empirical claim ships with runnable code on real data. The claim-to-code map, what held, and what we qualified.">
+<meta name="twitter:image" content="https://citizensstandard.org/preview_card.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23141C26'/%3E%3Crect x='3' y='3' width='58' height='58' rx='10' fill='none' stroke='%233A3320' stroke-width='1.5'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='40' font-weight='700' text-anchor='middle' fill='%23C9A24B' letter-spacing='-2'%3ECS%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10161C;--ink-soft:#18212B;--line:#27313C;
+    --text:#ECE7DB;--dim:#9AA3AE;
+    --kept:#5FBE93;--amber:#E6A93E;--amber-ink:#1a1206;
+    --verify:#5FBE93;--stress:#E6A93E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--text);font-family:"Newsreader",Georgia,serif;
+    font-size:clamp(18px,1.05rem + 0.3vw,21px);line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px}
+  .display{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;letter-spacing:-0.02em;line-height:1.04}
+  .label{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;font-size:.72rem}
+
+  header.wrap{padding:60px 24px 6px}
+  @media (max-width:640px){header.wrap{padding:42px 24px 6px}}
+  .kicker{color:var(--amber);margin-bottom:34px}
+  .kicker b{color:var(--text);font-weight:700}
+  h1.display{font-size:clamp(2.3rem,7vw,3.6rem);margin-bottom:22px}
+  .lede{font-size:clamp(1.1rem,1rem + 0.5vw,1.34rem);color:#D9D3C6;max-width:42ch}
+  .lede em{font-style:italic;color:var(--text)}
+
+  section{padding:30px 0}
+  h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(1.4rem,1.1rem + 1.4vw,1.85rem);letter-spacing:-0.01em;margin:18px 0 16px;line-height:1.15}
+  p{margin-bottom:18px}
+  .text strong{font-weight:500;color:#fff;background:linear-gradient(transparent 62%,rgba(95,190,147,.22) 0)}
+  a.inline{color:var(--amber);text-decoration:none;border-bottom:1px solid rgba(230,169,62,.35)}
+  a.inline:hover{border-bottom-color:var(--amber)}
+
+  /* two kinds of backing */
+  .kinds{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0 6px}
+  .kind{padding:22px 20px;border-radius:12px;background:var(--ink-soft);border:1px solid var(--line)}
+  .kind .tag{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.7rem;margin-bottom:10px}
+  .kind.v .tag{color:var(--verify)} .kind.s .tag{color:var(--stress)}
+  .kind p{font-size:.98rem;color:#CFD3D8;margin:0}
+
+  /* claim-to-code ledger */
+  .ledger{margin:10px 0 6px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .row{display:grid;grid-template-columns:1fr auto;gap:6px 16px;padding:16px 18px;border-top:1px solid var(--line)}
+  .row:first-child{border-top:none}
+  .row .claim{color:var(--text);font-size:1rem}
+  .row .file{grid-column:1;color:var(--dim);font-family:"Bricolage Grotesque",sans-serif;font-weight:500;font-size:.82rem;margin-top:4px}
+  .row .file code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.8rem;color:#AEB6C0}
+  .badge{align-self:start;font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;border-radius:999px;white-space:nowrap}
+  .badge.v{color:var(--verify);background:rgba(95,190,147,.12);border:1px solid rgba(95,190,147,.3)}
+  .badge.s{color:var(--stress);background:rgba(230,169,62,.10);border:1px solid rgba(230,169,62,.3)}
+  .ledger-foot{padding:15px 18px;border-top:1px solid var(--line);background:rgba(255,255,255,.015);font-size:.95rem;color:var(--dim)}
+  .pkg{margin:14px 0 0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .pkg-head{display:flex;justify-content:space-between;align-items:baseline;gap:6px 14px;padding:13px 18px;background:rgba(255,255,255,.022);border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .pkg-head .pname{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.82rem;color:#9FD7B8;font-weight:600;word-break:break-word}
+  .pkg-head .ppaper{font-family:"Bricolage Grotesque",sans-serif;font-weight:600;font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);white-space:nowrap}
+  .pkg .row:first-of-type{border-top:none}
+  .pkg-foot{padding:15px 18px;margin-top:14px;border:1px dashed var(--line);border-radius:12px;font-size:.95rem;color:var(--dim);background:rgba(255,255,255,.012)}
+  .pkg-foot a{color:var(--amber);text-decoration:none;border-bottom:1px solid rgba(230,169,62,.35)}
+
+  /* honest qualifications */
+  .qual{margin:6px 0;padding:18px 20px;border-left:3px solid var(--amber);background:rgba(230,169,62,.05);border-radius:0 10px 10px 0}
+  .qual + .qual{margin-top:12px}
+  .qual h3{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1rem;color:#fff;margin-bottom:6px}
+  .qual p{font-size:.97rem;color:#CFD3D8;margin:0}
+  .qual .where{color:var(--amber);font-weight:700}
+
+  /* run it yourself */
+  .run{background:var(--ink-soft);border:1px solid var(--line);border-radius:12px;padding:24px 22px;margin:8px 0}
+  .run code{display:block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86rem;color:#CFE7D8;background:#0d1318;border:1px solid var(--line);border-radius:8px;padding:13px 15px;margin:14px 0;overflow-x:auto;line-height:1.7}
+  @media (max-width:560px){
+    .run code{white-space:pre-wrap;overflow-wrap:anywhere;overflow-x:visible}
+  }
+  .run .small{font-size:.92rem;color:var(--dim);margin:0}
+
+  .door{margin:14px 0 92px;padding:42px 0 0;border-top:1px solid var(--line);text-align:center}
+  .door .q{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(1.3rem,1.05rem + 1.8vw,1.85rem);line-height:1.3;color:#fff;margin-bottom:24px;max-width:32ch}
+  .cta{display:inline-flex;align-items:center;gap:.6em;background:var(--amber);color:var(--amber-ink);
+    font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.05rem;text-decoration:none;
+    padding:16px 26px;border-radius:9px;transition:transform .15s ease, box-shadow .15s ease}
+  .cta:hover{transform:translateY(-2px);box-shadow:0 10px 28px -10px rgba(230,169,62,.55)}
+  .cta:focus-visible{outline:3px solid #fff;outline-offset:3px}
+  .cta .arrow{transition:transform .18s ease}.cta:hover .arrow{transform:translateX(4px)}
+  .door .note{margin-top:20px;color:var(--dim);font-size:.95rem;max-width:46ch;margin-left:auto;margin-right:auto}
+  .door .note a{color:var(--amber);text-decoration:none}
+
+  @media (max-width:560px){.kinds{grid-template-columns:1fr}.row{grid-template-columns:1fr}.badge{justify-self:start}}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+
+  .pagenav-btn{display:inline-flex;align-items:center;gap:.4em;color:#E6A93E;text-decoration:none;
+    border:1px solid rgba(230,169,62,.5);border-radius:8px;padding:8px 16px;font-weight:600;
+    transition:background .15s ease,border-color .15s ease,transform .15s ease;}
+  .pagenav-btn:hover{background:#E6A93E;color:#11161c;border-color:#E6A93E;transform:translateY(-1px);}
+  .pagenav-btn:focus-visible{outline:2px solid #E6A93E;outline-offset:2px;}
+
+/* ===== Audio overview player ===== */
+/* ---------- The audio player ---------- */
+  .cs-audio{
+    background:var(--ink-soft);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px 20px;
+    display:flex; flex-direction:column; gap:12px;
+    box-shadow:0 1px 0 rgba(255,255,255,.02) inset, 0 6px 22px rgba(0,0,0,.22);
+  }
+  .cs-audio__head{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+  .cs-audio__eyebrow{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--amber); font-weight:700; margin:0;
+  }
+  .cs-audio__title{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-size:16px; font-weight:600; margin:0; color:var(--text); line-height:1.2;
+  }
+  .cs-audio__sub{font-size:13.5px; color:var(--dim); margin:0; line-height:1.4}
+
+  .cs-audio__row{display:flex; align-items:center; gap:14px}
+
+  /* play/pause button — the amber accent, the one bold element */
+  .cs-audio__play{
+    flex:0 0 auto; width:52px; height:52px; border-radius:50%;
+    border:none; cursor:pointer; background:var(--amber); color:var(--amber-ink);
+    display:grid; place-items:center; transition:transform .12s ease, box-shadow .12s ease;
+    box-shadow:0 3px 14px rgba(230,169,62,.32);
+  }
+  .cs-audio__play:hover{transform:scale(1.05)}
+  .cs-audio__play:active{transform:scale(.97)}
+  .cs-audio__play:focus-visible{outline:3px solid var(--kept); outline-offset:3px}
+  .cs-audio__play svg{width:22px; height:22px; display:block}
+  .cs-audio__play .icon-pause{display:none}
+  .cs-audio.is-playing .cs-audio__play .icon-play{display:none}
+  .cs-audio.is-playing .cs-audio__play .icon-pause{display:block}
+
+  /* progress: echoes the site's kept/lost meter — amber = heard */
+  .cs-audio__track-area{flex:1 1 auto; display:flex; flex-direction:column; gap:8px; min-width:0}
+  .cs-audio__scrub{
+    position:relative; height:8px; border-radius:6px; background:var(--lost);
+    cursor:pointer; overflow:hidden;
+  }
+  .cs-audio__played{
+    position:absolute; inset:0 auto 0 0; width:0%;
+    background:linear-gradient(90deg,#F0BE5A,var(--amber));
+    border-radius:6px; transition:width .08s linear;
+  }
+  .cs-audio__buffer{
+    position:absolute; inset:0 auto 0 0; width:0%;
+    background:rgba(236,231,219,.10); border-radius:6px;
+  }
+  .cs-audio__scrub:focus-visible{outline:3px solid var(--kept); outline-offset:3px}
+  .cs-audio__times{
+    display:flex; justify-content:space-between;
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-size:12px; color:var(--lost-text); font-variant-numeric:tabular-nums; letter-spacing:.02em;
+  }
+
+  /* speed control */
+  .cs-audio__speed{
+    flex:0 0 auto; border:1px solid var(--line); background:transparent;
+    color:var(--dim); font-family:"Bricolage Grotesque",sans-serif; font-size:12px; font-weight:600;
+    border-radius:7px; padding:7px 11px; cursor:pointer; transition:border-color .12s, color .12s;
+    min-width:52px; text-align:center;
+  }
+  .cs-audio__speed:hover{border-color:var(--amber); color:var(--text)}
+  .cs-audio__speed:focus-visible{outline:3px solid var(--kept); outline-offset:2px}
+
+  @media (max-width:520px){
+    .cs-audio__row{gap:12px}
+    .cs-audio__play{width:46px; height:46px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .cs-audio__play,.cs-audio__played{transition:none}
+  }
+
+  /* ===== Listen pill + panel ===== */
+  .kicker-row{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:42px}
+  .kicker-row .kicker{margin-bottom:0}
+  .listen-pill{
+    flex:0 0 auto; display:inline-flex; align-items:center; gap:7px;
+    background:transparent; border:1px solid var(--line); color:var(--text);
+    font-family:"Bricolage Grotesque",sans-serif; font-size:12px; font-weight:600;
+    letter-spacing:.04em; padding:7px 14px 7px 11px; border-radius:999px; cursor:pointer;
+    transition:border-color .14s ease, color .14s ease, background .14s ease;
+  }
+  .listen-pill svg{width:15px; height:15px; color:var(--amber); flex:0 0 auto}
+  .listen-pill:hover{border-color:var(--amber); background:rgba(230,169,62,.06)}
+  .listen-pill:focus-visible{outline:3px solid var(--kept); outline-offset:2px}
+  .listen-pill.is-open{border-color:var(--amber); background:rgba(230,169,62,.08)}
+  .cs-audio-panel{margin-top:6px; animation:csPanelIn .28s ease}
+  @keyframes csPanelIn{from{opacity:0; transform:translateY(-6px)} to{opacity:1; transform:none}}
+  @media (prefers-reduced-motion:reduce){.cs-audio-panel{animation:none}}
+  @media (max-width:520px){
+    .kicker-row{flex-wrap:wrap; gap:10px}
+  }
+</style>
+<style>
+.sitenav{border-bottom:1px solid var(--line,#27313c);font-family:inherit;}
+.sitenav-inner{max-width:760px;margin:0 auto;padding:13px 24px;display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:center;align-items:baseline;}
+.sitenav a{color:var(--dim,#9aa3ae);text-decoration:none;font-size:13.5px;font-weight:500;}
+.sitenav a:hover{color:#e6e8eb;}
+.sitenav a[aria-current="page"]{color:var(--amber,#e6a93e);font-weight:700;}
+
+/* --- centered header to match page 1 (sections stay left) --- */
+header.wrap h1.display{text-align:center;}
+header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
+
+</style>
+
+<style id="cs-persistent-player-css">
+  .csp-bar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom));
+    width:calc(100% - 40px);max-width:760px;z-index:9000;background:var(--ink-soft,#18212B);
+    border:1px solid var(--line,#27313C);border-radius:14px;padding:8px 14px;
+    display:flex;align-items:center;gap:12px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .csp-bar button{background:var(--amber,#E6A93E);color:var(--ink,#10161C);border:none;border-radius:50%;
+    width:36px;height:36px;font-weight:700;cursor:pointer;flex:0 0 auto;font-size:14px;display:flex;
+    align-items:center;justify-content:center}
+  .csp-bar .csp-meta{font-size:12px;color:var(--dim,#9AA3AE);flex:0 0 auto;min-width:98px;line-height:1.25}
+  .csp-bar .csp-meta b{color:var(--text,#ECE7DB);display:block;font-size:12px}
+  .csp-bar input[type=range]{flex:1 1 auto;accent-color:var(--amber,#E6A93E);min-width:60px;height:6px}
+  .csp-status{position:fixed;left:50%;transform:translateX(-50%);width:calc(100% - 40px);max-width:760px;
+    bottom:calc(66px + env(safe-area-inset-bottom));font-size:11px;padding-left:4px;
+    color:var(--amber,#E6A93E);z-index:9000;pointer-events:none;text-shadow:0 1px 4px var(--ink,#10161C)}
+  body{padding-bottom:84px}
+  /* branding: nav badge */
+  /* branding: hero banner (index only) */
+  .csp-hero{width:100%;max-width:900px;height:auto;border-radius:12px;display:block;margin:0 auto 8px;
+    box-shadow:0 8px 30px rgba(0,0,0,.45)}
+</style>
+</head>
+<body>
+<nav class="sitenav" aria-label="Site navigation">
+  <div class="sitenav-inner">
+    <a href="/">Diagnosis</a>
+    <a href="declaration.html">Declaration</a>
+    <a href="how_the_engine_works.html">How it works</a>
+    <a href="Citizens_Standard_Engine.html">Engine</a>
+    <a href="papers.html">Papers &amp; data</a>
+    <a href="questions_and_answers.html">Q&amp;A</a>
+    <a href="methodology.html" aria-current="page">Methodology</a> <a href="calibration_notes.html">Calibrations</a>
+  </div>
+</nav>
+
+<header class="wrap">
+  <div class="kicker-row">
+    <p class="kicker label">The Citizens Standard &nbsp;&middot;&nbsp; <b>The methodology</b></p>
+    <button class="listen-pill" id="listenPill" aria-expanded="false" aria-controls="csAudioPanel">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a.5.5 0 0 0 .77.42l10.29-6.86a.5.5 0 0 0 0-.84L8.77 4.72A.5.5 0 0 0 8 5.14Z"/></svg>
+      <span>Listen</span>
+    </button>
+  </div>
+
+<div class="wrap cs-audio-panel" id="csAudioPanel" hidden>
+<!-- ============ CS AUDIO PLAYER (copy this block) ============ -->
+  <figure class="cs-audio" id="csAudio">
+    <div class="cs-audio__head">
+      <p class="cs-audio__eyebrow">Audio overview</p>
+      <figcaption class="cs-audio__title">The Citizens Standard, start to finish</figcaption>
+    </div>
+    <p class="cs-audio__sub">A guided walk through the whole framework.</p>
+
+    <div class="cs-audio__row">
+      <button class="cs-audio__play" id="csPlay" aria-label="Play audio overview">
+        <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a.5.5 0 0 0 .77.42l10.29-6.86a.5.5 0 0 0 0-.84L8.77 4.72A.5.5 0 0 0 8 5.14Z"/></svg>
+        <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5h3.2v15H7zM13.8 4.5H17v15h-3.2z"/></svg>
+      </button>
+
+      <div class="cs-audio__track-area">
+        <div class="cs-audio__scrub" id="csScrub" role="slider" tabindex="0"
+             aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="cs-audio__buffer" id="csBuffer"></div>
+          <div class="cs-audio__played" id="csPlayed"></div>
+        </div>
+        <div class="cs-audio__times">
+          <span id="csCur">0:00</span>
+          <span id="csDur">40:00</span>
+        </div>
+      </div>
+
+      <button class="cs-audio__speed" id="csSpeed" aria-label="Playback speed">1&times;</button>
+    </div>
+
+    <!-- swap src for the repo-hosted file, e.g. audio/cs-overview.mp3 -->
+    <audio id="csSource" preload="metadata">
+      <source src="audio/cs-overview.mp3?v=20260712" type="audio/mpeg">
+    </audio>
+  </figure>
+  <!-- ============ /CS AUDIO PLAYER ============ -->
+</div>
+  <h1 class="display">Test the data</h1>
+  <p class="lede">Every load-bearing number ties to a script that computes it, and every empirical claim runs on <em>real, public data</em>. This page maps each claim to its code: what the tests confirmed, and where the data made us walk a claim back.</p>
+</header>
+
+<section class="wrap text">
+  <p class="small" style="margin:0 0 10px;color:var(--dim)">
+    The rest of this page explains how the replication layer is built and what it did and didn't
+    establish. But you don't have to take any of it on trust — start here.
+  </p>
+<style>
+  .liveverify{border:1px solid var(--line);border-radius:12px;background:var(--ink-soft);padding:20px 20px 16px;margin:22px 0}
+  .liveverify h3{font-size:1.02rem;margin:0 0 6px;color:var(--text)}
+  .liveverify .lv-lede{color:var(--dim);font-size:.92rem;margin:0 0 14px;max-width:70ch;line-height:1.6}
+  .liveverify .lv-lede b{color:var(--text)}
+  .liveverify .lv-wait{border-left:2px solid var(--amber);padding-left:11px;font-size:.86rem;margin:-4px 0 14px}
+  .lv-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
+  .lv-bar select{font:inherit;font-size:.88rem;color:var(--text);background:var(--ink);border:1px solid var(--line);border-radius:7px;padding:7px 10px;cursor:pointer;font-family:system-ui,sans-serif}
+  .lv-run{font:inherit;font-family:system-ui,sans-serif;font-size:.88rem;font-weight:600;color:var(--amber-ink);background:var(--amber);border:none;border-radius:7px;padding:8px 16px;cursor:pointer}
+  .lv-run:hover{filter:brightness(1.08)}
+  .lv-run:disabled{opacity:.5;cursor:default;filter:none}
+  .lv-all{font:inherit;font-family:system-ui,sans-serif;font-size:.85rem;font-weight:600;color:var(--amber);background:transparent;border:1px solid var(--amber);border-radius:7px;padding:7px 13px;cursor:pointer}
+  .lv-all:disabled{opacity:.45;cursor:default}
+  .lv-status{font-size:.8rem;color:var(--dim);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .lv-verdict{display:none;font-weight:700;font-size:.95rem;padding:10px 14px;border-radius:8px;margin:0 0 12px;font-family:system-ui,sans-serif}
+  .lv-verdict.pass{color:var(--kept);border:1px solid var(--kept);background:rgba(95,190,147,.09)}
+  .lv-verdict.fail{color:#E0685A;border:1px solid #E0685A;background:rgba(224,104,90,.09)}
+  .lv-term{display:none;background:#0B1015;border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.74rem;line-height:1.5;color:#C9D2DC;white-space:pre-wrap;overflow-wrap:anywhere;max-height:340px;overflow-y:auto}
+  .lv-term .ok{color:var(--kept)} .lv-term .bad{color:#E0685A} .lv-term .dim{color:#6B7885}
+  .lv-figs{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:14px}
+  .lv-figs figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px}
+  .lv-figs img{width:100%;height:auto;display:block;border-radius:4px}
+  .lv-figs figcaption{color:var(--dim);font-size:.68rem;margin-top:5px;word-break:break-all;font-family:ui-monospace,monospace}
+  .lv-note{font-size:.8rem;color:var(--dim);margin:14px 0 0;line-height:1.6;border-top:1px solid var(--line);padding-top:12px}
+  .lv-note b{color:var(--text-muted,#B9C2CC)}
+  .lv-note code{font-family:ui-monospace,monospace;color:#AEB6C0}
+</style>
+
+<div class="liveverify">
+  <h3>Verify it in your browser — no install, no trust required</h3>
+  <p class="lv-lede">
+    Real CPython, compiled to WebAssembly, running <b>the actual replication code</b> in this tab. It
+    fetches a package's own scripts, runs them, and checks every number against the values the paper
+    published. Nothing is precomputed — if the code stops reproducing the paper, this page says so.
+  </p>
+  <p class="lv-lede lv-wait">
+    <b>Give it a moment.</b> Most packages finish in a second or two; Paper 5 runs 20 propositions and
+    a 10,000-draw Monte Carlo, so it takes around 40 seconds. Python runs in a background worker, so
+    the page stays responsive throughout and the timer keeps counting — you can scroll, read, or
+    leave it running. It is computing, not stuck.
+  </p>
+
+  <div class="lv-bar">
+    <select id="lvPkg" aria-label="Replication package"></select>
+    <button class="lv-run" id="lvRun">Run</button>
+    <button class="lv-all" id="lvRunAll">Run all 9</button>
+    <span class="lv-status" id="lvStatus">Python loads on first run (~15&nbsp;MB, cached afterwards).</span>
+  </div>
+
+  <div class="lv-verdict" id="lvVerdict"></div>
+  <div class="lv-term" id="lvTerm"></div>
+  <div class="lv-figs" id="lvFigs"></div>
+
+  <p class="lv-note">
+    <b>What a pass means.</b> Expected values come from each package's published artifact
+    (<code>all_results.txt</code> / <code>results/*.json</code>) — the numbers the papers cite — not from
+    this run. A pass means every one of them was reproduced to a relative tolerance of 1e-6. Figures are
+    drawn by the code as it runs; none are stored.
+    <br><br>
+    <b id="lvExcluded"></b>
+    <br><br>
+    <b>Prefer to run it locally?</b> <code>git clone</code> the repo, then
+    <code>cd replication &amp;&amp; python run_all.py</code> — that covers all 12 packages and takes a few
+    minutes. Add <code>--report</code> for an HTML report with every figure.
+  </p>
+</div>
+
+<script>
+(function () {
+  var BASE = 'replication/';
+  var manifest = null, worker = null, busy = false;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var termEl = $('lvTerm'), figsEl = $('lvFigs'), verdictEl = $('lvVerdict'),
+      statusEl = $('lvStatus'), runBtn = $('lvRun'), allBtn = $('lvRunAll'), selEl = $('lvPkg');
+
+  function status(s) { statusEl.textContent = s; }
+  function term(text, cls) {
+    termEl.style.display = 'block';
+    var span = document.createElement('span');
+    if (cls) span.className = cls;
+    span.textContent = text + '\n';
+    termEl.appendChild(span);
+    termEl.scrollTop = termEl.scrollHeight;
+  }
+  function clearOut() {
+    termEl.innerHTML = ''; termEl.style.display = 'none';
+    figsEl.innerHTML = ''; verdictEl.style.display = 'none';
+  }
+  function verdict(ok, text) {
+    verdictEl.style.display = 'block';
+    verdictEl.className = 'lv-verdict ' + (ok ? 'pass' : 'fail');
+    verdictEl.textContent = text;
+  }
+  function showFigs(figs, prefix) {
+    figs.forEach(function (f) {
+      var fig = document.createElement('figure');
+      var img = document.createElement('img');
+      img.src = 'data:image/png;base64,' + f.b64;
+      img.loading = 'lazy';
+      var cap = document.createElement('figcaption');
+      cap.textContent = (prefix ? prefix + ' · ' : '') + f.name;
+      fig.appendChild(img); fig.appendChild(cap); figsEl.appendChild(fig);
+    });
+  }
+
+  // ---- comparison: identical rule to the offline harness (replication/paper_pkg.py) ----
+  var NUM = /-?\d+\.?\d*(?:[eE][-+]?\d+)?/g;
+  var TIMING = /runtime|elapsed|seconds|secs|\bsec\b|took /i;
+
+  function nums(text, dropTiming) {
+    // dropTiming applies ONLY to the published artifact, never to the run's output: packages print
+    // results and durations on the same line, and dropping the line would hide a real result.
+    if (dropTiming) {
+      text = text.split('\n').filter(function (l) { return !TIMING.test(l); }).join('\n');
+    }
+    var out = [], m;
+    NUM.lastIndex = 0;
+    while ((m = NUM.exec(text)) !== null) {
+      var v = parseFloat(m[0]);
+      if (!isNaN(v)) out.push(v);
+    }
+    return out;
+  }
+  function flat(o, p, into) {
+    into = into || {};
+    if (o && typeof o === 'object' && !Array.isArray(o)) {
+      for (var k in o) flat(o[k], p ? p + '.' + k : k, into);
+    } else if (Array.isArray(o)) {
+      for (var i = 0; i < o.length; i++) flat(o[i], p + '[' + i + ']', into);
+    } else if (typeof o === 'number') { into[p] = o; }
+    return into;
+  }
+  function close(a, b) {
+    if (a === b) return true;
+    var d = Math.max(Math.abs(a), Math.abs(b));
+    return d === 0 ? Math.abs(a - b) <= 1e-6 : Math.abs(a - b) / d <= 1e-6;
+  }
+
+  function compare(pkg, res, golden) {
+    // NOTE: slice(-4) of 'x.json' is 'json' (no dot). Getting this wrong once sent every
+    // JSON-golden package down the text path, which reads the hyphen in "1960-2024" as a minus
+    // sign and invents values no code produced.
+    var isJson = pkg.golden.slice(-1) !== '/' && /\.json$/.test(pkg.golden);
+    var checked = 0, missed = [];
+
+    if (!isJson) {
+      var want = [];
+      pkg.goldenFiles.forEach(function (g) { want = want.concat(nums(golden[g] || '', true)); });
+      var got = nums(res.stdout, false);
+      want.forEach(function (v) {
+        checked++;
+        if (!got.some(function (x) { return close(x, v); })) missed.push(v);
+      });
+    } else {
+      var regenTxt = res.regenerated[pkg.golden];
+      if (!regenTxt) {
+        return { ok: false, summary: 'the run did not regenerate ' + pkg.golden, missed: [] };
+      }
+      var w = flat(JSON.parse(golden[pkg.golden]), '');
+      var g2 = flat(JSON.parse(regenTxt), '');
+      for (var k in w) {
+        if (!(k in g2)) continue;
+        checked++;
+        if (!close(g2[k], w[k])) missed.push(w[k]);
+      }
+    }
+    var ok = missed.length === 0 && checked > 0;
+    return {
+      ok: ok, missed: missed,
+      summary: ok ? checked + ' published values reproduced'
+                  : missed.length + '/' + checked + ' published values NOT reproduced'
+    };
+  }
+
+  // ---- the worker: Python runs OFF the main thread, so the page never freezes ----
+  function ensureWorker() {
+    if (worker) return worker;
+    worker = new Worker(BASE + 'verify_worker.js');
+    return worker;
+  }
+
+  function runOne(pkg) {
+    return new Promise(function (resolve) {
+      var w = ensureWorker();
+      var t0 = Date.now(), ticker = null, watchdog = null, settled = false;
+
+      function done(result) {
+        if (settled) return;
+        settled = true;
+        if (ticker) { clearInterval(ticker); ticker = null; }
+        if (watchdog) { clearTimeout(watchdog); watchdog = null; }
+        w.onmessage = w.onerror = w.onmessageerror = null;
+        resolve(result);
+      }
+
+      // A worker that DIES — out of memory, a failed package load, an uncaught throw — posts no
+      // message at all. Without these handlers the promise never settles, the Run button stays
+      // disabled, and the page just sits there looking broken. Never let that happen silently.
+      w.onerror = function (ev) {
+        var msg = (ev && ev.message) ? ev.message : 'the worker crashed (no message)';
+        term('ERROR: ' + msg, 'bad');
+        term('The background worker died. This is usually a failed package load or out of memory. ' +
+             'Reload the page and try a lighter package.', 'bad');
+        worker = null;                 // it is dead; build a fresh one next time
+        done({ ok: false, summary: msg, figures: [], secs: '0' });
+      };
+      w.onmessageerror = function () {
+        term('ERROR: could not deserialise a message from the worker', 'bad');
+        worker = null;
+        done({ ok: false, summary: 'worker message error', figures: [], secs: '0' });
+      };
+      watchdog = setTimeout(function () {
+        term('ERROR: no response from the worker after 10 minutes — giving up.', 'bad');
+        try { w.terminate(); } catch (e) {}
+        worker = null;
+        done({ ok: false, summary: 'timed out', figures: [], secs: '600' });
+      }, 600000);
+
+      w.onmessage = function (e) {
+        var m = e.data;
+        if (m.type === 'status') {
+          if (m.warn) term('warning: ' + m.msg.replace(/^warning: /, ''), 'bad');
+          status(m.msg);
+          if (m.running && !ticker) {
+            term('$ cd replication/' + pkg.id, 'dim');
+            pkg.steps.forEach(function (s) { term('$ python ' + s[1], 'dim'); });
+            ticker = setInterval(function () {
+              status('running ' + pkg.title + '… ' +
+                     Math.round((Date.now() - t0) / 1000) + 's (page stays responsive)');
+            }, 1000);
+          }
+        } else if (m.type === 'stage') {
+          var mb = m.bytes ? ' (' + (m.bytes / 1e6).toFixed(1) + ' MB)' : '';
+          status('fetching files… ' + m.done + '/' + m.total + mb);
+          if (m.done === m.total) term('fetched ' + m.total + ' files' + mb, 'dim');
+        } else if (m.type === 'error') {
+          term('ERROR: ' + m.msg, 'bad');
+          done({ ok: false, summary: m.msg, figures: [], secs: '0' });
+        } else if (m.type === 'result') {
+          var secs = ((Date.now() - t0) / 1000).toFixed(1);
+          var res = JSON.parse(m.raw);
+          if (res.error) {
+            term(res.stdout);
+            term('ERROR: ' + res.error, 'bad');
+            return done({ ok: false, summary: res.error, figures: res.figures || [], secs: secs });
+          }
+          term(res.stdout);
+          var c = compare(pkg, res, m.golden);
+          term('');
+          term((c.ok ? '✓ PASS  ' : '✗ FAIL  ') + c.summary +
+               '  (' + secs + 's, ' + res.figures.length + ' figures)', c.ok ? 'ok' : 'bad');
+          if (!c.ok && c.missed.length) {
+            term('   not reproduced: ' + c.missed.slice(0, 8).join(', '), 'bad');
+          }
+          done({ ok: c.ok, summary: c.summary, figures: res.figures, secs: secs });
+        }
+      };
+
+      w.postMessage({
+        cmd: 'run',
+        base: new URL(BASE, location.href).href,
+        pkg: pkg
+      });
+    });
+  }
+
+  function currentPkg() {
+    return manifest.packages.filter(function (p) { return p.id === selEl.value; })[0];
+  }
+  function showHeavyHint() {
+    var p = currentPkg();
+    if (p && p.heavy) {
+      status('heavy: ' + p.heavyWhy + '. You will be asked before anything downloads.');
+    } else {
+      status('Python loads on first run (~15 MB, cached afterwards).');
+    }
+  }
+  function setBusy(b) {
+    busy = b;
+    runBtn.disabled = allBtn.disabled = b;
+  }
+
+  runBtn.addEventListener('click', async function () {
+    if (busy) return;
+    var pkg = currentPkg();
+    if (!pkg) return;
+    if (pkg.heavy && !window.confirm(
+          pkg.title + '\n\nThis one is heavy: ' + pkg.heavyWhy + '.\n' +
+          'About ' + pkg.heavyMB + ' MB will download, and it may take a minute or two on a slow ' +
+          'connection.\n\nRun it?')) {
+      return;
+    }
+    clearOut(); setBusy(true);
+    try {
+      var r = await runOne(pkg);
+      verdict(r.ok, (r.ok ? 'PASS — ' : 'FAIL — ') + pkg.title + ' · ' + r.summary);
+      showFigs(r.figures, '');
+      status('done in ' + r.secs + 's.');
+    } catch (e) {
+      term('ERROR: ' + e.message, 'bad');
+      verdict(false, 'FAILED — ' + pkg.title + ' · ' + e.message);
+      status('failed — ' + e.message);
+    } finally {
+      setBusy(false);            // the button ALWAYS comes back
+    }
+  });
+
+  allBtn.addEventListener('click', async function () {
+    if (busy) return;
+    clearOut(); setBusy(true);
+    var list = manifest.packages.filter(function (p) { return !p.heavy; });
+    var heavy = manifest.packages.filter(function (p) { return p.heavy; });
+    term('Running the ' + list.length + ' light packages. The heavy ones (' +
+         heavy.map(function (p) { return p.title; }).join(', ') +
+         ') are skipped here — run either from the menu.', 'dim');
+    var npass = 0;
+    for (var i = 0; i < list.length; i++) {
+      term('');
+      term('─── ' + list[i].title + ' ───', 'dim');
+      var r = await runOne(list[i]);
+      if (r.ok) npass++;
+      showFigs(r.figures, list[i].title);
+    }
+    verdict(npass === list.length,
+            npass + '/' + list.length + ' packages passed — every published value ' +
+            (npass === list.length ? 'reproduced, in your browser' : 'checked; see failures above'));
+    status('done.');
+    setBusy(false);
+  });
+
+  // ---- say why it can't run, instead of an empty box ----
+  function blocked(msg) {
+    selEl.innerHTML = '<option>unavailable</option>';
+    selEl.disabled = runBtn.disabled = allBtn.disabled = true;
+    verdictEl.style.display = 'block';
+    verdictEl.className = 'lv-verdict fail';
+    verdictEl.innerHTML = msg;
+    status('');
+  }
+
+  function loadManifest() {
+    // fetch() and Worker() are both blocked on file:// by every browser. Opening this page straight
+    // off disk gives an empty box and no explanation, so say so rather than fail silently.
+    if (location.protocol === 'file:') {
+      blocked('This page is open from your <b>filesystem</b> (<code>file://</code>), and browsers ' +
+              'block a page from reading local files or starting a worker. Serve the folder over ' +
+              'HTTP and it will work:<br><br>' +
+              '<code style="font-family:ui-monospace,monospace">cd Citizens-Standard &amp;&amp; ' +
+              'python -m http.server 8000</code><br>then open ' +
+              '<code style="font-family:ui-monospace,monospace">http://localhost:8000/methodology.html</code>' +
+              '<br><br>On the live site it runs normally.');
+      return;
+    }
+    // no-store: the manifest changes whenever a package is touched, and a cached copy silently
+    // serves a stale package list after every deploy.
+    fetch(BASE + 'web_manifest.json', { cache: 'no-store' }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status + ' fetching replication/web_manifest.json');
+      return r.json();
+    }).then(function (m) {
+      manifest = m;
+      selEl.innerHTML = m.packages.map(function (p) {
+        return '<option value="' + p.id + '">' + p.title +
+               (p.heavy ? '  (heavy — ~' + p.heavyMB + ' MB)' : '') + '</option>';
+      }).join('');
+      var light = m.packages.filter(function (p) { return !p.heavy; }).length;
+      allBtn.textContent = 'Run all ' + light;
+      var heavy = m.packages.filter(function (p) { return p.heavy; });
+      var parts = [];
+      parts.push('<b>' + m.packages.length + ' of the 14 papers have a replication package, and all ' +
+                 m.packages.length + ' run here.</b>');
+      if (heavy.length) {
+        parts.push('<b>Heavy:</b> ' + heavy.map(function (h) {
+          return h.title + ' (' + h.heavyWhy + ')'; }).join('; ') +
+          ' — excluded from “Run all”, but you can run it from the menu; the page tells you what it ' +
+          'is about to download first.');
+      }
+      if (m.excluded && m.excluded.length) {
+        parts.push('<b>Cannot run in a browser:</b> ' + m.excluded.map(function (e) {
+          return e.title + ' — ' + e.reason; }).join('; '));
+      }
+      if (m.noCode && m.noCode.length) {
+        parts.push('<b>No replication package:</b> ' + m.noCode.map(function (e) {
+          return e.title; }).join(', ') + '. These papers are argued rather than computed — there ' +
+          'is no code to run, so they are absent from the menu rather than silently failing.');
+      }
+      $('lvExcluded').innerHTML = parts.join('<br><br>');
+      selEl.addEventListener('change', showHeavyHint);
+      showHeavyHint();
+    }).catch(function (e) {
+      blocked('Could not load <code>replication/web_manifest.json</code> — ' + e.message +
+              '.<br><br>If you have just deployed, make sure the <code>replication/</code> folder ' +
+              'was pushed. The verifier needs it to know which scripts to run.');
+    });
+  }
+  loadManifest();
+})();
+</script>
+</section>
+
+<section class="wrap text">
+  <h2>Two kinds of backing</h2>
+  <p>The replication layer does two distinct jobs, and we label which is which so you are never left guessing whether a number is internally consistent or externally tested.</p>
+  <div class="kinds">
+    <div class="kind v">
+      <div class="tag">Verification</div>
+      <p>Code that reproduces a published figure straight from the framework&rsquo;s own engine and spec. It proves the paper is internally consistent: the number it prints is the number the model actually yields.</p>
+    </div>
+    <div class="kind s">
+      <div class="tag">Stress-test</div>
+      <p>A module that takes a contested claim out to <em>real external data</em>, or sweeps an uncertain parameter across its plausible range. It proves robustness, and in several cases it honestly qualifies the claim.</p>
+    </div>
+  </div>
+  <p style="margin-top:22px">Across the paper series there are dedicated replication packages, each with a <code style="font-family:ui-monospace,monospace;font-size:.85em;color:#AEB6C0">run_all</code> that executes end to end. Everything is plain Python on public data, no API key, no private series.</p>
+</section>
+
+<section class="wrap text">
+  <h2>What each package tests</h2>
+  <p>Eleven packages, one map. Each names the claims it backs, the file that computes or tests them, and whether the backing is verification or a stress-test. Nine packages reproduce a paper&rsquo;s published figures; one is the stress-test hub that takes contested claims out to real external data.</p>
+
+  <div class="pkg">
+    <div class="pkg-head"><span class="pname">architecture_replication</span><span class="ppaper">Papers 1, 4, 9</span></div>
+    <div class="row"><div class="claim">Launch issuance of $447B (2.0% of M2), with the floor figures that follow</div><div class="file"><code>code/run_all.py</code> &nbsp;(19/19 checks)</div><span class="badge v">Verification</span></div>
+    <div class="row"><div class="claim">Stable Floors: Mode A $233K, Mode B $413K, Mode C $230K, and the Mode B return band</div><div class="file"><code>code/cs_engine.py</code></div><span class="badge v">Verification</span></div>
+  </div>
+
+  <div class="pkg">
+    <div class="pkg-head"><span class="pname">empirical_replication</span><span class="ppaper">Papers 2, 1, 3</span></div>
+    <div class="row"><div class="claim">Counterfactual realizable return of 4.26% on actual 1960-2025 data</div><div class="file"><code>code/</code> deterministic engine (historical CSV)</div><span class="badge v">Verification</span></div>
+    <div class="row"><div class="claim">Outcomes under bad draws: 10,000-path bootstrap including the Depression and the Great Inflation, with P5/P10/P50 percentiles</div><div class="file"><code>code/mc_engine.py</code></div><span class="badge s">Stress-test</span></div>
+  </div>
+
+  <div class="pkg">
+    <div class="pkg-head"><span class="pname">macro_replication</span><span class="ppaper">Papers 5, 9</span></div>
+    <div class="row"><div class="claim">Propositions 4-9: price determinacy without a Taylor principle, dual-circuit separation, stability</div><div class="file"><code>code/verify_proposition_4.py</code> &hellip; <code>9.py</code></div><span class="badge v">Verification</span></div>
+    <div class="row"><div class="claim">Price-stability locus g&middot;M&#7488; &asymp; $229.7B (M&#7488; &asymp; 51% of M2); coupling threshold &zeta;* &asymp; 0.13</div><div class="file"><code>code/recompute_illustrations.py</code></div><span class="badge v">Verification</span></div>
+  </div>
+
+  <div class="pkg">
+    <div class="pkg-head"><span class="pname">banking_replication</span><span class="ppaper">Paper 6</span></div>
+    <div class="row"><div class="claim">Propositions B1-B5: monetary control, lending cap, throttle, capital requirement, run-proof payments</div><div class="file"><code>code/paper6_model.py</code> (run_all)</div><span class="badge v">Verification</span></div>
+    <div class="row"><div class="claim">Collateral cap binds at &sigma; &asymp; 0.13 via the non-pledgeable lock</div><div class="file"><code>code/paper6_model.py</code> (B2)</div><span class="badge v">Verification</span></div>
+  </div>
+
+  <div class="pkg">
+    <div class="pkg-head"><span class="pname">interoperability_replication</span><span class="ppaper">Paper 7</span></div>
+    <div class="row"><div class="claim">Zero is the uniquely robust common external anchor, across swept divergence shocks</div><div class="file"><code>code/equa_stress.py</code></div><span class="badge v">Verification</span></div>
+    <div class="row"><div class="claim">Domestic launch figures reconcile to the dollar</div><div class="file"><code>code/cs_engine.py</code></div><span class="badge v">Verification</span></div>
+  </div>
+
+  <div class="pkg">
+    <div class="pkg-head"><span class="pname">structural_buyer_replication</span><span class="ppaper">Paper 8</span></div>
+    <div class="row"><div class="claim">Ownership plateau &psi;* &asymp; 0.10 via cohort decumulation (Prop 4)</div><div class="file"><code>code/verify_psi_plateau.py</code></div><span class="badge v">Verification</span></div>
+    <div class="row"><div class="claim">Bounded premium (Prop 1), mirror-voting (Prop 7), leak (Prop 3)</div><div class="file"><code>code/verify_prop*.py</code></div><span class="badge v">Verification</span></div>
+  </div>
+
+  <div class="pkg">
+    <div class="pkg-head"><span class="pname">transition_replication</span><span class="ppaper">Paper 3</span></div>
+    <div class="row"><div class="claim">Debt-to-GDP 102% &rarr; 39% (Y30) &rarr; 15% (Y45) via Mode T</div><div class="file"><code>code/appendix_A2_debt_trajectory.py</code></div><span class="badge v">Verification</span></div>
+    <div class="row"><div class="claim">The five-phase architecture and its phase milestones</div><div class="file"><code>code/phase_milestones.py</code></div><span class="badge v">Verification</span></div>
+  </div>
+
+  <div class="pkg">
+    <div class="pkg-head"><span class="pname">comparative_replication</span><span class="ppaper">Paper 13</span></div>
+    <div class="row"><div class="claim">Comparison against the Alaska PFD, Norway, Singapore, and LVT/UBI hybrids</div><div class="file"><code>src/compare.py</code>, <code>scenario_lvt_hybrid/lvt_hybrid.py</code></div><span class="badge v">Verification</span></div>
+  </div>
+
+  <div class="pkg">
+    <div class="pkg-head"><span class="pname">crisis_behaviour_replication</span><span class="ppaper">Paper 12</span></div>
+    <div class="row"><div class="claim">The procyclical dividend is the signature failure mode: the dividend falls to zero in a downturn</div><div class="file"><code>crisis_behaviour_replication/</code> + <code>procyclicality/</code></div><span class="badge s">Stress-test</span></div>
+  </div>
+
+  <div class="pkg">
+    <div class="pkg-head"><span class="pname">empirical_validation_replication</span><span class="ppaper">Paper 10</span></div>
+    <div class="row"><div class="claim">Transactional-aggregate decomposition raced against Divisia and composition benchmarks on real FRED data</div><div class="file"><code>src/run_divisia_horserace.py</code>, <code>run_composition_horserace.py</code></div><span class="badge s">Stress-test</span></div>
+    <div class="row"><div class="claim">M2 loses to the CS aggregate on RMSE; the analysis concedes the cases where it loses</div><div class="file"><code>src/</code> (robustness, Test A)</div><span class="badge s">Stress-test</span></div>
+  </div>
+
+  <div class="pkg">
+    <div class="pkg-head"><span class="pname">distribution_inequality_replication</span><span class="ppaper">The stress-test hub &middot; 14 sub-modules</span></div>
+    <div class="row"><div class="claim">Gini 0.830 &rarr; 0.743 (SCF 2022 microsimulation), with the floor-vs-dividend decomposition</div><div class="file"><code>src/channels.py</code>; <code>results/inequality_results.json</code></div><span class="badge v">Verification</span></div>
+    <div class="row"><div class="claim">External anchor across the 2022 ~6pp spike and Japan&rsquo;s ~17-year gap; floor survives a 40% drawdown; capture/override base rate from the IMF Fiscal Rules DB</div><div class="file"><code>anchor_real_shocks/</code>, <code>procyclicality/</code>, <code>capture_override_baserate/</code></div><span class="badge s">Stress-test</span></div>
+    <div class="row"><div class="claim">The four claims the data qualified: transition timeline, issuance-neutrality mechanism, structural-buyer plateau range, and no welfare-optimal dividend (see below)</div><div class="file"><code>transition_debt_path/</code>, <code>credit_displacement/</code>, <code>dsge_twocircuit/</code>, <code>structural_buyer_endgame/</code>, <code>mode_choice_welfare/</code></div><span class="badge s">Stress-test</span></div>
+    <div class="row"><div class="claim">Paper 14 second-order effects: rent-capitalization leak (~1.7%), demand impulse, crowd-out split (~79% net-new)</div><div class="file"><code>rent_capitalization/</code>, <code>mpc_demand_impulse/</code>, <code>crowdout_split/</code></div><span class="badge s">Stress-test</span></div>
+  </div>
+
+  <div class="pkg-foot">Three papers carry no dedicated package by design, and the index says so plainly rather than implying code exists: Paper 4 (statutory text, its figures backed by the shared engine), Paper 9 (shares the verified engine; its central figure is self-stress-tested in its own Table 3 and swept in two modules), and Paper 11 (institutional design; its one empirical claim is backed by <code>capture_override_baserate/</code>). For the exhaustive map, every figure in every paper down to its file, see the full <a href="https://github.com/Neo-Solon/Citizens-Standard/blob/main/replication/CLAIM_BACKING_INDEX.md">claim-to-code index</a>.</div>
+</section>
+
+<section class="wrap text">
+  <h2>What the tests qualified</h2>
+  <p>The stress tests did not just confirm. In a few places they pushed back on the framework&rsquo;s own first-pass claims, and the honest move is to lead with those rather than bury them. None of these sink the architecture; each one makes a specific number more truthful.</p>
+
+  <div class="qual">
+    <h3>The transition timeline is optimistic</h3>
+    <p><span class="where">Paper 3 (Transition).</span> The debt-to-GDP decline is real, but tested against current fiscal data the timeline leans fast. Most of the fall comes from nominal growth expanding the denominator, with the transition mode an assist rather than the main agent retiring the debt.</p>
+  </div>
+  <div class="qual">
+    <h3>Issuance neutrality does not rest on credit displacement</h3>
+    <p><span class="where">Paper 5 (Macro Model).</span> Getting neutrality from displacement alone would require roughly 73 to 89 percent of new issuance to displace bank credit; the literature supports only partial displacement. So neutrality is argued on other grounds, and the package says so instead of leaning on a mechanism that cannot carry the weight.</p>
+  </div>
+  <div class="qual">
+    <h3>The ownership plateau is a range, not a point</h3>
+    <p><span class="where">Paper 8 (Structural Buyer).</span> The structural buyer&rsquo;s long-run ownership share is real and bounded, with a central estimate near 11 percent, but it is sensitive to holding-duration assumptions across roughly a 6 to 21 percent band. We report it as a range.</p>
+  </div>
+  <div class="qual">
+    <h3>Full reserve sizes a credit gap it does not resolve</h3>
+    <p><span class="where">Paper 6 (Full-Reserve Banking).</span> The model sizes the credit-supply gap full-reserve banking would remove (on the order of 3.3 percent of GDP per year). Whether less credit and less boom-bust is net-desirable is a value judgment the paper flags as open, not something the code can settle.</p>
+  </div>
+  <div class="qual">
+    <h3>There is no welfare-optimal dividend share</h3>
+    <p><span class="where">Paper 1 (Architecture).</span> We went looking for an optimal split between the locked floor and the cash dividend and did not find one: welfare moves monotonically with the dividend dial, with no interior peak. So which mode a polity runs is a values choice it makes for itself, not a number we can solve for. We report the null result rather than manufacture a sweet spot.</p>
+  </div>
+</section>
+
+<section class="wrap text">
+  <h2>Or run it on your own machine</h2>
+
+
+  <div class="run">
+    <p class="small">The browser runs 10 of the 12 packages. For the full suite — including the two that need the raw SCF microdata and statsmodels — clone it and run everything in one command:</p>
+    <code>git clone https://github.com/Neo-Solon/Citizens-Standard<br>cd Citizens-Standard/replication<br>python run_all.py            <span style="opacity:.6"># all 12, pass/fail table</span><br>python run_all.py --report   <span style="opacity:.6"># + an HTML report with every figure</span></code>
+    <p class="small">Each package has its own <code style="font-family:ui-monospace,monospace;color:#AEB6C0">run_all</code> and a README stating its data sources and what it checks. Swap in your own assumptions and watch the figures move; that is the point.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="door" style="text-align:center;">
+    <p class="q" style="max-width:32ch;margin-left:auto;margin-right:auto;">Rigor you can run beats rigor you have to trust. Here is the whole suite, and the papers it backs.</p>
+    <a class="cta" href="replication.zip" download>Download the replication suite <span class="arrow">&rarr;</span></a>
+    <p class="note" style="max-width:46ch;margin-left:auto;margin-right:auto;">Prefer the writeups first? The <a href="papers.html">papers and data</a> page has the full series, free to read, each linked to the code above. The full claim-to-code index lives in the <a href="https://github.com/Neo-Solon/Citizens-Standard/blob/main/replication/CLAIM_BACKING_INDEX.md">replication folder</a>.</p>
+  </div>
+</div>
+
+<nav aria-label="Previous and next page" style="max-width:980px;margin:48px auto 0;padding:18px 24px 0;border-top:1px solid #27313C;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:.95rem;"> <a href="questions_and_answers.html" class="pagenav-btn">&larr; Q&amp;A</a> <a href="calibration_notes.html" class="pagenav-btn">Calibrations &rarr;</a> </nav>
+
+<nav aria-label="Citizens Standard pages" style="max-width:980px;margin:56px auto 38px;padding:18px 24px 0;border-top:1px solid #27313C;display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;justify-content:center;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:.92rem;line-height:1.6;"> <a href="/" style="color:#9AA3AE;text-decoration:none;">Diagnosis</a> <a href="declaration.html" style="color:#9AA3AE;text-decoration:none;">Declaration</a> <a href="how_the_engine_works.html" style="color:#9AA3AE;text-decoration:none;">How it works</a> <a href="Citizens_Standard_Engine.html" style="color:#9AA3AE;text-decoration:none;">Engine</a> <a href="papers.html" style="color:#9AA3AE;text-decoration:none;">Papers &amp; data</a> <a href="questions_and_answers.html" style="color:#9AA3AE;text-decoration:none;">Q&amp;A</a> <a href="methodology.html" style="color:#E6A93E;text-decoration:none;font-weight:600;">Methodology</a> <a href="calibration_notes.html" style="color:#9AA3AE;text-decoration:none;">Calibrations</a>  <a href="mailto:Neo-Solon@hotmail.com" style="color:#9AA3AE;text-decoration:none;">Contact</a> </nav>
+<!-- old cs-audio panel player retired; audio now handled by the single persistent bottom bar -->
+<script>
+/* Listen pill now controls the persistent bottom player (single audio system) */
+(function(){
+  var pill=document.getElementById('listenPill');
+  if(!pill) return;
+  var label=pill.querySelector('span');
+  function findAudio(){ return document.getElementById('cspAudio'); }
+  function sync(){
+    var a=findAudio(); if(!a||!label) return;
+    label.textContent = a.paused ? 'Listen' : 'Pause';
+    pill.classList.toggle('is-open', !a.paused);
+    pill.setAttribute('aria-expanded', a.paused?'false':'true');
+  }
+  pill.addEventListener('click', function(){
+    var a=findAudio(); if(!a) return;
+    if(a.paused){ a.play(); } else { a.pause(); }
+  });
+  // keep the pill label in sync with the bottom player
+  document.addEventListener('play', function(e){ if(e.target && e.target.id==='cspAudio') sync(); }, true);
+  document.addEventListener('pause', function(e){ if(e.target && e.target.id==='cspAudio') sync(); }, true);
+  // initial state (in case audio resumed on load)
+  setTimeout(sync, 300);
+})();
+</script>
+
+<!-- ===== CS persistent bottom audio player (Path B: resume-on-load across real navigations) ===== -->
+<div class="csp-status" id="cspStatus"></div>
+<div class="csp-bar" role="region" aria-label="Audio overview player">
+  <button id="cspPlay" aria-label="Play or pause audio overview">&#9654;</button>
+  <div class="csp-meta"><b>Audio Overview</b><span id="cspTime">0:00 / 0:00</span></div>
+  <input type="range" id="cspSeek" min="0" max="100" value="0" step="0.1" aria-label="Seek audio">
+  <audio id="cspAudio" preload="metadata" src="audio/cs-overview.mp3?v=20260712"></audio>
+</div>
+<script>
+(function(){
+  var KEY='cs_audio_state';
+  var a=document.getElementById('cspAudio'),pb=document.getElementById('cspPlay'),
+      sk=document.getElementById('cspSeek'),tl=document.getElementById('cspTime'),stx=document.getElementById('cspStatus');
+  function fmt(s){s=Math.floor(s||0);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({t:a.currentTime||0,playing:!a.paused}));}catch(e){}}
+  a.addEventListener('timeupdate',function(){var d=a.duration||1;sk.value=a.currentTime/d*100;
+    tl.textContent=fmt(a.currentTime)+' / '+fmt(d);if(Math.floor(a.currentTime*2)%2===0)save();});
+  pb.addEventListener('click',function(){a.paused?a.play():a.pause();});
+  a.addEventListener('play',function(){pb.innerHTML='&#10074;&#10074;';save();});
+  a.addEventListener('pause',function(){pb.innerHTML='&#9654;';save();});
+  sk.addEventListener('input',function(){a.currentTime=sk.value/100*(a.duration||0);});
+  window.addEventListener('beforeunload',save);
+  // resume on load
+  var s=null;try{s=JSON.parse(localStorage.getItem(KEY)||'null');}catch(e){}
+  if(s&&s.t>0){
+    var ap=function(){a.currentTime=Math.min(s.t,a.duration||s.t);};
+    if(a.readyState>=1)ap();else a.addEventListener('loadedmetadata',ap,{once:true});
+    if(s.playing){a.play().then(function(){stx.textContent='';})
+      .catch(function(){stx.textContent='\u25B8 tap play to resume';});}
+  }
+})();
+</script>
+</body>
+</html>
