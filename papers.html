@@ -289,6 +289,404 @@ main.wrap > .lede{font-size:clamp(1.1rem,1rem + 0.5vw,1.34rem);color:#D9D3C6;max
     <li title="The full SCF 2022 microsimulation (Gini, P10, neg-net-worth) plus the rent, demand-impulse, crowd-out, labor-supply, growth-measurement, and full-reserve-credit modules."><span class="pt"><a class="ptitle" href="papers/14_Distribution_Inequality.pdf">Distribution and Wealth Inequality</a> <span class="pmeta">· 12 pp</span></span><span class="links"><a href="papers/14_Distribution_Inequality.pdf">PDF</a> <a href="https://github.com/Neo-Solon/Citizens-Standard/raw/main/full_paper_list/Paper14_Distribution.zip">Data</a></span></li>
   </ol>
 
+  <h2>Run it yourself</h2>
+  <p class="sub">Don't take the papers on trust. Run the code that backs them, here, now.</p>
+<style>
+  .liveverify{border:1px solid var(--line, #27313C);border-radius:12px;background:var(--ink-soft, #18212B);padding:20px 20px 16px;margin:22px 0}
+  .liveverify h3{font-size:1.02rem;margin:0 0 6px;color:var(--text, #ECE7DB)}
+  .liveverify .lv-lede{color:var(--dim, #9AA3AE);font-size:.92rem;margin:0 0 14px;max-width:70ch;line-height:1.6}
+  .liveverify .lv-lede b{color:var(--text, #ECE7DB)}
+  .liveverify .lv-wait{border-left:2px solid var(--amber, #E6A93E);padding-left:11px;font-size:.86rem;margin:-4px 0 14px}
+  .lv-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
+  .lv-bar select{font:inherit;font-size:.88rem;color:var(--text, #ECE7DB);background:var(--ink, #10161C);border:1px solid var(--line, #27313C);border-radius:7px;padding:7px 10px;cursor:pointer;font-family:system-ui,sans-serif}
+  .lv-run{font:inherit;font-family:system-ui,sans-serif;font-size:.88rem;font-weight:600;color:var(--amber-ink, #1a1206);background:var(--amber, #E6A93E);border:none;border-radius:7px;padding:8px 16px;cursor:pointer}
+  .lv-run:hover{filter:brightness(1.08)}
+  .lv-run:disabled{opacity:.5;cursor:default;filter:none}
+  .lv-all{font:inherit;font-family:system-ui,sans-serif;font-size:.85rem;font-weight:600;color:var(--amber, #E6A93E);background:transparent;border:1px solid var(--amber, #E6A93E);border-radius:7px;padding:7px 13px;cursor:pointer}
+  .lv-all:disabled{opacity:.45;cursor:default}
+  .lv-status{font-size:.8rem;color:var(--dim, #9AA3AE);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .lv-verdict{display:none;font-weight:700;font-size:.95rem;padding:10px 14px;border-radius:8px;margin:0 0 12px;font-family:system-ui,sans-serif}
+  .lv-verdict.pass{color:var(--kept, #5FBE93);border:1px solid var(--kept, #5FBE93);background:rgba(95,190,147,.09)}
+  .lv-verdict.fail{color:#E0685A;border:1px solid #E0685A;background:rgba(224,104,90,.09)}
+  .lv-term{display:none;background:#0B1015;border:1px solid var(--line, #27313C);border-radius:8px;padding:12px 14px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.74rem;line-height:1.5;color:#C9D2DC;white-space:pre-wrap;overflow-wrap:anywhere;max-height:340px;overflow-y:auto}
+  .lv-term .ok{color:var(--kept, #5FBE93)} .lv-term .bad{color:#E0685A} .lv-term .dim{color:#6B7885}
+  .lv-figs{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:14px}
+  .lv-figs figure{margin:0;background:#fff;border:1px solid var(--line, #27313C);border-radius:8px;padding:6px}
+  .lv-figs img{width:100%;height:auto;display:block;border-radius:4px}
+  .lv-figs figcaption{color:var(--dim, #9AA3AE);font-size:.68rem;margin-top:5px;word-break:break-all;font-family:ui-monospace,monospace}
+  .lv-note{font-size:.8rem;color:var(--dim, #9AA3AE);margin:14px 0 0;line-height:1.6;border-top:1px solid var(--line, #27313C);padding-top:12px}
+  .lv-note b{color:var(--text-muted,#B9C2CC)}
+  .lv-note code{font-family:ui-monospace,monospace;color:#AEB6C0}
+</style>
+
+<div class="liveverify">
+  <h3>Verify it in your browser — no install, no trust required</h3>
+  <p class="lv-lede">
+    Real CPython, compiled to WebAssembly, running <b>the actual replication code</b> in this tab. It
+    fetches a package's own scripts, runs them, and checks every number against the values the paper
+    published. Nothing is precomputed — if the code stops reproducing the paper, this page says so.
+  </p>
+  <p class="lv-lede lv-wait">
+    <b>Give it a moment</b> — some take 20+ seconds.
+  </p>
+
+  <div class="lv-bar">
+    <select id="lvPkg" aria-label="Replication package"></select>
+    <button class="lv-run" id="lvRun">Run</button>
+    <button class="lv-all" id="lvRunAll">Run all 9</button>
+    <span class="lv-status" id="lvStatus">Python loads on first run (~15&nbsp;MB, cached afterwards).</span>
+  </div>
+
+  <div class="lv-verdict" id="lvVerdict"></div>
+  <div class="lv-term" id="lvTerm"></div>
+  <div class="lv-figs" id="lvFigs"></div>
+
+  <p class="lv-note">
+    <b>What a pass means.</b> Expected values come from each package's published artifact
+    (<code>all_results.txt</code> / <code>results/*.json</code>) — the numbers the papers cite — not from
+    this run. A pass means every one of them was reproduced to a relative tolerance of 1e-6. Figures are
+    drawn by the code as it runs; none are stored.
+    <br><br>
+    <b id="lvExcluded"></b>
+    <br><br>
+    <b>Prefer to run it locally?</b> <code>git clone</code> the repo, then
+    <code>cd replication &amp;&amp; python run_all.py</code> — that covers all 12 packages and takes a few
+    minutes. Add <code>--report</code> for an HTML report with every figure.
+  </p>
+</div>
+
+<script>
+(function () {
+  var BASE = 'replication/';
+  var manifest = null, worker = null, busy = false;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var termEl = $('lvTerm'), figsEl = $('lvFigs'), verdictEl = $('lvVerdict'),
+      statusEl = $('lvStatus'), runBtn = $('lvRun'), allBtn = $('lvRunAll'), selEl = $('lvPkg');
+
+  function status(s) { statusEl.textContent = s; }
+  function term(text, cls) {
+    termEl.style.display = 'block';
+    var span = document.createElement('span');
+    if (cls) span.className = cls;
+    span.textContent = text + '\n';
+    termEl.appendChild(span);
+    termEl.scrollTop = termEl.scrollHeight;
+  }
+  function clearOut() {
+    termEl.innerHTML = ''; termEl.style.display = 'none';
+    figsEl.innerHTML = ''; verdictEl.style.display = 'none';
+  }
+  function verdict(ok, text) {
+    verdictEl.style.display = 'block';
+    verdictEl.className = 'lv-verdict ' + (ok ? 'pass' : 'fail');
+    verdictEl.textContent = text;
+  }
+  function showFigs(figs, prefix) {
+    figs.forEach(function (f) {
+      var fig = document.createElement('figure');
+      var img = document.createElement('img');
+      img.src = 'data:image/png;base64,' + f.b64;
+      img.loading = 'lazy';
+      var cap = document.createElement('figcaption');
+      cap.textContent = (prefix ? prefix + ' · ' : '') + f.name;
+      fig.appendChild(img); fig.appendChild(cap); figsEl.appendChild(fig);
+    });
+  }
+
+  // ---- comparison: identical rule to the offline harness (replication/paper_pkg.py) ----
+  var NUM = /-?\d+\.?\d*(?:[eE][-+]?\d+)?/g;
+  var TIMING = /runtime|elapsed|seconds|secs|\bsec\b|took /i;
+
+  function nums(text, dropTiming) {
+    // dropTiming applies ONLY to the published artifact, never to the run's output: packages print
+    // results and durations on the same line, and dropping the line would hide a real result.
+    if (dropTiming) {
+      text = text.split('\n').filter(function (l) { return !TIMING.test(l); }).join('\n');
+    }
+    var out = [], m;
+    NUM.lastIndex = 0;
+    while ((m = NUM.exec(text)) !== null) {
+      var v = parseFloat(m[0]);
+      if (!isNaN(v)) out.push(v);
+    }
+    return out;
+  }
+  function flat(o, p, into) {
+    into = into || {};
+    if (o && typeof o === 'object' && !Array.isArray(o)) {
+      for (var k in o) flat(o[k], p ? p + '.' + k : k, into);
+    } else if (Array.isArray(o)) {
+      for (var i = 0; i < o.length; i++) flat(o[i], p + '[' + i + ']', into);
+    } else if (typeof o === 'number') { into[p] = o; }
+    return into;
+  }
+  function close(a, b) {
+    if (a === b) return true;
+    var d = Math.max(Math.abs(a), Math.abs(b));
+    return d === 0 ? Math.abs(a - b) <= 1e-6 : Math.abs(a - b) / d <= 1e-6;
+  }
+
+  function compare(pkg, res, golden) {
+    // NOTE: slice(-4) of 'x.json' is 'json' (no dot). Getting this wrong once sent every
+    // JSON-golden package down the text path, which reads the hyphen in "1960-2024" as a minus
+    // sign and invents values no code produced.
+    var isJson = pkg.golden.slice(-1) !== '/' && /\.json$/.test(pkg.golden);
+    var checked = 0, missed = [];
+
+    if (!isJson) {
+      var want = [];
+      pkg.goldenFiles.forEach(function (g) { want = want.concat(nums(golden[g] || '', true)); });
+      var got = nums(res.stdout, false);
+      want.forEach(function (v) {
+        checked++;
+        if (!got.some(function (x) { return close(x, v); })) missed.push(v);
+      });
+    } else {
+      var regenTxt = res.regenerated[pkg.golden];
+      if (!regenTxt) {
+        return { ok: false, summary: 'the run did not regenerate ' + pkg.golden, missed: [] };
+      }
+      var w = flat(JSON.parse(golden[pkg.golden]), '');
+      var g2 = flat(JSON.parse(regenTxt), '');
+      for (var k in w) {
+        if (!(k in g2)) continue;
+        checked++;
+        if (!close(g2[k], w[k])) missed.push(w[k]);
+      }
+    }
+    var ok = missed.length === 0 && checked > 0;
+    return {
+      ok: ok, missed: missed,
+      summary: ok ? checked + ' published values reproduced'
+                  : missed.length + '/' + checked + ' published values NOT reproduced'
+    };
+  }
+
+  // ---- the worker: Python runs OFF the main thread, so the page never freezes ----
+  function ensureWorker() {
+    if (worker) return worker;
+    worker = new Worker(BASE + 'verify_worker.js');
+    return worker;
+  }
+
+  function runOne(pkg) {
+    return new Promise(function (resolve) {
+      var w = ensureWorker();
+      var t0 = Date.now(), ticker = null, watchdog = null, settled = false;
+
+      function done(result) {
+        if (settled) return;
+        settled = true;
+        if (ticker) { clearInterval(ticker); ticker = null; }
+        if (watchdog) { clearTimeout(watchdog); watchdog = null; }
+        w.onmessage = w.onerror = w.onmessageerror = null;
+        resolve(result);
+      }
+
+      // A worker that DIES — out of memory, a failed package load, an uncaught throw — posts no
+      // message at all. Without these handlers the promise never settles, the Run button stays
+      // disabled, and the page just sits there looking broken. Never let that happen silently.
+      w.onerror = function (ev) {
+        var msg = (ev && ev.message) ? ev.message : 'the worker crashed (no message)';
+        term('ERROR: ' + msg, 'bad');
+        term('The background worker died. This is usually a failed package load or out of memory. ' +
+             'Reload the page and try a lighter package.', 'bad');
+        worker = null;                 // it is dead; build a fresh one next time
+        done({ ok: false, summary: msg, figures: [], secs: '0' });
+      };
+      w.onmessageerror = function () {
+        term('ERROR: could not deserialise a message from the worker', 'bad');
+        worker = null;
+        done({ ok: false, summary: 'worker message error', figures: [], secs: '0' });
+      };
+      watchdog = setTimeout(function () {
+        term('ERROR: no response from the worker after 10 minutes — giving up.', 'bad');
+        try { w.terminate(); } catch (e) {}
+        worker = null;
+        done({ ok: false, summary: 'timed out', figures: [], secs: '600' });
+      }, 600000);
+
+      w.onmessage = function (e) {
+        var m = e.data;
+        if (m.type === 'status') {
+          if (m.warn) term('warning: ' + m.msg.replace(/^warning: /, ''), 'bad');
+          status(m.msg);
+          if (m.running && !ticker) {
+            term('$ cd replication/' + pkg.id, 'dim');
+            pkg.steps.forEach(function (s) { term('$ python ' + s[1], 'dim'); });
+            ticker = setInterval(function () {
+              status('running ' + pkg.title + '… ' +
+                     Math.round((Date.now() - t0) / 1000) + 's (page stays responsive)');
+            }, 1000);
+          }
+        } else if (m.type === 'stage') {
+          var mb = m.bytes ? ' (' + (m.bytes / 1e6).toFixed(1) + ' MB)' : '';
+          status('fetching files… ' + m.done + '/' + m.total + mb);
+          if (m.done === m.total) term('fetched ' + m.total + ' files' + mb, 'dim');
+        } else if (m.type === 'error') {
+          term('ERROR: ' + m.msg, 'bad');
+          done({ ok: false, summary: m.msg, figures: [], secs: '0' });
+        } else if (m.type === 'result') {
+          var secs = ((Date.now() - t0) / 1000).toFixed(1);
+          var res = JSON.parse(m.raw);
+          if (res.error) {
+            term(res.stdout);
+            term('ERROR: ' + res.error, 'bad');
+            return done({ ok: false, summary: res.error, figures: res.figures || [], secs: secs });
+          }
+          term(res.stdout);
+          var c = compare(pkg, res, m.golden);
+          term('');
+          term((c.ok ? '✓ PASS  ' : '✗ FAIL  ') + c.summary +
+               '  (' + secs + 's, ' + res.figures.length + ' figures)', c.ok ? 'ok' : 'bad');
+          if (!c.ok && c.missed.length) {
+            term('   not reproduced: ' + c.missed.slice(0, 8).join(', '), 'bad');
+          }
+          done({ ok: c.ok, summary: c.summary, figures: res.figures, secs: secs });
+        }
+      };
+
+      w.postMessage({
+        cmd: 'run',
+        base: new URL(BASE, location.href).href,
+        pkg: pkg
+      });
+    });
+  }
+
+  function currentPkg() {
+    return manifest.packages.filter(function (p) { return p.id === selEl.value; })[0];
+  }
+  function showHeavyHint() {
+    var p = currentPkg();
+    if (p && p.heavy) {
+      status('heavy: ' + p.heavyWhy + '. You will be asked before anything downloads.');
+    } else {
+      status('Python loads on first run (~15 MB, cached afterwards).');
+    }
+  }
+  function setBusy(b) {
+    busy = b;
+    runBtn.disabled = allBtn.disabled = b;
+  }
+
+  runBtn.addEventListener('click', async function () {
+    if (busy) return;
+    var pkg = currentPkg();
+    if (!pkg) return;
+    if (pkg.heavy && !window.confirm(
+          pkg.title + '\n\nThis one is heavy: ' + pkg.heavyWhy + '.\n' +
+          'About ' + pkg.heavyMB + ' MB will download, and it may take a minute or two on a slow ' +
+          'connection.\n\nRun it?')) {
+      return;
+    }
+    clearOut(); setBusy(true);
+    try {
+      var r = await runOne(pkg);
+      verdict(r.ok, (r.ok ? 'PASS — ' : 'FAIL — ') + pkg.title + ' · ' + r.summary);
+      showFigs(r.figures, '');
+      status('done in ' + r.secs + 's.');
+    } catch (e) {
+      term('ERROR: ' + e.message, 'bad');
+      verdict(false, 'FAILED — ' + pkg.title + ' · ' + e.message);
+      status('failed — ' + e.message);
+    } finally {
+      setBusy(false);            // the button ALWAYS comes back
+    }
+  });
+
+  allBtn.addEventListener('click', async function () {
+    if (busy) return;
+    clearOut(); setBusy(true);
+    var list = manifest.packages.filter(function (p) { return !p.heavy; });
+    var heavy = manifest.packages.filter(function (p) { return p.heavy; });
+    term('Running the ' + list.length + ' light packages. The heavy ones (' +
+         heavy.map(function (p) { return p.title; }).join(', ') +
+         ') are skipped here — run either from the menu.', 'dim');
+    var npass = 0;
+    for (var i = 0; i < list.length; i++) {
+      term('');
+      term('─── ' + list[i].title + ' ───', 'dim');
+      var r = await runOne(list[i]);
+      if (r.ok) npass++;
+      showFigs(r.figures, list[i].title);
+    }
+    verdict(npass === list.length,
+            npass + '/' + list.length + ' packages passed — every published value ' +
+            (npass === list.length ? 'reproduced, in your browser' : 'checked; see failures above'));
+    status('done.');
+    setBusy(false);
+  });
+
+  // ---- say why it can't run, instead of an empty box ----
+  function blocked(msg) {
+    selEl.innerHTML = '<option>unavailable</option>';
+    selEl.disabled = runBtn.disabled = allBtn.disabled = true;
+    verdictEl.style.display = 'block';
+    verdictEl.className = 'lv-verdict fail';
+    verdictEl.innerHTML = msg;
+    status('');
+  }
+
+  function loadManifest() {
+    // fetch() and Worker() are both blocked on file:// by every browser. Opening this page straight
+    // off disk gives an empty box and no explanation, so say so rather than fail silently.
+    if (location.protocol === 'file:') {
+      blocked('This page is open from your <b>filesystem</b> (<code>file://</code>), and browsers ' +
+              'block a page from reading local files or starting a worker. Serve the folder over ' +
+              'HTTP and it will work:<br><br>' +
+              '<code style="font-family:ui-monospace,monospace">cd Citizens-Standard &amp;&amp; ' +
+              'python -m http.server 8000</code><br>then open ' +
+              '<code style="font-family:ui-monospace,monospace">http://localhost:8000/methodology.html</code>' +
+              '<br><br>On the live site it runs normally.');
+      return;
+    }
+    // no-store: the manifest changes whenever a package is touched, and a cached copy silently
+    // serves a stale package list after every deploy.
+    fetch(BASE + 'web_manifest.json', { cache: 'no-store' }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status + ' fetching replication/web_manifest.json');
+      return r.json();
+    }).then(function (m) {
+      manifest = m;
+      selEl.innerHTML = m.packages.map(function (p) {
+        return '<option value="' + p.id + '">' + p.title +
+               (p.heavy ? '  (heavy — ~' + p.heavyMB + ' MB)' : '') + '</option>';
+      }).join('');
+      var light = m.packages.filter(function (p) { return !p.heavy; }).length;
+      allBtn.textContent = 'Run all ' + light;
+      var heavy = m.packages.filter(function (p) { return p.heavy; });
+      var parts = [];
+      parts.push('<b>' + m.packages.length + ' of the 14 papers have a replication package, and all ' +
+                 m.packages.length + ' run here.</b>');
+      if (heavy.length) {
+        parts.push('<b>Heavy:</b> ' + heavy.map(function (h) {
+          return h.title + ' (' + h.heavyWhy + ')'; }).join('; ') +
+          ' — excluded from “Run all”, but you can run it from the menu; the page tells you what it ' +
+          'is about to download first.');
+      }
+      if (m.excluded && m.excluded.length) {
+        parts.push('<b>Cannot run in a browser:</b> ' + m.excluded.map(function (e) {
+          return e.title + ' — ' + e.reason; }).join('; '));
+      }
+      if (m.noCode && m.noCode.length) {
+        parts.push('<b>No replication package:</b> ' + m.noCode.map(function (e) {
+          return e.title; }).join(', ') + '. These papers are argued rather than computed — there ' +
+          'is no code to run, so they are absent from the menu rather than silently failing.');
+      }
+      $('lvExcluded').innerHTML = parts.join('<br><br>');
+      selEl.addEventListener('change', showHeavyHint);
+      showHeavyHint();
+    }).catch(function (e) {
+      blocked('Could not load <code>replication/web_manifest.json</code> — ' + e.message +
+              '.<br><br>If you have just deployed, make sure the <code>replication/</code> folder ' +
+              'was pushed. The verifier needs it to know which scripts to run.');
+    });
+  }
+  loadManifest();
+})();
+</script>
+
   <h2>Replication &amp; data</h2>
   <p class="sub">Built to be checked, not believed.</p>
   <div class="repbox">
