@@ -40,10 +40,10 @@ demand/supply share.
 ## Framework constants
 
 * `ANCHOR_CPI = 1.0` — near-zero price-stability anchor (Mode B), architecture paper.
-* `TRIGGER_OVER = 3.0` — Tool 14 fires at anchor+3pp; Paper 1 §13.2 (Tool 14a).
+* `TRIGGER_OVER = 3.0` — Tool 14 fires at anchor+3pp; Paper 1 §10 (Tool 14a).
 * `M2_LEVEL = 22.4e12`, `GDP_LEVEL = 30.762e12` — launch-scale aggregates;
   identical to `transition_replication/appendix_A2_kt_inflation.py`.
-* `TOOL14_CAP_PCT = 0.03` — Tool 14 ceiling, 3% of M2/yr (~$671B); Paper 1 §13.2.
+* `TOOL14_CAP_PCT = 0.03` — Tool 14 ceiling, 3% of M2/yr (~$671B); Paper 1 §10.
 * `PASS_THROUGH = 1.0` — unit quantity-theoretic pass-through on the demand share,
   identical convention to the KT consumer-price appendix.
 * Derived: `TOOL14_MAX_PULL_PP = 0.03 * 22.4e12 / 30.762e12 * 100 ≈ 2.18pp/yr`.

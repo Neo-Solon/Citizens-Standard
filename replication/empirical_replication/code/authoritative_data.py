@@ -9,7 +9,7 @@ Last verified: May 12, 2026 from:
   Jan 2026 release for 2025 values)
 * Damodaran (NYU Stern) histretSP.html January 2026 release
 * FRED GDPA (April 9, 2026 vintage)
-* FRED M2SL end-of-period (December) values, seasonally adjusted
+* FRED M2SL annual averages
 * FRED A191RL1A225NBEA (NOT A191RP1A027NBEA -- see AUDIT.md)
 * Census Bureau Vintage 2025 population estimates (Jan 27, 2026)
 * For pre-1960 real GDP growth: BEA NIPA Table 1.1.1 historical
@@ -165,7 +165,7 @@ REAL_GDP_GROWTH = {
 }
 
 # =============================================================================
-# M2 money supply, billions $ (FRED M2SL, end-of-period December values, seasonally adjusted)
+# M2 money supply, billions $ (FRED M2SL annual averages)
 # Pre-1960 values from Friedman & Schwartz / Fed Bulletin historical.
 # Note: M2 definition changed in May 2020 to exclude savings (now in M1);
 # the post-2020 jump partly reflects this re-definition plus actual growth.
@@ -178,7 +178,7 @@ M2_BILLIONS = {
     1948: 148.1, 1949: 147.5, 1950: 150.8, 1951: 156.5, 1952: 164.9,
     1953: 171.2, 1954: 177.2, 1955: 183.7, 1956: 186.9, 1957: 191.8,
     1958: 201.1, 1959: 210.1,
-    # 1960-2025 from FRED M2SL end-of-period (December) values, seasonally adjusted
+    # 1960-2025 from FRED M2SL annual averages
     1960: 312.4, 1961: 335.5, 1962: 362.7, 1963: 393.2, 1964: 424.7,
     1965: 459.2, 1966: 480.0, 1967: 524.3, 1968: 566.3, 1969: 589.6,
     1970: 628.1, 1971: 712.7, 1972: 805.2, 1973: 861.0, 1974: 908.5,

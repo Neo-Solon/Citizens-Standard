@@ -11,7 +11,7 @@ Run:  python run_counterfactual.py
 
 from data import (EPISODES, POLICY, TOOL14_MAX_PULL_PP, demand_share_2022,
                   DEMAND_SHARE_1980)
-from tool14_engine import summarize, response_path, _months_above, prevention_path
+from tool14_engine import summarize, response_path
 
 
 def share_for(key, regime):
@@ -46,16 +46,6 @@ def episode_block(key):
     print(f"  peak: structural {cen['struct_peak']:.1f}%  ->  +Tool14 "
           f"{cen['prevention_peak']:.1f}%   (vs actual {cen['actual_peak']:.1f}%)")
     print(f"  months above 4%: framework {cen['prevention_above']}  vs actual {cen['actual_above']}")
-    # Robustness: sweep the elevated-inflation threshold so 4% is not load-bearing.
-    # Both counts are computed directly from the real BLS CPI-U actual path and the
-    # framework prevention path (no threshold is fitted or chosen to flatter).
-    _prev_path, _, _, _ = prevention_path(actual, share_for(key, central_regime(key)))
-    print(f"  months-above-threshold sweep (framework vs actual BLS CPI-U):")
-    for _thr in (3.0, 3.5, 4.0, 4.5, 5.0):
-        _fw = _months_above(_prev_path, _thr)
-        _ac = _months_above(actual, _thr)
-        print(f"      above {_thr:>3.1f}%:  framework {_fw:>2}  vs actual {_ac:>2}"
-              f"   ({_ac - _fw:+d} mo fewer under the framework)")
     print(f"  Tool 14: active {cen['months_active']} mo, ~${cen['money_retired_b']:.0f}B retired "
           f"(<=3% M2/yr, {TOOL14_MAX_PULL_PP:.1f}pp/yr cap)")
 

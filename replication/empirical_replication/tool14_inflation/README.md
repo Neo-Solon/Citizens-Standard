@@ -66,14 +66,6 @@ These answer different questions and must not be blended:
 | Conventional policy rate | 0.1%→5.3% | ~19% |
 | Conventional real cost | mortgages 3.2%→7.1% | 10.8% unemployment; sacrifice ratio ~2.5 |
 
-**Elevated-inflation threshold is swept, not chosen.** `run_counterfactual.py` reports
-the months-above count for both episodes at 3.0 / 3.5 / 4.0 / 4.5 / 5.0%, computed
-directly from the real BLS CPI-U actual path and the framework prevention path (nothing
-fitted). The framework spends fewer months elevated at *every* threshold, and the gap
-*widens* at higher cutoffs — so the 4% headline is conservative, not cherry-picked. For
-2022: 19 vs 32 (≥3%), 9 vs 25 (≥4%), 0 vs 21 (≥5%). For 1980: 44 vs 134 (≥3%), 0 vs 117
-(≥4%), 0 vs 112 (≥5%).
-
 ## Structural cross-validation (the model's own transmission)
 
 The headline numbers above come from a transparent reduced form. As a check,

@@ -1,7 +1,7 @@
 ==========================================================================================
 CITIZENS STANDARD COUNTERFACTUAL — FULL RESULTS
 Reconstructed with authoritative data (FRED/BLS/Census/BEA latest vintages)
-Run date: 2026-07-12 audit
+Run date: 2026-05-12 audit
 ==========================================================================================
 
 ==========================================================================================
@@ -9,9 +9,9 @@ SECTION 3.2  Illustrative years of K1 and K2 calibration
 ==========================================================================================
 Year     M2 ($B)   GDP/cap nom    K1 nominal   K2 per cit nom   CPI ratio to 2025
 ------------------------------------------------------------------------------------------
-1960  $      312$       3,002$       75.04$          17.06            10.87x
-1990  $    3,285$      23,891$      597.27$         138.43             2.46x
-2025  $   22,366$      90,000$    2,250.01$         814.16             1.00x
+1960  $      312$       3,002$       75.04$          15.12            10.87x
+1990  $    3,285$      23,891$      597.27$         120.49             2.46x
+2025  $   22,366$      90,000$    2,250.01$         691.76             1.00x
 
 ==========================================================================================
 SECTION 4.1 - TABLE 1   Central scenario  (4.5% real equity return post-2025)
@@ -71,7 +71,7 @@ Below-median findings under stress:
 SECTION 6  Monte Carlo bootstrap analysis (10,000 paths per configuration)
 ==========================================================================================
 
-Monte Carlo runtime: 0.4 seconds for 16 configs x 10,000 paths = 160,000 simulated lives
+Monte Carlo runtime: 0.6 seconds for 16 configs x 10,000 paths = 160,000 simulated lives
 
 TABLE M1   Block bootstrap, 1929-2025 universe (Section 6.2)
 ==========================================================================================
@@ -123,3 +123,5 @@ Bootstrap median advantage (P50 / median actual, 1929-2025 block):
   Cohort B: P50=$     313,474  =  1.21x median
   Cohort C: P50=$     390,251  =  1.50x median
   Cohort D: P50=$     453,617  =  1.74x median
+                                            
+Full output saved to all_results.txt
