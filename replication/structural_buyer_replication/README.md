@@ -62,3 +62,23 @@ Requirements: Python 3.10+ with `numpy`. All scripts are deterministic.
 
 ## Figures
 `code/make_figures.py` reproduces the two paper figures from the verified proposition math: `figure_prop1_premium_stability.png` (Proposition 1 — bounded premium A*/phi and the 0<theta*phi<2 convergence band) and `figure_psi_plateau.png` (psi* = c*annuity(g,dur) saturating at c/g under growth). Output to `figures/`.
+
+
+## Consolidated verification (`code/verify_all.py`)
+
+One command runs all five propositions as a single PASS/FAIL report with a
+structural-vs-calibration classification and a one-page diagnostic dashboard:
+
+```
+python3 code/verify_all.py            # full report + dashboard
+python3 code/verify_all.py dashboard  # one-page dashboard only
+```
+
+Structural propositions (P1 premium = A*/phi, P2 flow funds investment, P7
+mirror-voting neutrality) hold as identities for any admissible parameters;
+calibration-dependent ones (P1b convergence band, P3 leak range, psi* bound)
+depend on the calibrated magnitudes. The harness reproduces the same computed
+values as the individual `verify_prop*.py` scripts.
+
+
+*`requirements.txt` added 2026-07-07 (numpy, matplotlib); run remains `cd code && python3 run_all.py`.*

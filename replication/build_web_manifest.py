@@ -42,15 +42,13 @@ SPEC = {
     "comparative_replication":      ([["src", "compare.py"], ["src", "make_figures.py"]],
                                      "results/comparison_results.json", ["matplotlib"]),
     # --- HEAVY: runnable, but they cost a large download. Flagged, never auto-run. ---
-    "empirical_validation_replication": ([[".", s] for s in
-                                      ["src/build_mt.py", "src/run_horserace.py",
-                                       "src/run_divisia_horserace.py", "src/run_composition_horserace.py",
-                                       "src/build_mt_paymentflow.py", "src/make_divisia_figure.py",
-                                       "src/make_composition_figure.py", "src/robustness_and_figure.py"]],
-                                     "results/horserace_results.json",
-                                     ["numpy", "pandas", "matplotlib", "statsmodels"]),
-    # run_all.py mixes imports with subprocess; _web_run.py is the in-process equivalent.
-    "distribution_inequality_replication": ([[".", "_web_run.py"]],
+    # run_all.py mixes imports with subprocess; web_run.py is the in-process equivalent.
+    # NOTE: no leading underscore — GitHub Pages runs Jekyll, which refuses to publish "_*" files.
+    # Paper 5 supplementary: the liquidation flow L_t, which Macro §3.3 defines and no paper
+    # ever gives a number. Depends only on numpy (SSA life table is a bundled CSV).
+    "liquidation_flow_replication": ([["code", "run_all.py"]],
+                                     "all_results.txt", ["numpy"]),
+    "distribution_inequality_replication": ([[".", "web_run.py"]],
                                      "results/inequality_results.json",
                                      ["numpy", "pandas", "matplotlib"]),
     "transition_replication":       ([["code", "run_all_appendix.py"],
@@ -90,18 +88,10 @@ SPEC = {
                                      "all_results.txt", ["numpy", "matplotlib", "sympy"]),
 }
 
-# Runnable in the browser, but expensive. The page warns and asks before starting one, and
-# "Run all" skips them — a visitor shouldn't accidentally pull 25 MB.
-HEAVY = {
-    "empirical_validation_replication": {
-        "mb": 25,
-        "why": "needs statsmodels, which pulls scipy — about 25 MB of extra WebAssembly",
-    },
-    "distribution_inequality_replication": {
-        "mb": 30,
-        "why": "downloads the 22 MB raw SCF 2022 microdata, plus pandas",
-    },
-}
+# No package is treated as "heavy" any more. Paper 14 does pull the 22 MB raw SCF microdata, but
+# labelling that up front reads as a warning not to bother — and the fetch counter and elapsed clock
+# already show it working. Let the progress do the talking; don't editorialise the cost.
+HEAVY = {}
 
 # Some scripts reach into a SIBLING package's data (distribution/procyclicality reads
 # empirical_replication's historical CSV via ../../../). Packages are staged side by side in the
@@ -111,7 +101,14 @@ SIBLING_FILES = {
         "empirical_replication/data/citizens_standard_historical_data_1960_2025_v2.csv",
     ],
 }
-EXCLUDED = {}
+EXCLUDED = {
+    # VERIFIED against the Pyodide v0.26.4 lock file: it ships pandas, scipy and sympy, but NOT
+    # statsmodels — and statsmodels has C extensions, so micropip cannot install it at runtime.
+    # There is no way to run this package in the browser today.
+    "empirical_validation_replication":
+        "needs statsmodels, which is not in the Pyodide distribution and cannot be installed at "
+        "runtime (it has C extensions). Runs in the offline suite and in CI.",
+}
 
 TITLES = {
     "architecture_replication": "Paper 1 — Architecture",
@@ -120,10 +117,11 @@ TITLES = {
     "comparative_replication": "Paper 13 — Comparative Analysis",
     "transition_replication": "Paper 3 — Transition",
     "banking_replication": "Paper 6 — Full-Reserve Banking",
-    "empirical_replication": "Paper 10 — Historical Counterfactual",
+    "empirical_replication": "Paper 2 — Historical Counterfactual",
     "interoperability_replication": "Paper 7 — External Interoperability",
     "macro_replication": "Paper 5 — Macroeconomic Model",
     "distribution_inequality_replication": "Paper 14 — Distribution & Inequality",
+    "liquidation_flow_replication": "Paper 5 — The Liquidation Flow L\u209c (supplementary)",
     "empirical_validation_replication": "Paper 10 — Empirical Validation",
 }
 
@@ -132,15 +130,20 @@ PAPER_NO = {
     "architecture_replication": 1,
     "transition_replication": 3,
     "macro_replication": 5,
+    "liquidation_flow_replication": 5,
     "banking_replication": 6,
     "interoperability_replication": 7,
     "structural_buyer_replication": 8,
-    "empirical_replication": 10,
+    "empirical_replication": 2,
     "empirical_validation_replication": 10,
     "crisis_behaviour_replication": 12,
     "comparative_replication": 13,
     "distribution_inequality_replication": 14,
 }
+
+# Largest file the browser will fetch. Paper 14's raw SCF 2022 microdata is 22 MB and is REQUIRED —
+# the package cannot run without it. Nothing else in the tree comes close.
+MAX_FETCH_BYTES = 25_000_000
 
 SKIP_DIRS = {"figures", "results", "outputs", "report"}          # regenerated by the run
 JUNK_DIRS = {"__pycache__"}
@@ -182,8 +185,10 @@ def files_for(pkg):
             continue
         if p.name.startswith("_harness"):
             continue           # offline-harness helper; the browser runs the scripts directly
-        cap = 25_000_000 if pkg in HEAVY else 3_000_000
-        if p.stat().st_size > cap:
+        # A single global cap. This used to be "25 MB if the package is HEAVY, else 3 MB" — so when
+        # HEAVY was emptied, the exemption vanished with it and the 22 MB SCF microdata silently
+        # dropped out of the fetch list. A cosmetic change quietly broke the data.
+        if p.stat().st_size > MAX_FETCH_BYTES:
             continue
         out.append(rel.as_posix())
     return out
@@ -214,6 +219,11 @@ def main():
         })
     manifest = {
         "note": "Drives the in-browser verifier on methodology.html. Regenerate with build_web_manifest.py.",
+        "noCode": [
+            {"paper": 4,  "title": "Paper 4 — Statutory"},
+            {"paper": 9,  "title": "Paper 9 — Issuance Engine"},
+            {"paper": 11, "title": "Paper 11 — Governance"},
+        ],
         "base": "replication",
         "packages": pkgs,
         "excluded": [{"id": k, "title": TITLES[k], "reason": v}

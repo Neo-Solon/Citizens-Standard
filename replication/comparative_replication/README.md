@@ -2,8 +2,8 @@
 
 Author: Neo-Solon · Neo-Solon@hotmail.com · License: CC BY 4.0
 
-This package empirically grounds *The Citizens Standard: A Comparative Analysis*
-(Neo-Solon 2026; SSRN forthcoming). It backs every cell of the paper's comparison
+This package empirically grounds *The Citizens Standard: Comparison with Alternative Monetary and Distributional Systems*
+(Neo-Solon, 2026m; SSRN 6973338). It backs every cell of the paper's comparison
 table and every comparative claim with a sourced, real-world figure, and computes
 the axes that are genuinely comparable across systems.
 

@@ -224,6 +224,9 @@ if __name__ == "__main__":
         if k == "claim1_distinctive_cell":
             print(f'      only system meeting all three: {v["systems_meeting_all_three"]}')
 
-    with open("../results/comparison_results.json", "w") as fh:
+    import os as _os
+    _rd = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "..", "results")
+    _os.makedirs(_rd, exist_ok=True)
+    with open(_os.path.join(_rd, "comparison_results.json"), "w") as fh:
         json.dump(out, fh, indent=2, default=str)
     print("\n-> results/comparison_results.json written")

@@ -1,7 +1,7 @@
 ==========================================================================================
 CITIZENS STANDARD COUNTERFACTUAL — FULL RESULTS
 Reconstructed with authoritative data (FRED/BLS/Census/BEA latest vintages)
-Run date: 2026-07-12 audit
+Run date: 2026-07-13 audit
 ==========================================================================================
 
 ==========================================================================================
@@ -71,7 +71,7 @@ Below-median findings under stress:
 SECTION 6  Monte Carlo bootstrap analysis (10,000 paths per configuration)
 ==========================================================================================
 
-Monte Carlo runtime: 0.4 seconds for 16 configs x 10,000 paths = 160,000 simulated lives
+Monte Carlo runtime: 0.5 seconds for 16 configs x 10,000 paths = 160,000 simulated lives
 
 TABLE M1   Block bootstrap, 1929-2025 universe (Section 6.2)
 ==========================================================================================

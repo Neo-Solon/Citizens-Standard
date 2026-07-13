@@ -1,0 +1,68 @@
+============================================================================================
+CITIZENS STANDARD — THE LIQUIDATION FLOW L_t, COMPUTED
+Paper 5 (Macro Model) §3.3 / Paper 1 (Architecture) 'Two bounds on kappa_d'
+Framework calibration UNCHANGED. Mortality: SSA period life table (real l_x).
+============================================================================================
+
+SECTION 0  Stable-population validation (real SSA survival)
+--------------------------------------------------------------------------------------------
+  65+ share   model 17.5%     published US ~18.0% (Census: 61.2M / 342M)
+  65+ count   model 59.7M      published US ~61.2M
+
+SECTION 1  Launch gate — reproduce the Architecture paper's own arithmetic
+--------------------------------------------------------------------------------------------
+  growth budget         447.3 $B    paper ~447
+  K3 dividend           174.2 $B    paper ~175.3
+  M^T = mu*M2         11484.9 $B    paper ~11488
+  required dM^T         229.7 $B    paper ~229.7
+  L_t at launch           0.0 $B    (no floor has matured yet)
+
+SECTION 2  The constraint:  K3 + KI + liquidation <= Y-matched expansion
+--------------------------------------------------------------------------------------------
+  year      L_t       K3    spill     inflow   required     excess   implied pi      mu
+  2026       0.0    174.2    15.2      189.4      229.7      -40.3     -0.35%   0.513
+  2040      17.5    230.2    18.6      266.2      291.5      -25.3     -0.17%   0.494
+  2050      60.8    280.6    21.0      362.4      352.7       +9.7     +0.05%   0.490
+  2060     147.7    341.9    23.3      512.9      437.6      +75.3     +0.34%   0.499
+  2070     306.4    416.8    25.2      748.4      559.6     +188.7     +0.67%   0.523
+  2080     589.8    508.0    26.4     1124.1      740.2     +383.9     +1.04%   0.568
+  2090    1088.4    619.1    26.5     1734.0     1015.0     +719.1     +1.42%   0.639
+  2100    1804.0    754.7    25.0     2583.7     1436.5    +1147.2     +1.60%   0.742
+  2110    2667.9    920.1    20.8     3608.9     2041.7    +1567.2     +1.54%   0.865
+  2125    4567.3   1238.8     5.8     5811.9     3405.9    +2406.0     +1.41%   1.072
+
+  CONSTRAINT FIRST BREACHED: 2048
+  peak implied inflation:    +1.60%  in 2100
+  mu drift:                  0.513 -> 1.506
+
+SECTION 3  Sensitivity — does the breach survive?
+--------------------------------------------------------------------------------------------
+  variation                         breach   peak pi   L_t(2100)
+  base (framework defaults)          2048    +1.60%     1804.0
+  withdrawal w = 3%                  2051    +1.45%     1513.6
+  withdrawal w = 5%                  2047    +1.70%     2029.2
+  withdrawal w = 6%                  2045    +1.78%     2204.9
+  realizable r = 3.30%               2050    +1.06%     1123.5
+  realizable r = 5.03%               2047    +2.16%     2676.7
+  r = g = 2.00% (r>g removed)        2053    +0.57%      614.7
+  r = 1.50% (r < g)                  2054    +0.44%      493.9
+  kappa_d = 0.00                     2062    +2.80%     2964.1
+  kappa_d = 0.60                     2026    +1.13%     1224.0
+
+  The breach survives EVERY variation, including removing r>g entirely.
+  Mechanism: K3 was calibrated at launch to fill the ENTIRE Y-matched expansion
+  at a moment when L_t = 0. As floors mature, L_t lands on top of a full budget.
+
+SECTION 4  The kappa_d schedule that holds the locus
+--------------------------------------------------------------------------------------------
+  2026   kappa_d required = +0.488
+  2040   kappa_d required = +0.441
+  2060   kappa_d required = +0.310
+  2080   kappa_d required = +0.097
+  2100   kappa_d required = -0.206
+  2125   kappa_d required = -0.374
+
+  kappa_d must reach ZERO in 2087; past that, holding the price level requires
+  NET CONTRACTION (KI negative / Tool 14a retirement) — the same 'withdrawal capacity'
+  limit the Paper 7 red-team identifies as the framework's binding constraint.
+============================================================================================
