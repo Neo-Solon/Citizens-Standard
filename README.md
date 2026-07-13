@@ -103,19 +103,28 @@ containment, not eyeballing: the runner's output must contain every published va
 
 ## Citation
 
-The Citizens Standard is a **fourteen-paper series**, not a single paper. Papers are lettered as
-they are cited within the series (2026a, 2026b, …).
+The Citizens Standard is a **fourteen-paper series**, not a single paper. The letters are the ones
+the papers use to cite each other.
+
+**Published on SSRN:**
 
 | | Paper | SSRN |
 |---|---|---|
-| **2026a** | *One Model, Many Systems: A Constitutional Monetary Architecture* | [6702518](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6702518) |
-| **2026b** | *A Historical Counterfactual: Empirical Analysis of an Alternative US Monetary Architecture* | [6735078](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6735078) |
-| **2026c** | *Transition Architecture and Migration Mechanics* | [6810741](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6810741) |
-| **2026d** | *A Statutory Implementation Pathway* | [6873798](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6873798) |
-| **2026e** | *A Macroeconomic Model of a Dual-Circuit Monetary System* | [6939418](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6939418) |
+| **2026a** | One Model, Many Systems — A Constitutional Monetary Architecture | [6702518](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6702518) |
+| **2026b** | A Historical Counterfactual, 1960–2055 | [6735078](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6735078) |
+| **2026c** | Transition Architecture and Migration Mechanics | [6810741](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6810741) |
+| **2026e** | A Macroeconomic Model of a Two-Circuit Monetary System | [6939418](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6939418) |
+| **2026f** | Full-Reserve Banking and the Dual-Circuit System | [6939498](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6939498) |
+| **2026g** | External Interoperability and the Common Anchor | [6939600](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6939600) |
+| **2026h** | The Structural Buyer — Asset-Market Dynamics, Price Discovery, and Universal Ownership | [6945320](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6945320) |
 
-Papers 6–14 are in this repository under [`papers/`](papers/) and on
-[citizensstandard.org](https://citizensstandard.org/papers.html); SSRN entries to follow.
+**In this repository, SSRN posting pending:** Statutory Implementation (2026d), The Issuance Engine
+(2026i), Empirical Validation (2026j), Governance (2026k), Crisis Behaviour (2026l), Comparative
+Analysis (2026m), Distribution & Inequality (2026n).
+
+All fourteen — published or not — are in [`papers/`](papers/) as PDF and DOCX, on
+[citizensstandard.org](https://citizensstandard.org/papers.html), and every quantitative claim in
+them is reproduced by the code in [`replication/`](replication/).
 
 **To cite the architecture (the entry point):**
 
