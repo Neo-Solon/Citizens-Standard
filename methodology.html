@@ -431,6 +431,7 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
   .liveverify h3{font-size:1.02rem;margin:0 0 6px;color:var(--text)}
   .liveverify .lv-lede{color:var(--dim);font-size:.92rem;margin:0 0 14px;max-width:70ch;line-height:1.6}
   .liveverify .lv-lede b{color:var(--text)}
+  .liveverify .lv-wait{border-left:2px solid var(--amber);padding-left:11px;font-size:.86rem;margin:-4px 0 14px}
   .lv-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
   .lv-bar select{font:inherit;font-size:.88rem;color:var(--text);background:var(--ink);border:1px solid var(--line);border-radius:7px;padding:7px 10px;cursor:pointer;font-family:system-ui,sans-serif}
   .lv-run{font:inherit;font-family:system-ui,sans-serif;font-size:.88rem;font-weight:600;color:var(--amber-ink);background:var(--amber);border:none;border-radius:7px;padding:8px 16px;cursor:pointer}
@@ -456,10 +457,15 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
 <div class="liveverify">
   <h3>Verify it in your browser — no install, no trust required</h3>
   <p class="lv-lede">
-    This runs the <b>actual replication code</b> — real CPython, compiled to WebAssembly, executing in
-    this tab. It fetches a package's own scripts from this repository, runs them, and checks every
-    number they produce against the values the paper published. Nothing is precomputed. If the code
-    stops reproducing the paper, this page will say so.
+    Real CPython, compiled to WebAssembly, running <b>the actual replication code</b> in this tab. It
+    fetches a package's own scripts, runs them, and checks every number against the values the paper
+    published. Nothing is precomputed — if the code stops reproducing the paper, this page says so.
+  </p>
+  <p class="lv-lede lv-wait">
+    <b>Give it a moment.</b> Most packages finish in a second or two; Paper 5 runs 20 propositions and
+    a 10,000-draw Monte Carlo, so it takes around 40 seconds. Python runs in a background worker, so
+    the page stays responsive throughout and the timer keeps counting — you can scroll, read, or
+    leave it running. It is computing, not stuck.
   </p>
 
   <div class="lv-bar">
@@ -490,19 +496,18 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
 <script>
 (function () {
   var BASE = 'replication/';
-  var PYODIDE = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/';
-  var py = null, manifest = null, booting = null;
+  var manifest = null, worker = null, busy = false;
 
   var $ = function (id) { return document.getElementById(id); };
   var termEl = $('lvTerm'), figsEl = $('lvFigs'), verdictEl = $('lvVerdict'),
       statusEl = $('lvStatus'), runBtn = $('lvRun'), allBtn = $('lvRunAll'), selEl = $('lvPkg');
 
   function status(s) { statusEl.textContent = s; }
-  function term(html, cls) {
+  function term(text, cls) {
     termEl.style.display = 'block';
     var span = document.createElement('span');
     if (cls) span.className = cls;
-    span.textContent = html + '\n';
+    span.textContent = text + '\n';
     termEl.appendChild(span);
     termEl.scrollTop = termEl.scrollHeight;
   }
@@ -510,8 +515,24 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
     termEl.innerHTML = ''; termEl.style.display = 'none';
     figsEl.innerHTML = ''; verdictEl.style.display = 'none';
   }
+  function verdict(ok, text) {
+    verdictEl.style.display = 'block';
+    verdictEl.className = 'lv-verdict ' + (ok ? 'pass' : 'fail');
+    verdictEl.textContent = text;
+  }
+  function showFigs(figs, prefix) {
+    figs.forEach(function (f) {
+      var fig = document.createElement('figure');
+      var img = document.createElement('img');
+      img.src = 'data:image/png;base64,' + f.b64;
+      img.loading = 'lazy';
+      var cap = document.createElement('figcaption');
+      cap.textContent = (prefix ? prefix + ' · ' : '') + f.name;
+      fig.appendChild(img); fig.appendChild(cap); figsEl.appendChild(fig);
+    });
+  }
 
-  // ---- numeric comparison: identical rule to the offline harness (replication/paper_pkg.py) ----
+  // ---- comparison: identical rule to the offline harness (replication/paper_pkg.py) ----
   var NUM = /-?\d+\.?\d*(?:[eE][-+]?\d+)?/g;
   var TIMING = /runtime|elapsed|seconds|secs|\bsec\b|took /i;
 
@@ -544,183 +565,27 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
     return d === 0 ? Math.abs(a - b) <= 1e-6 : Math.abs(a - b) / d <= 1e-6;
   }
 
-  // ---- boot pyodide once ----
-  async function boot() {
-    if (py) return py;
-    if (booting) return booting;
-    booting = (async function () {
-      status('loading Python (WebAssembly)…');
-      await new Promise(function (res, rej) {
-        var s = document.createElement('script');
-        s.src = PYODIDE + 'pyodide.js'; s.onload = res; s.onerror = rej;
-        document.head.appendChild(s);
-      });
-      py = await loadPyodide({ indexURL: PYODIDE });
-      if (!manifest) {
-        manifest = await (await fetch(BASE + 'web_manifest.json', { cache: 'no-store' })).json();
-      }
-      status('Python ready.');
-      return py;
-    })();
-    return booting;
-  }
-
-  // ---- fetch a package's files into pyodide's virtual filesystem ----
-  async function stage(pkg) {
-    var root = '/w/' + pkg.id;
-    try { py.FS.mkdirTree(root); } catch (e) {}
-    (pkg.mkdirs || []).forEach(function (d) {
-      try { py.FS.mkdirTree(root + '/' + d); } catch (e) {}
-    });
-
-    // Some scripts read a sibling package's data via ../../../. Packages are staged side by side
-    // under /w/, so the relative path resolves — but the file still has to be fetched.
-    for (var si = 0; si < (pkg.siblings || []).length; si++) {
-      var sp = pkg.siblings[si];
-      var sr = await fetch(BASE + sp);
-      if (sr.ok) {
-        var sbuf = new Uint8Array(await sr.arrayBuffer());
-        var sdir = '/w/' + sp.slice(0, sp.lastIndexOf('/'));
-        try { py.FS.mkdirTree(sdir); } catch (e) {}
-        py.FS.writeFile('/w/' + sp, sbuf);
-      } else {
-        term('warning: sibling file missing: ' + sp, 'bad');
-      }
-    }
-
-    var all = pkg.files.concat(pkg.goldenFiles);
-    var golden = {};
-    for (var i = 0; i < all.length; i++) {
-      var rel = all[i];
-      var r = await fetch(BASE + pkg.id + '/' + rel);
-      if (!r.ok) {
-        // Don't kill the whole package for one absent file — say which, and let the run proceed.
-        // If it was genuinely needed, the script that needs it will fail loudly a moment later.
-        term('warning: could not fetch ' + rel + ' (HTTP ' + r.status + ')', 'bad');
-        continue;
-      }
-      var buf = new Uint8Array(await r.arrayBuffer());
-      var dir = rel.lastIndexOf('/') > 0 ? root + '/' + rel.slice(0, rel.lastIndexOf('/')) : root;
-      try { py.FS.mkdirTree(dir); } catch (e) {}
-      py.FS.writeFile(root + '/' + rel, buf);
-      // Stash the PUBLISHED artifact now: the run will overwrite results/*.json in place.
-      if (pkg.goldenFiles.indexOf(rel) >= 0) {
-        golden[rel] = new TextDecoder().decode(buf);
-      }
-    }
-    return golden;
-  }
-
-  // ---- the python driver: exec each script in-process, no subprocess (Pyodide has none) ----
-  var DRIVER = `
-import base64, contextlib, glob, io, json, os, runpy, sys
-
-def run_package(root, steps):
-    # Imported HERE, not at module scope: this driver is exec'd once, and pyodide.loadPackage()
-    # for a given package's deps runs before each call. A top-level import would execute before
-    # anything was loaded and die with ModuleNotFoundError.
-    import matplotlib
-    matplotlib.use("Agg")
-
-    buf = io.StringIO()
-    cwd0 = os.getcwd()
-    path0 = list(sys.path)
-    argv0 = list(sys.argv)
-    mods0 = set(sys.modules)
-    err = None
-    try:
-        with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
-            for d, script in steps:
-                wd = root if d == "." else os.path.join(root, d)
-                os.chdir(wd)
-                sys.path.insert(0, wd)
-                # Scripts branch on sys.argv (one package's runner takes a mode argument). A
-                # subprocess gets a clean argv; an in-process exec inherits the caller's.
-                sys.argv = [os.path.basename(script)]
-                try:
-                    runpy.run_path(os.path.join(wd, script), run_name="__main__")
-                except SystemExit:
-                    pass          # sys.exit() in one script must not abort the remaining steps
-    except Exception as e:
-        err = "%s: %s" % (type(e).__name__, e)
-    finally:
-        os.chdir(cwd0)
-        sys.path[:] = path0
-        sys.argv[:] = argv0
-        # Evict only the PACKAGE's modules. Purging library modules (matplotlib.pyplot!) leaves the
-        # library half-initialised and throws bizarre errors in the next package.
-        for m in list(set(sys.modules) - mods0):
-            f = getattr(sys.modules.get(m), "__file__", None) or ""
-            if f.startswith(root):
-                sys.modules.pop(m, None)
-        # matplotlib is process-global: open figures and mutated rcParams leak between packages.
-        import matplotlib.pyplot as plt
-        plt.close("all"); matplotlib.rcdefaults(); matplotlib.use("Agg")
-
-    figs = []
-    for p in sorted(glob.glob(os.path.join(root, "**", "*.png"), recursive=True)):
-        with open(p, "rb") as fh:
-            figs.append({"name": os.path.relpath(p, root),
-                         "b64": base64.b64encode(fh.read()).decode()})
-    regen = {}
-    for p in glob.glob(os.path.join(root, "**", "*.json"), recursive=True):
-        try:
-            regen[os.path.relpath(p, root)] = open(p).read()
-        except Exception:
-            pass
-    return json.dumps({"stdout": buf.getvalue(), "figures": figs,
-                       "regenerated": regen, "error": err})
-`;
-
-  async function runOne(pkg, quiet) {
-    await boot();
-
-    // Deps first — the driver's run_package() imports matplotlib on entry, so the wheels must be
-    // in place before it is called. (Loading is cached, so this is instant on later runs.)
-    status('loading ' + pkg.deps.join(', ') + '…');
-    await py.loadPackage(pkg.deps);
-
-    if (!py.__driverLoaded) { await py.runPythonAsync(DRIVER); py.__driverLoaded = true; }
-
-    status('fetching ' + pkg.files.length + ' files…');
-    var golden = await stage(pkg);
-
-    status('running ' + pkg.title + '…');
-    term('$ cd replication/' + pkg.id, 'dim');
-    pkg.steps.forEach(function (s) { term('$ python ' + s[1], 'dim'); });
-
-    var t0 = performance.now();
-    py.globals.set('_root', '/w/' + pkg.id);
-    py.globals.set('_steps', py.toPy(pkg.steps));
-    var raw = await py.runPythonAsync('run_package(_root, [list(s) for s in _steps])');
-    var res = JSON.parse(raw);
-    var secs = ((performance.now() - t0) / 1000).toFixed(1);
-
-    if (res.error) {
-      term(res.stdout);
-      term('ERROR: ' + res.error, 'bad');
-      return { ok: false, summary: res.error, secs: secs, figures: [] };
-    }
-    term(res.stdout);
-
-    // ---- compare against the PUBLISHED values ----
-    var checked = 0, missed = [];
-    // NOTE: slice(-4) on 'x.json' is 'json' (no dot) — comparing it to '.json' is always false,
-    // which silently sent every JSON-golden package down the TEXT path. Text-matching a JSON
-    // artifact reads the hyphen in "1960-2024" as a minus sign and invents values like -2024.
+  function compare(pkg, res, golden) {
+    // NOTE: slice(-4) of 'x.json' is 'json' (no dot). Getting this wrong once sent every
+    // JSON-golden package down the text path, which reads the hyphen in "1960-2024" as a minus
+    // sign and invents values no code produced.
     var isJson = pkg.golden.slice(-1) !== '/' && /\.json$/.test(pkg.golden);
+    var checked = 0, missed = [];
+
     if (!isJson) {
       var want = [];
-      pkg.goldenFiles.forEach(function (g) { want = want.concat(nums(golden[g], true)); });
+      pkg.goldenFiles.forEach(function (g) { want = want.concat(nums(golden[g] || '', true)); });
       var got = nums(res.stdout, false);
       want.forEach(function (v) {
         checked++;
         if (!got.some(function (x) { return close(x, v); })) missed.push(v);
       });
     } else {
-      var w = flat(JSON.parse(golden[pkg.golden]), '');
       var regenTxt = res.regenerated[pkg.golden];
-      if (!regenTxt) return { ok: false, summary: 'the run did not regenerate ' + pkg.golden, secs: secs, figures: res.figures };
+      if (!regenTxt) {
+        return { ok: false, summary: 'the run did not regenerate ' + pkg.golden, missed: [] };
+      }
+      var w = flat(JSON.parse(golden[pkg.golden]), '');
       var g2 = flat(JSON.parse(regenTxt), '');
       for (var k in w) {
         if (!(k in g2)) continue;
@@ -728,32 +593,76 @@ def run_package(root, steps):
         if (!close(g2[k], w[k])) missed.push(w[k]);
       }
     }
-
     var ok = missed.length === 0 && checked > 0;
-    var summary = ok ? checked + ' published values reproduced'
-                     : missed.length + '/' + checked + ' published values NOT reproduced';
-    term('');
-    term((ok ? '✓ PASS  ' : '✗ FAIL  ') + summary + '  (' + secs + 's, ' +
-         res.figures.length + ' figures)', ok ? 'ok' : 'bad');
-    if (!ok) term('   not reproduced: ' + missed.slice(0, 8).join(', '), 'bad');
-    return { ok: ok, summary: summary, secs: secs, figures: res.figures };
+    return {
+      ok: ok, missed: missed,
+      summary: ok ? checked + ' published values reproduced'
+                  : missed.length + '/' + checked + ' published values NOT reproduced'
+    };
   }
 
-  function showFigs(figs, prefix) {
-    figs.forEach(function (f) {
-      var fig = document.createElement('figure');
-      var img = document.createElement('img');
-      img.src = 'data:image/png;base64,' + f.b64;
-      img.loading = 'lazy';
-      var cap = document.createElement('figcaption');
-      cap.textContent = (prefix ? prefix + ' · ' : '') + f.name;
-      fig.appendChild(img); fig.appendChild(cap); figsEl.appendChild(fig);
-    });
+  // ---- the worker: Python runs OFF the main thread, so the page never freezes ----
+  function ensureWorker() {
+    if (worker) return worker;
+    worker = new Worker(BASE + 'verify_worker.js');
+    return worker;
   }
-  function verdict(ok, text) {
-    verdictEl.style.display = 'block';
-    verdictEl.className = 'lv-verdict ' + (ok ? 'pass' : 'fail');
-    verdictEl.textContent = text;
+
+  function runOne(pkg) {
+    return new Promise(function (resolve) {
+      var w = ensureWorker();
+      var t0 = Date.now(), ticker = null;
+
+      function done(result) {
+        if (ticker) { clearInterval(ticker); ticker = null; }
+        w.onmessage = null;
+        resolve(result);
+      }
+
+      w.onmessage = function (e) {
+        var m = e.data;
+        if (m.type === 'status') {
+          if (m.warn) term('warning: ' + m.msg.replace(/^warning: /, ''), 'bad');
+          status(m.msg);
+          if (m.running && !ticker) {
+            term('$ cd replication/' + pkg.id, 'dim');
+            pkg.steps.forEach(function (s) { term('$ python ' + s[1], 'dim'); });
+            ticker = setInterval(function () {
+              status('running ' + pkg.title + '… ' +
+                     Math.round((Date.now() - t0) / 1000) + 's (page stays responsive)');
+            }, 1000);
+          }
+        } else if (m.type === 'stage') {
+          status('fetching files… ' + m.done + '/' + m.total);
+        } else if (m.type === 'error') {
+          term('ERROR: ' + m.msg, 'bad');
+          done({ ok: false, summary: m.msg, figures: [], secs: '0' });
+        } else if (m.type === 'result') {
+          var secs = ((Date.now() - t0) / 1000).toFixed(1);
+          var res = JSON.parse(m.raw);
+          if (res.error) {
+            term(res.stdout);
+            term('ERROR: ' + res.error, 'bad');
+            return done({ ok: false, summary: res.error, figures: res.figures || [], secs: secs });
+          }
+          term(res.stdout);
+          var c = compare(pkg, res, m.golden);
+          term('');
+          term((c.ok ? '✓ PASS  ' : '✗ FAIL  ') + c.summary +
+               '  (' + secs + 's, ' + res.figures.length + ' figures)', c.ok ? 'ok' : 'bad');
+          if (!c.ok && c.missed.length) {
+            term('   not reproduced: ' + c.missed.slice(0, 8).join(', '), 'bad');
+          }
+          done({ ok: c.ok, summary: c.summary, figures: res.figures, secs: secs });
+        }
+      };
+
+      w.postMessage({
+        cmd: 'run',
+        base: new URL(BASE, location.href).href,
+        pkg: pkg
+      });
+    });
   }
 
   function currentPkg() {
@@ -767,58 +676,53 @@ def run_package(root, steps):
       status('Python loads on first run (~15 MB, cached afterwards).');
     }
   }
+  function setBusy(b) {
+    busy = b;
+    runBtn.disabled = allBtn.disabled = b;
+  }
 
   runBtn.addEventListener('click', async function () {
-    var pkg0 = currentPkg();
-    // Never pull tens of megabytes without asking.
-    if (pkg0 && pkg0.heavy && !window.confirm(
-          pkg0.title + '\n\nThis one is heavy: ' + pkg0.heavyWhy + '.\n' +
-          'About ' + pkg0.heavyMB + ' MB will download, and it may take a minute or two on a slow ' +
+    if (busy) return;
+    var pkg = currentPkg();
+    if (!pkg) return;
+    if (pkg.heavy && !window.confirm(
+          pkg.title + '\n\nThis one is heavy: ' + pkg.heavyWhy + '.\n' +
+          'About ' + pkg.heavyMB + ' MB will download, and it may take a minute or two on a slow ' +
           'connection.\n\nRun it?')) {
       return;
     }
-    clearOut(); runBtn.disabled = allBtn.disabled = true;
-    try {
-      await boot();
-      var pkg = currentPkg();
-      var r = await runOne(pkg);
-      verdict(r.ok, (r.ok ? 'PASS — ' : 'FAIL — ') + pkg.title + ' · ' + r.summary);
-      showFigs(r.figures, '');
-      status('done in ' + r.secs + 's.');
-    } catch (e) {
-      term('ERROR: ' + e.message, 'bad'); status('failed \u2014 ' + e.message);
-    }
-    runBtn.disabled = allBtn.disabled = false;
+    clearOut(); setBusy(true);
+    var r = await runOne(pkg);
+    verdict(r.ok, (r.ok ? 'PASS — ' : 'FAIL — ') + pkg.title + ' · ' + r.summary);
+    showFigs(r.figures, '');
+    status('done in ' + r.secs + 's.');
+    setBusy(false);
   });
 
   allBtn.addEventListener('click', async function () {
-    clearOut(); runBtn.disabled = allBtn.disabled = true;
-    try {
-      await boot();
-      var list = manifest.packages.filter(function (p) { return !p.heavy; });
-      var npass = 0, n = list.length;
-      term('Running the ' + n + ' light packages. The two heavy ones (' +
-           manifest.packages.filter(function (p) { return p.heavy; })
-             .map(function (p) { return p.title; }).join(', ') +
-           ') are skipped here \u2014 run either from the menu.', 'dim');
-      for (var i = 0; i < n; i++) {
-        var pkg = list[i];
-        term('');
-        term('─── ' + pkg.title + ' ───', 'dim');
-        var r = await runOne(pkg, true);
-        if (r.ok) npass++;
-        showFigs(r.figures, pkg.title);
-      }
-      verdict(npass === n, npass + '/' + n + ' packages passed — every published value ' +
-              (npass === n ? 'reproduced, in your browser' : 'checked; see failures above'));
-      status('done.');
-    } catch (e) {
-      term('ERROR: ' + e.message, 'bad'); status('failed \u2014 ' + e.message);
+    if (busy) return;
+    clearOut(); setBusy(true);
+    var list = manifest.packages.filter(function (p) { return !p.heavy; });
+    var heavy = manifest.packages.filter(function (p) { return p.heavy; });
+    term('Running the ' + list.length + ' light packages. The heavy ones (' +
+         heavy.map(function (p) { return p.title; }).join(', ') +
+         ') are skipped here — run either from the menu.', 'dim');
+    var npass = 0;
+    for (var i = 0; i < list.length; i++) {
+      term('');
+      term('─── ' + list[i].title + ' ───', 'dim');
+      var r = await runOne(list[i]);
+      if (r.ok) npass++;
+      showFigs(r.figures, list[i].title);
     }
-    runBtn.disabled = allBtn.disabled = false;
+    verdict(npass === list.length,
+            npass + '/' + list.length + ' packages passed — every published value ' +
+            (npass === list.length ? 'reproduced, in your browser' : 'checked; see failures above'));
+    status('done.');
+    setBusy(false);
   });
 
-  // ---- why this can't run, in plain terms, instead of an empty box ----
+  // ---- say why it can't run, instead of an empty box ----
   function blocked(msg) {
     selEl.innerHTML = '<option>unavailable</option>';
     selEl.disabled = runBtn.disabled = allBtn.disabled = true;
@@ -829,17 +733,20 @@ def run_package(root, steps):
   }
 
   function loadManifest() {
-    // fetch() is blocked on file:// by every browser. Opening this page straight off disk gives an
-    // empty box and no explanation, so say so rather than fail silently.
+    // fetch() and Worker() are both blocked on file:// by every browser. Opening this page straight
+    // off disk gives an empty box and no explanation, so say so rather than fail silently.
     if (location.protocol === 'file:') {
       blocked('This page is open from your <b>filesystem</b> (<code>file://</code>), and browsers ' +
-              'block a page from reading local files. Serve the folder over HTTP and it will work:' +
-              '<br><br><code style="font-family:ui-monospace,monospace">cd Citizens-Standard &amp;&amp; ' +
+              'block a page from reading local files or starting a worker. Serve the folder over ' +
+              'HTTP and it will work:<br><br>' +
+              '<code style="font-family:ui-monospace,monospace">cd Citizens-Standard &amp;&amp; ' +
               'python -m http.server 8000</code><br>then open ' +
               '<code style="font-family:ui-monospace,monospace">http://localhost:8000/methodology.html</code>' +
               '<br><br>On the live site it runs normally.');
       return;
     }
+    // no-store: the manifest changes whenever a package is touched, and a cached copy silently
+    // serves a stale package list after every deploy.
     fetch(BASE + 'web_manifest.json', { cache: 'no-store' }).then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status + ' fetching replication/web_manifest.json');
       return r.json();
@@ -847,20 +754,19 @@ def run_package(root, steps):
       manifest = m;
       selEl.innerHTML = m.packages.map(function (p) {
         return '<option value="' + p.id + '">' + p.title +
-               (p.heavy ? '  (heavy \u2014 ~' + p.heavyMB + ' MB)' : '') + '</option>';
+               (p.heavy ? '  (heavy — ~' + p.heavyMB + ' MB)' : '') + '</option>';
       }).join('');
       var light = m.packages.filter(function (p) { return !p.heavy; }).length;
       allBtn.textContent = 'Run all ' + light;
       var heavy = m.packages.filter(function (p) { return p.heavy; });
-      $('lvExcluded').innerHTML = 'All 11 packages run here. Two are <b>heavy</b> and are not ' +
-        'included in \u201cRun all\u201d \u2014 you can still run either from the menu, and the page ' +
-        'will tell you what it is about to download first: ' +
+      $('lvExcluded').innerHTML = 'All ' + m.packages.length + ' packages run here. Two are ' +
+        '<b>heavy</b> and are not included in “Run all” — you can still run either from the menu, ' +
+        'and the page will tell you what it is about to download first: ' +
         heavy.map(function (h) { return h.title + ' (' + h.heavyWhy + ')'; }).join('; ') + '.';
       selEl.addEventListener('change', showHeavyHint);
       showHeavyHint();
-      status('Python loads on first run (~15 MB, cached afterwards).');
     }).catch(function (e) {
-      blocked('Could not load <code>replication/web_manifest.json</code> \u2014 ' + e.message +
+      blocked('Could not load <code>replication/web_manifest.json</code> — ' + e.message +
               '.<br><br>If you have just deployed, make sure the <code>replication/</code> folder ' +
               'was pushed. The verifier needs it to know which scripts to run.');
     });
