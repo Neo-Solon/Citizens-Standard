@@ -2,7 +2,7 @@
 
 Reproduces the quantitative claims in **Paper 1, *The Citizens Standard: Architecture*** (SSRN 6702518): the launch-year issuance channels, the Mode A/B/C/D Stable Floors, implied inflation by mode, and the Mode C/D dividends.
 
-The base-Mode floors are **derived**, not stored. `run_all.py` calls the same deterministic engine (`cs_engine.py`) that backs the interactive HTML engine, on the **general-equilibrium realizable return** by Mode (Neo-Solon 2026e §6.7: Mode A/C ~5.4%, Mode B ~4.3% with the 60/40 split), so the repository's tool and its founding paper agree. The Mode Ω Table 8 scenario floors are the one exception: they additionally embed the capture→return feedback solved in the macro model and are used in Figure 6 as published values, not re-derived here.
+The base-Mode floors are **derived**, not stored. `run_all.py` calls the same deterministic engine (`cs_engine.py`) that backs the interactive HTML engine, on the **general-equilibrium realizable return** by Mode (Neo-Solon 2026e §6.7: Mode A/C ~5.4%, Mode B ~4.3% with the 60/40 split), so the repository's tool and its founding paper agree. The Mode Λ Table 8 scenario floors are the one exception: they additionally embed the capture→return feedback solved in the macro model and are used in Figure 6 as published values, not re-derived here.
 
 ## Run
 
@@ -48,7 +48,7 @@ architecture_replication/
 ├── code/
 │   ├── run_all.py               ← derivation + regression vs Paper 1
 │   ├── cs_engine.py             ← deterministic engine (port of the HTML engine's simulate())
-│   ├── mode_omega.py            ← Mode Ω governor model (simple-engine reference)
+│   ├── mode_lambda.py            ← Mode Λ governor model (simple-engine reference)
 │   ├── switch_calc.py           ← GE mode-switch lifetime values (Appendix A.1)
 │   ├── paper1_figures.py        ← regenerates the Paper 1 figures into ../figures/
 │   ├── paper1_extra_figures.py  ← Appendix A.2 / A.3 figures
@@ -57,9 +57,9 @@ architecture_replication/
     ├── modes_vs_current.png          ← Paper 1, Figure 1
     ├── purchasing_power.png          ← Paper 1, Figure 2
     ├── stable_floor_accumulation.png ← Paper 1, Figure 3
-    ├── mode_omega_inflation.png      ← Paper 1, Figure 7a
-    ├── mode_omega_deviation.png      ← Paper 1, Figure 7b
-    ├── mode_omega_scenarios.png      ← Paper 1, Figure 6 (Table 8)
+    ├── mode_lambda_inflation.png      ← Paper 1, Figure 7a
+    ├── mode_lambda_deviation.png      ← Paper 1, Figure 7b
+    ├── mode_lambda_scenarios.png      ← Paper 1, Figure 6 (Table 8)
     └── mode_transitions.png          ← Paper 1, Appendix A.1
 ```
 
@@ -67,3 +67,15 @@ Canonical macro inputs (GDP, M2, population) are sourced and dated in `../empiri
 
 
 *`requirements.txt` added 2026-07-07 (numpy, matplotlib); run remains `cd code && python3 run_all.py`.*
+
+
+## Naming correction
+
+These files were previously named `mode_omega*`. They were always **Mode Λ** — Architecture
+**§10, "An Adaptive Configuration"**: demographic and productivity governors, K1 capped at
+2.0×, combined issuance capped at 3.5% of M2. **Mode Ω is §9**, the price-stability *solver*,
+which has no governors and no scenarios.
+
+The code was always correct — `mode_lambda.py` states it implements Section 10, and the
+scenario figure plots Λ's five demographic scenarios. Only the name was wrong. The rename
+moved **no numbers**: all 163 published values reproduce unchanged.

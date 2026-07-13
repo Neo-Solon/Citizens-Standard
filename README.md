@@ -89,8 +89,12 @@ containment, not eyeballing: the runner's output must contain every published va
 
 ## Known gaps, stated plainly
 
-- **Paper 10 (Empirical Validation)** cannot run in the browser: it needs `statsmodels`, which has
-  C extensions and is not in the Pyodide distribution. It runs offline and in CI.
+- **Paper 10 (Empirical Validation)** *used to* be un-runnable in the browser — it needs
+  `statsmodels`, which has C extensions and is not in the Pyodide distribution. Resolved:
+  `src/hac_ols.py` is a pure-numpy drop-in for the only two things the package used from
+  statsmodels (OLS, and OLS with Newey–West HAC errors). It reproduces statsmodels to machine
+  precision, and the package's output is **byte-identical** with and without it. All 12 packages
+  now run in the browser.
 - **Papers 4, 9, 11** are argument, not computation — nothing to replicate.
 - **The liquidation flow `L_t`** — defined in Macro §3.3 and never given a number in any paper — is
   now computed in `replication/liquidation_flow_replication`. It finds the circulating-pool ceiling

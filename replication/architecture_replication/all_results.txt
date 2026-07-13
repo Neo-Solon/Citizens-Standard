@@ -51,11 +51,11 @@ REGRESSION vs PAPER 1 PUBLISHED VALUES
     [PASS] Mode B dividend ~ $43/mo (60/40)   got 42.7
     [PASS] Mode B equity flow ~ $272B         got 271,994,488,446
     [PASS] Mode B equity flow ~ 0.39% of mkt  got 0.4
-    [PASS] Mode Ω base-60 reference ~ $474K   got 473,467
-    [PASS] Mode Ω neg-pop reference ~ $736K   got 735,779
-    [PASS] Mode Ω prod-boom reference ~ $897K got 897,110
-    [PASS] Mode Ω normal drift ~ -0.80%       got -0.8
-    [PASS] Mode Ω neg-pop drift ~ -0.44%      got -0.4
+    [PASS] Mode Λ base-60 reference ~ $474K   got 473,467
+    [PASS] Mode Λ neg-pop reference ~ $736K   got 735,779
+    [PASS] Mode Λ prod-boom reference ~ $897K got 897,110
+    [PASS] Mode Λ normal drift ~ -0.80%       got -0.8
+    [PASS] Mode Λ neg-pop drift ~ -0.44%      got -0.4
 ------------------------------------------------------------------------
 ALL CHECKS PASS
 ========================================================================

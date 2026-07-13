@@ -46,6 +46,20 @@ SPEC = {
     # NOTE: no leading underscore — GitHub Pages runs Jekyll, which refuses to publish "_*" files.
     # Paper 5 supplementary: the liquidation flow L_t, which Macro §3.3 defines and no paper
     # ever gives a number. Depends only on numpy (SSA life table is a bundled CSV).
+    # Paper 10's own run_all.py shells out via subprocess, which Pyodide does not have, so the
+    # step sequence is listed here. Same scripts, same order, in-process.
+    # cwd is the PACKAGE ROOT (run_all.py shells out from there and the scripts read data/...),
+    # not src/. Getting this wrong makes every read_csv fail with FileNotFoundError.
+    "empirical_validation_replication": ([[".", "src/build_mt.py"],
+                                          [".", "src/run_horserace.py"],
+                                          [".", "src/run_divisia_horserace.py"],
+                                          [".", "src/run_composition_horserace.py"],
+                                          [".", "src/build_mt_paymentflow.py"],
+                                          [".", "src/make_divisia_figure.py"],
+                                          [".", "src/make_composition_figure.py"],
+                                          [".", "src/robustness_and_figure.py"]],
+                                         "results/horserace_results.json",
+                                         ["numpy", "pandas", "matplotlib"]),
     "liquidation_flow_replication": ([["code", "run_all.py"]],
                                      "all_results.txt", ["numpy"]),
     "distribution_inequality_replication": ([[".", "web_run.py"]],
@@ -102,12 +116,12 @@ SIBLING_FILES = {
     ],
 }
 EXCLUDED = {
-    # VERIFIED against the Pyodide v0.26.4 lock file: it ships pandas, scipy and sympy, but NOT
-    # statsmodels — and statsmodels has C extensions, so micropip cannot install it at runtime.
-    # There is no way to run this package in the browser today.
-    "empirical_validation_replication":
-        "needs statsmodels, which is not in the Pyodide distribution and cannot be installed at "
-        "runtime (it has C extensions). Runs in the offline suite and in CI.",
+    # (was: empirical_validation_replication, blocked on statsmodels — which is genuinely NOT in
+    # the Pyodide v0.26.4 lock file and cannot be micropip-installed, since it has C extensions.
+    # Resolved by src/hac_ols.py: a pure-numpy drop-in for the only two things this package used
+    # from statsmodels — OLS, and OLS with Newey-West HAC errors. It reproduces statsmodels to
+    # machine precision, and the package's output is BYTE-IDENTICAL with and without it, so the
+    # browser now runs the same code the offline suite and CI run.)
 }
 
 TITLES = {

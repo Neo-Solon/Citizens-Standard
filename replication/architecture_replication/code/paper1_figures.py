@@ -24,7 +24,7 @@ plt.rcParams.update({
     "legend.frameon": True,
     "legend.framealpha": 0.9,
 })
-C = {"A":"#2563eb", "B":"#16a34a", "C":"#ea580c", "current":"#dc2626", "omega":"#7c3aed"}
+C = {"A":"#2563eb", "B":"#16a34a", "C":"#ea580c", "current":"#dc2626", "lambda":"#7c3aed"}
 
 # ---- core economic assumptions (full-rate) ----
 R_NOM = 0.07            # nominal equity return
@@ -160,9 +160,9 @@ def fig3_composite(path):
     ax.legend(fontsize=8,loc="upper left"); ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda v,_:f"${v:.0f}K"))
     fig.tight_layout(rect=[0,0,1,0.96]); fig.savefig(path); plt.close(fig)
 
-# Mode Omega environment (shared across fig5/6) — illustrative 65-yr path
-def omega_inflation_path():
-    """Mode Omega effective inflation. The 60%-capture base is mildly
+# Mode Λ environment (shared across fig5/6) — illustrative 65-yr path
+def laminflation_path():
+    """Mode Λ effective inflation. The 60%-capture base is mildly
     deflationary (-0.80%/yr). Governors ADD issuance during demographic
     stress / productivity boom, REDUCING the deflation toward 0%
     (grounded anchors: -0.80% normal, -0.44% under demographic stress,
@@ -187,52 +187,52 @@ def omega_inflation_path():
             infl[i]=-0.0060                               # reverting toward the -0.80% base
     return t,infl
 
-def fig5_omega_zoom(path):
-    t,infl=omega_inflation_path()
+def fig5_lambda_zoom(path):
+    t,infl=laminflation_path()
     fig,ax=plt.subplots(figsize=(15,7))
     ax.axhline(0.0,ls="--",color=C["B"],lw=2.5,label="Mode B (0% drift) \u2014 price-stable baseline")
-    ax.axhline(-0.0080,ls=":",color=C["omega"],lw=1.8,alpha=0.7,label="Mode \u03a9 base (\u22120.80%) \u2014 governors inactive")
+    ax.axhline(-0.0080,ls=":",color=C["lambda"],lw=1.8,alpha=0.7,label="Mode \u039b base (\u22120.80%) \u2014 governors inactive")
     ax.axhline(-0.0165,ls=":",color=C["A"],lw=1.8,label="Mode A (\u22121.65%) \u2014 for reference")
-    ax.plot(t,infl,color=C["omega"],lw=3,label="Mode \u03a9 (adaptive band)")
-    ax.fill_between(t,0.0,infl,color=C["omega"],alpha=0.12)
-    ax.axvspan(30,38,color="#f59e0b",alpha=0.08); ax.axvspan(38,46,color=C["omega"],alpha=0.06); ax.axvspan(48,55,color="#3b82f6",alpha=0.07)
+    ax.plot(t,infl,color=C["lambda"],lw=3,label="Mode \u039b (adaptive band)")
+    ax.fill_between(t,0.0,infl,color=C["lambda"],alpha=0.12)
+    ax.axvspan(30,38,color="#f59e0b",alpha=0.08); ax.axvspan(38,46,color=C["lambda"],alpha=0.06); ax.axvspan(48,55,color="#3b82f6",alpha=0.07)
     peak=infl.max()
-    ax.annotate(f"Least deflation: {peak*100:+.2f}%\n(governors at max)",(int(np.argmax(infl)),peak),color=C["omega"],fontweight="bold",
-                xytext=(-30,28),textcoords="offset points",arrowprops=dict(arrowstyle="->",color=C["omega"]))
+    ax.annotate(f"Least deflation: {peak*100:+.2f}%\n(governors at max)",(int(np.argmax(infl)),peak),color=C["lambda"],fontweight="bold",
+                xytext=(-30,28),textcoords="offset points",arrowprops=dict(arrowstyle="->",color=C["lambda"]))
     ax.text(34,-0.0030,"Productivity\nboom",color="#b45309",ha="center",fontsize=10,style="italic")
-    ax.text(42,-0.0030,"Demo stress",color=C["omega"],ha="center",fontsize=10,style="italic")
+    ax.text(42,-0.0030,"Demo stress",color=C["lambda"],ha="center",fontsize=10,style="italic")
     ax.text(51,-0.0055,"Demographic\ngovernor active",color="#1d4ed8",ha="center",fontsize=10,style="italic")
     ax.set_ylim(-0.018,0.004)
     ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda v,_:f"{v*100:.1f}%"))
-    ax.set_title("Mode \u03a9 Effective Inflation Rate \u2014 Zoomed View\n(Mildly deflationary base; governors ease the deflation toward 0% under stress)")
+    ax.set_title("Mode \u039b Effective Inflation Rate \u2014 Zoomed View\n(Mildly deflationary base; governors ease the deflation toward 0% under stress)")
     ax.set_xlabel("Years from launch"); ax.set_ylabel("Annual inflation rate (%)")
     ax.legend(loc="lower right")
     fig.tight_layout(); fig.savefig(path); plt.close(fig)
 
-def fig6_omega_deviation(path):
-    t,infl=omega_inflation_path()
-    gap=infl-0.0  # Mode Omega relative to Mode B (0%); negative = below Mode B (deflationary)
+def fig6_lambda_deviation(path):
+    t,infl=laminflation_path()
+    gap=infl-0.0  # Mode Λ relative to Mode B (0%); negative = below Mode B (deflationary)
     fig,ax=plt.subplots(figsize=(15,6))
     ax.axhline(0.0,ls="--",color=C["B"],lw=2.5,label="Mode B baseline (0%)")
-    ax.axhline(-0.0080,ls=":",color=C["omega"],lw=1.5,alpha=0.6,label="Mode \u03a9 base gap (\u22120.80%)")
-    ax.plot(t,gap,color=C["omega"],lw=3,label="Mode \u03a9 below Mode B (governors narrow the gap)")
-    ax.fill_between(t,0,gap,color=C["omega"],alpha=0.15)
-    ax.axvspan(30,38,color="#f59e0b",alpha=0.08); ax.axvspan(38,47,color=C["omega"],alpha=0.06); ax.axvspan(48,55,color="#3b82f6",alpha=0.07)
+    ax.axhline(-0.0080,ls=":",color=C["lambda"],lw=1.5,alpha=0.6,label="Mode \u039b base gap (\u22120.80%)")
+    ax.plot(t,gap,color=C["lambda"],lw=3,label="Mode \u039b below Mode B (governors narrow the gap)")
+    ax.fill_between(t,0,gap,color=C["lambda"],alpha=0.15)
+    ax.axvspan(30,38,color="#f59e0b",alpha=0.08); ax.axvspan(38,47,color=C["lambda"],alpha=0.06); ax.axvspan(48,55,color="#3b82f6",alpha=0.07)
     ax.text(34,-0.0020,"Productivity\nboom",color="#b45309",ha="center",fontsize=10,style="italic")
-    ax.text(42,-0.0020,"Demo stress",color=C["omega"],ha="center",fontsize=10,style="italic")
+    ax.text(42,-0.0020,"Demo stress",color=C["lambda"],ha="center",fontsize=10,style="italic")
     ax.text(51,-0.0052,"Demographic\ngovernor active",color="#1d4ed8",ha="center",fontsize=10,style="italic")
     ax.set_ylim(-0.010,0.002)
     ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda v,_:f"{v*100:+.2f}%"))
-    ax.set_title("Mode \u03a9 Inflation Gap Below the Mode B Baseline (Governors Narrow the Gap Under Stress)")
+    ax.set_title("Mode \u039b Inflation Gap Below the Mode B Baseline (Governors Narrow the Gap Under Stress)")
     ax.set_xlabel("Years from launch"); ax.set_ylabel("Gap vs. Mode B (%)")
     ax.legend(loc="lower right")
     fig.text(0.5,-0.02,f"Smallest gap: ~{gap.max()*100:+.2f}% (governors at maximum, near price stability); base gap \u22120.80% (mild deflation). "
-             "Mode \u03a9 reverts toward its \u22120.80% deflationary base once conditions normalize.",
+             "Mode \u039b reverts toward its \u22120.80% deflationary base once conditions normalize.",
              ha="center",fontsize=9,style="italic",color="gray")
     fig.tight_layout(); fig.savefig(path,bbox_inches="tight"); plt.close(fig)
 
-def fig7_omega_scenarios(path):
-    # Mode Omega floors are the published Table 8 values (Section 10.6; macro model Neo-Solon 2026e
+def fig7_lambda_scenarios(path):
+    # Mode Λ floors are the published Table 8 values (Section 10.6; macro model Neo-Solon 2026e
     # Section 6.7 supplies the general-equilibrium realizable return per scenario, including the
     # capture->return feedback that the simple replication engine does not solve). Mode A and Mode B
     # central-case floors ($233K, $413K) are shown for reference.
@@ -241,12 +241,12 @@ def fig7_omega_scenarios(path):
     A_REF, B_REF = 233, 413                 # Mode A / Mode B central-case floors (2025$K)
     x=np.arange(5)
     fig,ax1=plt.subplots(1,1,figsize=(13,7))
-    fig.suptitle("Mode Ω Stable Floor Across the Five Table 8 Scenarios\n"
+    fig.suptitle("Mode Λ Stable Floor Across the Five Table 8 Scenarios\n"
                  "(general-equilibrium realizable basis; Mode A and Mode B central-case floors for reference)",
                  fontweight="bold")
-    bars=ax1.bar(x,Om,0.62,color=C["omega"],label="Mode Ω (Table 8)")
+    bars=ax1.bar(x,Om,0.62,color=C["lambda"],label="Mode Λ (Table 8)")
     for i,v in enumerate(Om):
-        ax1.annotate(f"${v}K",(i,v),ha="center",va="bottom",fontsize=11,color=C["omega"],fontweight="bold")
+        ax1.annotate(f"${v}K",(i,v),ha="center",va="bottom",fontsize=11,color=C["lambda"],fontweight="bold")
     ax1.axhline(B_REF,ls="--",color=C["B"],lw=2,label=f"Mode B central (~${B_REF}K)")
     ax1.axhline(A_REF,ls=":",color=C["A"],lw=2,label=f"Mode A central (~${A_REF}K)")
     ax1.set_xticks(x); ax1.set_xticklabels(scen,fontsize=10)
@@ -254,9 +254,9 @@ def fig7_omega_scenarios(path):
     ax1.set_ylabel("$K (2025 dollars)"); ax1.legend(loc="upper left")
     ax1.yaxis.set_major_formatter(mticker.FuncFormatter(lambda v,_:f"${v:.0f}K"))
     ax1.set_ylim(0, max(Om)*1.15)
-    fig.text(0.5,-0.02,"Mode \u03a9 runs a 60-percent base capture with adaptive demographic and productivity governors. "
+    fig.text(0.5,-0.02,"Mode \u039b runs a 60-percent base capture with adaptive demographic and productivity governors. "
              "At the central return it sits just below fixed-capture Mode B; at the low end of the return band the "
-             "demographic governor outweighs Mode B (Mode \u03a9 leads Mode B's roughly $277K there), and it leads most "
+             "demographic governor outweighs Mode B (Mode \u039b leads Mode B's roughly $277K there), and it leads most "
              "clearly when the productivity governor also engages.",
              ha="center",fontsize=9,style="italic",color="gray")
     fig.tight_layout(rect=[0,0.02,1,0.93]); fig.savefig(path,bbox_inches="tight"); plt.close(fig)
@@ -318,9 +318,9 @@ FIGURES = [
     (fig3_composite,           "modes_vs_current.png"),          # Paper 1, Figure 1
     (fig2_purchasing_power,    "purchasing_power.png"),          # Paper 1, Figure 2
     (fig1_wealth_accumulation, "stable_floor_accumulation.png"), # Paper 1, Figure 3
-    (fig5_omega_zoom,          "mode_omega_inflation.png"),      # Paper 1, Figure 7a
-    (fig6_omega_deviation,     "mode_omega_deviation.png"),      # Paper 1, Figure 7b
-    (fig7_omega_scenarios,     "mode_omega_scenarios.png"),      # Paper 1, Tables 7/8
+    (fig5_lambda_zoom,          "mode_lambda_inflation.png"),      # Paper 1, Figure 7a
+    (fig6_lambda_deviation,     "mode_lambda_deviation.png"),      # Paper 1, Figure 7b
+    (fig7_lambda_scenarios,     "mode_lambda_scenarios.png"),      # Paper 1, Tables 7/8
     (fig8_transitions,         "mode_transitions.png"),          # Paper 1, Appendix A.1
 ]
 

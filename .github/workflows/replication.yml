@@ -1,9 +1,9 @@
 name: replication
 
-# The browser verifier on methodology.html covers 9 of the 12 packages. The other two need the
-# 22 MB SCF microdata and statsmodels/scipy, which are unreasonable to pull into a browser tab.
-# This runs the FULL suite — all 12 — so nothing is verified only by the packages that happen to
-# be convenient.
+# The browser verifier now covers ALL 12 packages (Paper 10 unblocked via src/hac_ols.py). This
+# still runs the full suite against the REAL statsmodels, which stays the source of truth.
+# The browser fallback is verified against it, not trusted in place of it.
+
 on:
   push:
   pull_request:

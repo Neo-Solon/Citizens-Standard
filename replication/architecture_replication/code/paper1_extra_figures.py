@@ -1,11 +1,11 @@
 """Paper 1 — Figures 4, A.2, A.3 (grounded).
 
 These three figures previously had no generator in the package. This script
-reproduces them from the corrected engine and the grounded Mode Omega
-calibration, so they stay consistent with cs_engine / mode_omega / the HTML
+reproduces them from the corrected engine and the grounded Mode Λ
+calibration, so they stay consistent with cs_engine / mode_lambda / the HTML
 engine. Output PNGs match the embedded image dimensions (dpi=120).
 
-  Figure 4   -> fig4_omega_governors.png   (image4.png; 1575x1277)
+  Figure 4   -> fig4_lambda_governors.png   (image4.png; 1575x1277)
   Figure A.2 -> figA2_rotation.png         (image9.png; 1784x1038)
   Figure A.3 -> figA3_midcrisis.png        (image10.png; 1684x1197)
 
@@ -39,8 +39,8 @@ C_K1, C_K2, C_KI = "#7c3aed", "#10b981", "#d97706"
 HZ = 65
 
 
-# ---- Grounded Mode Omega governor path (ported from the corrected HTML omegaGovernors) ----
-def omega_governor_path():
+# ---- Grounded Mode Λ governor path (ported from the corrected HTML lamGovernors) ----
+def lamgovernor_path():
     """65-yr illustrative environment + the governor response it triggers.
     K1 multiplier -> 1.30x, K2 capture 0.60 -> 0.78 (+30%) under demographic
     stress, -> 0.96 with the productivity governor; conditional KI only when
@@ -73,10 +73,10 @@ def omega_governor_path():
     return t, pop, prod, np.array(k1m), np.array(k2m), np.array(ki), np.array(defl)
 
 
-def fig4_omega_governors(path):
-    t, pop, prod, k1m, k2m, ki, defl = omega_governor_path()
+def fig4_lambda_governors(path):
+    t, pop, prod, k1m, k2m, ki, defl = lamgovernor_path()
     fig, ax = plt.subplots(3, 1, figsize=(13.125, 10.64), dpi=120)
-    fig.suptitle("Mode \u03a9 \u2014 How the Governors Respond to Conditions Over Time\n"
+    fig.suptitle("Mode \u039b \u2014 How the Governors Respond to Conditions Over Time\n"
                  "(Illustrative 65-year environment: aging population, mid-century productivity boom, "
                  "late-period deflation)", fontsize=13, fontweight="bold")
     # Panel 1 — environment
@@ -212,7 +212,7 @@ def figA3_midcrisis(path):
 
 if __name__ == "__main__":
     from PIL import Image
-    jobs = [(fig4_omega_governors, "fig4_omega_governors.png"),
+    jobs = [(fig4_lambda_governors, "fig4_lambda_governors.png"),
             (figA2_rotation, "figA2_rotation.png"),
             (figA3_midcrisis, "figA3_midcrisis.png")]
     for fn, name in jobs:

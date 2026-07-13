@@ -841,7 +841,7 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
 
 
   <div class="run">
-    <p class="small">The browser runs 10 of the 12 packages. For the full suite — including the two that need the raw SCF microdata and statsmodels — clone it and run everything in one command:</p>
+    <p class="small">The browser now runs <strong>all 12 packages</strong> — Paper 10 was the last holdout, and only because it needed <code style="font-family:ui-monospace,monospace;color:#AEB6C0">statsmodels</code>, which cannot be installed in a browser. It is now backed by a pure-numpy equivalent that reproduces statsmodels to machine precision. To run the suite against the real statsmodels — which remains the source of truth — clone it:</p>
     <code>git clone https://github.com/Neo-Solon/Citizens-Standard<br>cd Citizens-Standard/replication<br>python run_all.py            <span style="opacity:.6"># all 12, pass/fail table</span><br>python run_all.py --report   <span style="opacity:.6"># + an HTML report with every figure</span></code>
     <p class="small">Each package has its own <code style="font-family:ui-monospace,monospace;color:#AEB6C0">run_all</code> and a README stating its data sources and what it checks. Swap in your own assumptions and watch the figures move; that is the point.</p>
   </div>

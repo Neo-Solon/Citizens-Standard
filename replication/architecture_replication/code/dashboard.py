@@ -65,7 +65,7 @@ def dashboard():
     print(f"    Mode B floor (60/40):   ${grab('Mode B floor')}")
     print(f"    Mode C floor:           ${grab('Mode C floor')}")
     print(f"    Mode C KI (issuance):   ${grab('Mode C KI')}")
-    print(f"    Mode Omega base-60:     ${grab('Mode Ω base-60 reference')}")
+    print(f"    Mode Λ base-60:     ${grab('Mode Λ base-60 reference')}")
     print()
 
     print(line)

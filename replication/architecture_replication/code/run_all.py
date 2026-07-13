@@ -19,7 +19,7 @@ Run:  python3 run_all.py
 """
 
 import cs_engine as E
-import mode_omega as OM
+import mode_lambda as OM
 
 M2, GDP, POP = E.M2_0, E.GDP_0, E.POP_0
 RG, PG, HZ = E.RG, E.PG, E.HZ
@@ -145,16 +145,16 @@ checks = [
     ("Mode B dividend ~ $43/mo (60/40)",      b_div/POP/12,          42.7,    2),
     ("Mode B equity flow ~ $272B",            b_eqflow,              272e9,   4e9),
     ("Mode B equity flow ~ 0.39% of mkt",     b_eqflow/69e12*100,    0.39,    0.03),
-    # --- Mode Omega: the simple governor engine reproduces its own price-taker-return
+    # --- Mode Λ: the simple governor engine reproduces its own price-taker-return
     #     reference values below. The PUBLISHED Table 8 GE floors ($403/480/638/343/541K)
     #     additionally incorporate the capture->return feedback solved in the macro model
     #     (Neo-Solon 2026e 6.7) and are NOT reproducible from this engine; Figure 6 uses
     #     the published Table 8 values directly. ---
-    ("Mode \u03a9 base-60 reference ~ $474K",     OM.base60(0.045),                          473.5e3, 3e3),
-    ("Mode \u03a9 neg-pop reference ~ $736K",     OM.run(0.045,-0.005,1.3,0.30)[0],          735.8e3, 5e3),
-    ("Mode \u03a9 prod-boom reference ~ $897K",   OM.run(0.045,-0.005,1.3,0.30,0.30)[0],     897.1e3, 6e3),
-    ("Mode \u03a9 normal drift ~ -0.80%",         OM.run(0.045, 0.003)[1]*100,               -0.80,   0.05),
-    ("Mode \u03a9 neg-pop drift ~ -0.44%",        OM.run(0.045,-0.005,1.3,0.30)[1]*100,      -0.44,   0.05),
+    ("Mode \u039b base-60 reference ~ $474K",     OM.base60(0.045),                          473.5e3, 3e3),
+    ("Mode \u039b neg-pop reference ~ $736K",     OM.run(0.045,-0.005,1.3,0.30)[0],          735.8e3, 5e3),
+    ("Mode \u039b prod-boom reference ~ $897K",   OM.run(0.045,-0.005,1.3,0.30,0.30)[0],     897.1e3, 6e3),
+    ("Mode \u039b normal drift ~ -0.80%",         OM.run(0.045, 0.003)[1]*100,               -0.80,   0.05),
+    ("Mode \u039b neg-pop drift ~ -0.44%",        OM.run(0.045,-0.005,1.3,0.30)[1]*100,      -0.44,   0.05),
 ]
 allpass = True
 for name, got, want, tol in checks:

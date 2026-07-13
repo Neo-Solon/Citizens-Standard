@@ -7,7 +7,13 @@ Runs the two pre-registered tests on genuine FRED data:
 All claims are reported honestly: slopes, R2, and pseudo-out-of-sample RMSE, by regime.
 """
 import pandas as pd, numpy as np, json
-import statsmodels.api as sm
+# statsmodels is the source of truth offline and in CI. It has C extensions and is NOT in the
+# Pyodide distribution, so in the browser we fall back to hac_ols -- a pure-numpy drop-in that
+# reproduces the OLS/HAC results to machine precision (see hac_ols.py for the verification).
+try:
+    import statsmodels.api as sm
+except ImportError:                     # Pyodide / no statsmodels
+    import hac_ols as sm
 
 HORIZON = 12          # predict inflation over next 12 months
 REGIME_THRESHOLD = 4.0  # trailing 12m CPI inflation (%) splitting high/low regime  [pre-registered]
