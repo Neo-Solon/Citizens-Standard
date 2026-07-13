@@ -28,6 +28,11 @@ NUM = re.compile(r'-?\d+\.?\d*(?:[eE][-+]?\d+)?')
 # Lines reporting wall-clock timing are machine-dependent, not published results. Excluding them
 # stops a faster/slower box from being reported as a failed reproduction.
 TIMING = re.compile(r'runtime|elapsed|seconds|secs|\bsec\b|took ', re.I)
+# An ISO datestamp is not a published value. Paper 2's golden opens 'Run date: 2026-07-12';
+# a fresh run prints today's. The tokenizer splits that into 2026, -07, -12, so the golden's
+# '-12' is never reproduced and the package fails on the calendar. Neutralised on BOTH sides —
+# unlike TIMING, a date is never a result in either text.
+DATESTAMP = re.compile(r'\b\d{4}-\d{2}-\d{2}\b')
 
 
 def _nums(text, drop_timing=False):
@@ -39,6 +44,7 @@ def _nums(text, drop_timing=False):
     look unreproduced. Removing it from the EXPECTATIONS just means we don't demand a wall-clock
     match, which is what we want. Containment (want subset of got) makes extra numbers harmless.
     """
+    text = DATESTAMP.sub("DATE", text)
     if drop_timing:
         text = "\n".join(ln for ln in text.splitlines() if not TIMING.search(ln))
     out = []
