@@ -18,7 +18,7 @@ def load():
 
 
 def wpct(v, wt, q):
-    o = np.argsort(v)
+    o = np.argsort(v, kind='stable')
     v = np.asarray(v)[o]
     wt = np.asarray(wt)[o]
     cw = (np.cumsum(wt) - 0.5 * wt) / wt.sum()
@@ -26,7 +26,7 @@ def wpct(v, wt, q):
 
 
 def gini(v, wt):
-    o = np.argsort(v)
+    o = np.argsort(v, kind='stable')
     v = v[o].astype(float)
     wt = wt[o].astype(float)
     cw = np.cumsum(wt) / wt.sum()
@@ -35,7 +35,7 @@ def gini(v, wt):
 
 
 def share(v, wt, lo, hi):
-    o = np.argsort(v)
+    o = np.argsort(v, kind='stable')
     s = (v[o] * wt[o])
     cc = np.cumsum(wt[o]) / wt.sum()
     return s[(cc > lo) & (cc <= hi)].sum() / s.sum() * 100
