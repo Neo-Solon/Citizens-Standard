@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>You saved a dollar. It didn't wait for you.</title>
+<title>Questions people ask: the Citizens Standard</title>
 <!-- social share + discovery -->
-<meta name="description" content="A dollar you saved in 2000 buys about 54 cents today, by design, and that lost value flows to whoever spends the new money first, never to you. The Citizens Standard hands the rules to the citizens and returns that money to them as a dividend and a savings floor instead of draining it away.">
+<meta name="description" content="The skeptic's questions answered plainly: the money-printing fear, who controls it, hasn't this been tried, would anyone still work.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="The Citizens Standard: money the citizens control">
-<meta property="og:description" content="A dollar you saved in 2000 buys about 54 cents today, by design, and that lost value flows to whoever spends the new money first, never to you. The Citizens Standard hands the rules to the citizens and returns that money to them as a dividend and a savings floor instead of draining it away.">
-<meta property="og:url" content="https://citizensstandard.org/">
+<meta property="og:title" content="The Citizens Standard: questions & answers">
+<meta property="og:description" content="The skeptic's questions answered plainly: the money-printing fear, who controls it, hasn't this been tried, would anyone still work.">
+<meta property="og:url" content="https://citizensstandard.org/questions_and_answers.html">
 <meta property="og:image" content="https://citizensstandard.org/preview_card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="The Citizens Standard: money the citizens control">
-<meta name="twitter:description" content="A dollar you saved in 2000 buys about 54 cents today, by design, and that lost value flows to whoever spends the new money first, never to you. The Citizens Standard hands the rules to the citizens and returns that money to them as a dividend and a savings floor instead of draining it away.">
+<meta name="twitter:title" content="The Citizens Standard: questions & answers">
+<meta name="twitter:description" content="The skeptic's questions answered plainly: the money-printing fear, who controls it, hasn't this been tried, would anyone still work.">
 <meta name="twitter:image" content="https://citizensstandard.org/preview_card.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23141C26'/%3E%3Crect x='3' y='3' width='58' height='58' rx='10' fill='none' stroke='%233A3320' stroke-width='1.5'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='40' font-weight='700' text-anchor='middle' fill='%23C9A24B' letter-spacing='-2'%3ECS%3C/text%3E%3C/svg%3E">
 
@@ -23,97 +23,68 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#10161C;          /* warm blue-black ground */
-    --ink-soft:#18212B;     /* raised panel */
-    --line:#27313C;         /* hairlines */
-    --text:#ECE7DB;         /* warm near-white */
-    --dim:#9AA3AE;          /* secondary */
-    --kept:#5FBE93;         /* the value you keep */
-    --lost:#3C4855;--lost-text:#737E8A;         /* the value drained away */
-    --amber:#E6A93E;        /* the doorway upstairs */
-    --amber-ink:#1a1206;
-  }
+  :root{--ink:#10161C;--ink-soft:#18212B;--line:#27313C;--text:#ECE7DB;--dim:#9AA3AE;
+    --kept:#5FBE93;--kept-soft:rgba(95,190,147,.10);--lost:#3C4855;--amber:#E6A93E;--amber-ink:#1a1206;}
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{
-    background:var(--ink);color:var(--text);
-    font-family:"Newsreader",Georgia,serif;
-    font-size:clamp(18px,1.1rem + 0.3vw,21px);line-height:1.65;
-    -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
-  }
+  body{background:var(--ink);color:var(--text);font-family:"Newsreader",Georgia,serif;
+    font-size:clamp(18px,1.05rem + 0.3vw,21px);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   .wrap{max-width:760px;margin:0 auto;padding:0 24px}
-  .display{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;letter-spacing:-0.02em;line-height:1.02}
+  .display{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;letter-spacing:-0.02em;line-height:1.05}
   .label{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;font-size:.72rem}
-
-  /* ---- hero ---- */
-  header.wrap{padding:60px 24px 8px}
-  .kicker{color:var(--amber);margin-bottom:42px}
-  .kicker b{color:var(--text);font-weight:700}
-  h1.display{font-size:clamp(2.4rem,7vw,3.4rem);margin-bottom:28px;text-align:center}
-  h1 .turn2{color:#AEB6C0}
-  .subhead{display:block;text-align:center;font-family:"Bricolage Grotesque",sans-serif;font-weight:700;color:#AEB6C0;font-size:clamp(1.55rem,1.2rem + 1.8vw,2.3rem);letter-spacing:-0.01em;line-height:1.12;margin-top:.34em}
-  .lede{font-size:clamp(1.15rem,1.05rem + 0.5vw,1.4rem);color:#D9D3C6;max-width:36ch;margin-left:auto;margin-right:auto;text-align:center}
-  .lede em{font-style:italic;color:var(--text)}
-  .text{text-align:left}
-  .text p{max-width:60ch}
-  .big{text-align:left;max-width:60ch}
-
-  /* ---- draining dollar signature ---- */
-  .meter{margin:52px 0 14px}
-  .meter-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;gap:16px}
-  .meter-head .from{color:var(--dim)}
-  .meter-head .now{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(1.6rem,1.2rem + 2vw,2.4rem);color:var(--kept)}
-  .bar{position:relative;height:64px;background:var(--lost);border-radius:7px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
-  .bar .kept{position:absolute;inset:0 auto 0 0;width:100%;background:linear-gradient(180deg,#6CCBA0,#4FA77D);border-radius:7px 0 0 7px}
-  .bar.go .kept{width:12%;transition:width 2.4s cubic-bezier(.5,0,.1,1) .2s}
-  .bar .seam{position:absolute;top:0;bottom:0;left:12%;width:1px;background:rgba(0,0,0,.35);opacity:0;transition:opacity .4s 2.2s}
-  .bar.go .seam{opacity:1}
-  .tag{position:absolute;top:50%;transform:translateY(-50%);font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:.95rem;color:#06281b;left:calc(12% - 12px);transform:translate(-100%,-50%);white-space:nowrap;opacity:0;transition:opacity .5s 2.4s}
-  .bar.go .tag{opacity:1}
-  .tag.lost-tag{left:auto;right:16px;transform:translateY(-50%);color:#aeb7c1}
-  .meter-cap{color:var(--dim);font-size:.92rem;line-height:1.5;margin-top:14px;font-family:"Bricolage Grotesque",sans-serif;font-weight:500}
-
-  /* ---- narrative ---- */
-  section{padding:26px 0}
-  p{margin-bottom:22px}
-  p.big{font-size:1.18em}
-  .text strong{font-weight:500;color:#fff;background:linear-gradient(transparent 62%,rgba(95,190,147,.22) 0)}
-
-  /* ---- inequality ---- */
-  .ineq{margin:30px 0;padding:34px 28px;background:var(--ink-soft);border:1px solid var(--line);border-radius:12px;text-align:center}
-  .ineq .expr{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(1.7rem,1.2rem + 3vw,2.6rem);letter-spacing:-0.01em;display:flex;align-items:center;justify-content:center;gap:.5em;flex-wrap:wrap}
-  .ineq .now{color:var(--kept)}
-  .ineq .later{color:var(--lost-text)}
-  .ineq .gt{color:var(--dim);font-weight:500}
-  .ineq .gloss{margin:18px 0 0;color:var(--dim);font-size:.98rem;font-family:"Bricolage Grotesque",sans-serif;font-weight:500}
-  .ineq .gloss b{color:var(--amber);font-weight:700}
-
-  /* ---- the door ---- */
-  .door{margin:18px 0 96px;padding:48px 0 0;border-top:1px solid var(--line);text-align:center}
-  .door .q{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(1.5rem,1.1rem + 2.4vw,2.2rem);line-height:1.25;color:#fff;margin-bottom:26px;max-width:24ch;margin-left:auto;margin-right:auto}
+  header.wrap{padding:60px 24px 10px}
+  .kicker{color:var(--amber);margin-bottom:30px}.kicker b{color:var(--text);font-weight:700}
+  h1.display{font-size:clamp(2.2rem,6vw,3.3rem);margin-bottom:24px}
+  .lede{font-size:clamp(1.12rem,1rem + 0.5vw,1.36rem);color:#D9D3C6;max-width:42ch;font-style:italic}
+  main{padding:14px 0 0}
+  h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;letter-spacing:-0.015em;
+    font-size:clamp(1.45rem,1.1rem + 1.6vw,1.95rem);line-height:1.12;color:#fff;
+    margin:54px 0 18px;padding-top:26px;border-top:1px solid var(--line)}
+  p{margin:0 0 20px}
+  strong{font-weight:700;color:#fff}
+  em{font-style:italic;color:#EFEFE6}
+  ul,ol{margin:0 0 22px;padding-left:0;list-style:none}
+  ul li,ol li{position:relative;padding-left:30px;margin-bottom:13px}
+  ul li::before{content:"";position:absolute;left:6px;top:.72em;width:7px;height:7px;border-radius:50%;background:var(--kept)}
+  ol{counter-reset:n}
+  ol li{counter-increment:n}
+  ol li::before{content:counter(n);position:absolute;left:0;top:.05em;font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:800;font-size:.9em;color:var(--amber)}
+  code{font-family:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;font-size:.86em;
+    background:var(--ink-soft);color:var(--amber);padding:.08em .38em;border-radius:5px;border:1px solid var(--line)}
+  .formula{font-family:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;font-size:.95rem;line-height:1.6;
+    background:var(--ink-soft);border:1px solid var(--line);border-left:3px solid var(--kept);border-radius:9px;
+    color:#E7E2D6;padding:18px 20px;margin:6px 0 24px;overflow-x:auto;white-space:pre}
+  .formula code{background:none;border:none;padding:0;color:inherit}
+  .aside{font-style:italic;color:var(--dim);font-size:.98em;border-left:2px solid var(--line);padding-left:18px;margin:8px 0 22px}
+  .tablewrap{overflow-x:auto;margin:6px 0 26px;border:1px solid var(--line);border-radius:10px}
+  table{border-collapse:collapse;width:100%;font-family:"Bricolage Grotesque",sans-serif;font-size:.82rem}
+  th{background:var(--ink-soft);color:var(--dim);font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+    font-size:.68rem;text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+  td{padding:11px 12px;border-bottom:1px solid var(--line);color:#D9D3C6;white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  td strong{color:var(--kept)}
+  .door{margin:64px 0 96px;padding:42px 0 0;border-top:1px solid var(--line)}
+  .door .q{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(1.3rem,1.05rem + 1.8vw,1.85rem);
+    line-height:1.3;color:#fff;margin-bottom:24px;max-width:30ch}
   .cta{display:inline-flex;align-items:center;gap:.6em;background:var(--amber);color:var(--amber-ink);
     font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.05rem;text-decoration:none;
-    padding:16px 26px;border-radius:9px;transition:transform .15s ease, box-shadow .15s ease;box-shadow:0 0 0 0 rgba(230,169,62,.0)}
+    padding:16px 26px;border-radius:9px;transition:transform .15s ease,box-shadow .15s ease}
   .cta:hover{transform:translateY(-2px);box-shadow:0 10px 28px -10px rgba(230,169,62,.55)}
-  .cta:focus-visible{outline:3px solid #fff;outline-offset:3px}
-  .cta .arrow{transition:transform .18s ease}
-  .cta:hover .arrow{transform:translateX(4px)}
-  .door .note{margin-top:22px;color:var(--dim);font-size:.95rem;max-width:40ch;margin-left:auto;margin-right:auto}
+  .cta .arrow{transition:transform .18s ease}.cta:hover .arrow{transform:translateX(4px)}
+  .door .note{margin-top:20px;color:var(--dim);font-size:.95rem;max-width:44ch}
+  .backlink{display:inline-block;margin:0 0 0;color:var(--dim);text-decoration:none;font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:500;font-size:.95rem}
+  .backlink:hover{color:var(--text)}
+  @media (max-width:520px){header.wrap{padding:42px 24px 6px}}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 
-  @media (max-width:560px){
-    header.wrap{padding:42px 24px 4px}
-    .meter-head{flex-direction:row;flex-wrap:nowrap;align-items:baseline;gap:10px}
-    .from{flex:0 1 auto;min-width:0}
-    .now{flex:0 0 auto;font-size:clamp(1.3rem,1rem + 4vw,1.9rem)}
-    .tag{display:none}
-  }
-  @media (prefers-reduced-motion:reduce){
-    html{scroll-behavior:auto}
-    .bar .kept{width:12%;transition:none}
-    .bar .seam,.tag{opacity:1;transition:none}
-  }
+  .q-block{margin:30px 0;padding-top:26px;border-top:1px solid var(--line);}
+  .q-block:first-of-type{border-top:none;padding-top:6px;}
+  .q-q{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(1.25rem,1.05rem + 1vw,1.55rem);line-height:1.3;color:#fff;margin:0 0 16px;}
+  .pointer{font-family:"Bricolage Grotesque",sans-serif;font-weight:500;font-size:.88rem;color:var(--dim);border-left:2px solid var(--line);padding-left:16px;margin:14px 0 0;}
+  .pointer b{color:var(--text);font-weight:700;}
+  .sec-intro{color:var(--dim);font-style:italic;margin:0 0 8px;}
 
   .pagenav-btn{display:inline-flex;align-items:center;gap:.4em;color:#E6A93E;text-decoration:none;
     border:1px solid rgba(230,169,62,.5);border-radius:8px;padding:8px 16px;font-weight:600;
@@ -121,7 +92,7 @@
   .pagenav-btn:hover{background:#E6A93E;color:#11161c;border-color:#E6A93E;transform:translateY(-1px);}
   .pagenav-btn:focus-visible{outline:2px solid #E6A93E;outline-offset:2px;}
 
-  /* ===== Audio overview player ===== */
+/* ===== Audio overview player ===== */
 /* ---------- The audio player ---------- */
   .cs-audio{
     background:var(--ink-soft);
@@ -227,37 +198,11 @@
 .sitenav a{color:var(--dim,#9aa3ae);text-decoration:none;font-size:13.5px;font-weight:500;}
 .sitenav a:hover{color:#e6e8eb;}
 .sitenav a[aria-current="page"]{color:var(--amber,#e6a93e);font-weight:700;}
-</style>
-<style>
-  /* ---- see-the-difference instrument (merged in) ---- */
-  .lead-q{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(1.5rem,1.1rem + 2.4vw,2.2rem);line-height:1.25;color:#fff;margin:10px 0 0;padding:46px 0 0;border-top:1px solid var(--line);text-align:center}
-  .lead-q span{display:block;max-width:26ch;margin:0 auto}
-  .see-intro{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;color:var(--amber);margin:34px 0 14px}
-  .panel{margin:0 0 8px;background:var(--ink-soft);border:1px solid var(--line);border-radius:14px;padding:30px 28px}
-  .ctrl-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;gap:12px}
-  .ctrl-row .label{color:var(--dim)}
-  .ctrl-row .yrs{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.5rem;color:var(--text)}
-  .ctrl-row .yrs span{font-size:.95rem;color:var(--dim);font-weight:500}
-  .panel input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:6px;background:var(--lost);outline:none;margin:10px 0 4px}
-  .panel input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;border-radius:50%;background:var(--amber);cursor:pointer;border:3px solid transparent;box-shadow:0 2px 10px rgba(0,0,0,.4)}
-  .panel input[type=range]::-moz-range-thumb{width:26px;height:26px;border:none;border-radius:50%;background:var(--amber);cursor:pointer}
-  .panel input[type=range]:focus-visible{box-shadow:0 0 0 3px rgba(230,169,62,.4)}
-  .outcomes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0 6px}
-  .card{padding:20px 18px;border-radius:11px;border:1px solid var(--line)}
-  .card .label{margin-bottom:10px}
-  .card .val{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(2.2rem,1.4rem + 4vw,3.2rem);line-height:1}
-  .card .sub{font-family:"Bricolage Grotesque",sans-serif;font-weight:500;font-size:.86rem;color:var(--dim);margin-top:8px}
-  .card.today{background:rgba(60,72,85,.18)}
-  .card.today .label{color:var(--lost-text)} .card.today .val{color:var(--lost-text)}
-  .card.std{background:rgba(95,190,147,.14);border-color:rgba(95,190,147,.3)}
-  .card.std .label{color:var(--kept)} .card.std .val{color:var(--kept)}
-  .gap-note{font-family:"Bricolage Grotesque",sans-serif;font-weight:500;color:var(--dim);font-size:.98rem;text-align:center;margin-top:18px}
-  .gap-note b{color:var(--amber);font-weight:700}
-  .chart{margin-top:24px}
-  .chart svg{width:100%;height:auto;display:block;overflow:visible}
-  .axis{fill:var(--dim);font-family:"Bricolage Grotesque",sans-serif;font-weight:500;font-size:11px}
-  .rate{color:var(--dim);font-size:.9rem;font-family:"Bricolage Grotesque",sans-serif;font-weight:500;margin-top:18px;text-align:center}
-  @media (max-width:560px){.outcomes{grid-template-columns:1fr}}
+
+/* --- centered header to match page 1 (sections stay left) --- */
+header.wrap h1.display{text-align:center;}
+header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
+
 </style>
 
 <style id="cs-persistent-player-css">
@@ -284,30 +229,24 @@
 <body>
 <nav class="sitenav" aria-label="Site navigation">
   <div class="sitenav-inner">
-    <a href="/" aria-current="page">Diagnosis</a>
+    <a href="/">Diagnosis</a>
     <a href="declaration.html">Declaration</a>
     <a href="how_the_engine_works.html">How it works</a>
     <a href="Citizens_Standard_Engine.html">Engine</a>
     <a href="papers.html">Papers &amp; data</a>
-    <a href="questions_and_answers.html">Q&amp;A</a>
+    <a href="questions_and_answers.html" aria-current="page">Q&amp;A</a>
     <a href="methodology.html">Methodology</a> <a href="calibration_notes.html">Calibrations</a>
   </div>
 </nav>
 
-
 <header class="wrap">
-<img class="csp-hero" src="assets/cs-banner.jpg?v=20260712b" alt="Citizens Standard — Sovereign, Rules-based, Universal">
-
   <div class="kicker-row">
-    <p class="kicker label">The Citizens Standard &nbsp;·&nbsp; <b>the diagnosis</b></p>
+    <p class="kicker label">The Citizens Standard &nbsp;&middot;&nbsp; <b>The questions</b></p>
     <button class="listen-pill" id="listenPill" aria-expanded="false" aria-controls="csAudioPanel">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a.5.5 0 0 0 .77.42l10.29-6.86a.5.5 0 0 0 0-.84L8.77 4.72A.5.5 0 0 0 8 5.14Z"/></svg>
       <span>Listen</span>
     </button>
   </div>
-  <h1 class="display">You saved a dollar<span class="subhead">It didn&rsquo;t wait for you</span></h1>
-  <p class="lede">A dollar you saved in 2000 buys about <em>54 cents</em> today. You didn&rsquo;t spend it. It simply bought less every year.</p>
-</header>
 
 <div class="wrap cs-audio-panel" id="csAudioPanel" hidden>
 <!-- ============ CS AUDIO PLAYER (copy this block) ============ -->
@@ -341,167 +280,72 @@
   </figure>
   <!-- ============ /CS AUDIO PLAYER ============ -->
 </div>
-
-<div class="wrap">
-  <div class="meter" aria-label="Purchasing power of one US dollar saved in 1971, worth about 12 cents today">
-    <div class="meter-head">
-      <span class="from">$1 saved in 1971&hellip;</span>
-      <span class="now">&asymp; 12&cent; now</span>
-    </div>
-    <div class="bar" id="bar">
-      <div class="kept"></div>
-      <div class="seam"></div>
-      <span class="tag">12&cent; kept</span>
-      <span class="tag lost-tag">88&cent; gone</span>
-    </div>
-    <p class="meter-cap">Purchasing power of one US dollar, 1971 to today. Illustrative, from US Bureau of Labor Statistics CPI-U data (1971-2026).</p>
-  </div>
+  <h1 class="display">Questions people ask</h1>
+  <p class="lede">The honest answers to what comes up first, whether it&rsquo;s just printing money, who controls it, whether it&rsquo;s been tried, and whether it would even work.</p>
+</header>
+<main class="wrap">
+<h2>The money questions</h2>
+<div class="q-block"><p class="q-q">"Isn't this just printing money? Won't it cause inflation?"</p>
+<p>New money is <em>already</em> being made, constantly, every time a bank writes a loan, every time the central bank acts. The question was never whether new money gets created. It's <em>by what rule, and to whose benefit.</em> Today the rule is discretion and the benefit flows to whoever is closest to the money: banks, borrowers, asset holders. The Citizens Standard ties new money to one thing, the real growth of the economy, and sends it to citizens instead. It can create <em>less</em> new money than the system does now, not more, and it's bound by a rule that printing-money schemes never have. The thing people fear about "printing money" is the absence of a rule. This is almost entirely rule.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the price-stability rule and the issuance cap (the architecture paper, "The Mechanical Design"); why it stays determinate (the macroeconomic model).</p>
+</div>
+<div class="q-block"><p class="q-q">"If everyone gets a dividend, won't prices just rise to eat it?"</p>
+<p>That worry is right about <em>extra</em> money, money dumped on top of an economy chases the same goods and prices climb. But the citizen dividend isn't extra. It's the money the economy already generates as it grows, redirected. Right now that growth-money exists too; it just accrues quietly to the financial system. Moving it to citizens instead doesn't add a dollar to the total, so there's nothing extra to push prices up. The model shows price stability holding precisely because the dividend is paid <em>within</em> the money the economy creates, not on top of it.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> why the dividend is price-stable (the macroeconomic model, the welfare-optimal dividend share and the return results).</p>
+</div>
+<div class="q-block"><p class="q-q">"Won't the fund buying stocks just inflate the stock market?"</p>
+<p>Partly yes, and pretending otherwise would be dishonest. When you buy an asset, you push its price up. The honest questions are <em>how much</em> and <em>is it accounted for.</em> The floor buys about 0.39% of the total market a year, which is roughly a quarter of what corporate stock buybacks already pull from the market every year, a bid the market routinely absorbs, not a new force. And the model doesn't ignore the effect: it assumes a lower return precisely because the floor bids up what it buys, rather than pretending it can buy at yesterday's prices forever. The price pressure is real, it's bounded, and it's already built into the numbers.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the structural-buyer paper (the bounded valuation premium) and the asset-price replication module.</p>
+</div>
+<div class="q-block"><p class="q-q">"People who need help want money now, not a stake that compounds for decades."</p>
+<p>Completely fair, and it's the most important version of this objection. A locked stake that grows for thirty years does nothing for someone who needs rent this month. That's why the design has <em>two</em> lanes, not one: a cash dividend that pays out now, and a locked floor that builds ownership over time. The mode sets how much goes to each. It was never "wait decades instead of cash": it's both, and a society that needs more cash now can weight the dividend higher. If anything, this objection is an argument for that weighting, not against the floor.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the issuance engine (how the dividend and floor split) and the architecture paper (mode selection).</p>
+</div>
+<div class="q-block"><p class="q-q">"Isn't some inflation actually good? That's why the target is 2%."</p>
+<p>This is the fairest hard question, and the honest answer is: <em>that's a choice, and it should be made on purpose.</em> The case for mild inflation is real: it greases wage adjustments and keeps a little distance from deflation. The Citizens Standard doesn't outlaw that. It lets a society <em>choose</em> its monetary regime out in the open: mild deflation, dead-flat stability, or mild inflation, instead of having 2% handed down as if it were physics. The objection to today's system isn't that 2% is wrong. It's that you never got a vote, and the people who pay for it most aren't the ones who picked it.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the modes and how a regime gets chosen (the architecture paper, the Cross-Mode Comparison and Mode Selection).</p>
+</div>
+<h2>The control questions</h2>
+<div class="q-block"><p class="q-q">"Who decides the rules? Isn't this just handing money to politicians?"</p>
+<p>The opposite, actually. Today's money is run by discretion: a committee can change course quarter to quarter. The Citizens Standard's whole design is to take that discretion <em>away</em> and replace it with rules written into law, hard to change on a whim and changeable only through a slow, public, constitutional process. A politician can't quietly turn the dial. The point isn't to give someone new the keys; it's to bolt the keys to a rule so no one, including the people running it, can use money as a private lever.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the statutory and constitutional design (the statutory paper); the updatability safeguards (the architecture paper, Governance).</p>
+</div>
+<div class="q-block"><p class="q-q">"Once you centralize the money rule, won't every crisis become an excuse to override it?"</p>
+<p>This is the objection we take most seriously, and the data backs the worry, not the design. We went and looked: comparable rules, government deficit limits and central-bank independence, get broken often, near-universally in a crisis and a fair amount even in calm years. So a written rule is no guarantee, and we won't pretend otherwise. What a formula-bound, auditable rule does is make breaking it <em>visible</em>, an on-the-record act, instead of the quiet discretion money creation runs on today. That raises the cost of override without eliminating it. We don't claim the rule can't be broken; we claim breaking it can't be hidden. Capture stays on the unsolved list, honestly.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the governance paper (the constitutional lock as a commitment device, not a guarantee) and the capture/override replication module.</p>
+</div>
+<div class="q-block"><p class="q-q">"Is this a left-wing or a right-wing idea?"</p>
+<p>Neither, and that's not a dodge. The diagnosis, that money quietly loses value and the loss falls hardest on ordinary savers, isn't partisan; it's arithmetic. A version of the fix appeals to the right (hard rules, sound money, an end to discretionary debasement) and a version appeals to the left (a floor, a shared dividend, breaking the finance system's grip). It's a monetary <em>architecture</em>, not a party platform. You can want money you have a say in without signing up for anyone's politics.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the framing throughout, and where it sits in the literature (the architecture paper, Situating the Citizens Standard).</p>
+</div>
+<h2>The "hasn't this been tried" questions</h2>
+<div class="q-block"><p class="q-q">"Hasn't this been tried before? It sounds like [communism / MMT / social credit / UBI]."</p>
+<p>Pieces of it are old; the combination is what's new, and the honest version names both. It isn't MMT. MMT loosens the rule on money creation, this one tightens it. It isn't UBI bolted onto today's system: the dividend comes from <em>how money is made</em>, not from taxes. It isn't a command economy: prices, markets, and private business all stay. What's genuinely new is using the economy's own money growth, on a fixed rule, as the thing that funds a floor and a dividend while keeping prices stable. If that specific mechanism had been tried and worked, we wouldn't need to write it down so carefully.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> how it differs from existing proposals (the macroeconomic model; the architecture paper, Situating the Citizens Standard).</p>
+</div>
+<div class="q-block"><p class="q-q">"Why not just use gold, or Bitcoin? Fixed supply, no inflation."</p>
+<p>Fixed-supply money fixes the erosion problem by creating a worse one: an economy grows, but the money can't, so each year the same money has to stretch over more goods and the money gains value just by sitting there. That sounds great until you realize it rewards hoarding over building, punishes borrowers, and tends to seize up in a crisis. The Citizens Standard keeps the discipline people want from gold, a hard rule with no discretionary debasement, without freezing the money supply against a growing economy. It grows the money <em>with</em> the economy, by rule, and not a dollar faster.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> why a growth-tied rule beats a fixed quantity (the architecture paper, The Mechanical Design and the modes).</p>
+</div>
+<h2>The practical questions</h2>
+<div class="q-block"><p class="q-q">"Why would anyone work if they get a floor and a dividend?"</p>
+<p>Because the floor is a <em>floor</em>: enough to stand on, not enough to stop. It's deliberately set so that work always pays clearly more, and the savings floor is locked rather than handed out as spendable cash, which changes the incentive entirely. When the economics is worked through, the floor doesn't pull people out of the workforce; the security at the bottom actually makes it easier to take the risk of a better job, a move, or a business. "People will stop working" is the oldest objection to any floor, and it keeps not happening.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the labor-supply analysis (the macroeconomic model, the labor results).</p>
+</div>
+<div class="q-block"><p class="q-q">"What happens in a recession, when the economy isn't growing?"</p>
+<p>This is the framework's hardest failure mode, and the honest answer concedes it. Because the dividend is paid out of real growth, when growth stops the dividend stops. It falls to zero in a downturn, exactly when people need it most. That's a genuine weakness, not one we hide. What survives is the floor: the ownership stake already built up doesn't vanish in a recession, it rides through (with a real drawdown) and keeps compounding after. So the cash lane is fragile in a slump and the ownership lane is the shock absorber, roughly the opposite of today's system, where the cash keeps coming and the assets crater. We'd rather name the failure mode than paper over it.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the crisis-behaviour paper (the procyclical-dividend failure mode) and the procyclicality replication module.</p>
+</div>
+<div class="q-block"><p class="q-q">"What happens to banks? Who lends money?"</p>
+<p>Banks still lend. They just lend money that already exists, the way most people already assume they do. What changes is that banks stop <em>creating</em> new transactional money when they make a loan, which is the part most people are surprised to learn they do today. Credit, mortgages, and business lending all continue; they're funded by real savings rather than conjured. It makes the payment system run-proof and separates "keeping money safe" from "betting it": two jobs today's banks do at once, which is why they need rescuing when the bets go bad.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> full-reserve banking and credit (the full-reserve banking paper; the architecture paper, Banking Architecture).</p>
+</div>
+<div class="q-block"><p class="q-q">"This is a huge change. Is it even possible to get there from here?"</p>
+<p>Honestly, it's the hardest part, bigger than the design itself. A monetary system can't be swapped overnight without breaking things, so the work isn't just "what should money be" but "how do you move a live economy onto it without a shock." There's a staged transition mapped out for exactly that: a path with phases, off-ramps, and stress tests, not a flip of a switch. We'd rather show the whole route, including the difficult stretches, than pretend it's easy.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the transition design, phase by phase (the transition paper).</p>
 </div>
 
-<section class="wrap text">
-  <p class="big">Here is the strange part: that didn&rsquo;t happen because you were careless. It happened because <strong>more dollars kept being made</strong>, and every new one made the ones you were holding worth a little less.</p>
-  <p>No one calls it a tax. But year after year it takes the same thing a tax would, a slice of what you earned and kept, and it takes the most from the people who did the responsible thing and saved.</p>
-</section>
-
-<div class="wrap">
-  <div class="ineq">
-    <div class="expr"><span class="now">$1 now</span><span class="gt">is worth more than</span><span class="later">$1 later</span></div>
-    <p class="gloss">Next year it takes a dollar <b>and some change</b> to buy what one dollar buys today: $1.x&nbsp;&gt;&nbsp;$1. The &ldquo;and some change&rdquo; is the part that quietly leaves your pocket.</p>
-  </div>
-</div>
-
-<section class="wrap text">
-  <p class="big" style="text-align:center;max-width:none;font-family:&#39;Bricolage Grotesque&#39;,sans-serif;font-weight:800;font-size:1.7em;letter-spacing:-0.015em;color:#fff;margin:6px 0 20px">This isn&rsquo;t a law of nature</p>
-  <p>Money is a human institution. It is unlike rain, which you cannot stop. What was made can be remade.</p>
-  <p>The erosion isn&rsquo;t baked into money. It&rsquo;s baked into <strong>who gets to make it, how much, and whether you had any say</strong>. You didn&rsquo;t.</p>
-  <p>And the value that slips out of your dollar doesn&rsquo;t evaporate. It goes to <strong>whoever spends the new money first</strong>. Just never you.</p>
-</section>
-
-<div class="wrap">
-  <p class="lead-q"><span>So the real question is who gets to decide, and where the difference goes. What if both answers were you?</span></p>
-  <p class="see-intro">See the difference</p>
-  <div class="panel">
-    <div class="ctrl-row">
-      <span class="label">Years you hold it</span>
-      <span class="yrs"><span id="yrsVal">20</span> <span>years</span></span>
-    </div>
-    <input type="range" id="yrs" min="1" max="40" value="20" step="1" aria-label="Years you hold your dollar">
-
-    <div class="outcomes">
-      <div class="card today">
-        <div class="label">Today&rsquo;s money</div>
-        <div class="val" id="todayVal">55&cent;</div>
-        <div class="sub">what your dollar can still buy</div>
-      </div>
-      <div class="card std">
-        <div class="label">The Citizens Standard</div>
-        <div class="val">$1.00</div>
-        <div class="sub">your choice, kept</div>
-      </div>
-    </div>
-
-    <p class="gap-note">After <span id="gapYrs">20</span> years, inflation has quietly taken <b id="gapAmt">45&cent;</b> of every dollar you saved.</p>
-
-    <div class="chart">
-      <svg id="chart" viewBox="0 0 600 240" role="img" aria-label="A dollar's purchasing power over time: flat under the Citizens Standard, declining under today's money.">
-        <line x1="48" y1="200" x2="592" y2="200" stroke="#27313C" stroke-width="1"/>
-        <line x1="48" y1="40"  x2="48"  y2="200" stroke="#27313C" stroke-width="1"/>
-        <path id="gapArea" fill="rgba(230,169,62,.10)" stroke="none"/>
-        <path id="stdLine" fill="none" stroke="#5FBE93" stroke-width="3" stroke-linecap="round"/>
-        <path id="todayLine" fill="none" stroke="#8A95A1" stroke-width="3" stroke-linecap="round"/>
-        <circle id="todayDot" r="5" fill="#8A95A1"/>
-        <circle id="stdDot" r="5" fill="#5FBE93"/>
-        <text class="axis" x="44" y="44" text-anchor="end">$1</text>
-        <text class="axis" x="44" y="204" text-anchor="end">0</text>
-        <text class="axis" x="48" y="222" text-anchor="start">today</text>
-        <text class="axis" id="xEnd" x="592" y="222" text-anchor="end">20 yrs</text>
-      </svg>
-    </div>
-    <p class="rate">Figured at 3% inflation a year, close to the dollar&rsquo;s long-run average. You can change that, and everything else, in the full engine.</p>
-  </div>
-</div>
-
-<section class="wrap text">
-  <p>That gap isn&rsquo;t a forecast or an opinion. It&rsquo;s just arithmetic: what happens to money that loses a few percent of its value every year, for years on end. <strong>The longer you do the responsible thing and save, the more it takes.</strong></p>
-  <p><strong>That&rsquo;s one choice: money that holds its value.</strong> Citizens could pick differently, a little inflation for a larger dividend, and that&rsquo;s the point. Nobody hands you a rate you never voted for. The choice belongs to the citizens, and however it&rsquo;s set, the newly made money returns to you as a dividend and a locked savings floor instead of quietly leaving your pocket.</p>
-</section>
-
-<div class="wrap">
-  <div class="door">
-    <p class="q">This is one dial out of many. And changing how money works isn&rsquo;t a radical act. It&rsquo;s your right.</p>
-    <a class="cta" href="declaration.html">The right to remake money <span class="arrow">&rarr;</span></a>
-    <p class="note">The founders named a right to remake any governing power that stops serving the people. A money system is one of those powers, and the Constitution already gives Congress the means to remake it. No amendment required.</p>
-    <p class="note" style="margin-top:30px;padding-top:22px;border-top:1px solid var(--line);"><span style="display:block;max-width:46ch;margin:0 auto;">This framework shares its diagnosis with another independent project, <a href="https://publiccashmoney.com" style="color:var(--amber);text-decoration:none;">Public Cash Money</a>.</span></p>
-  </div>
-</div>
-
-<script>
-  // Reveal the drain when the meter scrolls into view (once).
-  (function(){
-    var bar = document.getElementById('bar');
-    if(!bar) return;
-    var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-    if(reduce){ bar.classList.add('go'); return; }
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){ bar.classList.add('go'); io.disconnect(); }
-      });
-    }, {threshold:0.6});
-    io.observe(bar);
-  })();
-</script>
-
-<script>
-  // See-the-difference slider: $1 held over N years, today's money vs the Standard.
-  (function(){
-    var RATE=0.03;
-    var L=48, Rr=592, T=40, Bm=200;
-    var slider=document.getElementById('yrs');
-    if(!slider) return;
-    var yrsVal=document.getElementById('yrsVal'), todayVal=document.getElementById('todayVal');
-    var gapYrs=document.getElementById('gapYrs'), gapAmt=document.getElementById('gapAmt'), xEnd=document.getElementById('xEnd');
-    var stdLine=document.getElementById('stdLine'), todayLine=document.getElementById('todayLine'), gapArea=document.getElementById('gapArea');
-    var todayDot=document.getElementById('todayDot'), stdDot=document.getElementById('stdDot');
-
-    function pp(y){ return 1/Math.pow(1+RATE,y); }
-    function cents(v){ return Math.round(v*100); }
-    function X(y,years){ return L + (Rr-L)*(y/years); }
-    function Y(v){ return Bm - (Bm-T)*v; }
-
-    function render(){
-      var years=+slider.value;
-      yrsVal.textContent=years;
-      var pv=pp(years);
-      todayVal.innerHTML = cents(pv)+'&cent;';
-      var lost=100-cents(pv);
-      gapYrs.textContent=years;
-      gapAmt.innerHTML=lost+'&cent;';
-      xEnd.textContent=years+' yrs';
-
-      var N=Math.max(2,years), todayPts=[], topPts=[];
-      for(var i=0;i<=N;i++){
-        var y=years*i/N, x=X(y,years);
-        todayPts.push(x+','+Y(pp(y)));
-        topPts.push(x+','+Y(1));
-      }
-      stdLine.setAttribute('d','M'+topPts.join(' L'));
-      todayLine.setAttribute('d','M'+todayPts.join(' L'));
-      gapArea.setAttribute('d','M'+topPts.join(' L')+' L'+todayPts.slice().reverse().join(' L')+' Z');
-      var ex=X(years,years);
-      todayDot.setAttribute('cx',ex); todayDot.setAttribute('cy',Y(pv));
-      stdDot.setAttribute('cx',ex);  stdDot.setAttribute('cy',Y(1));
-    }
-    slider.addEventListener('input',render);
-    render();
-  })();
-</script>
-
-<div class="wrap">
-
-  </div>
-
-<div class="wrap">
-<section class="ai-analyze" aria-label="Analyze with AI">
+  <section class="ai-analyze" aria-label="Analyze with AI">
   <style>
     .ai-analyze{ border:1px solid var(--line); border-radius:12px;
       padding:22px 22px 20px; margin:34px 0;
@@ -556,9 +400,12 @@ Be fair and clear, not a cheerleader and not a hit piece. If something is well-s
     <a class="ai-dl" href="CS_AI_Companion.txt" download>Download (text)</a>
   </div>
 </section>
-</div>
 
-<nav aria-label="Citizens Standard pages" style="max-width:980px;margin:56px auto 38px;padding:18px 24px 0;border-top:1px solid #27313C;display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;justify-content:center;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:.92rem;line-height:1.6;"> <a href="/" style="color:#E6A93E;text-decoration:none;font-weight:600;">Diagnosis</a> <a href="declaration.html" style="color:#9AA3AE;text-decoration:none;">Declaration</a> <a href="how_the_engine_works.html" style="color:#9AA3AE;text-decoration:none;">How it works</a> <a href="Citizens_Standard_Engine.html" style="color:#9AA3AE;text-decoration:none;">Engine</a> <a href="papers.html" style="color:#9AA3AE;text-decoration:none;">Papers &amp; data</a> <a href="questions_and_answers.html" style="color:#9AA3AE;text-decoration:none;">Q&amp;A</a> <a href="methodology.html" style="color:#9AA3AE;text-decoration:none;">Methodology</a> <a href="calibration_notes.html" style="color:#9AA3AE;text-decoration:none;">Calibrations</a>  <a href="mailto:Neo-Solon@hotmail.com" style="color:#9AA3AE;text-decoration:none;">Contact</a> </nav>
+</main>
+
+<nav aria-label="Previous and next page" style="max-width:980px;margin:48px auto 0;padding:18px 24px 0;border-top:1px solid #27313C;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:.95rem;"> <a href="papers.html" class="pagenav-btn">&larr; Papers &amp; data</a> <a href="methodology.html" class="pagenav-btn">Methodology &rarr;</a> </nav>
+
+<nav aria-label="Citizens Standard pages" style="max-width:980px;margin:24px auto 38px;padding:18px 24px 0;border-top:1px solid #27313C;display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;justify-content:center;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:.92rem;line-height:1.6;"> <a href="/" style="color:#9AA3AE;text-decoration:none;">Diagnosis</a> <a href="declaration.html" style="color:#9AA3AE;text-decoration:none;">Declaration</a> <a href="how_the_engine_works.html" style="color:#9AA3AE;text-decoration:none;">How it works</a> <a href="Citizens_Standard_Engine.html" style="color:#9AA3AE;text-decoration:none;">Engine</a> <a href="papers.html" style="color:#9AA3AE;text-decoration:none;">Papers &amp; data</a> <a href="questions_and_answers.html" style="color:#E6A93E;text-decoration:none;font-weight:600;">Q&amp;A</a>  <a href="methodology.html" style="color:#9AA3AE;text-decoration:none;">Methodology</a> <a href="calibration_notes.html" style="color:#9AA3AE;text-decoration:none;">Calibrations</a>  <a href="mailto:Neo-Solon@hotmail.com" style="color:#9AA3AE;text-decoration:none;">Contact</a> </nav>
 <!-- old cs-audio panel player retired; audio now handled by the single persistent bottom bar -->
 <script>
 /* Listen pill now controls the persistent bottom player (single audio system) */
