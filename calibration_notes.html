@@ -2495,25 +2495,101 @@ cap US$69.1T. Real growth 2.0%, pop growth 0.5%. Realizable band 3.3 / 4.3 / 5.0
 </div>
 <script>
 (function(){
+  /* Persistent audio across page navigations.
+   *
+   * Three things were making the resume feel sloppy:
+   *   1. The position was only saved when Math.floor(t*2)%2===0 — i.e. during alternate
+   *      half-seconds — so the stored time could be up to a second stale. That is why it
+   *      restarted "a bit earlier" than where you were.
+   *   2. It saved on `beforeunload`, which browsers increasingly ignore (and never fire on
+   *      mobile). `pagehide` and `visibilitychange` are the events that actually fire.
+   *   3. It called play() BEFORE the seek had been applied, so playback could start at the
+   *      wrong point and then jump.
+   *
+   * This page is a normal document, so navigating DOES tear the <audio> element down — a short
+   * gap is unavoidable without a single-page app. What we can do is make the gap as small as
+   * possible and the resume frame-accurate.
+   */
   var KEY='cs_audio_state';
   var a=document.getElementById('cspAudio'),pb=document.getElementById('cspPlay'),
       sk=document.getElementById('cspSeek'),tl=document.getElementById('cspTime'),stx=document.getElementById('cspStatus');
+  if(!a) return;
+
   function fmt(s){s=Math.floor(s||0);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
-  function save(){try{localStorage.setItem(KEY,JSON.stringify({t:a.currentTime||0,playing:!a.paused}));}catch(e){}}
-  a.addEventListener('timeupdate',function(){var d=a.duration||1;sk.value=a.currentTime/d*100;
-    tl.textContent=fmt(a.currentTime)+' / '+fmt(d);if(Math.floor(a.currentTime*2)%2===0)save();});
+
+  var last=0;
+  function save(force){
+    var now=Date.now();
+    if(!force && now-last<250) return;     /* throttle writes, but never lose more than 250ms */
+    last=now;
+    try{localStorage.setItem(KEY,JSON.stringify({t:a.currentTime||0,playing:!a.paused}));}catch(e){}
+  }
+  function saveNow(){ save(true); }
+
+  a.addEventListener('timeupdate',function(){
+    var d=a.duration||1;
+    sk.value=a.currentTime/d*100;
+    tl.textContent=fmt(a.currentTime)+' / '+fmt(d);
+    save();
+  });
   pb.addEventListener('click',function(){a.paused?a.play():a.pause();});
-  a.addEventListener('play',function(){pb.innerHTML='&#10074;&#10074;';save();});
-  a.addEventListener('pause',function(){pb.innerHTML='&#9654;';save();});
+  a.addEventListener('play',function(){pb.innerHTML='&#10074;&#10074;';saveNow();});
+  a.addEventListener('pause',function(){pb.innerHTML='&#9654;';saveNow();});
+  a.addEventListener('seeked',saveNow);
   sk.addEventListener('input',function(){a.currentTime=sk.value/100*(a.duration||0);});
-  window.addEventListener('beforeunload',save);
-  // resume on load
+
+  /* Capture the EXACT position at the moment of navigation. pagehide is the reliable one;
+   * visibilitychange covers tab switches and mobile backgrounding. beforeunload is kept only
+   * as a last-resort fallback for old desktop browsers. */
+  window.addEventListener('pagehide',saveNow);
+  window.addEventListener('beforeunload',saveNow);
+  document.addEventListener('visibilitychange',function(){ if(document.hidden) saveNow(); });
+
+  /* ---- restore ---- */
   var s=null;try{s=JSON.parse(localStorage.getItem(KEY)||'null');}catch(e){}
   if(s&&s.t>0){
-    var ap=function(){a.currentTime=Math.min(s.t,a.duration||s.t);};
-    if(a.readyState>=1)ap();else a.addEventListener('loadedmetadata',ap,{once:true});
-    if(s.playing){a.play().then(function(){stx.textContent='';})
-      .catch(function(){stx.textContent='\u25B8 tap play to resume';});}
+    /* Only pull the whole file eagerly for someone who was actually mid-listen. A visitor who
+     * has never pressed play should not be made to download a 23 MB mp3. */
+    if(s.playing) a.preload='auto';
+
+    var started=false;
+    function seekThenPlay(){
+      if(started) return; started=true;
+      var t=Math.min(s.t, (a.duration||s.t));
+      /* Seek FIRST, and only start playing once the seek has landed — otherwise playback
+       * begins at the old position and audibly jumps. */
+      var go=function(){
+        if(!s.playing) return;
+        var p=a.play();
+        if(p&&p.catch) p.then(function(){stx.textContent='';})
+                        .catch(function(){stx.textContent='\u25B8 tap play to resume';});
+      };
+      a.addEventListener('seeked',go,{once:true});
+      try{
+        if(a.fastSeek) a.fastSeek(t); else a.currentTime=t;
+      }catch(e){ a.currentTime=t; }
+      /* If the browser never fires `seeked` (some do not when the seek is a no-op), don't hang. */
+      setTimeout(function(){ if(a.paused && s.playing) go(); },400);
+    }
+    if(a.readyState>=1) seekThenPlay();
+    else a.addEventListener('loadedmetadata',seekThenPlay,{once:true});
+  }
+
+  /* OS-level media controls (lock screen, keyboard media keys, headphones). Costs nothing and
+   * makes a 40-minute audio piece behave like a real player. */
+  if('mediaSession' in navigator){
+    try{
+      navigator.mediaSession.metadata=new MediaMetadata({
+        title:'The Citizens Standard \u2014 overview',
+        artist:'Neo-Solon',
+        album:'citizensstandard.org'
+      });
+      navigator.mediaSession.setActionHandler('play',function(){a.play();});
+      navigator.mediaSession.setActionHandler('pause',function(){a.pause();});
+      navigator.mediaSession.setActionHandler('seekbackward',function(){a.currentTime=Math.max(0,a.currentTime-15);});
+      navigator.mediaSession.setActionHandler('seekforward',function(){a.currentTime=Math.min(a.duration||0,a.currentTime+30);});
+      navigator.mediaSession.setActionHandler('seekto',function(d){ if(d.seekTime!=null) a.currentTime=d.seekTime; });
+    }catch(e){}
   }
 })();
 </script>
