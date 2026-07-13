@@ -60,7 +60,7 @@
     "code/cs_engine.py",
     "code/dashboard.py",
     "code/growth_scenario.py",
-    "code/mode_omega.py",
+    "code/mode_lambda.py",
     "code/modec_ki_real_check.py",
     "code/paper1_extra_figures.py",
     "code/paper1_figA3.py",
@@ -78,7 +78,7 @@
     "demurrage/output/demurrage_verify2.txt",
     "requirements.txt"
    ],
-   "bytes": 106933
+   "bytes": 107819
   },
   {
    "id": "empirical_replication",
@@ -265,7 +265,7 @@
     "code/run_all.py",
     "data/ssa_life_table_2022.csv"
    ],
-   "bytes": 23490
+   "bytes": 24450
   },
   {
    "id": "macro_replication",

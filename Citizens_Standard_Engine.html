@@ -824,7 +824,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
 
 <div id="lambda-view" style="display:none;">
   <div class="info-banner">
-    <strong>What this answers:</strong> "What if conditions change — aging, depopulation, an AI productivity boom?" <strong>Mode Λ</strong> is the adaptive configuration: instead of fixed channel settings, its K1, K2, and KI respond automatically to demographic and productivity conditions by published formula — no committee, no discretion. In calm conditions it runs conservatively (≈60% K2 capture, mild deflationary bias, no KI); its governors engage only when conditions warrant and revert at 25%/year once conditions normalize. Pick a scenario to watch the governors respond; the lifetime figures are the architecture paper §9.6's simulation results.
+    <strong>What this answers:</strong> "What if conditions change — aging, depopulation, an AI productivity boom?" <strong>Mode Λ</strong> is the adaptive configuration: instead of fixed channel settings, its K1, K2, and KI respond automatically to demographic and productivity conditions by published formula — no committee, no discretion. In calm conditions it runs conservatively (≈60% K2 capture, mild deflationary bias, no KI); its governors engage only when conditions warrant and revert at 25%/year once conditions normalize. Pick a scenario to watch the governors respond; the lifetime figures are the architecture paper §10.6's simulation results.
   </div>
   <div class="scenario-pills" id="lambda-pills" style="margin-top:12px;">
     <button class="pill active" data-lambda="normal">Normal (+0.3% pop)</button>
@@ -834,14 +834,14 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
     <button class="pill" data-lambda="prodboom">Productivity boom + negative pop</button>
   </div>
   <div class="stats" style="margin-top:16px;">
-    <div class="stat"><p class="stat-label">Stable Floor at 65 (real)</p><p class="stat-val" id="lambda-floor">—</p><p class="stat-sub" id="lambda-er">the architecture paper §9.6 simulation</p></div>
+    <div class="stat"><p class="stat-label">Stable Floor at 65 (real)</p><p class="stat-val" id="lambda-floor">—</p><p class="stat-sub" id="lambda-er">the architecture paper §10.6 simulation</p></div>
     <div class="stat"><p class="stat-label">Annual real income</p><p class="stat-val" id="lambda-income">—</p><p class="stat-sub">at 5% withdrawal</p></div>
     <div class="stat"><p class="stat-label">Governors</p><p class="stat-val" id="lambda-gov" style="font-size:16px">—</p><p class="stat-sub" id="lambda-note">—</p></div>
   </div>
   <div class="legend" id="lambda-legend"></div>
   <div class="chart-wrap"><canvas id="lambda-chart" role="img" aria-label="Mode Omega governor response chart"></canvas></div>
   <p style="font-size:12px; color:var(--text-dim); margin:16px 0 0; line-height:1.6;">
-    <strong>Mode Λ guardrails (Architecture §9):</strong> every multiplier, threshold, and reversion rate is formula-specified and publicly auditable — adaptive means the formula responds to observable data, not that anyone exercises judgment. K1 is capped at 2.0× base; combined issuance is capped at 3.5% of M2; the conditional KI issues 0–0.6% of M2 (split 60% to Stable Floors / 40% spendable), activates only on sustained deflation (&gt;1.2%) or demographic stress with weak wage growth, and carries a 36-month sunset with mandatory reaffirmation. Governors above baseline revert at 25%/year once the trigger resolves. Floor figures are the paper's §9.6 results; the three negative-pop scenarios share the same governor path and differ only by equity return. Governor paths shown are illustrative of that response (cf. Figure 5). The <b style="color:#5FBE93">Stable Floor line</b> is accumulated from each scenario's own governor path, with the real return solved so the path lands exactly on the paper's §9.6 endpoint — so the three negative-pop scenarios share one governor path but separate on the floor line, which is precisely the capital-share difference (implied realizable return 4.91% high-α vs 3.40% low-α).
+    <strong>Mode Λ guardrails (Architecture §10):</strong> every multiplier, threshold, and reversion rate is formula-specified and publicly auditable — adaptive means the formula responds to observable data, not that anyone exercises judgment. K1 is capped at 2.0× base; combined issuance is capped at 3.5% of M2; the conditional KI issues 0–0.6% of M2 (split 60% to Stable Floors / 40% spendable), activates only on sustained deflation (&gt;1.2%) or demographic stress with weak wage growth, and carries a 36-month sunset with mandatory reaffirmation. Governors above baseline revert at 25%/year once the trigger resolves. Floor figures are the paper's §10.6 results; the three negative-pop scenarios share the same governor path and differ only by equity return. Governor paths shown are illustrative of that response (cf. Figure 5). The <b style="color:#5FBE93">Stable Floor line</b> is accumulated from each scenario's own governor path, with the real return solved so the path lands exactly on the paper's §10.6 endpoint — so the three negative-pop scenarios share one governor path but separate on the floor line, which is precisely the capital-share difference (implied realizable return 4.91% high-α vs 3.40% low-α).
   </p>
 </div>
 
@@ -2525,7 +2525,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
     });
   }
 
-  // ===== Mode Λ (adaptive) — reproduces the architecture paper §9.6 simulation outcomes =====
+  // ===== Mode Λ (adaptive) — reproduces the architecture paper §10.6 simulation outcomes =====
   const LAMBDA_SCENARIOS = {
     normal:      { floor:403000,  demo:false, prod:false, gov:'inactive',                note:'Base case on the realizable basis (Table 8): ~60% K2 capture, mild deflationary bias, no KI' },
     negpop:      { floor:480000,  demo:true,  prod:false, gov:'demographic active',      note:'+19% vs the normal-conditions floor from the demographic governor (Table 8, realizable basis)' },
@@ -2535,7 +2535,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   };
   // Stable Floor path per scenario. The accumulation is driven by the scenario's OWN governor
   // path (contribution ∝ K1 multiplier × K2 capture, plus a share of any conditional KI), and the
-  // real return is then SOLVED so the path lands exactly on the paper's §9.6 endpoint. So the
+  // real return is then SOLVED so the path lands exactly on the paper's §10.6 endpoint. So the
   // endpoint is the paper's, not fabricated; the implied return is what the scenario's capital
   // share must be delivering. This is what separates negpop_opt / negpop_pess: identical
   // governors, different realizable return (4.91% vs 3.40%), hence different floor paths.
@@ -2738,7 +2738,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
     $('lambda-gov').textContent = sc.gov;
     $('lambda-note').textContent = sc.note;
     if ($('lambda-er')) $('lambda-er').textContent =
-      '§9.6 endpoint · implied realizable return ' + (fp.er*100).toFixed(2) + '%';
+      '§10.6 endpoint · implied realizable return ' + (fp.er*100).toFixed(2) + '%';
     const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const tickColor = '#9AA3AE';
     const gridColor = isDark ? 'rgba(180,178,169,0.15)' : 'rgba(136,135,128,0.15)';
