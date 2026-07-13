@@ -350,10 +350,7 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
     published. Nothing is precomputed — if the code stops reproducing the paper, this page says so.
   </p>
   <p class="lv-lede lv-wait">
-    <b>Give it a moment.</b> Most packages finish in a second or two; Paper 5 runs 20 propositions and
-    a 10,000-draw Monte Carlo, so it takes around 40 seconds. Python runs in a background worker, so
-    the page stays responsive throughout and the timer keeps counting — you can scroll, read, or
-    leave it running. It is computing, not stuck.
+    <b>Give it a moment</b> — some take 20+ seconds.
   </p>
 
   <div class="lv-bar">
@@ -682,10 +679,25 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
       var light = m.packages.filter(function (p) { return !p.heavy; }).length;
       allBtn.textContent = 'Run all ' + light;
       var heavy = m.packages.filter(function (p) { return p.heavy; });
-      $('lvExcluded').innerHTML = 'All ' + m.packages.length + ' packages run here. Two are ' +
-        '<b>heavy</b> and are not included in “Run all” — you can still run either from the menu, ' +
-        'and the page will tell you what it is about to download first: ' +
-        heavy.map(function (h) { return h.title + ' (' + h.heavyWhy + ')'; }).join('; ') + '.';
+      var parts = [];
+      parts.push('<b>' + m.packages.length + ' of the 14 papers have a replication package, and all ' +
+                 m.packages.length + ' run here.</b>');
+      if (heavy.length) {
+        parts.push('<b>Heavy:</b> ' + heavy.map(function (h) {
+          return h.title + ' (' + h.heavyWhy + ')'; }).join('; ') +
+          ' — excluded from “Run all”, but you can run it from the menu; the page tells you what it ' +
+          'is about to download first.');
+      }
+      if (m.excluded && m.excluded.length) {
+        parts.push('<b>Cannot run in a browser:</b> ' + m.excluded.map(function (e) {
+          return e.title + ' — ' + e.reason; }).join('; '));
+      }
+      if (m.noCode && m.noCode.length) {
+        parts.push('<b>No replication package:</b> ' + m.noCode.map(function (e) {
+          return e.title; }).join(', ') + '. These papers are argued rather than computed — there ' +
+          'is no code to run, so they are absent from the menu rather than silently failing.');
+      }
+      $('lvExcluded').innerHTML = parts.join('<br><br>');
       selEl.addEventListener('change', showHeavyHint);
       showHeavyHint();
     }).catch(function (e) {
