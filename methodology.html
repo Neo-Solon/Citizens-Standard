@@ -611,13 +611,39 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
   function runOne(pkg) {
     return new Promise(function (resolve) {
       var w = ensureWorker();
-      var t0 = Date.now(), ticker = null;
+      var t0 = Date.now(), ticker = null, watchdog = null, settled = false;
 
       function done(result) {
+        if (settled) return;
+        settled = true;
         if (ticker) { clearInterval(ticker); ticker = null; }
-        w.onmessage = null;
+        if (watchdog) { clearTimeout(watchdog); watchdog = null; }
+        w.onmessage = w.onerror = w.onmessageerror = null;
         resolve(result);
       }
+
+      // A worker that DIES — out of memory, a failed package load, an uncaught throw — posts no
+      // message at all. Without these handlers the promise never settles, the Run button stays
+      // disabled, and the page just sits there looking broken. Never let that happen silently.
+      w.onerror = function (ev) {
+        var msg = (ev && ev.message) ? ev.message : 'the worker crashed (no message)';
+        term('ERROR: ' + msg, 'bad');
+        term('The background worker died. This is usually a failed package load or out of memory. ' +
+             'Reload the page and try a lighter package.', 'bad');
+        worker = null;                 // it is dead; build a fresh one next time
+        done({ ok: false, summary: msg, figures: [], secs: '0' });
+      };
+      w.onmessageerror = function () {
+        term('ERROR: could not deserialise a message from the worker', 'bad');
+        worker = null;
+        done({ ok: false, summary: 'worker message error', figures: [], secs: '0' });
+      };
+      watchdog = setTimeout(function () {
+        term('ERROR: no response from the worker after 10 minutes — giving up.', 'bad');
+        try { w.terminate(); } catch (e) {}
+        worker = null;
+        done({ ok: false, summary: 'timed out', figures: [], secs: '600' });
+      }, 600000);
 
       w.onmessage = function (e) {
         var m = e.data;
@@ -633,7 +659,9 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
             }, 1000);
           }
         } else if (m.type === 'stage') {
-          status('fetching files… ' + m.done + '/' + m.total);
+          var mb = m.bytes ? ' (' + (m.bytes / 1e6).toFixed(1) + ' MB)' : '';
+          status('fetching files… ' + m.done + '/' + m.total + mb);
+          if (m.done === m.total) term('fetched ' + m.total + ' files' + mb, 'dim');
         } else if (m.type === 'error') {
           term('ERROR: ' + m.msg, 'bad');
           done({ ok: false, summary: m.msg, figures: [], secs: '0' });
@@ -692,11 +720,18 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
       return;
     }
     clearOut(); setBusy(true);
-    var r = await runOne(pkg);
-    verdict(r.ok, (r.ok ? 'PASS — ' : 'FAIL — ') + pkg.title + ' · ' + r.summary);
-    showFigs(r.figures, '');
-    status('done in ' + r.secs + 's.');
-    setBusy(false);
+    try {
+      var r = await runOne(pkg);
+      verdict(r.ok, (r.ok ? 'PASS — ' : 'FAIL — ') + pkg.title + ' · ' + r.summary);
+      showFigs(r.figures, '');
+      status('done in ' + r.secs + 's.');
+    } catch (e) {
+      term('ERROR: ' + e.message, 'bad');
+      verdict(false, 'FAILED — ' + pkg.title + ' · ' + e.message);
+      status('failed — ' + e.message);
+    } finally {
+      setBusy(false);            // the button ALWAYS comes back
+    }
   });
 
   allBtn.addEventListener('click', async function () {
