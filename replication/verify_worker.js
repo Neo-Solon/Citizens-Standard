@@ -113,7 +113,7 @@ async function stage(base, pkg) {
   // empirical_replication's historical CSV). Packages are staged side by side under /w/, so the
   // relative path resolves — but the file still has to be fetched.
   for (const sp of (pkg.siblings || [])) {
-    const r = await fetch(base + sp);
+    const r = await fetch(base + sp, { cache: 'no-cache' });
     if (!r.ok) { post('status', { msg: 'warning: sibling file missing: ' + sp }); continue; }
     const buf = new Uint8Array(await r.arrayBuffer());
     mkdirTree('/w/' + sp.slice(0, sp.lastIndexOf('/')));
@@ -126,7 +126,7 @@ async function stage(base, pkg) {
   let bytes = 0;
   for (let i = 0; i < all.length; i++) {
     const rel = all[i];
-    const r = await fetch(base + pkg.id + '/' + rel);
+    const r = await fetch(base + pkg.id + '/' + rel, { cache: 'no-cache' });
     if (!r.ok) {
       // Don't kill the whole package for one absent file — report it, keep going. If it was
       // genuinely needed, the script that needs it fails loudly a moment later.
