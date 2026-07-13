@@ -570,11 +570,6 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
 
       <button class="cs-audio__speed" id="csSpeed" aria-label="Playback speed">1&times;</button>
     </div>
-
-    <!-- swap src for the repo-hosted file, e.g. audio/cs-overview.mp3 -->
-    <audio id="csSource" preload="metadata">
-      <source src="audio/cs-overview.mp3?v=20260712" type="audio/mpeg">
-    </audio>
   </figure>
   <!-- ============ /CS AUDIO PLAYER ============ -->
 </div>
@@ -933,7 +928,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
 <div class="card" style="margin-bottom:0;">
   <p class="dts-eyebrow">Interactive Tool</p>
   <h2 class="dts-h2">Public Debt Trajectory Simulator</h2>
-  <p class="dts-lede">Debt compounds on itself: interest on a growing stock creates the next round of borrowing. Every number below is that country's own 2026 fiscal position, projected forward to 2100 with nothing changed. Switch countries with the selector at the top of the page.</p>
+  <p class="dts-lede">Debt compounds on itself: interest on a growing stock creates the next round of borrowing. Every number below is that country's own 2026 fiscal position, projected forward to 2125 with nothing changed. Switch countries with the selector at the top of the page.</p>
 
   <div class="dts-model">Debt(t+1) = Debt(t) &times; (1 + <b>r</b>) / (1 + <b>g</b>) &nbsp;+&nbsp; <b>primary deficit</b> &nbsp;&nbsp;|&nbsp;&nbsp; r = effective interest rate · g = nominal GDP growth · all as % of GDP</div>
 
@@ -965,11 +960,11 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   <p class="dts-note" id="dts-csnote"></p>
 
   <div class="dts-sources">
-    <b>Calibration (2026 baseline, held constant to 2100).</b>
+    <b>Calibration (2026 baseline, held constant to 2125).</b>
     <b>Gross debt:</b> general government gross debt, % of GDP — <a href="https://www.imf.org/en/publications/weo/issues/2026/04/14/world-economic-outlook-april-2026" target="_blank" rel="noopener">IMF WEO</a> / <a href="https://www.imf.org/en/publications/fm/issues/2026/04/15/fiscal-monitor-april-2026" target="_blank" rel="noopener">Fiscal Monitor</a>, April 2026 — one series for all 15, so the chart is like-for-like.
     <b>Effective rate:</b> gross interest ÷ gross debt.
     <b>Primary deficit:</b> derived by identity (overall balance − interest), so the three inputs always reconcile.
-    <b>Nominal growth:</b> IMF 2026 real growth + the central bank's inflation target — not that year's realised inflation, so one shock year isn't frozen in for 74.
+    <b>Nominal growth:</b> IMF 2026 real growth + the central bank's inflation target — not that year's realised inflation, so one shock year isn't frozen in for 99.
     <br><b>A mechanical projection, not a forecast.</b> It asks one question: what if the 2026 fiscal position never changed? No country's will. Debt is floored at 0%. Fragile inputs are flagged on the chart.
     <br><b>Citizens Standard path:</b> KT retires legacy debt as an asset swap (≈1.5% of M2/yr), pulling debt/GDP into the 30–60% operational band (≈45% central) by roughly Year 26 — Statutory §4 (2026c). The band, not zero: the standing stock is the safe-asset benchmark and the base for reverse-KT.
     <b>Already in the band?</b> The channel doesn't idle — “within the band, KT routes the growth-matched seigniorage to citizen Stable Floors by default, and to redemption only as needed to hold the band” (Statutory §4). Those citizens receive the issuance that would otherwise have gone to bondholders.
@@ -980,7 +975,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
 <script>
 (function() {
   var NS = 'http://www.w3.org/2000/svg';
-  var START = 2026, END = 2100;
+  var START = 2026, END = 2125;
 
   // ===== 2026 fiscal baseline, one row per calibrated economy =====
   // debt : general government gross debt, % of GDP        — IMF WEO / Fiscal Monitor, Apr 2026
@@ -988,7 +983,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   // def  : primary deficit, % of GDP, DERIVED BY IDENTITY (overall balance - interest),
   //        so debt / rate / deficit always reconcile instead of coming from three perimeters
   // grow : nominal GDP growth = IMF 2026 real growth + the central bank's inflation target
-  //        (target, not the realised 2026 print, so one shock year isn't frozen in for 74 years)
+  //        (target, not the realised 2026 print, so one shock year isn't frozen in for 99 years)
   // warn : where a constant-parameter projection is known to break down, and why
   var DEBT = {
     US: {debt:125.8, rate:2.62, def: 4.2, grow:4.0},
@@ -1000,14 +995,14 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
     JP: {debt:204.4, rate:0.93, rateTo:2.86, rateYears:15, def: 0.1, grow:2.7,
          band:{loTo:null, loYears:0, hiTo:2.86, hiYears:15},
          altLabel:'if coupons never reprice',
-         warn:'Japan’s answer is the repricing assumption. The 0.93% effective rate is the average coupon on a stock issued through ZIRP; new 10-year JGBs yield 2.86% (MoF, Jul 2026). Debt rolls over, so it <em>will</em> reprice — the only question is how fast. The central line converges to 2.86% over 15 years (roughly the average JGB maturity). The shaded band is the full span: the lower edge is the old frozen-coupon assumption, reachable only if yields stay suppressed indefinitely. The gap between those edges — 60% vs 205% of GDP by 2100 — is larger than almost any other uncertainty on this page.'},
+         warn:'Japan’s answer is the repricing assumption. The 0.93% effective rate is the average coupon on a stock issued through ZIRP; new 10-year JGBs yield 2.86% (MoF, Jul 2026). Debt rolls over, so it <em>will</em> reprice — the only question is how fast. The central line converges to 2.86% over 15 years (roughly the average JGB maturity). The shaded band is the full span: the lower edge is the old frozen-coupon assumption, reachable only if yields stay suppressed indefinitely. The gap between those edges — 41% vs 216% of GDP by 2125 — is larger than almost any other uncertainty on this page.'},
     KR: {debt: 54.4, rate:2.39, def: 0.2, grow:3.9},
     AU: {debt: 50.6, rate:1.98, def: 1.4, grow:4.5},
     CH: {debt: 36.1, rate:1.11, def:-0.3, grow:1.9},
     TR: {debt: 23.1, rate:14.17, def: 0.0, grow:8.8,
          // Türkiye is not projected. Its debt ratio fell because inflation outran the nominal stock —
          // a denominator effect that mechanically stops as disinflation proceeds. So instead of a
-         // 74-year extrapolation we show what is actually published: the HMB actuals, and the
+         // 99-year extrapolation we show what is actually published: the HMB actuals, and the
          // government's own Medium Term Program path, held flat past the program horizon.
          history:[[2010,38.6],[2011,34.8],[2012,30.8],[2013,29.5],[2014,27.4],[2015,26.5],[2016,27.0],
                   [2017,26.9],[2018,28.8],[2019,31.2],[2020,38.3],[2021,38.9],[2022,29.4],[2023,28.2],
@@ -1016,7 +1011,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
          warn:'Not projected — shown as published. Türkiye’s debt ratio fell from 38.9% (2021) to 23.8% (2025) while the nominal stock rose 5.2× and it ran a deficit every year: the entire decline is inflation inflating the <em>denominator</em>, not repayment. That effect stops as disinflation proceeds, and Türkiye’s own Medium Term Program projects the ratio <strong>flat at ~24%</strong>, not falling. It would also only ever erode the lira half of the stock — <strong>52.9% of central-government debt is FX-denominated</strong> and is revalued <em>upward</em> by lira depreciation. So the red line here is not our model: it is the HMB actual series and the MTP’s own 2026–2028 path, held flat beyond the program horizon.'},
     SE: {debt: 36.6, rate:1.91, def: 2.1, grow:3.8},
     NO: {debt: 41.1, rate:3.89, def:-12.6,grow:3.1,
-         warn:'Debt is extinguished by 2030 and the projection floors at 0%. Norway’s 12.6% primary surplus is petroleum revenue and sovereign-fund income, not a policy setting that persists for 74 years — the IMF already projects it fading as the fund matures.'},
+         warn:'Debt is extinguished by 2030 and the projection floors at 0%. Norway’s 12.6% primary surplus is petroleum revenue and sovereign-fund income, not a policy setting that persists for 99 years — the IMF already projects it fading as the fund matures.'},
     SA: {debt: 32.7, rate:3.98, def: 2.0, grow:3.7},
     IN: {debt: 83.4, rate:4.32, def: 3.8, grow:10.5},
     ID: {debt: 41.5, rate:5.54, def: 0.6, grow:8.0}
@@ -1132,9 +1127,16 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
     }
     function path(arr){ return arr.map(function(d,i){ return (i?'L':'M')+cx(i).toFixed(1)+','+cy(d.ratio).toFixed(1); }).join(' '); }
 
-    svg.appendChild(svgEl('path',{d:path(cur)+' L'+cx(cur.length-1).toFixed(1)+','+(H-padB)+' L'+padL+','+(H-padB)+' Z',fill:clrRed,opacity:0.07}));
-    // Reference geometry goes ON TOP of the red fills — otherwise the area wash under the
-    // current-policy curve tints the teal operational band red wherever the two overlap.
+    /* NO red area fill. There used to be one — the area under the current-policy curve, filled
+     * down to the x-axis. It was wrong twice over: it washed the whole plot red on high-debt
+     * countries and drew a red bar along the bottom on low-debt ones, so it appeared for every
+     * country and sat on top of everything else. Clipping it to the >150% region fixed the
+     * arithmetic but it still read as an overlay draped across the chart.
+     *
+     * It is gone because it was never carrying information. The red LINE is the current-policy
+     * path; the dashed amber line is the 150% threshold; the teal rect is the operational band,
+     * which is the one shaded region that means something. The area under a debt curve is not a
+     * quantity — integrating debt/GDP over time has no interpretation. Nothing was lost. */
     svg.appendChild(svgEl('rect',{x:padL,y:cy(60),width:W-padL-padR,height:cy(30)-cy(60),fill:clrTeal,opacity:0.14}));
     svg.appendChild(svgEl('line',{x1:padL,y1:cy(60),x2:W-padR,y2:cy(60),stroke:clrTeal,'stroke-width':1,'stroke-dasharray':'3 4',opacity:0.55}));
     svg.appendChild(svgEl('line',{x1:padL,y1:cy(30),x2:W-padR,y2:cy(30),stroke:clrTeal,'stroke-width':1,'stroke-dasharray':'3 4',opacity:0.55}));
@@ -1220,7 +1222,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
     var rEnd = sim.cur[n].rate;   // terminal effective rate (differs from p.rate where a path is set)
 
     document.getElementById('dts-country').innerHTML =
-      NAMES[c] + ' <span>· 2026 fiscal position, held constant to 2100</span>';
+      NAMES[c] + ' <span>· 2026 fiscal position, held constant to ' + END + '</span>';
 
     // A country driven by its own published path is NOT being modelled — don't show model inputs
     // (nominal growth, r − g) as if they were driving the line.
@@ -1245,6 +1247,56 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
       if (cross===null && sim.cur[i].ratio >= 150) cross = sim.cur[i].year;
       if (zero===null && sim.cur[i].ratio <= 0)    zero  = sim.cur[i].year;
     }
+
+    /* "never" is a claim about ALL future time, but the window stops at END. A country still
+     * climbing at the last data point was being reported as "never" purely because the chart
+     * ran out of years. Mexico is the case in point: 149.2% in 2100 — and it crosses in 2101.
+     *
+     * The honest split is not inside-the-window / outside-the-window, it is whether the debt
+     * dynamic is EXPLOSIVE or CONVERGENT. With d' = d·(1+r)/(1+g) + pd the multiplier is
+     * a = (1+r)/(1+g). When r > g, a > 1: the fixed point d* = pd/(1−a) is UNSTABLE and any
+     * starting level above it runs away without bound — that country crosses 150% eventually,
+     * guaranteed, and "never" is simply false. When r ≤ g the path converges to d*, and if
+     * d* < 150 it genuinely never crosses.
+     *
+     * So: keep projecting past END on the terminal assumptions and report what actually happens. */
+    var crossTxt, crossCls, crossSub='';
+    if (cross === START){
+      /* Japan opens at 205%. It does not "cross" 150% in 2026 — it is already through it. */
+      crossTxt = 'already above'; crossCls = 'danger';
+    } else if (cross){
+      crossTxt = String(cross); crossCls = 'danger';
+    } else if (p.official){
+      /* Türkiye's red line is a PUBLISHED path (HMB actuals + MTP) held flat past its endpoint —
+       * it is not the debt identity. Running the identity on past it would assert a trajectory
+       * the chart does not draw, and would contradict the flat line the reader is looking at. */
+      crossTxt = 'not by ' + END; crossCls = 'neutral';
+      crossSub = '<div class="dts-range">official path held flat past ' + p.officialEnd +
+                 ' — not projected beyond it</div>';
+    } else {
+      var aMul = (1 + rEnd/100) / (1 + p.grow/100);
+      var dd = sim.cur[n].ratio, yy = END, later = null;
+      for (var g2=0; g2<500; g2++){
+        dd = dd*aMul + p.def; yy++;
+        if (dd >= 150){ later = yy; break; }
+        if (dd <= 0) break;
+      }
+      if (later && later <= END + 50){
+        crossTxt = 'not by ' + END;
+        crossCls = 'amber';                    /* still climbing — this is NOT the safe outcome */
+        crossSub = '<div class="dts-range">still rising — crosses in ' + later + '</div>';
+      } else if (later){
+        /* A crossing 150 years out is arithmetically true and practically meaningless: no
+         * calibration survives that long. Report the DIRECTION, not a fake-precise year. */
+        crossTxt = 'not by ' + END; crossCls = 'amber';
+        crossSub = '<div class="dts-range">but r &gt; g — still rising, crosses well beyond the window</div>';
+      } else {
+        var dStar = (aMul < 1) ? p.def/(1-aMul) : null;
+        crossTxt = 'never'; crossCls = 'kept';
+        if (dStar !== null && dStar > 0)
+          crossSub = '<div class="dts-range">r &lt; g — settles near ' + dStar.toFixed(0) + '%</div>';
+      }
+    }
     var band=null;
     for (var j=0;j<sim.cs.length;j++){ if (sim.cs[j].ratio <= 60){ band = sim.cs[j].year; break; } }
     var bandTxt = (band === START) ? 'at enactment' : (band ? String(band) : '—');
@@ -1259,15 +1311,15 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
     document.getElementById('dts-readouts').innerHTML =
       '<div class="dts-col"><div class="dts-col-head current">Current Policy</div><div class="dts-stats-inner">' +
         '<div class="dts-stat"><div class="dts-k">Debt/GDP at 2026</div><div class="dts-v amber">'+p.debt.toFixed(1)+'%</div></div>' +
-        '<div class="dts-stat"><div class="dts-k">Debt/GDP by 2100</div><div class="dts-v '+dir+'">'+endCur.toFixed(0)+'%</div>'+rangeTxt+'</div>' +
-        '<div class="dts-stat"><div class="dts-k">Crosses 150%</div><div class="dts-v '+(cross?'danger':'neutral')+'">'+(cross?cross:'never')+'</div></div>' +
-        '<div class="dts-stat"><div class="dts-k">Interest cost by 2100</div><div class="dts-v '+dir+'">'+(endCur*rEnd/100).toFixed(1)+'% of GDP/yr</div></div>' +
+        '<div class="dts-stat"><div class="dts-k">Debt/GDP by '+END+'</div><div class="dts-v '+dir+'">'+endCur.toFixed(0)+'%</div>'+rangeTxt+'</div>' +
+        '<div class="dts-stat"><div class="dts-k">Crosses 150%</div><div class="dts-v '+crossCls+'">'+crossTxt+'</div>'+crossSub+'</div>' +
+        '<div class="dts-stat"><div class="dts-k">Interest cost by '+END+'</div><div class="dts-v '+dir+'">'+(endCur*rEnd/100).toFixed(1)+'% of GDP/yr</div></div>' +
       '</div></div>' +
       '<div class="dts-col"><div class="dts-col-head cs">Citizens Standard</div><div class="dts-stats-inner">' +
         '<div class="dts-stat"><div class="dts-k">Debt/GDP at enactment</div><div class="dts-v amber">'+p.debt.toFixed(1)+'%</div></div>' +
-        '<div class="dts-stat"><div class="dts-k">Debt/GDP by 2100</div><div class="dts-v kept">'+endCS.toFixed(0)+'%</div></div>' +
+        '<div class="dts-stat"><div class="dts-k">Debt/GDP by '+END+'</div><div class="dts-v kept">'+endCS.toFixed(0)+'%</div></div>' +
         '<div class="dts-stat"><div class="dts-k">Operational band reached</div><div class="dts-v kept">'+bandTxt+'</div></div>' +
-        '<div class="dts-stat"><div class="dts-k">Interest cost by 2100</div><div class="dts-v kept">'+(endCS*rEnd/100).toFixed(1)+'% of GDP/yr</div></div>' +
+        '<div class="dts-stat"><div class="dts-k">Interest cost by '+END+'</div><div class="dts-v kept">'+(endCS*rEnd/100).toFixed(1)+'% of GDP/yr</div></div>' +
       '</div></div>';
 
     drawChart(sim.cur, sim.cs, sim.lo, sim.hi, p);
@@ -1282,16 +1334,16 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
     } else if (p.debt <= CS_BAND_CENTRE){
       note.innerHTML = NAMES[c] + ' already sits at or below the ~45% central path, so there is no legacy stock worth retiring and the teal line holds. This is not KT switching off: <strong style="color:var(--teal)">within the band, KT routes its growth-matched seigniorage to citizen Stable Floors by default, and to redemption only as needed to hold the band</strong> (Statutory §4). A low-debt country doesn’t just skip the transition — its citizens receive the issuance that would otherwise have gone to bondholders. ' +
         'Under current policy the same position ' + (endCur > p.debt
-          ? 'drifts up to <strong style="color:var(--red)">'+endCur.toFixed(0)+'%</strong> by 2100.'
-          : 'stays at <strong style="color:var(--teal)">'+endCur.toFixed(0)+'%</strong> by 2100.');
+          ? 'drifts up to <strong style="color:var(--red)">'+endCur.toFixed(0)+'%</strong> by ' + END + '.'
+          : 'stays at <strong style="color:var(--teal)">'+endCur.toFixed(0)+'%</strong> by ' + END + '.');
     } else {
       note.innerHTML = 'Holding the 2026 position constant, debt in ' + NAMES[c] + ' ' +
         (endCur > p.debt ? 'climbs to <strong style="color:var(--red)">'+endCur.toFixed(0)+'%</strong>'
                          : 'drifts to <strong style="color:var(--teal)">'+endCur.toFixed(0)+'%</strong>') +
-        ' of GDP by 2100' + (cross ? ', crossing 150% in <strong style="color:var(--red)">'+cross+'</strong>' : '') +
+        ' of GDP by ' + END + (cross ? ', crossing 150% in <strong style="color:var(--red)">'+cross+'</strong>' : '') +
         '. Under the Citizens Standard, the KT channel retires the legacy stock as an asset swap — debt/GDP falls into the ' +
         '<strong style="color:var(--teal)">30–60% operational band</strong>' + (band ? ' by <strong style="color:var(--teal)">'+band+'</strong>' : '') +
-        (saving > 0.05 ? ', freeing roughly <strong style="color:var(--teal)">'+saving.toFixed(1)+'% of GDP a year</strong> in interest by 2100' : '') +
+        (saving > 0.05 ? ', freeing roughly <strong style="color:var(--teal)">'+saving.toFixed(1)+'% of GDP a year</strong> in interest by ' + END : '') +
         ' — without inflating away savings.';
     }
   }
@@ -3385,7 +3437,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   <button id="cspPlay" aria-label="Play or pause audio overview">&#9654;</button>
   <div class="csp-meta"><b>Audio Overview</b><span id="cspTime">0:00 / 0:00</span></div>
   <input type="range" id="cspSeek" min="0" max="100" value="0" step="0.1" aria-label="Seek audio">
-  <audio id="cspAudio" preload="metadata" src="audio/cs-overview.mp3?v=20260712"></audio>
+  <audio id="cspAudio" preload="metadata" src="audio/cs-overview.mp3?v=20260712b"></audio>
 </div>
 <script>
 (function(){
@@ -3459,9 +3511,10 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
                         .catch(function(){stx.textContent='\u25B8 tap play to resume';});
       };
       a.addEventListener('seeked',go,{once:true});
-      try{
-        if(a.fastSeek) a.fastSeek(t); else a.currentTime=t;
-      }catch(e){ a.currentTime=t; }
+      /* NOT fastSeek(). fastSeek is DEFINED as trading accuracy for speed — it lands on the
+       * nearest keyframe, which is EARLIER than asked for. That is precisely the "falls back a
+       * bit" symptom. currentTime is the accurate seek; use it. */
+      a.currentTime=t;
       /* If the browser never fires `seeked` (some do not when the seek is a no-op), don't hang. */
       setTimeout(function(){ if(a.paused && s.playing) go(); },400);
     }
@@ -3485,6 +3538,77 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
       navigator.mediaSession.setActionHandler('seekto',function(d){ if(d.seekTime!=null) a.currentTime=d.seekTime; });
     }catch(e){}
   }
+})();
+</script>
+
+<script>
+/* ---- in-page audio card (figure.cs-audio) ----------------------------------------------
+ * This card was fully styled but had NO script: every one of its ids (csPlay, csScrub,
+ * csPlayed, csBuffer, csCur, csDur, csSpeed) appeared exactly once in the page — the markup
+ * and nothing else. The play button did nothing when clicked, and it carried its own second
+ * <audio id="csSource"> pointing at the same 22 MB mp3, so the file was fetched twice.
+ *
+ * It is now driven by the SAME element as the persistent bar (#cspAudio). One stream, two
+ * UIs, always in sync — press play here and the bar follows it across page navigations.
+ */
+(function(){
+  var a=document.getElementById('cspAudio'), fig=document.getElementById('csAudio');
+  if(!a||!fig) return;
+  var play=document.getElementById('csPlay'), scrub=document.getElementById('csScrub'),
+      played=document.getElementById('csPlayed'), buf=document.getElementById('csBuffer'),
+      cur=document.getElementById('csCur'), dur=document.getElementById('csDur'),
+      spd=document.getElementById('csSpeed');
+
+  function fmt(s){s=Math.floor(s||0);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+  function pct(){var d=a.duration||0; return d?(a.currentTime/d*100):0;}
+
+  function paint(){
+    var p=pct();
+    if(played) played.style.width=p+'%';
+    if(cur) cur.textContent=fmt(a.currentTime);
+    if(dur && a.duration) dur.textContent=fmt(a.duration);   /* was hardcoded 40:00; real 40:50 */
+    if(scrub) scrub.setAttribute('aria-valuenow',Math.round(p));
+    if(buf && a.buffered && a.buffered.length && a.duration)
+      buf.style.width=(a.buffered.end(a.buffered.length-1)/a.duration*100)+'%';
+  }
+  a.addEventListener('timeupdate',paint);
+  a.addEventListener('progress',paint);
+  a.addEventListener('loadedmetadata',paint);
+  a.addEventListener('play', function(){fig.classList.add('is-playing');});
+  a.addEventListener('pause',function(){fig.classList.remove('is-playing');});
+  if(!a.paused) fig.classList.add('is-playing');
+
+  if(play) play.addEventListener('click',function(){
+    a.preload='auto';                       /* card is the entry point: commit to the file now */
+    a.paused?a.play():a.pause();
+  });
+
+  /* scrub: click or drag anywhere on the track, plus keyboard for the role="slider" */
+  function seekTo(clientX){
+    var r=scrub.getBoundingClientRect();
+    var f=Math.min(1,Math.max(0,(clientX-r.left)/r.width));
+    if(a.duration) a.currentTime=f*a.duration;
+  }
+  if(scrub){
+    var dragging=false;
+    scrub.addEventListener('pointerdown',function(e){dragging=true;scrub.setPointerCapture(e.pointerId);seekTo(e.clientX);});
+    scrub.addEventListener('pointermove',function(e){if(dragging)seekTo(e.clientX);});
+    scrub.addEventListener('pointerup',  function(e){dragging=false;try{scrub.releasePointerCapture(e.pointerId);}catch(_){}}); 
+    scrub.addEventListener('keydown',function(e){
+      if(!a.duration) return;
+      if(e.key==='ArrowRight'){a.currentTime=Math.min(a.duration,a.currentTime+15);e.preventDefault();}
+      if(e.key==='ArrowLeft'){ a.currentTime=Math.max(0,a.currentTime-15);e.preventDefault();}
+      if(e.key===' '||e.key==='Enter'){a.paused?a.play():a.pause();e.preventDefault();}
+    });
+  }
+
+  var RATES=[1,1.25,1.5,1.75,2,0.75], ri=0;
+  if(spd) spd.addEventListener('click',function(){
+    ri=(ri+1)%RATES.length; a.playbackRate=RATES[ri];
+    spd.innerHTML=RATES[ri]+'&times;';
+  });
+
+  paint();
 })();
 </script>
 </body>
