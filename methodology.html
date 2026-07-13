@@ -557,7 +557,7 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
       });
       py = await loadPyodide({ indexURL: PYODIDE });
       if (!manifest) {
-        manifest = await (await fetch(BASE + 'web_manifest.json')).json();
+        manifest = await (await fetch(BASE + 'web_manifest.json', { cache: 'no-store' })).json();
       }
       status('Python ready.');
       return py;
@@ -572,6 +572,21 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
     (pkg.mkdirs || []).forEach(function (d) {
       try { py.FS.mkdirTree(root + '/' + d); } catch (e) {}
     });
+
+    // Some scripts read a sibling package's data via ../../../. Packages are staged side by side
+    // under /w/, so the relative path resolves — but the file still has to be fetched.
+    for (var si = 0; si < (pkg.siblings || []).length; si++) {
+      var sp = pkg.siblings[si];
+      var sr = await fetch(BASE + sp);
+      if (sr.ok) {
+        var sbuf = new Uint8Array(await sr.arrayBuffer());
+        var sdir = '/w/' + sp.slice(0, sp.lastIndexOf('/'));
+        try { py.FS.mkdirTree(sdir); } catch (e) {}
+        py.FS.writeFile('/w/' + sp, sbuf);
+      } else {
+        term('warning: sibling file missing: ' + sp, 'bad');
+      }
+    }
 
     var all = pkg.files.concat(pkg.goldenFiles);
     var golden = {};
@@ -737,11 +752,31 @@ def run_package(root, steps):
     verdictEl.textContent = text;
   }
 
+  function currentPkg() {
+    return manifest.packages.filter(function (p) { return p.id === selEl.value; })[0];
+  }
+  function showHeavyHint() {
+    var p = currentPkg();
+    if (p && p.heavy) {
+      status('heavy: ' + p.heavyWhy + '. You will be asked before anything downloads.');
+    } else {
+      status('Python loads on first run (~15 MB, cached afterwards).');
+    }
+  }
+
   runBtn.addEventListener('click', async function () {
+    var pkg0 = currentPkg();
+    // Never pull tens of megabytes without asking.
+    if (pkg0 && pkg0.heavy && !window.confirm(
+          pkg0.title + '\n\nThis one is heavy: ' + pkg0.heavyWhy + '.\n' +
+          'About ' + pkg0.heavyMB + ' MB will download, and it may take a minute or two on a slow ' +
+          'connection.\n\nRun it?')) {
+      return;
+    }
     clearOut(); runBtn.disabled = allBtn.disabled = true;
     try {
       await boot();
-      var pkg = manifest.packages.filter(function (p) { return p.id === selEl.value; })[0];
+      var pkg = currentPkg();
       var r = await runOne(pkg);
       verdict(r.ok, (r.ok ? 'PASS — ' : 'FAIL — ') + pkg.title + ' · ' + r.summary);
       showFigs(r.figures, '');
@@ -756,9 +791,14 @@ def run_package(root, steps):
     clearOut(); runBtn.disabled = allBtn.disabled = true;
     try {
       await boot();
-      var npass = 0, n = manifest.packages.length;
+      var list = manifest.packages.filter(function (p) { return !p.heavy; });
+      var npass = 0, n = list.length;
+      term('Running the ' + n + ' light packages. The two heavy ones (' +
+           manifest.packages.filter(function (p) { return p.heavy; })
+             .map(function (p) { return p.title; }).join(', ') +
+           ') are skipped here \u2014 run either from the menu.', 'dim');
       for (var i = 0; i < n; i++) {
-        var pkg = manifest.packages[i];
+        var pkg = list[i];
         term('');
         term('─── ' + pkg.title + ' ───', 'dim');
         var r = await runOne(pkg, true);
@@ -796,18 +836,24 @@ def run_package(root, steps):
               '<br><br>On the live site it runs normally.');
       return;
     }
-    fetch(BASE + 'web_manifest.json').then(function (r) {
+    fetch(BASE + 'web_manifest.json', { cache: 'no-store' }).then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status + ' fetching replication/web_manifest.json');
       return r.json();
     }).then(function (m) {
       manifest = m;
       selEl.innerHTML = m.packages.map(function (p) {
-        return '<option value="' + p.id + '">' + p.title + '</option>';
+        return '<option value="' + p.id + '">' + p.title +
+               (p.heavy ? '  (heavy \u2014 ~' + p.heavyMB + ' MB)' : '') + '</option>';
       }).join('');
-      allBtn.textContent = 'Run all ' + m.packages.length;
-      var ex = m.excluded.map(function (e) { return e.title + ' (' + e.reason + ')'; });
-      $('lvExcluded').innerHTML = 'Two of the twelve packages cannot run here, and are not quietly ' +
-        'skipped: ' + ex.join('; ') + '. Both still run in the offline suite and in CI.';
+      var light = m.packages.filter(function (p) { return !p.heavy; }).length;
+      allBtn.textContent = 'Run all ' + light;
+      var heavy = m.packages.filter(function (p) { return p.heavy; });
+      $('lvExcluded').innerHTML = 'All 11 packages run here. Two are <b>heavy</b> and are not ' +
+        'included in \u201cRun all\u201d \u2014 you can still run either from the menu, and the page ' +
+        'will tell you what it is about to download first: ' +
+        heavy.map(function (h) { return h.title + ' (' + h.heavyWhy + ')'; }).join('; ') + '.';
+      selEl.addEventListener('change', showHeavyHint);
+      showHeavyHint();
       status('Python loads on first run (~15 MB, cached afterwards).');
     }).catch(function (e) {
       blocked('Could not load <code>replication/web_manifest.json</code> \u2014 ' + e.message +
