@@ -1255,6 +1255,56 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
       if (cross===null && sim.cur[i].ratio >= 150) cross = sim.cur[i].year;
       if (zero===null && sim.cur[i].ratio <= 0)    zero  = sim.cur[i].year;
     }
+
+    /* "never" is a claim about ALL future time, but the window stops at END. A country still
+     * climbing at the last data point was being reported as "never" purely because the chart
+     * ran out of years. Mexico is the case in point: 149.2% in 2100 — and it crosses in 2101.
+     *
+     * The honest split is not inside-the-window / outside-the-window, it is whether the debt
+     * dynamic is EXPLOSIVE or CONVERGENT. With d' = d·(1+r)/(1+g) + pd the multiplier is
+     * a = (1+r)/(1+g). When r > g, a > 1: the fixed point d* = pd/(1−a) is UNSTABLE and any
+     * starting level above it runs away without bound — that country crosses 150% eventually,
+     * guaranteed, and "never" is simply false. When r ≤ g the path converges to d*, and if
+     * d* < 150 it genuinely never crosses.
+     *
+     * So: keep projecting past END on the terminal assumptions and report what actually happens. */
+    var crossTxt, crossCls, crossSub='';
+    if (cross === START){
+      /* Japan opens at 205%. It does not "cross" 150% in 2026 — it is already through it. */
+      crossTxt = 'already above'; crossCls = 'danger';
+    } else if (cross){
+      crossTxt = String(cross); crossCls = 'danger';
+    } else if (p.official){
+      /* Türkiye's red line is a PUBLISHED path (HMB actuals + MTP) held flat past its endpoint —
+       * it is not the debt identity. Running the identity on past it would assert a trajectory
+       * the chart does not draw, and would contradict the flat line the reader is looking at. */
+      crossTxt = 'not by ' + END; crossCls = 'neutral';
+      crossSub = '<div class="dts-range">official path held flat past ' + p.officialEnd +
+                 ' — not projected beyond it</div>';
+    } else {
+      var aMul = (1 + rEnd/100) / (1 + p.grow/100);
+      var dd = sim.cur[n].ratio, yy = END, later = null;
+      for (var g2=0; g2<500; g2++){
+        dd = dd*aMul + p.def; yy++;
+        if (dd >= 150){ later = yy; break; }
+        if (dd <= 0) break;
+      }
+      if (later && later <= END + 50){
+        crossTxt = 'not by ' + END;
+        crossCls = 'amber';                    /* still climbing — this is NOT the safe outcome */
+        crossSub = '<div class="dts-range">still rising — crosses in ' + later + '</div>';
+      } else if (later){
+        /* A crossing 150 years out is arithmetically true and practically meaningless: no
+         * calibration survives that long. Report the DIRECTION, not a fake-precise year. */
+        crossTxt = 'not by ' + END; crossCls = 'amber';
+        crossSub = '<div class="dts-range">but r &gt; g — still rising, crosses well beyond the window</div>';
+      } else {
+        var dStar = (aMul < 1) ? p.def/(1-aMul) : null;
+        crossTxt = 'never'; crossCls = 'kept';
+        if (dStar !== null && dStar > 0)
+          crossSub = '<div class="dts-range">r &lt; g — settles near ' + dStar.toFixed(0) + '%</div>';
+      }
+    }
     var band=null;
     for (var j=0;j<sim.cs.length;j++){ if (sim.cs[j].ratio <= 60){ band = sim.cs[j].year; break; } }
     var bandTxt = (band === START) ? 'at enactment' : (band ? String(band) : '—');
@@ -1270,7 +1320,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
       '<div class="dts-col"><div class="dts-col-head current">Current Policy</div><div class="dts-stats-inner">' +
         '<div class="dts-stat"><div class="dts-k">Debt/GDP at 2026</div><div class="dts-v amber">'+p.debt.toFixed(1)+'%</div></div>' +
         '<div class="dts-stat"><div class="dts-k">Debt/GDP by 2100</div><div class="dts-v '+dir+'">'+endCur.toFixed(0)+'%</div>'+rangeTxt+'</div>' +
-        '<div class="dts-stat"><div class="dts-k">Crosses 150%</div><div class="dts-v '+(cross?'danger':'neutral')+'">'+(cross?cross:'never')+'</div></div>' +
+        '<div class="dts-stat"><div class="dts-k">Crosses 150%</div><div class="dts-v '+crossCls+'">'+crossTxt+'</div>'+crossSub+'</div>' +
         '<div class="dts-stat"><div class="dts-k">Interest cost by 2100</div><div class="dts-v '+dir+'">'+(endCur*rEnd/100).toFixed(1)+'% of GDP/yr</div></div>' +
       '</div></div>' +
       '<div class="dts-col"><div class="dts-col-head cs">Citizens Standard</div><div class="dts-stats-inner">' +
