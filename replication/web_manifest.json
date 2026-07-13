@@ -734,6 +734,7 @@
     "crowdout_split/code/stage2_crowdout_sweep.py",
     "crowdout_split/output/stage1_results.txt",
     "crowdout_split/output/stage2_results.txt",
+    "data/SCFP2022.csv",
     "dsge_twocircuit/README.md",
     "dsge_twocircuit/code/stage1_determinacy.py",
     "dsge_twocircuit/code/stage2_price_response.py",
@@ -793,7 +794,7 @@
     "transition_debt_path/output/stage2_results.txt",
     "web_run.py"
    ],
-   "bytes": 269740
+   "bytes": 22223063
   }
  ],
  "excluded": [
