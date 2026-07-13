@@ -1,0 +1,75 @@
+{
+  "pop65_share_model": 0.1747,
+  "L_launch": 0.0,
+  "L_2100": 1804.0,
+  "required_launch": 229.7,
+  "K3_launch": 174.2,
+  "breach_year": 2048,
+  "peak_inflation_pct": 1.5971,
+  "peak_inflation_year": 2100,
+  "mu_launch": 0.5135,
+  "mu_2125": 1.5059,
+  "kappa_d_zero_year": 2087,
+  "sensitivity": [
+    {
+      "variation": "base (framework defaults)",
+      "breach_year": 2048,
+      "peak_pi": 1.5971,
+      "L_2100": 1804.0
+    },
+    {
+      "variation": "withdrawal w = 3%",
+      "breach_year": 2051,
+      "peak_pi": 1.4549,
+      "L_2100": 1513.6
+    },
+    {
+      "variation": "withdrawal w = 5%",
+      "breach_year": 2047,
+      "peak_pi": 1.7018,
+      "L_2100": 2029.2
+    },
+    {
+      "variation": "withdrawal w = 6%",
+      "breach_year": 2045,
+      "peak_pi": 1.7782,
+      "L_2100": 2204.9
+    },
+    {
+      "variation": "realizable r = 3.30%",
+      "breach_year": 2050,
+      "peak_pi": 1.055,
+      "L_2100": 1123.5
+    },
+    {
+      "variation": "realizable r = 5.03%",
+      "breach_year": 2047,
+      "peak_pi": 2.1621,
+      "L_2100": 2676.7
+    },
+    {
+      "variation": "r = g = 2.00% (r>g removed)",
+      "breach_year": 2053,
+      "peak_pi": 0.5692,
+      "L_2100": 614.7
+    },
+    {
+      "variation": "r = 1.50% (r < g)",
+      "breach_year": 2054,
+      "peak_pi": 0.4424,
+      "L_2100": 493.9
+    },
+    {
+      "variation": "kappa_d = 0.00",
+      "breach_year": 2062,
+      "peak_pi": 2.8024,
+      "L_2100": 2964.1
+    },
+    {
+      "variation": "kappa_d = 0.60",
+      "breach_year": 2026,
+      "peak_pi": 1.1315,
+      "L_2100": 1224.0
+    }
+  ]
+}
