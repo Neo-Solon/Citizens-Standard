@@ -415,8 +415,20 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
   // ---- comparison: identical rule to the offline harness (replication/paper_pkg.py) ----
   var NUM = /-?\d+\.?\d*(?:[eE][-+]?\d+)?/g;
   var TIMING = /runtime|elapsed|seconds|secs|\bsec\b|took /i;
+  /* An ISO datestamp is not a published value. Paper 2's golden opens with
+   *     Run date: 2026-07-12 audit
+   * and a fresh run prints TODAY's date. The tokenizer below splits a date into 2026, -07, -12,
+   * so the golden's "-12" could never be reproduced again — Paper 2 reported
+   * "1/413 values NOT reproduced: -12" and would have failed every day, forever, on the calendar
+   * rather than on the economics.
+   *
+   * Unlike TIMING, this is neutralised on BOTH sides: a date is never a result in either text,
+   * so there is no risk of masking a real discrepancy by dropping it. Substituting (rather than
+   * dropping the line) also keeps any genuine numbers that share the line. */
+  var DATESTAMP = /\b\d{4}-\d{2}-\d{2}\b/g;
 
   function nums(text, dropTiming) {
+    text = text.replace(DATESTAMP, 'DATE');
     // dropTiming applies ONLY to the published artifact, never to the run's output: packages print
     // results and durations on the same line, and dropping the line would hide a real result.
     if (dropTiming) {
