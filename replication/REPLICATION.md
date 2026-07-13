@@ -189,11 +189,24 @@ crash, when it wasn't):
 4. **matplotlib is process-global.** Open figures and mutated rcParams leak between packages;
    reset between runs.
 
-**All 11 paper packages now run in the browser.** Two are flagged **heavy** — they work, but they
-cost a large download, so the page asks before starting one and `Run all` skips them:
+**10 of the 11 paper packages run in the browser**, and all 10 are included in `Run all`.
 
-- `empirical_validation_replication` (~25 MB) — statsmodels pulls scipy.
-- `distribution_inequality_replication` (~30 MB) — the 22 MB raw SCF 2022 microdata, plus pandas.
+`distribution_inequality_replication` does pull the 22 MB raw SCF microdata, but it is no longer
+labelled "heavy" or gated behind a prompt. Announcing the cost up front reads as a warning not to
+bother; the fetch counter and the elapsed clock already show it working, which is the honest signal.
+
+**`empirical_validation_replication` cannot run in the browser.** Verified against the Pyodide
+v0.26.4 lock file: it ships pandas, scipy and sympy, but **not statsmodels** — and statsmodels has C
+extensions, so micropip cannot install it at runtime either. There is no way to run this package in a
+browser today. It runs in the offline suite and in CI, and the page says so rather than hiding it.
+
+(I had briefly listed it as "heavy but runnable". That was an assumption, not a check — the package
+list was never verified. It is now.)
+
+**A worker that dies posts no message.** Out of memory, a failed dependency load, an uncaught throw —
+the promise never settles, the Run button stays disabled, and the page just sits there. The page now
+handles `onerror` and `onmessageerror`, carries a 10-minute watchdog, and unlocks the buttons in a
+`finally`. A failure is always visible.
 
 Two further things this shook out, both real:
 
@@ -235,3 +248,34 @@ match the offline harness exactly (9 / 74 / 32 / 13 / 56).
 
 Moral: the offline harness compares in Python, the browser in JS. Two implementations of one rule
 will drift. Both are now checked against each other on every package.
+
+
+---
+
+## A reproducibility defect the browser caught: unstable sort
+
+Paper 14's `share()`, `gini()` and `wpct()` used `np.argsort(v)`. **numpy's default sort is
+quicksort, which is not stable.** With tied values the tie order differs between numpy builds, the
+cumulative-weight cutoff lands in a different place, and the resulting wealth share changes.
+
+Locally it was invisible — one machine, one numpy, one answer. Run the same code under Pyodide's
+numpy and `floor_dividend.b50` came out at **6.7%** where the paper publishes **8.18%**. That is not
+float noise; it is a different answer to a published claim, produced by the same code and the same
+data.
+
+Fixed with `kind='stable'`, which is deterministic across platforms. Regenerating the artifact moved
+**4 of 56 values, all in the 5th significant figure** (largest relative change 2.2e-05); every other
+value is byte-identical and no published claim in Paper 14 is stated to that precision.
+
+The general lesson, worth applying to any weighted-quantile code in this repo: **if a cutoff can land
+inside a tie group, the sort must be stable, or the number is not reproducible.**
+
+## Two more Paper 14 fixes
+
+- `run_all.py` listed `stage1_debt_path.py` / `stage2_sweep_plausibility.py` for the
+  `transition_debt_path` module. **Those files do not exist** — the real names are
+  `stage1_band_path.py` / `stage2_band_robustness.py`. The package had been silently reporting
+  `[FAIL]` on two of its own modules. Corrected in `run_all.py` and `web_run.py`.
+- `rent_capitalization/stage2` re-runs stage1 via `subprocess` and parses its stdout. Emscripten has
+  no processes, so `web_run.py` installs an in-process shim — but **only** when
+  `sys.platform == "emscripten"`. Native Python is untouched.

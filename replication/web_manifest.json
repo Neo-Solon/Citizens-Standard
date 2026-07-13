@@ -234,6 +234,40 @@
    "bytes": 140782
   },
   {
+   "id": "liquidation_flow_replication",
+   "paper": 5,
+   "title": "Paper 5 \u2014 The Liquidation Flow L\u209c (supplementary)",
+   "heavy": false,
+   "heavyMB": 0,
+   "heavyWhy": "",
+   "siblings": [],
+   "steps": [
+    [
+     "code",
+     "run_all.py"
+    ]
+   ],
+   "golden": "all_results.txt",
+   "goldenFiles": [
+    "all_results.txt"
+   ],
+   "mkdirs": [
+    "figures",
+    "results"
+   ],
+   "deps": [
+    "numpy"
+   ],
+   "files": [
+    "README.md",
+    "all_results.txt",
+    "code/liquidation_flow.py",
+    "code/run_all.py",
+    "data/ssa_life_table_2022.csv"
+   ],
+   "bytes": 23490
+  },
+  {
    "id": "macro_replication",
    "paper": 5,
    "title": "Paper 5 \u2014 Macroeconomic Model",
