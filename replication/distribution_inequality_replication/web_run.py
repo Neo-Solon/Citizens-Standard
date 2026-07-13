@@ -8,6 +8,46 @@ run_all.py and is untouched.
 """
 import os, runpy, sys
 
+
+# --- subprocess shim (browser only) -------------------------------------------------------------
+# rent_capitalization/stage2 re-runs stage1 via subprocess and parses its stdout. Emscripten has no
+# processes ("OSError: [Errno 138] emscripten does not support processes"), so intercept the call and
+# execute the script in-process, capturing stdout into the same .stdout attribute the caller reads.
+# Native Python is untouched: this only installs itself when there are no processes to be had.
+import contextlib, io as _io, runpy as _runpy, subprocess as _sp, sys as _sys, types as _types
+
+
+def _in_process_run(cmd, *a, **kw):
+    script = None
+    for part in cmd[1:]:
+        if isinstance(part, str) and part.endswith(".py"):
+            script = part
+            break
+    if script is None:
+        raise OSError("subprocess is unavailable in this environment")
+    buf = _io.StringIO()
+    argv0, path0, cwd0 = list(_sys.argv), list(_sys.path), os.getcwd()
+    try:
+        d = os.path.dirname(os.path.abspath(script)) or cwd0
+        os.chdir(d)
+        _sys.path.insert(0, d)
+        _sys.argv = [os.path.basename(script)]
+        with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(_io.StringIO()):
+            try:
+                _runpy.run_path(os.path.abspath(script), run_name="__main__")
+            except SystemExit:
+                pass
+    finally:
+        os.chdir(cwd0)
+        _sys.argv[:] = argv0
+        _sys.path[:] = path0
+    return _types.SimpleNamespace(stdout=buf.getvalue(), stderr="", returncode=0)
+
+
+if _sys.platform == "emscripten":
+    _sp.run = _in_process_run
+# ------------------------------------------------------------------------------------------------
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "src"))
 
@@ -36,7 +76,7 @@ SUPP = [
     ("fullreserve_credit_gap", ["stage1_gap_sizing.py", "stage2_residual_and_debate.py"]),
     ("capture_override_baserate", ["stage1_override_baserate.py", "stage2_mitigants_and_cs.py"]),
     ("credit_displacement", ["stage1_displacement_requirement.py", "stage2_breakeven_and_plausibility.py"]),
-    ("transition_debt_path", ["stage1_debt_path.py", "stage2_sweep_plausibility.py"]),
+    ("transition_debt_path", ["stage1_band_path.py", "stage2_band_robustness.py"]),
     ("structural_buyer_endgame", ["stage1_ownership_plateau.py", "stage2_float_and_verdict.py"]),
     ("anchor_real_shocks", ["stage1_observed_divergence.py", "stage2_zero_dominance.py"]),
     ("dsge_twocircuit", ["stage1_determinacy.py", "stage2_price_response.py"]),
