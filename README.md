@@ -1,49 +1,111 @@
 # The Citizens Standard
 
-**A sovereign monetary framework built so that a dollar saved stays a dollar, with an engine you can run yourself.**
+**A constitutional monetary architecture with mode-selectable inflation regimes.**
 
-A dollar you saved in 2000 buys about 54 cents today. You didn't spend it. It simply bought less every year, because the money system is built that way. The Citizens Standard is a worked-out alternative: a set of rules, a macroeconomic model, stress tests, and an interactive engine, all aimed at money that holds its value while building a floor of wealth under every citizen.
+Fourteen papers, an interactive engine, and a replication suite where **every quantitative claim
+in the papers is reproduced by code you can run yourself** — offline, in CI, or in your browser
+without installing anything.
 
-You don't need any of it to see the problem. You already felt it.
+**→ [citizensstandard.org](https://citizensstandard.org)**
 
-## Start here: everything runs live in your browser
+---
 
-| Page | What it is |
+## What it is
+
+A rules-based monetary framework that replaces central-bank discretion with four constitutionally
+bounded issuance channels. Every dollar of new money is distributed equally to all citizens, split
+between locked citizen equity (the **Stable Floor**) and spendable dividends.
+
+| Channel | What it does |
 |---|---|
-| **[Diagnosis](https://citizensstandard.org/)** | The diagnosis on one page, with the fix made tangible right there: one slider, one outcome, a dollar that holds its value versus one that doesn't. No mechanism, no jargon. |
-| **[Declaration](https://citizensstandard.org/declaration.html)** | The right to remake the money system, and the constitutional power that already exists to do it. No amendment required, plus an honest map of where it would be litigated. |
-| **[How it works](https://citizensstandard.org/how_the_engine_works.html)** | The mechanism in plain language: the four channels, and why inflation is an output rather than a dial. |
-| **[Engine](https://citizensstandard.org/Citizens_Standard_Engine.html)** | Every lever, every mode, calibrated across countries from primary-source national data. Inflation is derived from your settings, never assumed. Includes a comparison against alternative monetary systems and embedded stress tests. |
-| **[Papers &amp; data](https://citizensstandard.org/papers.html)** | The full paper series, free to read, with SSRN links where posted, plus the full replication suite. |
-| **[Calibrations](https://citizensstandard.org/calibration_notes.html)** | The national data behind each country in the engine: macro parameters, transaction-active shares, and realizable returns, each derived from primary sources with an audit checklist. |
-| **[Q&amp;A](https://citizensstandard.org/questions_and_answers.html)** | The questions a skeptic asks: the money-printing fear, who controls it, hasn't this been tried, would anyone still work. Answered plainly. |
-| **[Methodology](https://citizensstandard.org/methodology.html)** | How to check it: every load-bearing claim mapped to the script that backs it, what the stress tests confirmed, and the handful of places the data made us qualify a claim. |
+| **K1** | Citizenship endowment — 2.5% of GDP per capita, issued once per new citizen |
+| **K2** | Growth dividend — issued annually against real growth, into locked floors |
+| **K3** | Citizen dividend — the κ_d share of the same budget, paid as spendable cash |
+| **KI** | Inflation-gap channel — the **only** channel that moves the price level |
 
-Every page is a single self-contained `.html` file that opens in any browser, and each links to the next, so the Diagnosis page alone is enough to reach everything.
+K3 is carved *from* the K2 budget, not added to it: raising the dividend lowers the floor by the
+same dollars, and total issuance is unchanged. That is what makes the split price-neutral.
 
-The engine runs on the United States by default and switches, from one dropdown, to further calibrations — Australia, Canada, the Eurozone, India, Indonesia, Japan, Mexico, Norway, Saudi Arabia, South Korea, Sweden, Switzerland, Turkey, and the United Kingdom — each built from primary-source national data, with the full derivations on the [Calibrations](https://citizensstandard.org/calibration_notes.html) page.
+## The Modes
 
-## What it proposes, in one breath
+A single architecture hosts several constitutionally selectable regimes. Mode selection is a Tier-2
+choice requiring a supermajority and a deliberation period — it does not rotate automatically.
 
-Issue money in proportion to real growth, route it through four transparent channels, and let inflation come out as a *result* of those settings rather than a dial anyone turns. Two channels build a locked, compounding **wealth floor** under every citizen; one pays a recurring **dividend**; one is an inflation-gap stabiliser that can lean against rising prices without an interest-rate channel. Every channel can be set to zero: the framework includes the case for doing nothing.
+| Mode | | Paper 1 |
+|---|---|---|
+| **A** | Mild deflation — holdings gain purchasing power | |
+| **B** | The full-rate 60/40 split (the reference configuration) | |
+| **C** | Modest ~2% inflation, KI active | |
+| **D** | Pure dividend — builds no floor | |
+| **Ω** | **Price stability**, solved per economy | §9 |
+| **Λ** | **Adaptive** — demographic and productivity governors | §10 |
+| **0** | Zero-issuance — the hard-money corner | |
 
-## The deeper layer
+On the general-equilibrium **realizable** basis (Macro Model §6.7 — the attenuated marginal product
+of the capital stock the deposit itself deepens, *not* an exogenous market return), the per-citizen
+Stable Floor at 65 lands at roughly **$233K (Mode A)**, **$413K (Mode B)**, **$230K (Mode C)**, at a
+4.26% central realizable return within a 3.30–5.03% band.
 
-The simple pages sit on top of a full body of work — a series of working papers spanning the architecture, a macroeconomic model with formal results, a statutory draft, full-reserve banking and external interoperability, crisis behaviour, distribution and inequality, and a comparative analysis against UBI, Social Security, sovereign wealth funds, and Georgism. Every empirical claim ships with a **replication package** — one per empirical paper — built on real data (BLS, SSA, the Survey of Consumer Finances, the Alaska Permanent Fund), so the numbers can be reproduced, not just asserted.
+These are **not** multiples of what people retire with today. On the realizable basis the floor
+lands near the median actual US retirement outcome. The structural claim is not that it is bigger —
+it is that **every** citizen receives a compounding equity stake where today they receive nothing.
 
-Every paper in the series is in this repository and free to read. The **[papers and replication index](https://citizensstandard.org/papers.html)** is the full table of contents, with a one-click PDF for every paper and the replication suite beside it. Papers already posted to SSRN are linked there directly; the rest open as PDFs here until they post:
+## Verify it yourself
 
-- **[One Model, Many Systems: A Constitutional Monetary Architecture](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6702518)** (106 pp) · [PDF](papers/01_Architecture.pdf)
-- [A Historical Counterfactual, 1960-2055](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6735078) (27 pp) · [PDF](papers/02_Counterfactual.pdf)
-- [Transition Architecture and Migration Mechanics](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6810741) (33 pp) · [PDF](papers/03_Transition.pdf)
+Every number in the papers is backed by code. Three ways to check, in increasing order of effort:
 
-The [replication suite](replication/) carries one package per empirical paper; each README states its exact run command (most are one command, e.g. `python run_all.py`).
+**1. In your browser, no install.** [Papers & data](https://citizensstandard.org/papers.html) and
+[Methodology](https://citizensstandard.org/methodology.html) run the replication packages live via
+Pyodide (CPython compiled to WebAssembly). Pick a paper, press Run, watch it reproduce.
 
-## A related project
+**2. Offline, one command.**
 
-This framework shares its diagnosis with an independent project, **[Public Cash Money](https://publiccashmoney.com)**.
+```bash
+cd replication
+python run_all.py            # all 12 packages, pass/fail table
+python run_all.py --report   # + an HTML report with every figure
+```
 
-## About
+Exits non-zero if *any* package fails to reproduce.
 
-Written under the pen name **Neo-Solon** · Neo-Solon@hotmail.com
-Free to read, run, and critique, released under CC BY 4.0. The simplest contribution is the most valuable one: tell me where it breaks.
+**3. CI.** `.github/workflows/replication.yml` runs the full suite on every push and weekly — so
+dependency drift gets caught, not just our own edits.
+
+## Layout
+
+```
+papers/                     14 papers (PDF + DOCX)
+replication/                12 packages, one per paper + supplementary
+  run_all.py                the one-push verifier
+  paper_pkg.py              copy → run → compare against the published golden
+  web_manifest.json         drives the in-browser verifier
+*.html                      the 8-page site
+fx_exploratory_record/      exploratory, unverified
+two_circuit_supplementary_record/
+```
+
+Each package ships a **golden artifact** — the exact figures the paper cites. Verification is
+containment, not eyeballing: the runner's output must contain every published value.
+
+## Known gaps, stated plainly
+
+- **Paper 10 (Empirical Validation)** cannot run in the browser: it needs `statsmodels`, which has
+  C extensions and is not in the Pyodide distribution. It runs offline and in CI.
+- **Papers 4, 9, 11** are argument, not computation — nothing to replicate.
+- **The liquidation flow `L_t`** — defined in Macro §3.3 and never given a number in any paper — is
+  now computed in `replication/liquidation_flow_replication`. It finds the circulating-pool ceiling
+  breached from ~2048 under a fixed κ_d. **This postdates the papers and is not yet in them.** It is
+  flagged as supplementary and awaits adversarial review.
+
+## Citation
+
+> Neo-Solon. *The Citizens Standard: A Constitutional Monetary Architecture with Mode-Selectable
+> Inflation Regimes* (2026). SSRN: <https://ssrn.com/abstract=6702518> ·
+> DOI: [10.2139/ssrn.6702518](http://dx.doi.org/10.2139/ssrn.6702518)
+
+## Licence
+
+Open source. Free to share, embed, modify, adapt. Attribution appreciated, not required.
+
+*If you find an error in the model, want to add a comparator, or can break one of the results —
+open an issue. The replication suite exists precisely so that you can.*
