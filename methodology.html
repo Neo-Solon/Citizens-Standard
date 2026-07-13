@@ -705,7 +705,11 @@ def run_package(root, steps):
 
     // ---- compare against the PUBLISHED values ----
     var checked = 0, missed = [];
-    if (pkg.golden.slice(-1) === '/' || pkg.golden.slice(-4) !== '.json') {
+    // NOTE: slice(-4) on 'x.json' is 'json' (no dot) — comparing it to '.json' is always false,
+    // which silently sent every JSON-golden package down the TEXT path. Text-matching a JSON
+    // artifact reads the hyphen in "1960-2024" as a minus sign and invents values like -2024.
+    var isJson = pkg.golden.slice(-1) !== '/' && /\.json$/.test(pkg.golden);
+    if (!isJson) {
       var want = [];
       pkg.goldenFiles.forEach(function (g) { want = want.concat(nums(golden[g], true)); });
       var got = nums(res.stdout, false);
