@@ -578,7 +578,12 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
     for (var i = 0; i < all.length; i++) {
       var rel = all[i];
       var r = await fetch(BASE + pkg.id + '/' + rel);
-      if (!r.ok) throw new Error('missing file: ' + rel);
+      if (!r.ok) {
+        // Don't kill the whole package for one absent file — say which, and let the run proceed.
+        // If it was genuinely needed, the script that needs it will fail loudly a moment later.
+        term('warning: could not fetch ' + rel + ' (HTTP ' + r.status + ')', 'bad');
+        continue;
+      }
       var buf = new Uint8Array(await r.arrayBuffer());
       var dir = rel.lastIndexOf('/') > 0 ? root + '/' + rel.slice(0, rel.lastIndexOf('/')) : root;
       try { py.FS.mkdirTree(dir); } catch (e) {}
