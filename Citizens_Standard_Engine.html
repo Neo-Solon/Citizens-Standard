@@ -639,6 +639,10 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
     <div class="row"><span class="label">K2 — Growth rate</span><input type="range" id="k2" min="0" max="100" step="0.5" value="100"><span class="readout" id="k2r">100%</span></div>
     <div class="row"><span class="label">K2/K3 split (κ_d)</span><input type="range" id="k3" min="0" max="100" step="1" value="0"><span class="readout" id="k3r">0%</span></div>
     <p class="card-note" id="splitNote" style="margin:2px 0 0;color:var(--accent)">Growth budget → <strong id="splitFloor">100%</strong> locked floor (K2) · <strong id="splitDiv">0%</strong> spendable dividend (K3). Always sums to 100%: raising the dividend lowers the floor by the same dollars, and total money issued is unchanged.</p>
+    <label id="kdSchedRow" style="display:flex;align-items:flex-start;gap:8px;margin:8px 0 2px;font-size:11.5px;color:var(--text-dim);cursor:pointer;line-height:1.45">
+      <input type="checkbox" id="kdSched" style="margin-top:2px;flex:0 0 auto;accent-color:var(--accent);cursor:pointer">
+      <span>Apply the <strong style="color:var(--accent)">liquidation-flow κ_d schedule</strong> — the dividend share the circulating-pool ceiling actually permits once Stable Floors begin to mature. <span id="kdSchedNow" style="color:var(--text)"></span></span>
+    </label>
     <div style="margin:8px 0 2px;">
       <div style="display:flex;height:26px;width:100%;border-radius:6px;overflow:hidden;font-size:10px;font-weight:600;line-height:26px;text-align:center;border:1px solid var(--border-strong);" aria-label="Dual-circuit split of the growth budget">
         <div id="barFloor" style="width:100%;background:var(--accent);color:var(--amber-ink);white-space:nowrap;overflow:hidden;transition:width .15s ease;">Asset Circuit · price-protected</div>
@@ -1804,6 +1808,7 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
 
     return {
       k1, k2, k3: kd, ki, rg, pg, m2, gdp, pop, mkt, dur,
+      kdSched: !!($('kdSched') && $('kdSched').checked),
       er: parseFloat($('er').value)/100,
       cpi,
       hz: hz,
@@ -1820,6 +1825,12 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
       : (p.k3*100).toFixed(0) + '%';
     if ($('splitFloor')) $('splitFloor').textContent = Math.round((1-p.k3)*100) + '%';
     if ($('splitDiv'))   $('splitDiv').textContent   = Math.round(p.k3*100) + '%';
+    if ($('kdSchedNow')){
+      $('kdSchedNow').innerHTML = p.kdSched
+        ? '<br>Launch κ_d <b>' + (kdAt(2026)*100).toFixed(1) + '%</b> → <b>0%</b> by <b>' + KD_ZERO
+          + '</b>. Past that the dividend cannot absorb more and KI must contract.'
+        : '';
+    }
     if ($('barFloor')){
       const floorPct = Math.round((1-p.k3)*100), divPct = Math.round(p.k3*100);
       $('barFloor').style.width = floorPct + '%';
@@ -1868,6 +1879,37 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
     if ($('durr')) $('durr').textContent = p.dur + 'y';
   }
 
+  /* ---- kappa_d is not a constant. It is a schedule. -------------------------------------
+   * Architecture ("Two bounds on kappa_d") states the circulating-pool ceiling:
+   *     K3 + KI + liquidation  <=  the Y-matched expansion of the circulating pool
+   * and then treats kappa_d as "a free Mode parameter". It is not free once the Stable Floor
+   * liquidation flow L_t exists.
+   *
+   * At launch L_t = 0 -- no floor has matured -- and K3 is sized to fill the ENTIRE Y-matched
+   * expansion. As floors mature, L_t grows and lands on top of a budget that is already full.
+   * Holding the price level then requires the dividend to be CUT, on this path.
+   *
+   * These anchors are computed, not drawn: replication/liquidation_flow_replication.
+   * Note the launch value is 0.488, ABOVE Mode B's fixed 0.40 -- Mode B slightly UNDER-issues
+   * the dividend at launch (a mild deflationary bias) and badly OVER-issues it after ~2048. */
+  var KD_ANCHORS = [[2026,0.488],[2031,0.476],[2036,0.459],[2041,0.436],[2046,0.408],
+                    [2051,0.377],[2056,0.341],[2061,0.301],[2066,0.257],[2071,0.207],
+                    [2076,0.149],[2081,0.083],[2086,0.006],[2091,0.000]];
+  var KD_ZERO = 2087;   // past this the dividend cannot absorb more; KI must contract (Tool 14a)
+
+  function kdAt(year){
+    var A = KD_ANCHORS;
+    if (year <= A[0][0]) return A[0][1];
+    if (year >= A[A.length-1][0]) return 0;
+    for (var i=1;i<A.length;i++){
+      if (year <= A[i][0]){
+        var f = (year - A[i-1][0]) / (A[i][0] - A[i-1][0]);
+        return Math.max(0, A[i-1][1] + f*(A[i][1] - A[i-1][1]));
+      }
+    }
+    return 0;
+  }
+
   function simulate(p){
     const years = [];
     let m2 = p.m2, gdp = p.gdp, pop = p.pop;
@@ -1879,7 +1921,9 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
       const k1Total = p.k1 * gdpPerCap * Math.max(births, 0);
       const k2Budget = p.k2 * m2 * p.rg;        // full growth budget
       const splitBudget = Math.max(0, k2Budget - k1Total); // K1 paid first; K2/K3 split the residual
-      const k3Total = p.k3 * splitBudget;           // K3 = κ_d share, reallocated to dividend
+      // kappa_d is fixed by the Mode, UNLESS the liquidation schedule is engaged.
+      const kdT = p.kdSched ? kdAt(2026 + t) : p.k3;
+      const k3Total = kdT * splitBudget;            // K3 = κ_d share, reallocated to dividend
       const k2Total = splitBudget - k3Total;        // remainder stays in locked floors
       const kiTotal = p.ki * m2;                 // KI: additive inflation channel
       const k1pc = births > 0 ? k1Total / births : 0;
@@ -2008,7 +2052,9 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
       const k1Total = p.k1 * gdpPerCap * Math.max(births, 0);
       const k2Budget = p.k2 * m2 * p.rg;        // full growth budget
       const splitBudget = Math.max(0, k2Budget - k1Total); // K1 paid first; K2/K3 split the residual
-      const k3Total = p.k3 * splitBudget;           // K3 = κ_d share, reallocated to dividend
+      // kappa_d is fixed by the Mode, UNLESS the liquidation schedule is engaged.
+      const kdT = p.kdSched ? kdAt(2026 + t) : p.k3;
+      const k3Total = kdT * splitBudget;            // K3 = κ_d share, reallocated to dividend
       const k2Total = splitBudget - k3Total;        // remainder stays in locked floors
       const kiTotal = p.ki * m2;                 // KI: additive inflation channel
       const k1pc = births > 0 ? k1Total / births : 0;
@@ -3208,6 +3254,19 @@ header .meta{text-align:center;max-width:52ch;margin:16px auto 0;}
   // Inputs the Mode Ω solver depends on: it computes its split/KI from real growth and the
   // launch aggregates, so in Ω these are NOT inert display settings — moving them must re-solve.
   const omegaInputs = ['rg', 'm2', 'gdp'];
+  /* The kappa_d schedule toggle. When engaged the cohort's dividend share is no longer the
+   * slider -- it is kdAt(calendar year), the path the circulating-pool ceiling permits once the
+   * liquidation flow L_t exists. The slider is disabled so it is plain that kappa_d is being
+   * DRIVEN, not read. */
+  if ($('kdSched')){
+    $('kdSched').addEventListener('change', function(){
+      var on = $('kdSched').checked;
+      $('k3').disabled = on;
+      $('k3').style.opacity = on ? 0.4 : 1;
+      update();
+    });
+  }
+
   ['k1','k2','k3','ki','rg','pg','er','m2','gdp','pop','hz','mkt'].forEach(id => {
     $(id).addEventListener('input', () => {
       // Mode Ω re-solves its split/KI from the macro inputs inside readInputs(), so moving a
