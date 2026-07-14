@@ -24,7 +24,7 @@ jobs:
           cache: pip
 
       - name: Install dependencies
-        run: pip install numpy pandas matplotlib scipy statsmodels sympy
+        run: pip install numpy pandas matplotlib scipy statsmodels sympy networkx
 
       - name: Run the full replication suite
         working-directory: replication

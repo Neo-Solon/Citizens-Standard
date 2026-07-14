@@ -32,7 +32,20 @@ anchor pins a unique RE price path without a Taylor principle),
 (f) trace the Proposition 8 welfare-optimal dividend share (kappa_d=0 maximizes
 wealth, but the welfare optimum is positive under positive net discounting), and
 (g) recompute every illustrative magnitude in Sections 3.2a and 6.5 from the inputs
-printed in those sections, without trusting the arithmetic on faith.
+printed in those sections, without trusting the arithmetic on faith, and
+(h) run the injection-topology diffusion simulation (`injection_topology.py`):
+a network companion to Proposition 1 showing that hierarchical injection produces
+a real-advantage gradient by network distance that uniform injection does not,
+that the gradient is governed by injection topology nearly independently of both
+injection scale and price-adjustment speed (the aggregate windfall collapses as
+prices become flexible while ~90% of the near-far gradient survives), and that
+channel mix maps linearly to distributional tilt by superposition. Part B
+calibrates the price-adjustment speed to the BLS micro-data range (Bils-Klenow
+2004; Nakamura-Steinsson 2008; Kehoe-Midrigan 2015), the injection to the 2020
+M2 episode (23% over 12 months), and the injection-layer topology to the
+Fedwire core-periphery evidence (Soramaki et al. 2007). One good, one global
+price, no behavioral response: a mechanism demonstration with grounded
+parameters, not a measurement. Requires `networkx` (in requirements.txt).
 
 There is **no dataset** here, and none is needed: the model is analytical, and the
 worked magnitudes are explicitly *illustrations, not calibrations* (the paper says
@@ -43,6 +56,7 @@ claimed here.
 
 | Module | Reproduces |
 |---|---|
+| `injection_topology.py` | **Injection-topology simulation (network companion to Proposition 1):** Part A (stylized, Watts-Strogatz, one-shot 10% injection) — the real-advantage gradient by network distance under hub injection (hub +7,985/capita, negative beyond distance 4) vs flat gains under uniform injection; tier shares near-invariant to injection scale (max std 0.021 across 5–40%) but shifted up to 0.75 by injection point; ~90% of the near–far gradient surviving as price adjustment goes from λ=0 to instant while the aggregate windfall collapses 180,000 → 1,500 (and → 0 under price-first ordering, leaving pure zero-sum redistribution by network position); robustness across seeds, update ordering, and graph family. Part B (calibrated, Barabási–Albert per Fedwire topology, 23% of M over 12 months) — hierarchical-vs-uniform gradient ratios of 10×–160× across the full BLS price-stickiness × velocity box; far-tier agents net real losers in 5 of 6 cells; the 2020-21 75/25 channel-mix replica cutting the gradient 24.9%, linear by superposition. |
 | `verify_proposition_3.py` | Proposition 3 convergence classification: monotone (ψλ ≤ 1), damped oscillation (1 < ψλ < 2), marginal (ψλ = 2), divergence (ψλ > 2); the self-correction property (any ψ stabilized by λ < 1/ψ); and KI_T inheriting stability with margin (Section 4.7). |
 | `verify_proposition_3prime.py` | **Proposition 3' (Section 3.6):** the structural pass-through ψ = M2/M^T reproduced directly from the price mechanism; the stability regime by transactional money share; the maturing-circuit drift (ψλ rising as the asset circuit grows under M2-indexing); the M^T-indexing / adaptive-gain remedies that hold ψλ fixed at all maturities; and the minimum-variance gain (stationary-variance floor at ψλ = 1) with the robustness rationale for the baseline ψλ = 0.90. The result is scoped as local stability of the (backward-looking) path-targeting feedback; full forward-looking determinacy is noted as future work. |
 | `verify_proposition_4.py` | **Proposition 4 (Section 5.5 / A.7):** the bounded labor-supply response to a locked floor — the reduced first-order condition ℓ^(1+1/ν)+b·ℓ^(1/ν)=1 and its elasticity −ν/(1+ν); the lock factor ρ_eff/r (a liquid floor of ~16× income cuts labor ~19%, the lock brings it to ~1–5% and to zero as κ_d→0); the scale-invariance of b (a one-time level effect, not a trend change); and the growth-indexed labor–growth loop as a contraction (fixed point ~0.984, loop gain ~0.016). |

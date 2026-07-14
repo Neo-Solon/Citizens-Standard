@@ -426,7 +426,45 @@ ASSET-TO-GOODS SPILLOVER lambda -- empirical anchoring (Paper 9, Sec 8.2)
     magnitude match Paper 9 Table 4: the spillover sets a calibration,
     not an outcome.
 
-Saved /home/claude/kit_out/replication/macro_replication/results/spillover_results.json
+Saved /home/claude/repo/Citizens-Standard/replication/macro_replication/results/spillover_results.json
+
+########################################################################
+# RUNNING: injection_topology.py
+########################################################################
+PART A -- STYLIZED (WS graph, one-shot 10% injection, lam=0.05)
+  hier: near_pc=4999.2 far_pc=-151.9 gradient=5151.1
+  unif: near_pc=67.8 far_pc=49.2 gradient=18.6
+  hier tier advs: d0=7985.1 d1=2013.3 d2=737.7 d3=229.5 d4=28.9 d5=-87.6 d6=-152.2 d7=-186.6 d8=-117.3
+A2 -- topology vs scale (share stability across injection sizes)
+  max tier-share std across scales 5%-40% = 0.0208
+  max tier-share diff hier vs uniform    = 0.7497
+A3 -- price-adjustment-speed sweep (hier)
+  lam= 0.0: gradient=   5462.0 total=  180000.0
+  lam=0.01: gradient=   5328.4 total=  101607.3
+  lam=0.02: gradient=   5254.8 total=   65456.8
+  lam=0.05: gradient=   5151.1 total=   28571.3
+  lam= 0.1: gradient=   5080.3 total=   14333.6
+  lam= 0.2: gradient=   5017.4 total=    7187.5
+  lam= 0.5: gradient=   4948.0 total=    2906.6
+  lam= 1.0: gradient=   4909.2 total=    1500.0
+  gradient retention lam 0 -> 1: 89.9%  (total collapses 180000 -> 1500)
+A4 -- robustness
+  price-first ordering, lam=1.0: gradient=4841.1 total=-0.0  (zero aggregate windfall, redistribution persists)
+  seed 7: gradient=5557.5
+  seed 123: gradient=6374.6
+  seed 2024: gradient=5804.4
+  BA graph seed 42: gradient=3349.4 (max_dist=4)
+  BA graph seed 7: gradient=3344.7 (max_dist=4)
+PART B -- CALIBRATED (BA graph, 23% of M over 12 months, T=60 months)
+  lam=0.07 s=0.11: hier grad=  6390.2  unif grad=   92.6  far_pc(hier)=  -33.0
+  lam=0.07 s=0.45: hier grad=  7497.3  unif grad=  625.3  far_pc(hier)=   15.3
+  lam=0.11 s=0.11: hier grad=  6203.9  unif grad=   37.1  far_pc(hier)=  -39.6
+  lam=0.11 s=0.45: hier grad=  7130.1  unif grad=  366.3  far_pc(hier)=  -11.8
+  lam=0.23 s=0.11: hier grad=  5979.9  unif grad=  -10.9  far_pc(hier)=  -46.0
+  lam=0.23 s=0.45: hier grad=  6695.0  unif grad=  122.2  far_pc(hier)=  -37.2
+B2 -- 2020-21 replica mix (75% hub / 25% uniform), lam=0.11 s=0.11:
+  mix gradient=4662.2 vs pure-hier 6203.9: reduction=24.9% (linear by superposition)
+wrote results/injection_topology_results.json
 
 ########################################################################
 # RUNNING: recompute_illustrations.py
@@ -486,17 +524,17 @@ Sections 3.2a and 6.5 of Neo-Solon (2026e).
 ########################################################################
 # RUNNING: make_figure.py
 ########################################################################
-wrote /home/claude/kit_out/replication/macro_replication/figures/figure_P3_convergence_regimes.png
+wrote /home/claude/repo/Citizens-Standard/replication/macro_replication/figures/figure_P3_convergence_regimes.png
 
 ########################################################################
 # RUNNING: make_determinacy_figure.py
 ########################################################################
-wrote /home/claude/kit_out/replication/macro_replication/figures/figure_P3prime_determinacy.png
+wrote /home/claude/repo/Citizens-Standard/replication/macro_replication/figures/figure_P3prime_determinacy.png
 
 ########################################################################
 # RUNNING: make_labor_figure.py
 ########################################################################
-wrote /home/claude/kit_out/replication/macro_replication/figures/figure_P4_labor_growth.png ; loop gain=0.0156 fixed point=0.9841
+wrote /home/claude/repo/Citizens-Standard/replication/macro_replication/figures/figure_P4_labor_growth.png ; loop gain=0.0156 fixed point=0.9841
 
 ########################################################################
 # RUNNING: make_delay_figure.py

@@ -17,6 +17,8 @@ Paths are relative to `front_door_kit/replication/`.
 
 **Last verified: 2026-07-07 (eleven packages, end-to-end in a clean environment; every captured result file matches regenerated output, and every published figure checked matches its paper — empirical tables to the dollar; architecture 22/22 regression checks; banking 5/5 propositions; all stress suites complete). The innovation counterfactual, now nested at `banking_replication/innovation_counterfactual/` (it backs the R&D bound in Paper 6 section 5.4), was added and executed 2026-07-09; its results file matches its regenerated output.**
 
+**Addendum 2026-07-14: `injection_topology.py` added to the macro package (Paper 5 §3.2b) and executed end-to-end; the paper05 adapter passes with 1,096 published values reproduced (previously 976).**
+
 ---
 
 ## Paper 1 — Architecture
@@ -28,6 +30,7 @@ Paths are relative to `front_door_kit/replication/`.
 | §8.3 Mode choice is a values question, not a technical optimization (no welfare-optimal κ_d) | `distribution_inequality_replication/mode_choice_welfare/` (welfare monotonic in κ_d; no interior optimum) | Stress-test (null result) |
 | Return-risk under bad draws / sequence risk | `empirical_replication/code/mc_engine.py` (10,000-path bootstrap, two universes inc. Depression & Great Inflation) | Stress-test |
 | Floor survival under real equity drawdowns | `distribution_inequality_replication/procyclicality/` (stage 2) | Stress-test |
+| §1.1 Cantillon hierarchy claim (first recipients gain, last absorb the inflation) | `macro_replication/code/injection_topology.py` (quantified in Paper 5 §3.2b; gradient set by injection point, nearly independent of scale and price-adjustment speed) | Stress-test |
 
 ## Paper 2 — Counterfactual
 | Claim | Backing | Type |
@@ -64,6 +67,7 @@ are backed above.*
 | Two-circuit separation; bank-credit coupling (§3.8, Prop 9) | `macro_replication/code/verify_proposition_9.py`; `distribution_inequality_replication/credit_displacement/` | Verification + stress-test |
 | Issuance neutrality is NOT from displacement (the double-claim) | `credit_displacement/` — needs ~73–89% displacement; lit shows partial | Stress-test (qualifies) |
 | Coupling threshold ζ* ≈ 0.13 | `macro_replication/` (Appendix A.12); direction shown in `dsge_twocircuit/` | Verification |
+| §3.2b injection-topology gradient (hub +7,985/capita, negative beyond distance 4; tier shares scale-invariant to 0.021 but topology-shifted to 0.75; 89.9% gradient retention as λ→1 while aggregate windfall collapses to 0; calibrated box gradient 5,980–7,497 vs uniform ≤625; 24.9% mix reduction, linear by superposition) | `macro_replication/code/injection_topology.py` (grounding in `macro_replication/INJECTION_TOPOLOGY_GROUNDING.md`) | Verification + stress-test |
 
 ## Paper 6 — Full-Reserve Banking
 | Claim | Backing | Type |
