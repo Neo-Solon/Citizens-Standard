@@ -69,3 +69,30 @@ by injection topology, nearly independent of both injection scale and
 price-adjustment speed, while the aggregate windfall is governed by
 price-adjustment speed; (3) channel mix maps linearly to distributional tilt.
 The claims it does not support: real-world magnitudes of any of the above.
+
+## Mechanism note (A5): why the gradient survives instant price adjustment
+
+A natural objection: the first-recipient advantage is usually told as a
+stale-price story (near agents buy before prices rise), which predicts the
+gradient should vanish when prices adjust instantly. The simulation rules this
+out directly. Holding the price at its final level for every period — so there
+are zero stale-price purchases by construction — the near-far gradient persists
+almost undiminished (4,841 vs 5,151 gradual), with aggregate real windfall
+exactly zero.
+
+The decomposition is exact (identity error 1e-12). Each agent's advantage splits
+into two terms:
+- **Dilution:** the price rise is a flat proportional real haircut, exactly
+  `baseline_i * (1/P_final - 1)`, i.e. the same -9.09% cut on every agent's own
+  consumption regardless of network position (cross-tier std/mean 0.11, and that
+  residual variation is only because higher-throughput nodes consume more at
+  baseline — the *rate* is identical).
+- **New money reaching i:** the real value of injected nominal money passing
+  through agent i, which is strongly proximity-graded.
+
+The gradient lives entirely in the second term. So the mechanism is not
+price-timing but first-receipt of the new nominal money: near agents are
+compensated for the uniform price haircut by receiving the new money early and
+in quantity; far agents bear the identical haircut with little compensation.
+This is why adjustment speed (which governs the aggregate windfall) and network
+position (which governs the redistribution) are nearly independent.

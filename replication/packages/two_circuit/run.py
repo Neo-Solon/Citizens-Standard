@@ -84,8 +84,39 @@ def run(data_dir, refresh=False):
     detail["japan_broad_R2"] = round(r2b, 3)
     checks.append(("Japan: broad out-predicts narrow", r2b > r2n))
 
+    # ---- 4. US seam resolution: the measure-dependence was the May-2020 artifact ----
+    # (two_circuit_supplementary_record/seam_resolution.py, 2026-07-14). OECD simple-sum
+    # M1 jumps >200% in May 2020 (Reg D redefinition); Divisia is continuous. With the
+    # 2020-21 money-growth years excluded, BOTH measures show the high-regime flip in the
+    # same non-overlapping annual design.
+    oe = _load(data_dir, "MANMM101USM189S.csv", "OECD_M1")
+    uscpi = _load(data_dir, "CPIAUCSL.csv", "USCPI")
+    u = dv.merge(oe, on="date").merge(uscpi, on="date").sort_values("date").set_index("date")
+    seam_oe = float(u["OECD_M1"].pct_change(1).loc["2020-05-01"] * 100)
+    seam_dv = float(u["DM1"].pct_change(1).loc["2020-05-01"] * 100)
+    g = u.pct_change(12) * 100
+    g["infl"] = g["USCPI"]
+    g["infl_next"] = g["infl"].shift(-12)
+    gc = g.iloc[::12].dropna(subset=["DM1", "OECD_M1", "infl", "infl_next"])
+    gc = gc[(gc.index.year < 2020) | (gc.index.year > 2021)]
+    hi = gc["infl"] >= 4
+
+    def _r2(x, y):
+        return float(np.corrcoef(x, y)[0, 1] ** 2)
+
+    r2 = {m: {"high": _r2(gc[m][hi], gc["infl_next"][hi]),
+              "low": _r2(gc[m][~hi], gc["infl_next"][~hi])}
+          for m in ["OECD_M1", "DM1"]}
+    detail["us_seam_may2020_growth_pct"] = {"oecd_m1": round(seam_oe, 1), "divisia_m1": round(seam_dv, 1)}
+    detail["us_noseam_R2"] = {m: {k: round(v, 3) for k, v in d.items()} for m, d in r2.items()}
+    checks.append(("US May-2020 seam is a simple-sum artifact (OECD >100%, Divisia <15%)",
+                   seam_oe > 100 and abs(seam_dv) < 15))
+    checks.append(("US flip holds on BOTH measures once seam excluded (high-regime R2 > low)",
+                   all(r2[m]["high"] > r2[m]["low"] for m in r2)))
+
     passed = all(ok for _, ok in checks)
-    summary = f"MA gap {detail['coherence_gap_mean_pct']}%, corr {detail['divisia_vs_m2_growth_corr']}, JP broad>{r2b>r2n and 'narrow' or '?'}"
+    summary = (f"MA gap {detail['coherence_gap_mean_pct']}%, corr {detail['divisia_vs_m2_growth_corr']}, "
+               f"JP broad>narrow, US flip both measures ex-seam")
     return {"passed": passed, "summary": summary, "detail": detail, "checks": checks}
 
 

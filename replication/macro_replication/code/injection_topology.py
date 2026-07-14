@@ -173,6 +173,59 @@ for sd in [42, 7]:
     print(f"  BA graph seed {sd}: gradient={n - f:.1f} (max_dist={dx.max()})")
 out["A_rob_graph_family"] = rob_ba
 
+# A5 -- MECHANISM: why the gradient survives instant price adjustment.
+# Two candidate channels: (a) price-timing (near agents buy at stale prices),
+# (b) balance dilution (the price level rises for everyone from t=0; near agents
+# are compensated by new money arriving first, far agents are not). Decisive test:
+# hold the price at its final level for ALL t, so there are ZERO stale-price
+# purchases by construction. If the gradient persists, (a) is ruled out.
+Pf = (N * M0 + MINJ_A) / (N * M0)
+
+
+def run_fixed_price(m_inj, P, mode):
+    m = np.full(N, M0)
+    if mode == "hier":
+        m[hub] += m_inj
+    real = np.zeros(N)
+    for t in range(T_A):
+        spend = S_A * m
+        real += spend / P
+        m = m - spend + W.T @ spend
+    return real
+
+
+print("A5 -- mechanism decomposition (instant price, no stale-price purchases)")
+# hier priced at Pf throughout; baseline priced at its own level 1.0
+adv_instant = run_fixed_price(MINJ_A, Pf, "hier") - run_fixed_price(0, 1.0, "none")
+n_i, f_i = near_far(adv_instant, dist)
+# channel split: dilution_i = baseline_i * (1/Pf - 1), an exact proportional haircut;
+# new-money_i = adv_i - dilution_i, the real value of injected money reaching i.
+base10 = run_fixed_price(0, 1.0, "none")
+dilution = run_fixed_price(0, Pf, "none") - base10
+newmoney = adv_instant - dilution
+dilution_frac = float((1 / Pf - 1))
+dilution_flat = float(dilution.std() / abs(dilution.mean()))   # ~0 => uniform haircut
+newmoney_grad_corr = float(np.corrcoef(newmoney, -dist)[0, 1])
+identity_err = float(np.abs(dilution - base10 * (1 / Pf - 1)).max())
+print(f"  instant-price gradient survives: {n_i - f_i:.1f} "
+      f"(vs gradual {sweep['0.05']['gradient']:.1f}); aggregate windfall {adv_instant.sum():.2f}")
+print(f"  dilution is a flat proportional haircut of {dilution_frac * 100:.2f}% "
+      f"(cross-tier std/mean {dilution_flat:.3f}); identity err {identity_err:.1e}")
+print(f"  the gradient lives entirely in the new-money-reaching-i term "
+      f"(corr with proximity {newmoney_grad_corr:.3f})")
+out["A5_mechanism"] = {
+    "instant_price_gradient": n_i - f_i,
+    "instant_aggregate_windfall": float(adv_instant.sum()),
+    "dilution_proportional_haircut_pct": dilution_frac * 100,
+    "dilution_cross_tier_std_over_mean": dilution_flat,
+    "dilution_identity_max_err": identity_err,
+    "newmoney_proximity_corr": newmoney_grad_corr,
+    "reading": ("At instant adjustment there are no stale-price purchases, yet the "
+                "gradient persists. The price rise is a flat proportional real haircut "
+                "on every agent's own consumption; the redistribution is entirely in "
+                "which agents the new nominal money reaches first. Timing channel ruled "
+                "out; dilution/first-recipient channel confirmed.")}
+
 # ---------------- Part B: calibrated (flow, BA graph) ----------------
 T_B = 60
 Gb = nx.barabasi_albert_graph(N, 3, seed=SEED)

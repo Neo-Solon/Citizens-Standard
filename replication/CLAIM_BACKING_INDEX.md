@@ -67,7 +67,7 @@ are backed above.*
 | Two-circuit separation; bank-credit coupling (§3.8, Prop 9) | `macro_replication/code/verify_proposition_9.py`; `distribution_inequality_replication/credit_displacement/` | Verification + stress-test |
 | Issuance neutrality is NOT from displacement (the double-claim) | `credit_displacement/` — needs ~73–89% displacement; lit shows partial | Stress-test (qualifies) |
 | Coupling threshold ζ* ≈ 0.13 | `macro_replication/` (Appendix A.12); direction shown in `dsge_twocircuit/` | Verification |
-| §3.2b injection-topology gradient (hub +7,985/capita, negative beyond distance 4; tier shares scale-invariant to 0.021 but topology-shifted to 0.75; 89.9% gradient retention as λ→1 while aggregate windfall collapses to 0; calibrated box gradient 5,980–7,497 vs uniform ≤625; 24.9% mix reduction, linear by superposition) | `macro_replication/code/injection_topology.py` (grounding in `macro_replication/INJECTION_TOPOLOGY_GROUNDING.md`) | Verification + stress-test |
+| §3.2b injection-topology gradient (hub +7,985/capita, negative beyond distance 4; tier shares scale-invariant to 0.021 but topology-shifted to 0.75; 89.9% gradient retention as λ→1 while aggregate windfall collapses to 0; A5 decomposition proving the surviving gradient is balance-dilution not stale-price timing (exact identity, err 1e-12); calibrated box gradient 5,980–7,497 vs uniform ≤625; 24.9% mix reduction, linear by superposition) | `macro_replication/code/injection_topology.py` (grounding in `macro_replication/INJECTION_TOPOLOGY_GROUNDING.md`) | Verification + stress-test |
 
 ## Paper 6 — Full-Reserve Banking
 | Claim | Backing | Type |

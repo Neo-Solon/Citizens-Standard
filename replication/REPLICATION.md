@@ -15,19 +15,19 @@ No API key, no data hunting, works offline.
 
 PACKAGE                    RESULT       SEC  SUMMARY
 ----------------------------------------------------------------
-paper01_architecture       PASS        0.2  163 published values reproduced
-paper03_transition         PASS        9.6  9 published values reproduced
+paper01_architecture       PASS        0.0  163 published values reproduced
+paper03_transition         PASS        9.7  9 published values reproduced
 paper05_liquidation        PASS        0.1  181 published values reproduced
-paper05_macro              PASS       35.3  1096 published values reproduced
+paper05_macro              PASS       33.5  1104 published values reproduced
 paper06_banking            PASS        0.3  182 published values reproduced
-paper07_interoperability   PASS       11.6  375 published values reproduced
-paper08_structural_buyer   PASS        1.0  84 published values reproduced
-paper10_empirical          PASS        1.9  410 published values reproduced
-paper10_empirical_validation PASS       14.6  74 published values reproduced
+paper07_interoperability   PASS       12.0  375 published values reproduced
+paper08_structural_buyer   PASS        0.9  84 published values reproduced
+paper10_empirical          PASS        1.4  410 published values reproduced
+paper10_empirical_validation PASS       14.3  74 published values reproduced
 paper12_crisis             PASS        0.9  32 published values reproduced
-paper13_comparative        PASS        1.0  13 published values reproduced
-paper14_distribution       PASS       12.3  56 published values reproduced
-two_circuit                PASS        0.3  MA gap -5.3%, corr 0.684, JP broad>narrow
+paper13_comparative        PASS        0.9  13 published values reproduced
+paper14_distribution       PASS       11.8  56 published values reproduced
+two_circuit                PASS        0.3  MA gap -5.3%, corr 0.684, JP broad>narrow, US flip both measures ex-seam
 ----------------------------------------------------------------
   13/13 packages passed
 ================================================================

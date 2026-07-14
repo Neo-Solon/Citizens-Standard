@@ -184,6 +184,15 @@
       "max_dist": 4
     }
   },
+  "A5_mechanism": {
+    "instant_price_gradient": 4841.065283287103,
+    "instant_aggregate_windfall": -2.3283064365386963e-10,
+    "dilution_proportional_haircut_pct": -9.090909090909093,
+    "dilution_cross_tier_std_over_mean": 0.11139517028336937,
+    "dilution_identity_max_err": 3.922195901395753e-12,
+    "newmoney_proximity_corr": 0.6069992400544088,
+    "reading": "At instant adjustment there are no stale-price purchases, yet the gradient persists. The price rise is a flat proportional real haircut on every agent's own consumption; the redistribution is entirely in which agents the new nominal money reaches first. Timing channel ruled out; dilution/first-recipient channel confirmed."
+  },
   "B_grid": {
     "lam=0.07,s=0.11": {
       "lam_source": "Kehoe-Midrigan 14.5mo",

@@ -455,6 +455,10 @@ A4 -- robustness
   seed 2024: gradient=5804.4
   BA graph seed 42: gradient=3349.4 (max_dist=4)
   BA graph seed 7: gradient=3344.7 (max_dist=4)
+A5 -- mechanism decomposition (instant price, no stale-price purchases)
+  instant-price gradient survives: 4841.1 (vs gradual 5151.1); aggregate windfall -0.00
+  dilution is a flat proportional haircut of -9.09% (cross-tier std/mean 0.111); identity err 3.9e-12
+  the gradient lives entirely in the new-money-reaching-i term (corr with proximity 0.607)
 PART B -- CALIBRATED (BA graph, 23% of M over 12 months, T=60 months)
   lam=0.07 s=0.11: hier grad=  6390.2  unif grad=   92.6  far_pc(hier)=  -33.0
   lam=0.07 s=0.45: hier grad=  7497.3  unif grad=  625.3  far_pc(hier)=   15.3
