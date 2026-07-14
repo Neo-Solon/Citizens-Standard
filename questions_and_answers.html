@@ -297,6 +297,11 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
 <p>Partly yes, and pretending otherwise would be dishonest. When you buy an asset, you push its price up. The honest questions are <em>how much</em> and <em>is it accounted for.</em> The floor buys about 0.39% of the total market a year, which is roughly a quarter of what corporate stock buybacks already pull from the market every year, a bid the market routinely absorbs, not a new force. And the model doesn't ignore the effect: it assumes a lower return precisely because the floor bids up what it buys, rather than pretending it can buy at yesterday's prices forever. The price pressure is real, it's bounded, and it's already built into the numbers.</p>
 <p class="pointer"><b>Where it&rsquo;s worked out:</b> the structural-buyer paper (the bounded valuation premium) and the asset-price replication module.</p>
 </div>
+
+<div class="q-block"><p class="q-q">"Even if the total is fair, isn't whoever gets the new money first still better off?"</p>
+<p>Yes, and that's one of the oldest unfairnesses in money. When new money enters through banks and financial institutions, the people closest to that entry point get it first, at old prices, and spend it before prices catch up. Everyone further down the line gets it later, worn thinner. It's a quiet transfer from the edges of the economy to its center, and it happens no matter <em>how much</em> is created. The Citizens Standard changes the <em>doorway</em>: new money enters equally, to every citizen at once, so there's no front-of-the-line advantage to capture. We tested this directly with a model of money spreading through an economy. Send it through the usual hierarchy and the gap between the first and last to receive it is large; send it to everyone at once and the gap is flat. The unfairness was never only in the amount. It's in who stands nearest the door, and this moves the door.</p>
+<p class="pointer"><b>Where it&rsquo;s worked out:</b> the injection-topology simulation (the macroeconomic model, and its replication code).</p>
+</div>
 <div class="q-block"><p class="q-q">"People who need help want money now, not a stake that compounds for decades."</p>
 <p>Completely fair, and it's the most important version of this objection. A locked stake that grows for thirty years does nothing for someone who needs rent this month. That's why the design has <em>two</em> lanes, not one: a cash dividend that pays out now, and a locked floor that builds ownership over time. The mode sets how much goes to each. It was never "wait decades instead of cash": it's both, and a society that needs more cash now can weight the dividend higher. If anything, this objection is an argument for that weighting, not against the floor.</p>
 <p class="pointer"><b>Where it&rsquo;s worked out:</b> the issuance engine (how the dividend and floor split) and the architecture paper (mode selection).</p>
@@ -343,6 +348,11 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
 <div class="q-block"><p class="q-q">"This is a huge change. Is it even possible to get there from here?"</p>
 <p>Honestly, it's the hardest part, bigger than the design itself. A monetary system can't be swapped overnight without breaking things, so the work isn't just "what should money be" but "how do you move a live economy onto it without a shock." There's a staged transition mapped out for exactly that: a path with phases, off-ramps, and stress tests, not a flip of a switch. We'd rather show the whole route, including the difficult stretches, than pretend it's easy.</p>
 <p class="pointer"><b>Where it&rsquo;s worked out:</b> the transition design, phase by phase (the transition paper).</p>
+</div>
+
+<div class="q-block"><p class="q-q">"How do I know these numbers aren't just made up to sound good?"</p>
+<p>Because you can run them yourself. Every figure the papers cite is reproduced by code that's public, and there's a button that runs that code live in your own browser, no install, checking each number against what the papers claim. If the code ever stopped reproducing a figure, the page would say so. It's the opposite of "trust me": the whole thing is built to be checked rather than believed. That's a big enough claim that it gets its own page.</p>
+<p class="pointer"><b>See exactly how:</b> the <a href="methodology.html">methodology page</a> walks through what each package checks and lets you run the whole suite in your browser.</p>
 </div>
 
   <section class="ai-analyze" aria-label="Analyze with AI">

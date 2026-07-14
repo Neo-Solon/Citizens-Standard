@@ -371,7 +371,7 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
     <b id="lvExcluded"></b>
     <br><br>
     <b>Prefer to run it locally?</b> <code>git clone</code> the repo, then
-    <code>cd replication &amp;&amp; python run_all.py</code> — that covers all 12 packages and takes a few
+    <code>cd replication &amp;&amp; python run_all.py</code> — that covers the full suite and takes a few
     minutes. Add <code>--report</code> for an HTML report with every figure.
   </p>
 </div>
@@ -741,7 +741,7 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
 
 <section class="wrap text">
   <h2>What each package tests</h2>
-  <p>Eleven packages, one map. Each names the claims it backs, the file that computes or tests them, and whether the backing is verification or a stress-test. Nine packages reproduce a paper&rsquo;s published figures; one is the stress-test hub that takes contested claims out to real external data.</p>
+  <p>One map, every package. Each names the claims it backs, the file that computes or tests them, and whether the backing is verification or a stress-test. Most packages reproduce a paper&rsquo;s published figures; one is the stress-test hub that takes contested claims out to real external data.</p>
 
   <div class="pkg">
     <div class="pkg-head"><span class="pname">architecture_replication</span><span class="ppaper">Papers 1, 4, 9</span></div>
@@ -845,15 +845,15 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
 
 
   <div class="run">
-    <p class="small">The browser now runs <strong>all 12 packages</strong> — Paper 10 was the last holdout, and only because it needed <code style="font-family:ui-monospace,monospace;color:#AEB6C0">statsmodels</code>, which cannot be installed in a browser. It is now backed by a pure-numpy equivalent that reproduces statsmodels to machine precision. To run the suite against the real statsmodels — which remains the source of truth — clone it:</p>
-    <code>git clone https://github.com/Neo-Solon/Citizens-Standard<br>cd Citizens-Standard/replication<br>python run_all.py            <span style="opacity:.6"># all 12, pass/fail table</span><br>python run_all.py --report   <span style="opacity:.6"># + an HTML report with every figure</span></code>
+    <p class="small">The browser now runs <strong>every package</strong> — Paper 10 was the last holdout, and only because it needed <code style="font-family:ui-monospace,monospace;color:#AEB6C0">statsmodels</code>, which cannot be installed in a browser. It is now backed by a pure-numpy equivalent that reproduces statsmodels to machine precision. To run the suite against the real statsmodels — which remains the source of truth — clone it:</p>
+    <code>git clone https://github.com/Neo-Solon/Citizens-Standard<br>cd Citizens-Standard/replication<br>python run_all.py            <span style="opacity:.6"># full suite, pass/fail table</span><br>python run_all.py --report   <span style="opacity:.6"># + an HTML report with every figure</span></code>
     <p class="small">Each package has its own <code style="font-family:ui-monospace,monospace;color:#AEB6C0">run_all</code> and a README stating its data sources and what it checks. Swap in your own assumptions and watch the figures move; that is the point.</p>
   </div>
 </section>
 
 <div class="wrap">
   <div class="door" style="text-align:center;">
-    <p class="q" style="max-width:32ch;margin-left:auto;margin-right:auto;">Rigor you can run beats rigor you have to trust. Here is the whole suite, and the papers it backs.</p>
+    <p class="q" style="max-width:38ch;margin-left:auto;margin-right:auto;">Rigor you can run beats rigor you have to trust. That is the whole answer to &ldquo;how do I know these numbers aren&rsquo;t made up&rdquo; &mdash; you don&rsquo;t have to know, you can check. Here is the whole suite, and the papers it backs.</p>
     <a class="cta" href="replication.zip" download>Download the replication suite <span class="arrow">&rarr;</span></a>
     <p class="note" style="max-width:46ch;margin-left:auto;margin-right:auto;">Prefer the writeups first? The <a href="papers.html">papers and data</a> page has the full series, free to read, each linked to the code above. The full claim-to-code index lives in the <a href="https://github.com/Neo-Solon/Citizens-Standard/blob/main/replication/CLAIM_BACKING_INDEX.md">replication folder</a>.</p>
   </div>
