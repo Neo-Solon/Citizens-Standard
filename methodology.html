@@ -63,6 +63,9 @@
   .row{display:grid;grid-template-columns:1fr auto;gap:6px 16px;padding:16px 18px;border-top:1px solid var(--line)}
   .row:first-child{border-top:none}
   .row .claim{color:var(--text);font-size:1rem}
+  .row.sub{padding-left:34px;background:rgba(255,255,255,.015)}
+  .row.sub .claim::before{content:"└─ ";color:var(--dim)}
+  .row.sub .claim{color:var(--dim)}
   .row .file{grid-column:1;color:var(--dim);font-family:"Bricolage Grotesque",sans-serif;font-weight:500;font-size:.82rem;margin-top:4px}
   .row .file code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.8rem;color:#AEB6C0}
   .badge{align-self:start;font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;border-radius:999px;white-space:nowrap}
@@ -743,7 +746,6 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
   <div class="pkg">
     <div class="pkg-head"><span class="pname">architecture_replication</span><span class="ppaper">Papers 1, 4, 9</span></div>
     <div class="row"><div class="claim">Launch issuance of $447B (2.0% of M2), with the floor figures that follow</div><div class="file"><code>code/run_all.py</code> &nbsp;(19/19 checks)</div><span class="badge v">Verification</span></div>
-    <div class="row"><div class="claim">The liquidation flow <b>L<sub>t</sub></b> — defined in Macro §3.3, never given a number in the papers. Computed: the circulating-pool ceiling is breached in <b>2048</b>, κ_d must reach zero by <b>2087</b>.</div><div class="file"><code>liquidation_flow_replication/code/run_all.py</code> &nbsp;(181/181 values)</div><span class="badge v">Supplementary — postdates the papers</span></div>
     <div class="row"><div class="claim">Stable Floors: Mode A $233K, Mode B $413K, Mode C $230K, and the Mode B return band</div><div class="file"><code>code/cs_engine.py</code></div><span class="badge v">Verification</span></div>
   </div>
 
@@ -757,6 +759,8 @@ header.wrap .lede{margin-left:auto;margin-right:auto;text-align:center;}
     <div class="pkg-head"><span class="pname">macro_replication</span><span class="ppaper">Papers 5, 9</span></div>
     <div class="row"><div class="claim">Propositions 4-9: price determinacy without a Taylor principle, dual-circuit separation, stability</div><div class="file"><code>code/verify_proposition_4.py</code> &hellip; <code>9.py</code></div><span class="badge v">Verification</span></div>
     <div class="row"><div class="claim">Price-stability locus g&middot;M&#7488; &asymp; $229.7B (M&#7488; &asymp; 51% of M2); coupling threshold &zeta;* &asymp; 0.13</div><div class="file"><code>code/recompute_illustrations.py</code></div><span class="badge v">Verification</span></div>
+    <div class="row"><div class="claim">Injection topology (§3.2b): the real-advantage gradient is set by where money enters, near-independent of scale and price-adjustment speed; the surviving gradient under instant prices is balance-dilution, not stale-price timing (exact identity)</div><div class="file"><code>code/injection_topology.py</code></div><span class="badge v">Verification</span></div>
+    <div class="row sub"><div class="claim">The liquidation flow <b>L<sub>t</sub></b> — defined in Macro §3.3, never given a number in the papers. Computed: the circulating-pool ceiling is breached in <b>2048</b>, κ_d must reach zero by <b>2087</b>.</div><div class="file"><code>liquidation_flow_replication/code/run_all.py</code> &nbsp;(181/181 values)</div><span class="badge v">Supplementary — postdates the papers</span></div>
   </div>
 
   <div class="pkg">

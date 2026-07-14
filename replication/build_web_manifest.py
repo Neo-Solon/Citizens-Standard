@@ -136,7 +136,7 @@ TITLES = {
     "interoperability_replication": "Paper 7 — External Interoperability",
     "macro_replication": "Paper 5 — Macroeconomic Model",
     "distribution_inequality_replication": "Paper 14 — Distribution & Inequality",
-    "liquidation_flow_replication": "Paper 5 — The Liquidation Flow L\u209c (supplementary)",
+    "liquidation_flow_replication": "\u2514\u2500 Paper 5 (supplementary) — The Liquidation Flow L\u209c",
     "empirical_validation_replication": "Paper 10 — Empirical Validation",
 }
 
@@ -209,9 +209,16 @@ def files_for(pkg):
     return out
 
 
+# Within a paper, the main package sorts before any supplementary one (0 before 1).
+# Default 0 keeps every other paper's single package unaffected.
+SUB_ORDER = {
+    "liquidation_flow_replication": 1,   # supplementary to Paper 5's macro_replication
+}
+
+
 def main():
     pkgs = []
-    for pkg in sorted(SPEC, key=lambda k: (PAPER_NO[k], k)):
+    for pkg in sorted(SPEC, key=lambda k: (PAPER_NO[k], SUB_ORDER.get(k, 0), k)):
         steps, golden, deps = SPEC[pkg]
         files = files_for(pkg)
         gfiles = golden_files(pkg, golden)
