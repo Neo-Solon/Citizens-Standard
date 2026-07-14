@@ -1,0 +1,56 @@
+{
+  "date": "2026-07-14",
+  "supersedes_in_part": "regime_robustness_crosscountry_VERIFIED.json (US measure-dependence verdict)",
+  "leaves_intact": [
+    "circuits-distinct finding (corr 0.68)",
+    "Japan results (no 2020 M1 seam in Japan)",
+    "regime-conditionality as the general claim"
+  ],
+  "seam_monthly_growth_may2020_pct": {
+    "OECD_M1": 238.80905203879445,
+    "DM1": 5.556254732153332
+  },
+  "full_sample": {
+    "OECD_M1": {
+      "all": 0.028,
+      "high_ge4pct": 0.162,
+      "n_high": 20,
+      "low": 0.201,
+      "n_low": 35,
+      "below_median": 0.476
+    },
+    "DM1": {
+      "all": 0.009,
+      "high_ge4pct": 0.12,
+      "n_high": 20,
+      "low": 0.127,
+      "n_low": 35,
+      "below_median": 0.287
+    }
+  },
+  "seam_excluded": {
+    "OECD_M1": {
+      "all": 0.004,
+      "high_ge4pct": 0.162,
+      "n_high": 20,
+      "low": 0.002,
+      "n_low": 33,
+      "below_median": 0.009
+    },
+    "DM1": {
+      "all": 0.006,
+      "high_ge4pct": 0.12,
+      "n_high": 20,
+      "low": 0.008,
+      "n_low": 33,
+      "below_median": 0.09
+    }
+  },
+  "finding": "With the 2020-21 seam observations removed, the US 'reversal' disappears: OECD simple-sum low-regime R2 collapses (0.20 -> 0.00, below-median 0.48 -> 0.01) while the high-regime result is unchanged (0.162 either way). Both measures then agree on the high-regime flip in the same design (OECD 0.162 vs 0.002; Divisia 0.120 vs 0.008). Combined with Japan (flip present on simple-sum; no seam), the flip is consistent across measures and countries once the US May-2020 M1 redefinition is handled. The earlier record's weakening was itself substantially a data artifact -- correctly cautious at the time, now diagnosed.",
+  "nuance_divisia_2020": "For Divisia the 2020-21 surge is REAL money growth (not a seam), so dropping those years discards genuine information for that measure; the flip holds for Divisia with or without them. For simple-sum the observations are meaningless by construction and must be excluded or spliced.",
+  "honest_limits": [
+    "n_high ~ 19-20 annual observations, dominated by the 1970s (as the original audit flagged)",
+    "R2 magnitudes modest (0.12-0.33)",
+    "Two countries only; the circuit-boundary inference problem remains open"
+  ]
+}

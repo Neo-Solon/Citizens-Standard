@@ -62,7 +62,7 @@ Pyodide (CPython compiled to WebAssembly). Pick a paper, press Run, watch it rep
 
 ```bash
 cd replication
-python run_all.py            # all 12 packages, pass/fail table
+python run_all.py            # every package, pass/fail table
 python run_all.py --report   # + an HTML report with every figure
 ```
 
@@ -74,8 +74,8 @@ dependency drift gets caught, not just our own edits.
 ## Layout
 
 ```
-papers/                     14 papers (PDF + DOCX)
-replication/                12 packages, one per paper + supplementary
+papers/                     full paper set (PDF + DOCX)
+replication/                verifier packages, one per paper + supplementary
   run_all.py                the one-push verifier
   paper_pkg.py              copy → run → compare against the published golden
   web_manifest.json         drives the in-browser verifier
@@ -93,7 +93,7 @@ containment, not eyeballing: the runner's output must contain every published va
   `statsmodels`, which has C extensions and is not in the Pyodide distribution. Resolved:
   `src/hac_ols.py` is a pure-numpy drop-in for the only two things the package used from
   statsmodels (OLS, and OLS with Newey–West HAC errors). It reproduces statsmodels to machine
-  precision, and the package's output is **byte-identical** with and without it. All 12 packages
+  precision, and the package's output is **byte-identical** with and without it. Every package
   now run in the browser.
 - **Papers 4 and 11** are argument, not computation — nothing to replicate. **Paper 9** has no
   package of its own, but its numbers are computed elsewhere: its technical appendix maps every

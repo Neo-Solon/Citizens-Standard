@@ -318,6 +318,10 @@
     ],
     [
      "code",
+     "injection_topology.py"
+    ],
+    [
+     "code",
      "recompute_illustrations.py"
     ],
     [
@@ -368,13 +372,16 @@
    "deps": [
     "numpy",
     "matplotlib",
-    "sympy"
+    "sympy",
+    "networkx"
    ],
    "files": [
+    "INJECTION_TOPOLOGY_GROUNDING.md",
     "PROPOSITION_7_ASSESSMENT.md",
     "README.md",
     "all_results.txt",
     "code/dynamic_model.py",
+    "code/injection_topology.py",
     "code/make_banking_figure.py",
     "code/make_delay_figure.py",
     "code/make_determinacy_figure.py",
@@ -403,7 +410,7 @@
     "code/verify_realizable_return.py",
     "requirements.txt"
    ],
-   "bytes": 187003
+   "bytes": 204871
   },
   {
    "id": "banking_replication",

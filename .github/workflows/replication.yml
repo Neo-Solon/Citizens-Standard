@@ -1,6 +1,6 @@
 name: replication
 
-# The browser verifier now covers ALL 12 packages (Paper 10 unblocked via src/hac_ols.py). This
+# The browser verifier now covers EVERY package (Paper 10 unblocked via src/hac_ols.py). This
 # still runs the full suite against the REAL statsmodels, which stays the source of truth.
 # The browser fallback is verified against it, not trusted in place of it.
 

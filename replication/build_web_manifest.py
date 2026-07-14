@@ -86,7 +86,7 @@ SPEC = {
                                        "cs_sterilization_test.py", "behavioral_idle_capital.py",
                                        "behavioral_calibrated.py", "fig_paper7.py"]],
                                      "outputs/", ["numpy", "matplotlib"]),
-    # macro's golden report covers ALL 20 scripts its run_all.py drives, figure scripts included
+    # macro's golden report covers every script its run_all.py drives, figure scripts included
     # (several of them print values that appear in all_results.txt).
     "macro_replication":            ([["code", s] for s in
                                       ["verify_proposition_3.py", "verify_proposition_3prime.py",
@@ -94,12 +94,13 @@ SPEC = {
                                        "verify_proposition_6.py", "verify_proposition_7.py",
                                        "verify_proposition_8.py", "verify_proposition_9.py",
                                        "verify_realizable_return.py", "spillover_estimate.py",
+                                       "injection_topology.py",
                                        "recompute_illustrations.py", "make_figure.py",
                                        "make_determinacy_figure.py", "make_labor_figure.py",
                                        "make_delay_figure.py", "make_irf_figure.py",
                                        "dynamic_model.py", "make_forward_figure.py",
                                        "make_welfare_figure.py", "make_banking_figure.py"]],
-                                     "all_results.txt", ["numpy", "matplotlib", "sympy"]),
+                                     "all_results.txt", ["numpy", "matplotlib", "sympy", "networkx"]),
 }
 
 # No package is treated as "heavy" any more. Paper 14 does pull the 22 MB raw SCF microdata, but

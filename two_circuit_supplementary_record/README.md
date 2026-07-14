@@ -83,3 +83,24 @@ inflation.
   available (only US broad and Japan narrow on hand).
 - Single-country dollar MA (US); the high-regime samples are small (~20 independent years) and lean
   on the 1970s and 2020s episodes.
+
+
+---
+
+## Addendum 2026-07-14 — the measure-dependence, diagnosed (`seam_resolution.py`)
+
+The 2026-07-10 cross-country record found the US high-regime flip was
+measure-dependent (Divisia yes, OECD simple-sum reversed). Follow-up analysis
+diagnoses the reversal as substantially a data artifact: the May 2020
+Regulation D / H.6 redefinition moved savings deposits into M1, so OECD
+simple-sum M1 jumps +238.8% in that single month while Divisia is constructed
+continuously across the seam. The 2020 observation sits in the low-inflation
+cell right before the 2021-22 surge — one leverage point that manufactures
+low-regime predictive power for simple-sum money. Removing the 2020-21
+money-growth years: OECD low-regime R² collapses 0.20 → 0.00 (below-median
+0.48 → 0.01) while the high-regime result is unchanged (0.162), and both
+measures then agree on the flip in the same design. Japan (no seam) already
+agreed. See `seam_resolution_VERIFIED.json` for the full grid and the honest
+limits that remain (small high-regime n dominated by the 1970s; two countries).
+The 2026-07-10 record's caution was correct at the time; this addendum
+supersedes its US measure-dependence verdict, not its method.
